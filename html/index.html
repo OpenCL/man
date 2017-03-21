@@ -1,15 +1,101 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-<title>OpenCL 2.1 Reference Pages</title>
-<link rel="Shortcut Icon" href="http://www.khronos.org/favicon.ico" type="image/x-icon" />
-</HEAD>
-<frameset rows="65,*">
-	<frame src="Opencl_header.html" scrolling="no" noresize frameborder="0" marginwidth="0" marginheight="0">
-	<frameset cols="380,*">
-  		<frame src="Opencl_tofc.html" scrolling="yes">
-		<frame src="intro.html" name="pagedisplay" frameborder="0" marginwidth="0" marginheight="0">
-	</frameset>
-
-</frameset>
+    <meta charset="UTF-8">
+    <title>OpenCL 2.1 Reference Pages</title>
+    <link rel="Shortcut Icon" href="http://www.khronos.org/favicon.ico" type="image/x-icon" />
+    <style xmlns="" type="text/css">
+        body {
+            font-family: "Open Sans","DejaVu Sans",sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+        header {
+            padding-left: 10px;
+            height: 65px;
+            position: relative;
+        }
+        #links {
+            font-size: 80%;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            position: absolute;
+            bottom: 5px;
+        }
+        a:link, a:visited {
+            color: #2156a5;
+            text-decoration: none;
+        }
+        h1 {
+            font-family: "Open Sans","DejaVu Sans",sans-serif;
+            font-weight: 300;
+            font-style: normal;
+            text-align: left;
+            color: black;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        #main {
+            position: absolute;
+            top: 65px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid gray;
+        }
+        #toc {
+            border-width: 0;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 380px;
+            height: 100%;
+        }
+        iframe {
+            margin: 0;
+        }
+        #content {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 380px;
+            right: 0;
+        }
+        #content iframe {
+            border-width: 0;
+            border-left: 1px solid gray;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>OpenCL 2.1 Reference Pages</h1>
+        <p id="links">
+            <a href="http://www.khronos.org/opencl/" target="OpenCL">More OpenCL Info</a> &nbsp;&nbsp;&nbsp;
+            <a href="http://www.khronos.org/registry/cl/" target="OpenCL Specification">OpenCL Specification</a> &nbsp;&nbsp;&nbsp;
+            <a href="https://www.khronos.org/registry/cl/sdk/2.1/docs/OpenCL-2.1-refcard.pdf" target="OpenCL Quick Reference">OpenCL 2.1 Quick Reference Card</a> &nbsp;&nbsp;&nbsp;
+            <a href="https://github.com/OpenCL/man" target="Repository">Repository</a>
+        </p>
+    </header>
+    <div id="main">
+        <iframe id="toc" src="Opencl_tofc.html"></iframe>
+        <div id="content">
+            <iframe src="intro.html" name="pagedisplay"></iframe>
+        </div>
+    </div>
+</body>
 </html>
