@@ -1,0 +1,25 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - git clone "https://${GH_TOKEN}@${GH_REF}" -b gh-pages output
+  - rm -f output/*.html
+  - docker pull asciidoctor/docker-asciidoctor
+
+script:
+  - docker run -v $TRAVIS_BUILD_DIR:/documents/ --name asciidoc-to-html asciidoctor/docker-asciidoctor asciidoctor -a linkcss -a nofooter -D /documents/output *.adoc
+
+after_error:
+  - docker logs asciidoc-to-html
+
+after_failure:
+  - docker logs asciidoc-to-html
+
+after_success:
+  - cd output ; cp ../*.jpg . ; cp ../html/* .
+  - git add .
+  - git status
+  - git commit -m "Deploy to GitHub Pages"
+  - git push "https://${GH_TOKEN}@${GH_REF}" gh-pages:gh-pages
