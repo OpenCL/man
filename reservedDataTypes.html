@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Reserved Data Types</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="ReservedDataTypes" class="article">
+<div id="header">
+<h1>Reserved Data Types</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Built-in reserved Data Types.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The data type names described in the table below are reserved and cannot be used by applications as type names.
+The vector data type names defined in <a href="vectorDataTypes.html">Vector Data Types</a>, but where <code>n</code> is any value other than 2, 3, 4, 8 and 16, are also reserved.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>booln</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A boolean vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>halfn</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 16-bit float vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>quad</code>, <code>quadn</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 128-bit floating-point number and vectors.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>complex half,
+complex halfn,
+imaginary half,
+imaginary halfn</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Complex and imaginary 16-bit floating-point scalar and vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>complex float,
+complex floatn,
+imaginary float,
+imaginary floatn</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Complex and imaginary 32-bit floating-point scalar and vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>complex double,
+complex doublen,
+imaginary double,
+imaginary doublen</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Complex and imaginary 64-bit floating-point scalar and vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>complex quad,
+complex quadn,
+imaginary quad,
+imaginary quadn</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Complex and imaginary 128-bit floating-point scalar and vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>`floatn`x_m_</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>An <em>n</em> x <em>m</em> matrix of single precision floating-point values stored in column-major order.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>`doublen`x_m_</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>An <em>n</em> x <em>m</em> matrix of double precision floating-point values stored in column-major order.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>long double,
+long doublen</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A floating-point scalar and vector type with at long doublen least as much precision and range as a double and no more precision and range than a quad.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>long long</code>, <code>long longn</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 128-bit signed integer scalar and vector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>unsigned long long</code>, <code>ulong long</code>, <code>ulong longn</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 128-bit unsigned integer scalar and vector.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="macroLimits.html">Macros and Limits</a>, <a href="scalarDataTypes.html">Scalar Data Types</a>, <a href="vectorDataTypes.html">Vector Data Types</a>, <a href="otherDataTypes.html">Other Data Types</a>, <a href="abstractDataTypes.html">Abstract Data Types</a>, <a href="enums.html">Enumerated Data Types</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=11" target="_blank">OpenCL 2.0 C Language Specification, page 11</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

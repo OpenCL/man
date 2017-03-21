@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>memory_scope</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="memory_scope" class="article">
+<div id="header">
+<h1>memory_scope</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Identify if memory_scope applies to work-items in a work-group or work-items of a kernel(s).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>memory_scope</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The OpenCL C programming language implements a subset of the C11 atomics (refer to section 7.17 of the C11 specification) and synchronization operations.
+These operations play a special role in making assignments in one work-item visible to another.
+A synchronization operation on one or more memory locations is either an acquire operation, a release operation, or both an acquire and release operation. (The C11 consume operation is not supported.) A synchronization operation without an associated memory location is a fence and can be either an acquire fence, a release fence or both an acquire and release fence.
+In addition, there are relaxed atomic operations, which are not synchronization operations, and atomic read-modify-write operations which have special characteristics</p>
+</div>
+<div class="paragraph">
+<p>The enumerated type <code>memory_scope</code> specifies whether the memory ordering constraints given by <a href="memory_order.html"><code>memory_order</code></a> apply to work-items in a work-group or work-items of a kernel(s) executing on the device or across devices (in the case of shared virtual memory).
+Its enumeration constants are as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>     memory_scope_work_item
+     memory_scope_work_group
+     memory_scope_device
+     memory_scope_all_svm_devices</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>memory_scope_work_item</code> value for <code>memory_scope</code> can only be used with <a href="atomic_work_item_fence.html"><code>atomic_work_item_fence</code></a> with <code>flags</code> set to <code>CLK_IMAGE_MEM_FENCE</code>.</p>
+</div>
+<div class="paragraph">
+<p>The memory scope should only be used when performing atomic operations to global memory.
+Atomic operations to local memory only guarantee memory ordering in the work-group not across work-groups and therefore ignore the <code>memory_scope</code> value.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="atomicFunctions.html">Atomic Functions</a>, <a href="memory_order.html"><code>memory_order</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=105" target="_blank">OpenCL 2.0 C Language Specification, page 105</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateFromD3D10Texture2DKHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateFromD3D10Texture2DKHR" class="article">
+<div id="header">
+<h1>clCreateFromD3D10Texture2DKHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an OpenCL 2D image object from a subresource of a Direct3D 10 2D texture.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_mem clCreateFromD3D10Texture2DKHR(cl_context context,
+                                     cl_mem_flags flags,
+                                     ID3D10Texture2D *resource,
+                                     UINT subresource,
+                                     cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>A valid OpenCL context created from a Direct3D 10 device.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<p>A bit-field that is used to specify usage information.
+May be <code>CL_MEM_READ_ONLY</code>, <code>CL_MEM_WRITE_ONLY</code>, or <code>CL_MEM_READ_WRITE</code>. (See the table for <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> for more information.)</p>
+</dd>
+<dt class="hdlist1"><code>resource</code></dt>
+<dd>
+<p>A pointer to the Direct3D 10 2D texture to share.</p>
+</dd>
+<dt class="hdlist1"><code>subresource</code></dt>
+<dd>
+<p>The subresource of <code>resource</code> to share.</p>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>An appropriate error code.
+If <code>errcode_ret</code> is NULL, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The width, height and depth of the returned OpenCL 2D image object are determined by the width, height and depth of subresource <code>subresource</code> of <code>resource</code>.
+The channel type and order of the returned OpenCL 2D image object is determined by the format of <code>resource</code> as shown in of Direct3D 10 and corresponding OpenCL image formats of <code>resource</code> in <a href="clCreateFromD3D10Texture3DKHR.html"><code>clCreateFromD3D10Texture3DKHR</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This call will increment the internal Direct3D reference count on <code>resource</code>.
+The internal Direct3D reference count on <code>resource</code> will be decremented when the OpenCL reference count on the returned OpenCL memory object drops to zero.</p>
+</div>
+<div class="paragraph">
+<p>General information about sharing memory objects with Direct3D 10 follows.</p>
+</div>
+<div class="paragraph">
+<p>The goal of this extension is to provide interoperability between OpenCL and Direct3D 10.
+This is designed to function analogously to the <a href="cl_khr_gl_sharing.html">OpenGL interoperability</a> as defined in sections 9.7 and 9.8.
+If this extension is supported by an implementation, the string "cl_khr_d3d10_sharing" will be present in the <code>CL_PLATFORM_EXTENSIONS</code> (see <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>) or <code>CL_DEVICE_EXTENSIONS</code> (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>).</p>
+</div>
+<div class="paragraph">
+<p>As currently proposed the interfaces for this extension would be provided in <code>cl_d3d10.h</code>.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL functions enabled by the <code>cl_khr_d3d10_sharing</code> extension allow applications to use Direct3D 10 resources as OpenCL memory objects.
+This allows efficient sharing of data between OpenCL and Direct3D 10.
+The OpenCL API may be used to execute kernels that read and/or write memory objects that are also Direct3D 10 resources.
+An OpenCL image object may be created from a Direct3D 10 texture resource.
+An OpenCL buffer object may be created from a Direct3D 10 buffer resource.
+OpenCL memory objects may be created from Direct3D 10 objects if and only if the OpenCL context has been created from a Direct3D 10 device.</p>
+</div>
+<div class="paragraph">
+<div class="title">Lifetime of Shared [D3D10] Objects</div>
+<p>An OpenCL memory object created from a Direct3D 10 resource remains valid as long as the corresponding Direct3D 10 resource has not been deleted.
+If the Direct3D 10 resource is deleted through the Direct3D 10 API, subsequent use of the OpenCL memory object will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+<div class="paragraph">
+<p>The successful creation of a cl_context against a Direct3D 10 device specified via the context create parameter <code>CL_CONTEXT_D3D10_DEVICE_KHR</code> will increment the internal Direct3D reference count on the specified Direct3D 10 device.
+The internal Direct3D reference count on that Direct3D 10 device will be decremented when the OpenCL reference count on the returned OpenCL context drops to zero.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL context and corresponding command-queues are dependent on the existence of the Direct3D 10 device from which the OpenCL context was created.
+If the Direct3D 10 device is deleted through the Direct3D 10 API, subsequent use of the OpenCL context will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns a valid non-zero OpenCL image object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the image object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if values specified in <code>flags</code> are not valid or if <code>subresource</code> is not a valid subresource index for <code>resource</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_D3D10_RESOURCE_KHR</code> if <code>resource</code> is not a Direct3D 10 texture resource, if <code>resource</code> was created with the <code>D3D10_USAGE</code> flag <code>D3D10_USAGE_IMMUTABLE</code>, if a <code>resource</code> is a multisampled texture, if a <code>cl_mem</code> from subresource <code>subresource</code> of <code>resource</code> has already been created using <code>clCreateFromD3D10Texture2DKHR</code>, or if <code>context</code> was not created against the same Direct3D 10 device from which <code>resource</code> was created.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</code> if the Direct3D 10 texture format of <code>resource</code> is not a value listed in the table of Direct3D 10 and corresponding OpenCL image formats for <a href="clCreateFromD3D10Texture3DKHR.html"><code>clCreateFromD3D10Texture3DKHR</code></a>, or if the Direct3D 10 texture format of <code>resource</code> does not map to a supported OpenCL image format.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=72" target="_blank">OpenCL 2.1 Extensions Specification, page 72</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

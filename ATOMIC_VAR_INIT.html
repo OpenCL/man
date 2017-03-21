@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>ATOMIC_VAR_INIT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="ATOMIC_VAR_INIT" class="article">
+<div id="header">
+<h1>ATOMIC_VAR_INIT</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Expands to a token sequence suitable for initializing an atomic object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>ATOMIC_VAR_INIT</code> macro is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>       #define ATOMIC_VAR_INIT(C value)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>ATOMIC_VAR_INIT</code> macro expands to a token sequence suitable for initializing an atomic object of a type that is initialization-compatible with value.
+An atomic object with automatic storage duration that is not explicitly initialized using <code>ATOMIC_VAR_INIT</code> is initially in an indeterminate state; however, the default (zero) initialization for objects with static storage duration is guaranteed to produce a valid state.</p>
+</div>
+<div class="paragraph">
+<p>This macro can only be used to initialize atomic objects that are declared in program scope in the global address space.</p>
+</div>
+<div class="paragraph">
+<p>Concurrent access to the variable being initialized, even via an atomic operation, constitutes a data-race.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Examples</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>global atomic_int guide = ATOMIC_VAR_INIT(42);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Concurrent access to the variable being initialized, even via an atomic operation, constitutes a data-race.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=104" target="_blank">OpenCL 2.0 C Language Specification, page 104</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

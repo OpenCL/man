@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>length</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="length" class="article">
+<div id="header">
+<h1>length</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vector length.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">float length(float n p)
+
+double length(double n p)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>half length (gentype p)      // if half extension enabled</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns the length of vector <code>p</code>, i.e., the square root of (<code>p.x</code><sup>2</sup> + <code>p.y</code><sup>2</sup> + &#8230;&#8203;)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about built-in geometric functions: Built-in geometric functions operate component-wise.
+The description is per-component.
+<code>floatn</code> is <code>float</code>, <code>float2</code>, <code>float3</code>, or <code>float4</code> and <code>doublen</code> is <code>double</code>, <code>double2</code>, <code>double3</code>, or <code>double4</code>.
+The built-in geometric functions are implemented using the round to nearest even rounding mode.</p>
+</div>
+<div class="paragraph">
+<p>The geometric functions can be implemented using contractions such as <a href="mad.html"><code>mad</code></a> or <a href="fma.html"><code>fma</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If extended with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>, generic type name <code>gentype</code> may indicate <code>half</code> and <code>half{2|3|4}</code> as arguments.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="geometricFunctions.html">Geometric Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=88" target="_blank">OpenCL 2.0 C Language Specification, page 88</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">General information about address space qualifiers</div>
+<p>OpenCL implements the following disjoint named address spaces: <code><em>global</code>, <code></em>local</code>, <code><em>constant</code>, and <code></em>private</code>.
+The address space qualifier may be used in variable declarations to specify the region of memory that is used to allocate the object.
+The C syntax for type qualifiers is extended in OpenCL to include an address space name as a valid type qualifier.
+If the type of an object is qualified by an address space name, the object is allocated in the specified address name; otherwise, the object is allocated in the generic address space.</p>
+</div>
+<div class="paragraph">
+<p>The address space names without the <em> prefix i.e.
+<code>global</code>, <code>local</code>, <code>constant</code> and <code>private</code> may be substituted for the corresponding address space names with the </em> prefix.</p>
+</div>
+<div class="paragraph">
+<p>The address space name for arguments to a function in a program, or local variables of a function is <code><em>private</code>.
+All function arguments shall be in the <code></em>private</code> address space.
+The address space for a variable at program scope or a static variable inside a function can either be <code><em>global</code> or <code></em>constant</code>, but defaults to <code>__global</code> if not specified.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL 2.0 adds support for an unnamed <code>generic</code> address space.
+Pointers that are declared without pointing to a named address space point to the <code>generic</code> address space.
+Before referring to the region pointed to, the pointer must be associated with a named address space.
+Functions may be written with arguments and return values that point to the <code>generic</code> address space.</p>
+</div>
+<div class="paragraph">
+<p>kernel function arguments declared to be a pointer or an array of a type must point to one of the named address spaces <code><em>global</code>, <code></em>local</code> or <code>__constant</code>.</p>
+</div>
+<div class="paragraph">
+<p>The named address spaces are a subset of the generic address space except for the <code>constant</code> address space.</p>
+</div>
+<div class="paragraph">
+<p>A pointer to address space A can only be assigned to a pointer to the same address space A or a pointer to the <code>generic</code> address space.
+Casting a pointer to address space A to a pointer to address space B is illegal if A and B are named address spaces and A is not the same as B.</p>
+</div>
+<div class="paragraph">
+<p>The <code><em>global</code>, <code></em>constant</code>, <code><em>local</code>, <code></em>private</code>, <code><em>generic</code>, <code>global</code>, <code>constant</code>, <code>local</code>, and <code>private</code> names are reserved for use as address space qualifiers and shall not be used otherwise.
+The <code></em>generic</code> and <code>generic</code> names are reserved for future use.</p>
+</div>
+<div class="paragraph">
+<p>The size of pointers to different address spaces may differ.
+It is not correct to assume that, for example, <code>sizeof(<em>global int *)</code> always equals <code>sizeof(</em>local int *)</code>.</p>
+</div>
+</div>
+</body>
+</html>

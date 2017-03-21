@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>reserve_write_pipe</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="reserve_write_pipe" class="article">
+<div id="header">
+<h1>reserve_write_pipe</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Reserve entries for writing to pipe.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">reserve_id_t reserve_write_pipe(write_only pipe gentype p,
+                                uint num_packets)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Reserve <code>num_packets</code> entries for writing to pipe <code>p</code>.
+Returns a valid reservation ID if the reservation is successful.</p>
+</div>
+<div class="paragraph">
+<p>We use the generic type name gentype to indicate the built-in OpenCL C scalar or vector integer or floating-point data types or any user defined type built from these scalar and vector data types can be used as the type for the arguments to the pipe functions listed in this section.
+The half scalar and vector types can only be used if the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is supported.
+The <code>double</code> scalar and vector types can only be used if double precision is supported.</p>
+</div>
+<div class="paragraph">
+<div class="title">General information about pipes</div>
+<p>A pipe is identified by specifying the <code>pipe</code> keyword with a type.
+The data type specifies the size of each packet in the pipe.
+The <code>pipe</code> keyword is a type modifier.
+When it is applied to another type <code>T</code>, the result is a pipe type whose elements (or packets) are of type <code>T</code>.
+The packet type <code>T</code> may be any supported OpenCL C scalar and vector integer or floating-point data types, or a user-defined type built from these scalar and vector data types.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="qualifiers.html"><code>read_only</code></a> (or <code><em>read_only</code>) and <a href="qualifiers.html"><code>write_only</code></a> (or <code></em>write_only</code>) qualifiers must be used with the pipe qualifier when a pipe is a parameter of a kernel or of a user-defined function to identify if a pipe can be read from or written to by a kernel and its callees and enqueued child kernels.
+If no qualifier is specified, <a href="qualifiers.html"><code>read_only</code></a> is assumed.</p>
+</div>
+<div class="paragraph">
+<p>A kernel cannot read from and write to the same pipe object.
+Using the <a href="qualifiers.html"><code>read_write</code></a> (or <code>__read_write</code>) qualifier with the pipe qualifier is a compilation error.</p>
+</div>
+<div class="paragraph">
+<p>The macro <code>CLK_NULL_RESERVE_ID</code> refers to an invalid reservation ID.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The <a href="read_pipe.html"><code>read_pipe</code></a> and <a href="write_pipe.html"><code>write_pipe</code></a> functions that take a reservation ID as an argument can be used to read from or write to a packet index.
+These built-ins can be used to read from or write to a packet index one or multiple times.
+If a packet index that is reserved for writing is not written to using the <a href="write_pipe.html"><code>write_pipe</code></a> function, the contents of that packet in the pipe are undefined.
+<a href="commit_read_pipe.html"><code>commit_read_pipe</code></a> and <a href="work_group_commit_read_pipe.html"><code>work_group_commit_read_pipe</code></a> remove the entries reserved for reading from the pipe.
+<a href="commit_write_pipe.html"><code>commit_write_pipe</code></a> and <a href="work_group_commit_write_pipe.html"><code>work_group_commit_write_pipe</code></a> ensures that the entries reserved for writing are all added in-order as one contiguous set of packets to the pipe.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There can only be <code>CL_DEVICE_PIPE_MAX_ACTIVE_RESERVATIONS</code> (refer to the list of possible values for <code>parame_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>(table 4.3)) reservations active (i.e.
+reservation IDs that have been reserved but not committed) per work-item or work-group for a pipe in a kernel executing on a device.</p>
+</div>
+<div class="paragraph">
+<p>Work-item based reservations made by a work-item are ordered in the pipe as they are ordered in the program.
+Reservations made by different work-items that belong to the same work-group can be ordered using the work-group barrier function.
+The order of work-item based reservations that belong to different work-groups is implementation defined.</p>
+</div>
+<div class="paragraph">
+<p>Work-group based reservations made by a work-group are ordered in the pipe as they are ordered in the program.
+The order of work-group based reservations by different work-groups is implementation defined.</p>
+</div>
+<div class="paragraph">
+<div class="title">Restrictions</div>
+<p>Pipes can only be passed as arguments to a function (including kernel functions).
+The C <a href="operators.html"><code>operators</code></a> (refer to section 6.3 of the OpenCL 2.0 specification) cannot be used with variables declared with the <code>pipe</code> qualifier.</p>
+</div>
+<div class="paragraph">
+<p>The <code>pipe</code> qualifier cannot be used with variables declared inside a kernel, a structure or union field, a pointer type, an array, global variables declared in program scope or the return type of a function.</p>
+</div>
+<div class="paragraph">
+<p>The following behavior is undefined:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A kernel fails to call <code>reserve_pipe</code> before calling <a href="read_pipe.html"><code>read_pipe</code></a> or <a href="write_pipe.html"><code>write_pipe</code></a> that take a reservation ID.</p>
+</li>
+<li>
+<p>A kernel calls <a href="read_pipe.html"><code>read_pipe</code></a>, <a href="write_pipe.html"><code>write_pipe</code></a>, <a href="commit_read_pipe.html"><code>commit_read_pipe</code></a> or <a href="commit_write_pipe.html"><code>commit_write_pipe</code></a> with an invalid reservation ID.</p>
+</li>
+<li>
+<p>A kernel calls <a href="read_pipe.html"><code>read_pipe</code></a> or <a href="write_pipe.html"><code>write_pipe</code></a> with an valid reservation ID but with an <code>index</code> that is not a value from 0 &#8230;&#8203; <code>num_packets</code> - 1 specified to the corresponding call to <code>reserve_pipe</code>.</p>
+</li>
+<li>
+<p>A kernel calls <a href="read_pipe.html"><code>read_pipe</code></a> or <a href="write_pipe.html"><code>write_pipe</code></a> with a reservation ID that has already been committed (i.e.
+a <a href="commit_read_pipe.html"><code>commit_read_pipe</code></a> or <a href="commit_write_pipe.html"><code>commit_write_pipe</code></a> with this reservation ID has already been called).</p>
+</li>
+<li>
+<p>A kernel fails to call <a href="commit_read_pipe.html"><code>commit_read_pipe</code></a> for any reservation ID obtained by a prior call to <a href="reserve_read_pipe.html"><code>reserve_read_pipe</code></a>.</p>
+</li>
+<li>
+<p>A kernel fails to call <a href="commit_write_pipe.html"><code>commit_write_pipe</code></a> for any reservation ID obtained by a prior call to <a href="#"><code>reserve_write_pipe</code></a>.</p>
+</li>
+<li>
+<p>The contents of the reserved data packets in the pipe are undefined if the kernel does not call <a href="write_pipe.html"><code>write_pipe</code></a> for all entries that were reserved by the corresponding call to <code>reserve_pipe</code>.</p>
+</li>
+<li>
+<p>Calls to <a href="read_pipe.html"><code>read_pipe</code></a> that takes a reservation ID and <a href="commit_read_pipe.html"><code>commit_read_pipe</code></a> or <a href="write_pipe.html"><code>write_pipe</code></a> that takes a reservation ID and <a href="commit_write_pipe.html"><code>commit_write_pipe</code></a> for a given reservation ID must be called by the same kernel that made the reservation using <a href="reserve_read_pipe.html"><code>reserve_read_pipe</code></a> or <a href="#"><code>reserve_write_pipe</code></a>.
+The reservation ID cannot be passed to another kernel including child kernels.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the following example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel void
+foo (read_only pipe fooA_t pipeA,
+     write_only pipe fooB_t pipeB)
+{
+...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>pipeA</code> is a read-only pipe object, and <code>pipeB</code> is a write-only pipe object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="pipeFunctions.html">Pipe Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=158" target="_blank">OpenCL 2.0 C Language Specification, page 158</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

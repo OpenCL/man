@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clTerminateContextKHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clTerminateContextKHR" class="article">
+<div id="header">
+<h1>clTerminateContextKHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Terminates all pending work associated with the context and renders all data owned by the context invalid.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clTerminateContextKHR(cl_context context)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is the responsibility of the application to release all objects associated with the context being terminated.</p>
+</div>
+<div class="paragraph">
+<p>When a context is terminated:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The execution status of enqueued commands will be <code>CL_TERMINATED_KHR</code>.
+Event objects can be queried using <a href="clGetEventInfo.html"><code>clGetEventInfo</code></a>.
+Event callbacks can be registered and registered event callbacks will be called with <code>event_command_exec_status</code> set to <code>CL_TERMINATED_KHR</code>.
+<a href="clWaitForEvents.html"><code>clWaitForEvents</code></a> will return as immediately for commands associated with event objects specified in <code>event_list</code>.
+The status of user events can be set.
+Event objects can be retained and released.
+<a href="clGetEventProfilingInfo.html"><code>clGetEventProfilingInfo</code></a> returns <code>CL_PROFILING_INFO_NOT_AVAILABLE</code>.</p>
+</li>
+<li>
+<p>The context is considered to be terminated.
+A callback function registered when the context was created will be called.
+Only queries, retain and release operations can be performed on the context.
+All other APIs that use a context as an argument will return <code>CL_CONTEXT_TERMINATED_KHR</code>.</p>
+</li>
+<li>
+<p>The contents of the memory regions of the memory objects is undefined.
+Queries, registering a destructor callback, retain and release operations can be performed on the memory objects.</p>
+</li>
+<li>
+<p>Once a context has been terminated, all OpenCL API calls that create objects or enqueue commands will return <code>CL_CONTEXT_TERMINATED_KHR</code>.
+APIs that release OpenCL objects will continue to operate as though <code>clTerminateContextKHR</code> was not called.</p>
+</li>
+<li>
+<p>The behavior of callbacks will remain unchanged, and will report appropriate error, if executing after termination of context.
+This behavior is similar to enqueued commands, after the command queue has become invalid.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An implementation that supports this extension must be able to terminate commands currently executing on devices or queued across all command-queues associated with the context that is being terminated.
+The implementation cannot implement this extension by waiting for currently executing (or queued) commands to finish execution on devices associated with this context (i.e.
+doing a <a href="clFinish.html"><code>clFinish</code></a>).</p>
+</div>
+<div class="paragraph">
+<p>In Table 4.5, (see <a href="clCreateContext.html"><code>clCreateContext</code></a>) <code>CL_CONTEXT_TERMINATE_KHR</code> can be specified in the context properties only if all devices associated with the context support the ability to support context termination (i.e.
+<code>CL_DEVICE_TERMINATE_CAPABILITY_CONTEXT_KHR</code> is set for <code>CL_DEVICE_TERMINATE_CAPABILITY_KHR</code>).
+Otherwise, context creation fails with error code of <code>CL_INVALID_PROPERTY</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clTerminateContextKHR</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid OpenCL context.</p>
+</li>
+<li>
+<p><code>CL_CONTEXT_TERMINATED_KHR</code> if <code>context</code> has already been terminated.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if <code>context</code> was not created with <code>CL_CONTEXT_TERMNATE_KHR</code> set to <code>CL_TRUE</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=123" target="_blank">OpenCL 2.1 Extensions Specification, page 123</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

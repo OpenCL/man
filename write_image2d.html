@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>write_image</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="write_image2d" class="article">
+<div id="header">
+<h1>write_image</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Write <code>color</code> or depth value to location in a 2D image or depth image object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void write_imagef(aQual image2d_t image,
+                  int2 coord,
+                  float4 color)
+
+void write_imagef(aQual image2d_array_t image,
+                  int4 coord,
+                  float4 color)
+
+void write_imagei(aQual image2d_t image,
+                  int2 coord,
+                  int4 color)
+
+void write_imagei(aQual image2d_array_t image,
+                  int4 coord,
+                  int4 color)
+
+void write_imageui(aQual image2d_t image,
+                   int2 coord,
+                   uint4 color)
+
+void write_imageui(aQual image2d_array_t image,
+                   int4 coord,
+                   uint4 color)
+
+void write_imageh(image2d_t image,
+                  int2 coord,
+                  half4 color)
+
+void write_imageh(image2d_array_t image,
+                  int4 coord,
+                  half4 color)
+
+void write_imagef(aQual image2d_depth_t image,
+                  int2 coord,
+                  float depth)
+
+void write_imagef(aQual image2d_array_depth_t image,
+                  int4 coord,
+                  float depth)
+
+void write_imagef(image2d_t image,
+                  int2 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagef(image2d_depth_t image,
+                  int2 coord,
+                  int lod,
+                  float depth)
+
+void write_imagei(image2d_t image,
+                  int2 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image2d_t image,
+                   int2 coord,
+                   int lod,
+                   uint4 color)
+
+void write_imagef(image2d_array_t image,
+                  int4 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagef(image2d_array_depth_t image,
+                  int4 coord,
+                  int lod,
+                  float depth)
+
+void write_imagei(image2d_array_t image,
+                  int4 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image2d_array_t image,
+                   int4 coord,
+                   int lod,
+                   uint4 color)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>aQual</code> refers to one of the access qualifiers.
+For write functions this may be <code>write_only</code> or <code>read_write</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code>, <code>write_imagei</code>, <code>write_imageh</code>, and <code>write_imageui</code> forms that take image2d_t:</div>
+<p>Write <code>color</code> value to location specified by <code>coord.xy</code> in the 2D image object specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+<code>coord.x</code> and <code>coord.y</code> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width – 1, and 0 … image height – 1.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagef</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the pre-defined packed formats or set to <code>CL_SNORM_INT8</code>, <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_UNORM_INT16</code>, <code>CL_HALF_FLOAT</code> or <code>CL_FLOAT</code>.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagei</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the following values: <code>CL_SIGNED_INT8</code>, <code>CL_SIGNED_INT16</code>, and <code>CL_SIGNED_INT32</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imageui</code> functions can only be used with image objects created with <code>image_channel_data_type</code> set to one of the following values: <code>CL_UNSIGNED_INT8</code>, <code>CL_UNSIGNED_INT16</code>, or <code>CL_UNSIGNED_INT32</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imageh</code> functions can only be used with image objects created with <code>image_channel_data_type</code> set to one of the pre-defined packed formats or set to: <code>CL_SNORM_INT8</code>, <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_UNORM_INT16</code>, or <code>CL_HALF_FLOAT</code>.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of <code>write_imagef</code>, <code>write_imagei</code>, <code>write_imageui</code>, <code>write_imageh</code> and <code>write_imageh</code> for image objects created with <code>image_channel_data_type</code> values not specified in the description above or with <em>(x, y)</em> coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1), respectively, is undefined.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code>, <code>write_imagei</code>, and <code>write_imageui</code> forms that take image2d_t and which are enabled by the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension:</div>
+<p>Write color value to location specified by <code>coord.xy</code> in the mip-level specified by <code>lod</code> in the 2D image object specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+<code>coord.x</code> and <code>coord.y</code> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width of mip-level specified by <code>lod</code> – 1, and 0 &#8230;&#8203; image height of miplevel specified by <code>lod</code> – 1.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code>, <code>write_imagei</code>, <code>write_imageh</code>, and <code>write_imageui</code> forms that take image2d_array_t:</div>
+<p>Write <code>color</code> value to location specified by <code>coord.xy</code> in the 2D image identified by <code>coord.z</code> in the 2D image array specified specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+<code>coord.x</code>, <code>coord.y</code> and <code>coord.z</code> are considered to be unnormalized coordinates and must be in the range 0 … image width – 1, and 0… image height – 1, and 0 … image number of layers – 1.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagef</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the pre-defined packed formats or set to <code>CL_SNORM_INT8</code>, <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_UNORM_INT16</code>, <code>CL_HALF_FLOAT</code> or <code>CL_FLOAT</code>.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagei</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the following values: <code>CL_SIGNED_INT8</code>, <code>CL_SIGNED_INT16</code>, and <code>CL_SIGNED_INT32</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imageui</code> functions can only be used with image objects created with <code>image_channel_data_type</code> set to one of the following values: <code>CL_UNSIGNED_INT8</code>, <code>CL_UNSIGNED_INT16</code>, or <code>CL_UNSIGNED_INT32</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imageh</code> functions can only be used with image objects created with <code>image_channel_data_type</code> set to one of the pre-defined packed formats or set to: <code>CL_SNORM_INT8</code>, <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_UNORM_INT16</code>, or <code>CL_HALF_FLOAT</code>.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of <code>write_imagef</code>, <code>write_imagei</code>, <code>write_imageui</code>, and <code>write_imageh</code> for image objects created with <code>image_channel_data_type</code> values not specified in the description above or with <em>(x, y, z)</em> coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1, 0 … image number of layers - 1; ), respectively, is undefined.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code>, <code>write_imagei</code>, and <code>write_imageui</code> forms that take image2d_array_t and which are enabled by the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension:</div>
+<p>Write color value to location specified by <code>coord.xy</code> in the 2D image identified by <code>coord.z</code> and mip-level <code>lod</code> in the 2D image array specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+<code>coord.x</code>, <code>coord.y</code> and <code>coord.z</code> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width of the mip-level specified by <code>lod</code> – 1, 0 &#8230;&#8203; image height – 1 specified by <code>lod</code> – 1 and 0 &#8230;&#8203; image number of layers – 1</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code> forms that take image2d_depth_t:</div>
+<p>Write <code>depth</code> value to location specified by <code>coord.xy</code> in the 2D depth image object specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the depth value.
+<code>coord.x</code> and <code>coord.y</code> are considered to be unnormalized coordinates and must be in the range 0 … image width – 1, and 0… image height – 1.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagef</code> can only be used with image objects created with <code>image_channel_data_type</code> set to <code>CL_UNORM_INT16</code>, <code>CL_UNORM_INT24</code>, or <code>CL_FLOAT</code>.
+Appropriate data format conversion will be done to convert depth value from a floating-point value to actual data format in which the channels are stored.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of <code>write_imagef</code> for image objects created with <code>image_channel_data_type</code> values not specified in the description above or with <em>(x, y)</em> coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1), respectively, is undefined.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code> forms that take image2d_depth_t and which are enabled by the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension:</div>
+<p>Write color value to location specified by <code>coord.xy</code> in the mip-level specified by <code>lod</code> in the 2D image object specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+<code>coord.x</code> and <code>coord.y</code> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width of mip-level specified by <code>lod</code> – 1, and 0 &#8230;&#8203; image height of miplevel specified by <code>lod</code> – 1.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code> forms that take image2d_array_depth_t:</div>
+<p>Write <code>depth</code> value to location specified by <code>coord.xy</code> in the 2D image identified by <code>coord.z</code> in the 2D depth image array specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the depth value.
+<code>coord.x</code>, <code>coord.y</code> and <code>coord.z</code> are considered to be unnormalized coordinates and must be in the range 0 … image width – 1, 0… image height – 1 and 0… image number of layers – 1.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagef</code> can only be used with image objects created with <code>image_channel_data_type</code> set to <code>CL_UNORM_INT16</code>, <code>CL_UNORM_INT24</code>, or <code>CL_FLOAT</code>.
+Appropriate data format conversion will be done to convert depth value from a floating-point value to actual data format associated with the image..</p>
+</div>
+<div class="paragraph">
+<p>The behavior of <code>write_imagef</code> <code>write_imagei</code> and <code>write_imageui</code> for image objects created with <code>image_channel_data_type</code> values not specified in the description above or with <em>(x, y, z)</em> coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1, 0 … image number of layers - 1; ), respectively, is undefined.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>write_imagef</code> forms that take image2d_array_depth_t and which are enabled by the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension</div>
+<p>Write color value to location specified by <code>coord.xy</code> in the 2D image identified by <code>coord.z</code> and mip-level <code>lod</code> in the 2D image array specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+<code>coord.x</code>, <code>coord.y</code> and <code>coord.z</code> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width of the mip-level specified by <code>lod</code> – 1, 0 &#8230;&#8203; image height – 1 specified by <code>lod</code> – 1 and 0 &#8230;&#8203; image number of layers – 1.</p>
+</div>
+<div class="paragraph">
+<div class="title">For <code>HALF</code> forms:</div>
+<p>An application that wants to use <code>half</code> and <code>halfn</code> types will need to include the <code>#pragma OPENCL EXTENSION cl_khr_fp16 : enable</code> directive.</p>
+</div>
+<div class="paragraph">
+<div class="title">Mipmap read image functions:</div>
+<p>For the forms that take an <code>image2d_t</code> object, use the coordinate <code>coord.xy</code> to do an element lookup in the mip-level specified by <code>lod</code> in the 2D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the forms that use gradients, use the gradients to compute the lod and coordinate <em>coord.xy</em> to do an element lookup in the mip-level specified by the computed lod in the 2D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the forms that take an <code>image2d_array_t</code> object, use the coordinate <em>coord.xy</em> to do an element lookup in the 2D image identified by <em>coord.z</em> and mip-level specified by <code>lod</code> in the 2D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the forms that take an <code>image2d_array_t</code> object and that use gradients, use the gradients to compute the lod coordinate and <em>coord.xy</em> to do an element lookup in the 2D image identified by <em>coord.z</em> and mip-level specified by <code>lod</code> in the 2D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>When a multisample image is accessed in a kernel, the access takes one vector of integers describing which pixel to fetch and an integer corresponding to the sample numbers describing which sample within the pixel to fetch.
+sample identifies the sample position in the multi-sample image.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>CL_SAMPLER_NORMALIZED_COORDS</code> must be <code>CL_TRUE</code> for built-in functions described in the table above that read from a mip-mapped image; otherwise the behavior is undefined.
+The value specified in the <code>lod</code> argument is clamped to the minimum of (actual number of mip-levels - 1) in the image or value specified for <code>CL_SAMPLER_LOD_MAX</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The built-in functions defined in this section can only be used with image memory objects.
+An image memory object can be accessed by specific function calls that read from and/or write to specific locations in the image.</p>
+</div>
+<div class="paragraph">
+<p>Note that image writes to sRGB images are only supported if the <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension is supported; otherwise the behavior of writing to a sRGB image is undefined.</p>
+</div>
+<div class="paragraph">
+<p>Image memory objects that are being read by a kernel should be declared with the <a href="accessQualifiers.html"><code>read_only</code></a> qualifier.
+<code>write_image</code> calls to image memory objects declared with the <a href="accessQualifiers.html"><code>read_only</code></a> qualifier will generate a compilation error.
+Image memory objects that are being written to by a kernel should be declared with the <a href="accessQualifiers.html"><code>write_only</code></a> qualifier.
+<code>read_image</code> calls to image memory objects declared with the <a href="accessQualifiers.html"><code>write_only</code></a> qualifier will generate a compilation error.
+<code>read_image</code> and <code>write_image</code> calls to the same image memory object in a kernel are not supported.
+Image memory objects that are being read and written by a kernel should be declared with the <a href="accessQualifiers.html"><code>read_write</code></a> qualifier.</p>
+</div>
+<div class="paragraph">
+<p>The <code>read_image</code> calls returns a four component floating-point, integer or unsigned integer color value.
+The color values returned by <code>read_image</code> are identified as <code>x, y, z, w</code> where <code>x</code> refers to the red component, <code>y</code> refers to the green component, <code>z</code> refers to the blue component and <code>w</code> refers to the alpha component.</p>
+</div>
+<div class="paragraph">
+<p>The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to <code>CLK_FILTER_NEAREST</code>, normalized coordinates set to <code>CLK_NORMALIZED_COORDS_FALSE</code> and addressing mode to <code>CLK_ADDRESS_NONE</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">sRGB Images</div>
+<p>The built-in image read functions will perform sRGB to linear RGB conversions if the image is an sRGB image.
+Writing to sRGB images from a kernel is an optional extension.
+The <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension will be reported in the <code>CL_DEVICE_EXTENSIONS</code> string if a device supports writing to sRGB images using <a href="imageFunctions.html"><code>write_imagef</code></a>.
+<a href="clGetSupportedImageFormats.html"><code>clGetSupportedImageFormats</code></a> will return the supported sRGB images if <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> is specified in <code>flags</code> argument and the device supports writing to an sRGB image.
+If <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> is supported, the built-in image write functions will perform the linear to sRGB conversion.</p>
+</div>
+<div class="paragraph">
+<p>Only the R, G and B components are converted from linear to sRGB and vice-versa.
+The alpha component is returned as is.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="imageFunctions.html">Image Functions</a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a>, <a href="sampler_t.html"><code>sampler_t</code></a>, <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=127" target="_blank">OpenCL 2.0 C Language Specification, page 127</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

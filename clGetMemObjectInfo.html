@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetMemObjectInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetMemObjectInfo" class="article">
+<div id="header">
+<h1>clGetMemObjectInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Get information that is common to all memory objects (buffer and image objects).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetMemObjectInfo(cl_mem memobj,
+                          cl_mem_info param_name,
+                          size_t param_value_size,
+                          void *param_value,
+                          size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>memobj</code></dt>
+<dd>
+<p>Specifies the memory object being queried.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the information to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetMemObjectInfo</code> is described in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_mem_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Info.
+returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_mem_object_type</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns one of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_OBJECT_BUFFER</code> if <code>memobj</code> is created with <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> or <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>cl_image_desc.image_type argument value if <code>memobj</code> is created with <a href="clCreateImage.html"><code>clCreateImage</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_OBJECT_PIPE</code> if <code>memobj</code> is created with <a href="clCreatePipe.html"><code>clCreatePipe</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_FLAGS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_mem_flags</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the <code>flags</code> argument value specified when <code>memobj</code> is created with <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a>, <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>, <a href="clCreateImage.html"><code>clCreateImage</code></a>.
+or <a href="clCreatePipe.html"><code>clCreatePipe</code></a>.
+If <code>memobj</code> is a sub-buffer the memory access qualifiers inherited from parent buffer is also returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return actual size of the data store associated with <code>memobj</code> in bytes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>void *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If <code>memobj</code> is created with <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> or <a href="clCreateImage.html"><code>clCreateImage</code></a> and <code>CL_MEM_USE_HOST_PTR</code> is specified in <code>mem_flags</code>, return the <code>host_ptr</code> argument value specified when <code>memobj</code> is created.
+Otherwise a NULL value is returned.</p>
+</div>
+<div class="paragraph">
+<p>If <code>memobj</code> is created with <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>, return the <code>host_ptr</code> + <code>origin</code> value specified when <code>memobj</code> is created.
+<code>host_ptr</code> is the argument value specified to <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> and <code>CL_MEM_USE_HOST_PTR</code> is specified in <code>mem_flags</code> for memory object from which <code>memobj</code> is created.
+Otherwise a NULL value is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_MAP_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Map count.
+The map count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for debugging.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_REFERENCE_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return <code>memobj</code> reference count.
+The reference count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_CONTEXT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_context</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return context specified when memory object is created.
+If <code>memobj</code> is created using <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>, the context associated with the memory object specified as the <code>buffer</code> argument to <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a> is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_ASSOCIATED_- MEMOBJECT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_mem</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return memory object from which <code>memobj</code> is created.</p>
+</div>
+<div class="paragraph">
+<p>This returns the memory object specified as <code>buffer</code> argument to <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a> if <code>memobj</code> is a subbuffer object created using <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This returns the <code>memobj</code> specified in <code>cl_image_desc</code> if <code>memobj</code> is an image object.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise a NULL value is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OFFSET</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return offset if <code>memobj</code> is a sub-buffer object created using <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This returns 0 if <code>memobj</code> is not a subbuffer object.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_USES_SVM_POINTER</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return <code>CL_TRUE</code> if <code>memobj</code> is a buffer object that was created with <code>CL_MEM_USE_HOST_PTR</code> or is a subbuffer object of a buffer object that was created with <code>CL_MEM_USE_HOST_PTR</code> and the <code>host_ptr</code> specified when the buffer object was created is a SVM pointer; otherwise returns <code>CL_FALSE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_D3D10_RESOURCE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>ID3D10Resource *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a> extension is enabled, and if <code>memobj</code> was created using <a href="clCreateFromD3D10BufferKHR.html"><code>clCreateFromD3D10BufferKHR</code></a>, <a href="clCreateFromD3D10Texture2DKHR.html"><code>clCreateFromD3D10Texture2DKHR</code></a>, or <a href="clCreateFromD3D10Texture3DKHR.html"><code>clCreateFromD3D10Texture3DKHR</code></a>, returns the <code>resource</code> argument specified when <code>memobj</code> was created.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_DX9_MEDIA_- ADAPTER_TYPE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_dx9_media_- adapter_type_khr</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the <code>cl_dx9_media_adapter_type_khr</code> argument value specified when <code>memobj</code> is created using <a href="clCreateFromDX9MediaSurfaceKHR.html"><code>clCreateFromDX9MediaSurfaceKHR</code></a> (If the <a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_DX9_MEDIA_- SURFACE_INFO_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_dx9_- surface_info_khr</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the <code>cl_dx9_surface_info_khr</code> argument value specified when <code>memobj</code> is created using <a href="clCreateFromDX9MediaSurfaceKHR.html"><code>clCreateFromDX9MediaSurfaceKHR</code></a> (If the <a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_D3D11_RESOURCE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>ID3D11Resource *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_d3d11_sharing.html"><code>cl_khr_d3d11_sharing</code></a> extension is supported, if <code>memobj</code> was created using <a href="clCreateFromD3D11BufferKHR.html"><code>clCreateFromD3D11BufferKHR</code></a>, <a href="clCreateFromD3D11Texture2DKHR.html"><code>clCreateFromD3D11Texture2DKHR</code></a>, or <a href="clCreateFromD3D11Texture3DKHR.html"><code>clCreateFromD3D11Texture3DKHR</code></a>, returns the <code>resource</code> argument specified when <code>memobj</code> was created.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Used to specify the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table above.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data being queried by <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; the size of return type as described in the table above and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>memobj</code> is a not a valid memory object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+<li>
+<p><code>CL_INVALID_D3D10_RESOURCE_KHR</code> If the <a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a> extension is enabled and if <code>param_name</code> is <code>CL_MEM_D3D10_RESOURCE_KHR</code> and <code>memobj</code> was not created by the function <a href="clCreateFromD3D10BufferKHR.html"><code>clCreateFromD3D10BufferKHR</code></a>, <a href="clCreateFromD3D10Texture2DKHR.html"><code>clCreateFromD3D10Texture2DKHR</code></a>, or <a href="clCreateFromD3D10Texture3DKHR.html"><code>clCreateFromD3D10Texture3DKHR</code></a>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DX9_MEDIA_SURFACE_KHR</code> if <code>param_name</code> is <code>CL_MEM_DX9_MEDIA_SURFACE_INFO_KHR</code> and <code>memobj</code> was not created by the function <a href="clCreateFromDX9MediaSurfaceKHR.html"><code>clCreateFromDX9MediaSurfaceKHR</code></a> from a Direct3D9 surface. (If the <a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a> extension is supported)</p>
+</li>
+<li>
+<p><code>CL_INVALID_D3D11_RESOURCE_KHR</code> If the <a href="cl_khr_d3d11_sharing.html"><code>cl_khr_d3d11_sharing</code></a> extension is supported, if <code>param_name</code> is <code>CL_MEM_D3D11_RESOURCE_KHR</code> and <code>memobj</code> was not created by the function <a href="clCreateFromD3D11BufferKHR.html"><code>clCreateFromD3D11BufferKHR</code></a>, <a href="clCreateFromD3D11Texture2DKHR.html"><code>clCreateFromD3D11Texture2DKHR</code></a>, or <a href="clCreateFromD3D11Texture3DKHR.html"><code>clCreateFromD3D11Texture3DKHR</code></a>."</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetImageInfo.html"><code>clGetImageInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=170" target="_blank">OpenCL 2.1 API Specification, page 170</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

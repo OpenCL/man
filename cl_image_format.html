@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_image_format</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_image_format" class="article">
+<div id="header">
+<h1>cl_image_format</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The image format descriptor structure is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                        typedef struct _cl_image_format {
+          cl_channel_order image_channel_order;
+          cl_channel_type  image_channel_data_type;
+} cl_image_format;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Members</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">image_channel_order</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the number of channels and the channel layout i.e.
+the memory layout in which channels are stored in the image.
+Valid values are described in the table (Table 5.6) below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Format</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_R</code>, <code>CL_Rx</code>, or <code>CL_A</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_INTENSITY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This format can only be used if channel data type = <code>CL_UNORM_INT8</code>, <code>CL_UNORM_INT16</code>, <code>CL_SNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_HALF_FLOAT</code>, or <code>CL_FLOAT</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_LUMINANCE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This format can only be used if channel data type = <code>CL_UNORM_INT8</code>, <code>CL_UNORM_INT16</code>, <code>CL_SNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_HALF_FLOAT</code>, or <code>CL_FLOAT</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEPTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This format can only be used if channel data type = <code>CL_UNORM_INT16</code> or <code>CL_FLOAT</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RG</code>, <code>CL_RGx</code>, or <code>CL_RA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGB</code> or <code>CL_RGBx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>These formats can only be used if channel data type = <code>CL_UNORM_SHORT_565</code>, <code>CL_UNORM_SHORT_555</code> or <code>CL_UNORM_INT101010</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGB</code>, <code>CL_sRGBx</code>, <code>CL_sRGBA</code>, <code>CL_sBGRA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>These formats can only be used if channel data type = <code>CL_UNORM_INT8</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_ARGB</code>, <code>CL_BGRA</code>, <code>CL_ABGR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>These formats can only be used if channel data type = <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT8</code>, <code>CL_SIGNED_INT8</code> or <code>CL_UNSIGNED_INT8</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEPTH_STENCIL</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This format can only be used if channel data type = <code>CL_UNORM_INT24</code> or <code>CL_FLOAT</code> (applies if the <a href="cl_khr_gl_depth_images.html"><code>cl_khr_gl_depth_images</code></a> extension is enabled).</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">image_channel_data_type</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Describes the size of the channel data type.
+The number of bits per element determined by the <code>image_channel_data_type</code> and <code>image_channel_order</code> must be a power of two.
+The list of supported values is described in the table (Table 5.7) below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Image Channel Data Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_SNORM_INT8</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a normalized signed 8-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_SNORM_INT16</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a normalized signed 16-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNORM_INT8</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a normalized unsigned 8-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNORM_INT16</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a normalized unsigned 16-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNORM_SHORT_565</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Represents a normalized 5-6-5 3-channel RGB image.
+The channel order must be <code>CL_RGB</code> or <code>CL_RGBx</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNORM_SHORT_555</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Represents a normalized x-5-5-5 4-channel xRGB image.
+The channel order must be <code>CL_RGB</code> or <code>CL_RGBx</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNORM_INT_101010</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Represents a normalized x-10-10-10 4-channel xRGB image.
+The channel order must be <code>CL_RGB</code> or <code>CL_RGBx</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_SIGNED_INT8</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is an unnormalized signed 8-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_SIGNED_INT16</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is an unnormalized signed 16-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_SIGNED_INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is an unnormalized signed 32-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNSIGNED_INT8</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is an unnormalized unsigned 8-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNSIGNED_INT16</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is an unnormalized unsigned 16-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNSIGNED_INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is an unnormalized unsigned 32-bit integer value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_HALF_FLOAT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a 16-bit half-float value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_FLOAT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a single precision floating-point value.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_FLOAT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a single precision floating point value (applies if the <a href="cl_khr_gl_depth_images.html"><code>cl_khr_gl_depth_images</code></a> extension is enabled).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_UNORM_INT24</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Each channel component is a normalized unsigned 24-bit integer value (applies if the <a href="cl_khr_gl_depth_images.html"><code>cl_khr_gl_depth_images</code></a> extension is enabled).</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For example, to specify a normalized unsigned 8-bit / channel RGBA image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>          image_channel_order = CL_RGBA
+          image_channel_data_type = CL_UNORM_INT8</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>image_channel_data_type</code> values of <code>CL_UNORM_SHORT_565</code>, <code>CL_UNORM_SHORT_555</code>, <code>CL_UNORM_INT_101010</code>, and <code>CL_UNORM_INT_101010_2</code> are special cases of packed image formats where the channels of each element are packed into a single unsigned short or unsigned int.
+For these special packed image formats, the channels are normally packed with the first channel in the most significant bits of the bitfield, and successive channels occupying progressively less significant locations.
+For <code>CL_UNORM_SHORT_565</code>, R is in bits 15:11, G is in bits 10:5 and B is in bits 4:0.
+For <code>CL_UNORM_SHORT_555</code>, bit 15 is undefined, R is in bits 14:10, G in bits 9:5 and B in bits 4:0.
+For <code>CL_UNORM_INT_101010</code>, bits 31:30 are undefined, R is in bits 29:20, G in bits 19:10 and B in bits 9:0.
+For <code>CL_UNORM_INT_101010_2</code>, R is in bits 31:22, G in bits 21:12, B in bits 11:2 and A in bits 1:0.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL implementations must maintain the minimum precision specified by the number of bits in <code>image_channel_data_type</code>.
+If the image format specified by <code>image_channel_order</code>, and <code>image_channel_data_type</code> cannot be supported by the OpenCL implementation, then the call to <a href="clCreateImage.html"><code>clCreateImage</code></a> will return a NULL memory object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_image_desc.html">cl_image_desc Image Descriptor</a>, <a href="EXTENSION.html">EXTENSION</a>, <a href="clGetSupportedImageFormats.html"><code>clGetSupportedImageFormats</code></a>, <a href="clCreateImage.html"><code>clCreateImage</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=131" target="_blank">OpenCL 2.1 API Specification, page 131</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

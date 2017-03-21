@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetGLTextureInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetGLTextureInfo" class="article">
+<div id="header">
+<h1>clGetGLTextureInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns additional information about the GL texture object associated with a memory object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetGLTextureInfo(cl_mem memobj,
+                          cl_gl_texture_info param_name,
+                          size_t param_value_size,
+                          void *param_value,
+                          size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>Specifies what additional information about the GL texture object associated with <code>memobj</code> to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetGLTextureInfo</code> is described in the table below (Table 9.5).</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</div>
+<div class="paragraph">
+<p>Table 9.5:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_gl_texture_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Information returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_GL_TEXTURE_TARGET</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>GLenum</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The <code>texture_target</code> argument specified in <a href="clCreateFromGLTexture.html"><code>clCreateFromGLTexture</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_GL_MIPMAP_LEVEL</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>GLint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The <code>miplevel</code> argument specified in <a href="clCreateFromGLTexture.html"><code>clCreateFromGLTexture</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_GL_NUM_SAMPLES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>GLsizei</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is supported, the <code>samples</code> argument passed to <code>glTexImage2DMultisample</code> or <code>glTexImage3DMultisample</code>.
+If <code>image</code> is not a MSAA texture, 1 is returned.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>memobj</code> is not a valid OpenCL memory object</p>
+</li>
+<li>
+<p><code>CL_INVALID_GL_OBJECT</code> if there is no GL texture object associated with <code>memobj</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the table above and <code>param_value</code> is not NULL, or if <code>param_value</code> and <code>param_value_size_ret</code> are NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a>, <a href="clGetGLObjectInfo.html"><code>clGetGLObjectInfo</code></a>, <a href="clCreateFromGLTexture.html"><code>clCreateFromGLTexture</code></a>, <a href="clCreateFromGLTexture.html"><code>clCreateFromGLTexture</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=54" target="_blank">OpenCL 2.1 Extensions Specification, page 54</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

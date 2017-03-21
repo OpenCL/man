@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">Mapping image channels to color values</div>
+<p>The following table describes the mapping of the number of channels of an image element to the appropriate components in the <code>float4</code>, <code>int4</code> or <code>uint4</code> vector data type for the color values returned by <code>read_image{f|i|ui}</code> or supplied to <code>write_image{f|i|ui}</code>.
+The unmapped components will be set to <code>0.0</code> for red, green and blue channels and will be set to <code>1.0</code> for the alpha channel.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Channel Order</th>
+<th class="tableblock halign-left valign-top"><code>float4</code>, <code>int4</code> or <code>uint4</code> components of channel data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_R</code>, <code>CL_Rx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, 0.0, 0.0, 1.0)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_A</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(0.0, 0.0, 0.0, a)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RG</code>, <code>CL_RGx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, g, 0.0, 1.0)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, 0.0, 0.0, a)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGB</code>, <code>CL_RGBx</code>, <code>CL_sRGB</code>, <code>CL_sRGBx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, g, b, 1.0)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBA, CL_BGRA, CL_ARGB, CL_ABGR, CL_sRGBA, CL_sBGRA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, g, b, a)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_INTENSITY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(I, I, I, I)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_LUMINANCE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(L, L, L, 1.0)</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For <code>CL_DEPTH</code> images, a scalar value is returned by <code>read_imagef</code> or supplied to <code>write_imagef</code>.</p>
+</div>
+<div class="paragraph">
+<p>A kernel that uses a sampler with the <code>CL_ADDRESS_CLAMP</code> addressing mode with multiple images may result in additional samplers being used internally by an implementation.
+If the same sampler is used with multiple images called via <code>read_image{f|i|ui}</code>, then it is possible that an implementation may need to allocate an additional sampler to handle the different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values supported by the device and given by <code>CL_DEVICE_MAX_SAMPLERS</code>.
+Enqueuing a kernel that requires more samplers than the implementation can support will result in a <code>CL_OUT_OF_RESOURCES</code> error being returned.</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>write_image</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="write_image3d" class="article">
+<div id="header">
+<h1>write_image</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Write <code>color</code> value to location in a 3D image object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void write_imagef(aQual image3d_t image,
+                  int4 coord,
+                  float4 color)
+
+void write_imagei(aQual image3d_t image,
+                  int4 coord,
+                  int4 color)
+
+void write_imageui(aQual image3d_t image,
+                   int4 coord,
+                   uint4 color)
+
+void write_imageh(image3d_t image,
+                  int4 coord,
+                  half4 color)
+
+void write_imagef(image3d_t image,
+                  int4 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagei(image3d_t image,
+                  int4 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image3d_t image,
+                   int4 coord,
+                   int lod,
+                   uint4 color)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>aQual</code> refers to one of the access qualifiers.
+For write functions this may be <code>write_only</code> or <code>read_write</code>.</p>
+</div>
+<div class="paragraph">
+<p>Writes to a 3D image memory object are only supported when the <a href="cl_khr_3d_image_writes.html"><code>cl_khr_3d_image_writes</code></a> extension is implemented.
+Reads and writes to the same 3D image memory object are not allowed in a kernel.</p>
+</div>
+<div class="paragraph">
+<p>An application that wants to use this extension to write to 3D image memory objects will need to include the <code>#pragma OPENCL EXTENSION cl_khr_3d_image_writes : enable</code> directive in the OpenCL program source.</p>
+</div>
+<div class="paragraph">
+<p>These functions write <code>color</code> value to location specified by <code>coord.xyz</code> in the 3D image object specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value. <em>coord.x</em>, <em>coord.y</em> and <em>coord.z</em> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width - 1, 0 &#8230;&#8203; image height - 1 and 0 &#8230;&#8203; image depth - 1.</p>
+</div>
+<div class="paragraph">
+<p>For the forms enabled by the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension, write <code>color</code> value to location specified by <code>coord.xyz</code> in the 3D image object specified by <code>image</code>.
+Appropriate data format conversion to the specified image format is done before writing the color value. <em>coord.x</em>, <em>coord.y</em> and <em>coord.z</em> are considered to be unnormalized coordinates and must be in the range 0 &#8230;&#8203; image width - 1, 0 &#8230;&#8203; image height - 1 and 0 &#8230;&#8203; image depth - 1.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagef</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the pre-defined packed formats or set to <code>CL_SNORM_INT8</code>, <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_UNORM_INT16</code>, <code>CL_HALF_FLOAT</code> or <code>CL_FLOAT</code>.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imagei</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the following values: <code>CL_SIGNED_INT8</code>, <code>CL_SIGNED_INT16</code>, or <code>CL_SIGNED_INT32</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imageui</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the following values: <code>CL_UNSIGNED_INT8</code>, <code>CL_UNSIGNED_INT16</code>, or <code>CL_UNSIGNED_INT32</code>.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of <code>write_imagef</code>, <code>write_imagei</code> and <code>write_imageui</code> for image objects with <code>image_channel_data_type</code> values not specified in the description above or with <em>(x, y, z)</em> coordinate values that are not in the range (0 &#8230;&#8203; image width - 1, 0 &#8230;&#8203; image height - 1, 0 &#8230;&#8203; image depth - 1), respectively, is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>write_imageh</code> can only be used with image objects created with <code>image_channel_data_type</code> set to one of the pre-defined packed formats or set to <code>CL_SNORM_INT8</code>, <code>CL_UNORM_INT8</code>, <code>CL_SNORM_INT16</code>, <code>CL_UNORM_INT16</code> or <code>CL_HALF_FLOAT</code>.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of <code>write_imageh</code> for image objects created with <code>image_channel_data_type</code> values not specified in the description above or with <em>(x, y, z)</em> coordinate values that are not in the range (0 &#8230;&#8203; image width - 1, 0 &#8230;&#8203; image height - 1, 0 &#8230;&#8203; image depth - 1), respectively, is undefined.</p>
+</div>
+<div class="paragraph">
+<p>An application that wants to use <code>half</code> and <code>halfn</code> types will need to include the <code>#pragma OPENCL EXTENSION cl_khr_fp16 : enable</code> directive.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="imageFunctions.html">Image Functions</a>, <a href="cl_khr_3d_image_writes.html"><code>cl_khr_3d_image_writes</code></a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image_writes</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=127" target="_blank">OpenCL 2.0 C Language Specification, page 127</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

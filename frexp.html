@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>frexp</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="frexp" class="article">
+<div id="header">
+<h1>frexp</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Extract mantissa and exponent.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">float n frexp(float n x,
+              int n *exp)
+
+float frexp(float x,
+            int *exp)
+
+double n frexp(double n x,
+               int n *exp)
+
+double frexp(double x,
+             int *exp)
+
+half n frexp(half n x,
+             __global int n *exp)
+
+half n frexp(half n x,
+             __local int n *exp)
+
+half n frexp(half n x,
+             __private int n *exp)
+
+half n frexp(half n x,
+             int n *exp)
+
+half frexp(half x,
+           __global int *exp)
+
+half frexp(half x,
+           __local int *exp)
+
+half frexp(half x,
+           __private int *exp)
+
+half frexp(half x,
+           int *exp)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Extract mantissa and exponent from <code>x</code>.
+For each component the mantissa returned is a float with magnitude in the interval [1/2, 1) or 0.
+Each component of <code>x</code> equals mantissa returned * 2<sup>exp</sup>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The built-in math functions are not affected by the prevailing rounding mode in the calling environment, and always return the same value as they would if called with the round to nearest even rounding mode.</p>
+</div>
+<div class="paragraph">
+<p>An application that wants to use <code>half</code> and <code>halfn</code> types will need to include the <code>#pragma OPENCL EXTENSION cl_khr_fp16 : enable</code> directive.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="mathFunctions.html">Math Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=72" target="_blank">OpenCL 2.0 C Language Specification, page 72</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

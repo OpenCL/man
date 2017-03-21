@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateProgramWithSource</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateProgramWithSource" class="article">
+<div id="header">
+<h1>clCreateProgramWithSource</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a program object for a context, and loads the source code specified by the text strings in the <code>strings</code> array into the program object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_program clCreateProgramWithSource(cl_context context,
+                                     cl_uint count,
+                                     const char **strings,
+                                     const size_t *lengths,
+                                     cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>Must be a valid OpenCL context.</p>
+</dd>
+<dt class="hdlist1"><code>strings</code></dt>
+<dd>
+<p>An array of <code>count</code> pointers to optionally null-terminated character strings that make up the source code.</p>
+</dd>
+<dt class="hdlist1"><code>lengths</code></dt>
+<dd>
+<p>An array with the number of chars in each string (the string length).
+If an element in <code>lengths</code> is zero, its accompanying string is null-terminated.
+If <code>lengths</code> is NULL, all strings in the <code>strings</code> argument are considered null-terminated.
+Any length value passed in that is greater than zero excludes the null terminator in its count.</p>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>Returns an appropriate error code.
+If <code>errcode_ret</code> is NULL, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This function creates a program object for a context, and loads the source code specified by the text strings in the <code>strings</code> array into the program object.
+The devices associated with the program object are the devices associated with <code>context</code>.
+The source code specified by <code>strings</code> is either an OpenCL C program source, header or implementation-defined source for custom devices that support an online compiler.
+OpenCL C++ is not supported as an online-compiled kernel language through this interface.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clCreateProgramWithSource</code> returns a valid non-zero program object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the program object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>count</code> is zero or if <code>strings</code> or any entry in <code>strings</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>, <a href="clReleaseProgram.html"><code>clReleaseProgram</code></a>, <a href="clRetainProgram.html"><code>clRetainProgram</code></a>, <a href="classDiagram.html">Cardinality Diagram</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=194" target="_blank">OpenCL 2.1 API Specification, page 194</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

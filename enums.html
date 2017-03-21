@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Enumerated Types</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="Enumerators" class="article">
+<div id="header">
+<h1>Enumerated Types</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Following are the enumerated types and their permitted values.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Enumerated Type</th>
+<th class="tableblock halign-left valign-top">Permitted Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_addressing_mode"></a> <code>cl_addressing_mode</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_ADDRESS_NONE
+CL_ADDRESS_CLAMP_TO_EDGE
+CL_ADDRESS_CLAMP
+CL_ADDRESS_REPEAT
+CL_ADDRESS_MIRRORED_REPEAT</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_bool"></a> <code>cl_bool</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_FALSE
+CL_TRUE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note: Unlike <code>cl_</code> types in <code>cl_platform.h</code>, <code>cl_bool</code> is not guaranteed to be the same size as the <code>bool</code> in kernels.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_buffer_create_type"></a> <code>cl_buffer_create_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_BUFFER_CREATE_TYPE_REGION</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_build_status"></a> <code>cl_build_status</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_BUILD_SUCCESS
+CL_BUILD_NONE
+CL_BUILD_ERROR
+CL_BUILD_IN_PROGRESS</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_channel_order"></a> <code>cl_channel_order</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_A
+CL_R
+CL_RG
+CL_RA
+CL_RGB
+CL_RGBA
+CL_BGRA
+CL_ARGB
+CL_ABGR
+CL_INTENSITY
+CL_LUMINANCE
+CL_DEPTH
+CL_Rx
+CL_RGx
+CL_RGBx
+CL_sRGB
+CL_sRGBx
+CL_sRGBA
+CL_sBGRA
+CL_DEPTH_STENCIL (applies if the
+cl_khr_gl_depth_images
+extension is enabled)</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_channel_type"></a> <code>cl_channel_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_SNORM_INT8
+CL_SNORM_INT16
+CL_UNORM_INT8
+CL_UNORM_INT16
+CL_UNORM_SHORT_565
+CL_UNORM_SHORT_555
+CL_UNORM_INT_101010
+CL_UNORM_INT_101010_2
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_HALF_FLOAT
+CL_FLOAT
+CL_FLOAT (applies if the
+cl_khr_gl_depth_images
+extension is enabled)
+CL_UNORM_INT24 (applies if the
+cl_khr_gl_depth_images
+extension is enabled)</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_command_queue_info"></a> <code>cl_command_queue_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_QUEUE_CONTEXT
+CL_QUEUE_DEVICE
+CL_QUEUE_REFERENCE_COUNT
+CL_QUEUE_PROPERTIES
+CL_QUEUE_SIZE
+CL_QUEUE_DEVICE_DEFAULT</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_command_queue_properties"></a> <code>cl_command_queue_properties</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE
+CL_QUEUE_PROFILING_ENABLE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_command_type"></a> <code>cl_command_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_COMMAND_NDRANGE_KERNEL
+CL_COMMAND_NATIVE_KERNEL
+CL_COMMAND_READ_BUFFER
+CL_COMMAND_WRITE_BUFFER
+CL_COMMAND_COPY_BUFFER
+CL_COMMAND_READ_IMAGE
+CL_COMMAND_WRITE_IMAGE
+CL_COMMAND_COPY_IMAGE
+CL_COMMAND_COPY_IMAGE_TO_BUFFER
+CL_COMMAND_COPY_BUFFER_TO_IMAGE
+CL_COMMAND_MAP_BUFFER
+CL_COMMAND_MAP_IMAGE
+CL_COMMAND_UNMAP_MEM_OBJECT
+CL_COMMAND_MARKER
+CL_COMMAND_ACQUIRE_GL_OBJECTS
+CL_COMMAND_RELEASE_GL_OBJECTS
+CL_COMMAND_READ_BUFFER_RECT
+CL_COMMAND_WRITE_BUFFER_RECT
+CL_COMMAND_COPY_BUFFER_RECT
+CL_COMMAND_USER
+CL_COMMAND_BARRIER
+CL_COMMAND_MIGRATE_MEM_OBJECTS
+CL_COMMAND_FILL_BUFFER
+CL_COMMAND_FILL_IMAGE
+CL_COMMAND_SVM_FREE
+CL_COMMAND_SVM_MEMCPY
+CL_COMMAND_SVM_MEMFILL
+CL_COMMAND_SVM_MAP
+CL_COMMAND_SVM_UNMAP
+CL_COMMAND_GL_FENCE_SYNC_OBJECT_KHR
+CL_COMMAND_EGL_FENCE_SYNC_OBJECT_KHR
+CL_COMMAND_ACQUIRE_D3D10_OBJECTS_KHR
+CL_COMMAND_RELEASE_D3D10_OBJECTS_KHR
+CL_COMMAND_ACQUIRE_D3D11_OBJECTS_KHR
+CL_COMMAND_RELEASE_D3D11_OBJECTS_KHR
+CL_COMMAND_ACQUIRE_DX9_MEDIA_SURFACES_KHR
+CL_COMMAND_RELEASE_DX9_MEDIA_SURFACES_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_context_info"></a> <code>cl_context_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_CONTEXT_REFERENCE_COUNT
+CL_CONTEXT_NUM_DEVICES
+CL_CONTEXT_DEVICES
+CL_CONTEXT_PROPERTIES
+CL_CONTEXT_NUM_DEVICES
+CL_CONTEXT_D3D10_PREFER_SHARED_RESOURCES_KHR
+CL_CONTEXT_D3D11_PREFER_SHARED_RESOURCES_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_context_properties"></a> <code>cl_context_properties</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_CONTEXT_PLATFORM
+CL_CONTEXT_INTEROP_USER_SYNC
+CL_GL_CONTEXT_KHR
+CL_EGL_DISPLAY_KHR
+CL_GLX_DISPLAY_KHR
+CL_WGL_HDC_KHR
+CL_CGL_SHAREGROUP_KHR
+CL_CONTEXT_D3D10_DEVICE_KHR
+CL_CONTEXT_D3D11_DEVICE_KHR
+CL_CONTEXT_ADAPTER_D3D9_KHR
+CL_CONTEXT_ADAPTER_D3D9EX_KHR
+CL_CONTEXT_ADAPTER_DXVA_KHR
+CL_CONTEXT_MEMORY_INITIALIZE_KHR
+CL_CONTEXT_TERMINATE_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_d3d10_device_set_khr"></a> <code>cl_d3d10_device_set_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PREFERRED_DEVICES_FOR_D3D10_KHR
+CL_ALL_DEVICES_FOR_D3D10_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_d3d10_device_source_khr"></a> <code>cl_d3d10_device_source_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_D3D10_DEVICE_KHR
+CL_D3D10_DXGI_ADAPTER_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_d3d11_device_set_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PREFERRED_DEVICES_FOR_D3D11_KHR
+CL_ALL_DEVICES_FOR_D3D11_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_d3d11_device_source_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_D3D11_DEVICE_KHR
+CL_D3D11_DXGI_ADAPTER_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_affinity_domain"></a> <code>cl_device_affinity_domain</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEVICE_AFFINITY_DOMAIN_NUMA
+CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_exec_capabilities"></a> <code>cl_device_exec_capabilities</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_EXEC_KERNEL
+CL_EXEC_NATIVE_KERNEL</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_fp_config"></a> <code>cl_device_fp_config</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_FP_DENORM
+CL_FP_INF_NAN
+CL_FP_ROUND_TO_NEAREST
+CL_FP_ROUND_TO_ZERO
+CL_FP_ROUND_TO_INF
+CL_FP_FMA
+CL_FP_SOFT_FLOAT
+CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_info"></a> <code>cl_device_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEVICE_TYPE
+CL_DEVICE_VENDOR_ID
+CL_DEVICE_MAX_COMPUTE_UNITS
+CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS
+CL_DEVICE_MAX_WORK_GROUP_SIZE
+CL_DEVICE_MAX_WORK_ITEM_SIZES
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_CHAR
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_SHORT
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_INT
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_LONG
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_FLOAT
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF
+CL_DEVICE_MAX_CLOCK_FREQUENCY
+CL_DEVICE_ADDRESS_BITS
+CL_DEVICE_MAX_READ_IMAGE_ARGS
+CL_DEVICE_MAX_WRITE_IMAGE_ARGS
+CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS
+CL_DEVICE_MAX_MEM_ALLOC_SIZE
+CL_DEVICE_IMAGE2D_MAX_WIDTH
+CL_DEVICE_IMAGE2D_MAX_HEIGHT
+CL_DEVICE_IMAGE3D_MAX_WIDTH
+CL_DEVICE_IMAGE3D_MAX_HEIGHT
+CL_DEVICE_IMAGE3D_MAX_DEPTH
+CL_DEVICE_IMAGE_SUPPORT
+CL_DEVICE_MAX_PARAMETER_SIZE
+CL_DEVICE_MAX_SAMPLERS
+CL_DEVICE_IMAGE_PITCH_ALIGNMENT
+CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT
+CL_DEVICE_MAX_PIPE_ARGS
+CL_DEVICE_PIPE_MAX_ACTIVE_RESERVATIONS
+CL_DEVICE_PIPE_MAX_PACKET_SIZE
+CL_DEVICE_MEM_BASE_ADDR_ALIGN
+CL_DEVICE_MIN_DATA_TYPE_ALIGN_SIZE
+CL_DEVICE_SINGLE_FP_CONFIG
+CL_DEVICE_GLOBAL_MEM_CACHE_TYPE
+CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE
+CL_DEVICE_GLOBAL_MEM_CACHE_SIZE
+CL_DEVICE_GLOBAL_MEM_SIZE
+CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE
+CL_DEVICE_MAX_CONSTANT_ARGS
+CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE
+CL_DEVICE_GLOBAL_VARIABLE_PREFERRED_TOTAL_SIZE
+CL_DEVICE_LOCAL_MEM_TYPE
+CL_DEVICE_LOCAL_MEM_SIZE
+CL_DEVICE_ERROR_CORRECTION_SUPPORT
+CL_DEVICE_PROFILING_TIMER_RESOLUTION
+CL_DEVICE_ENDIAN_LITTLE
+CL_DEVICE_AVAILABLE
+CL_DEVICE_COMPILER_AVAILABLE
+CL_DEVICE_EXECUTION_CAPABILITIES
+CL_DEVICE_QUEUE_ON_HOST_PROPERTIES
+CL_DEVICE_QUEUE_ON_DEVICE_PROPERTIES
+CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE
+CL_DEVICE_QUEUE_ON_DEVICE_MAX_SIZE
+CL_DEVICE_MAX_ON_DEVICE_QUEUES
+CL_DEVICE_MAX_ON_DEVICE_EVENTS
+CL_DEVICE_NAME
+CL_DEVICE_VENDOR
+CL_DRIVER_VERSION
+CL_DEVICE_PROFILE
+CL_DEVICE_VERSION
+CL_DEVICE_EXTENSIONS
+CL_DEVICE_PLATFORM
+CL_DEVICE_DOUBLE_FP_CONFIG
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF
+CL_DEVICE_HOST_UNIFIED_MEMORY (deprecated)
+CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR
+CL_DEVICE_NATIVE_VECTOR_WIDTH_SHORT
+CL_DEVICE_NATIVE_VECTOR_WIDTH_INT
+CL_DEVICE_NATIVE_VECTOR_WIDTH_LONG
+CL_DEVICE_NATIVE_VECTOR_WIDTH_FLOAT
+CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE
+CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF
+CL_DEVICE_OPENCL_C_VERSION
+CL_DEVICE_LINKER_AVAILABLE
+CL_DEVICE_BUILT_IN_KERNELS
+CL_DEVICE_IMAGE_MAX_BUFFER_SIZE
+CL_DEVICE_IMAGE_MAX_ARRAY_SIZE
+CL_DEVICE_PARENT_DEVICE
+CL_DEVICE_PARTITION_MAX_SUB_DEVICES
+CL_DEVICE_PARTITION_PROPERTIES
+CL_DEVICE_PARTITION_AFFINITY_DOMAIN
+CL_DEVICE_PARTITION_TYPE
+CL_DEVICE_REFERENCE_COUNT
+CL_DEVICE_SVM_CAPABILITIES
+CL_DEVICE_PREFERRED_PLATFORM_ATOMIC_ALIGNMENT
+CL_DEVICE_PREFERRED_GLOBAL_ATOMIC_ALIGNMENT
+CL_DEVICE_PREFERRED_LOCAL_ATOMIC_ALIGNMENT
+CL_DEVICE_PREFERRED_INTEROP_USER_SYNC
+CL_DEVICE_PRINTF_BUFFER_SIZE
+CL_DEVICE_HALF_FP_CONFIG
+CL_DEVICE_TERMINATE_CAPABILITY_KHR
+CL_DEVICE_SPIR_VERSIONS</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_local_mem_type"></a> <code>cl_device_local_mem_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_GLOBAL
+CL_LOCAL
+
+CL_NONE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_mem_cache_type"></a> <code>cl_device_mem_cache_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_NONE
+CL_READ_ONLY_CACHE
+CL_READ_WRITE_CACHE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_partition_property"></a> <code>cl_device_partition_property</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEVICE_PARTITION_EQUALLY
+CL_DEVICE_PARTITION_BY_COUNTS
+CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN
+
+0</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_device_type"></a> <code>cl_device_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEVICE_TYPE_DEFAULT
+CL_DEVICE_TYPE_CPU
+CL_DEVICE_TYPE_GPU
+CL_DEVICE_TYPE_ACCELERATOR
+CL_DEVICE_TYPE_CUSTOM
+CL_DEVICE_TYPE_ALL</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_event_info"></a> <code>cl_event_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_EVENT_COMMAND_QUEUE
+CL_EVENT_COMMAND_TYPE
+CL_EVENT_REFERENCE_COUNT
+CL_EVENT_COMMAND_EXECUTION_STATUS
+CL_EVENT_CONTEXT</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_filter_mode"></a> <code>cl_filter_mode</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_FILTER_NEAREST
+CL_FILTER_LINEAR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_gl_context_info"></a> <code>cl_gl_context_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR
+CL_DEVICES_FOR_GL_CONTEXT_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_gl_object_type"></a> <code>cl_gl_object_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_GL_OBJECT_BUFFER
+CL_GL_OBJECT_TEXTURE2D
+CL_GL_OBJECT_TEXTURE3D
+CL_GL_OBJECT_RENDERBUFFER
+CL_GL_OBJECT_TEXTURE2D_ARRAY
+CL_GL_OBJECT_TEXTURE1D
+CL_GL_OBJECT_TEXTURE1D_ARRAY
+CL_GL_OBJECT_TEXTURE_BUFFER</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_gl_texture_info"></a> <code>cl_gl_texture_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_GL_TEXTURE_TARGET
+CL_GL_MIPMAP_LEVEL
+CL_GL_NUM_SAMPLES</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_image_info"></a> <code>cl_image_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_IMAGE_FORMAT
+CL_IMAGE_ELEMENT_SIZE
+CL_IMAGE_ROW_PITCH
+CL_IMAGE_SLICE_PITCH
+CL_IMAGE_WIDTH
+CL_IMAGE_HEIGHT
+CL_IMAGE_DEPTH
+CL_IMAGE_ARRAY_SIZE
+CL_IMAGE_BUFFER (deprecated)
+CL_IMAGE_NUM_MIP_LEVELS
+CL_IMAGE_NUM_SAMPLES
+CL_IMAGE_D3D10_SUBRESOURCE_KHR
+CL_IMAGE_D3D11_SUBRESOURCE_KHR
+CL_IMAGE_DX9_MEDIA_PLANE_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_arg_address_qualifier"></a> <code>cl_kernel_arg_address_qualifier</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_ARG_ADDRESS_GLOBAL
+CL_KERNEL_ARG_ADDRESS_LOCAL
+CL_KERNEL_ARG_ADDRESS_CONSTANT
+CL_KERNEL_ARG_ADDRESS_PRIVATE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_arg_access_qualifier"></a> <code>cl_kernel_arg_access_qualifier</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_ARG_ACCESS_READ_ONLY
+CL_KERNEL_ARG_ACCESS_WRITE_ONLY
+CL_KERNEL_ARG_ACCESS_READ_WRITE
+CL_KERNEL_ARG_ACCESS_NONE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_arg_info"></a> <code>cl_kernel_arg_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_ARG_ADDRESS_QUALIFIER
+CL_KERNEL_ARG_ACCESS_QUALIFIER
+CL_KERNEL_ARG_TYPE_NAME
+CL_KERNEL_ARG_TYPE_QUALIFIER
+CL_KERNEL_ARG_NAME</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_arg_type_qualifier"></a> <code>cl_kernel_arg_type_qualifier</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_ARG_TYPE_CONST
+CL_KERNEL_ARG_TYPE_RESTRICT
+CL_KERNEL_ARG_TYPE_VOLATILE
+CL_KERNEL_ARG_TYPE_PIPE
+CL_KERNEL_ARG_TYPE_NONE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_exec_info"></a> <code>cl_kernel_exec_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_EXEC_INFO_SVM_PTRS
+CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_info"></a> <code>cl_kernel_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_FUNCTION_NAME
+CL_KERNEL_NUM_ARGS
+CL_KERNEL_REFERENCE_COUNT
+CL_KERNEL_CONTEXT
+CL_KERNEL_PROGRAM
+CL_KERNEL_ATTRIBUTES</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_kernel_work_group_info"></a> <code>cl_kernel_work_group_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_KERNEL_WORK_GROUP_SIZE
+CL_KERNEL_COMPILE_WORK_GROUP_SIZE
+CL_KERNEL_LOCAL_MEM_SIZE
+CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE
+CL_KERNEL_PRIVATE_MEM_SIZE
+CL_KERNEL_GLOBAL_WORK_SIZE
+CL_KERNEL_MAX_NUM_SUB_GROUPS
+CL_KERNEL_COMPILE_NUM_SUB_GROUPS</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_map_flags"></a> <code>cl_map_flags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_MAP_READ
+CL_MAP_WRITE
+CL_MAP_WRITE_INVALIDATE_REGION</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_mem_fence_flags"></a> <code>cl_mem_fence_flags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CLK_GLOBAL_MEM_FENCE
+CLK_LOCAL_MEM_FENCE
+CLK_IMAGE_MEM_FENCE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_mem_flags"></a> <code>cl_mem_flags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_MEM_READ_WRITE
+CL_MEM_WRITE_ONLY
+CL_MEM_READ_ONLY
+CL_MEM_USE_HOST_PTR
+CL_MEM_ALLOC_HOST_PTR
+CL_MEM_COPY_HOST_PTR
+CL_MEM_HOST_WRITE_ONLY
+CL_MEM_HOST_READ_ONLY</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_mem_info"></a> <code>cl_mem_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_MEM_TYPE
+CL_MEM_FLAGS
+CL_MEM_SIZE
+CL_MEM_HOST_PTR
+CL_MEM_MAP_COUNT
+CL_MEM_REFERENCE_COUNT
+CL_MEM_CONTEXT
+CL_MEM_ASSOCIATED_MEMOBJECT
+CL_MEM_OFFSET
+CL_MEM_USES_SVM_POINTER
+CL_MEM_D3D10_RESOURCE_KHR
+CL_MEM_D3D11_RESOURCE_KHR
+CL_MEM_DX9_MEDIA_ADAPTER_TYPE_KHR
+CL_MEM_DX9_MEDIA_SURFACE_INFO_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_mem_migration_flags"></a> <code>cl_mem_migration_flags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_MIGRATE_MEM_OBJECT_HOST
+CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_mem_object_type"></a> <code>cl_mem_object_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_MEM_OBJECT_BUFFER
+
+CL_MEM_OBJECT_PIPE
+
+CL_MEM_OBJECT_IMAGE2D
+CL_MEM_OBJECT_IMAGE3D
+CL_MEM_OBJECT_IMAGE2D_ARRAY
+CL_MEM_OBJECT_IMAGE1D
+CL_MEM_OBJECT_IMAGE1D_ARRAY
+CL_MEM_OBJECT_IMAGE1D_BUFFER</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_pipe_info"></a> <code>cl_pipe_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PIPE_PACKET_SIZE
+CL_PIPE_MAX_PACKETS</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_platform_info"></a> <code>cl_platform_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PLATFORM_PROFILE
+CL_PLATFORM_VERSION
+CL_PLATFORM_NAME
+CL_PLATFORM_VENDOR
+CL_PLATFORM_EXTENSIONS
+CL_PLATFORM_HOST_TIMER_RESOLUTION
+CL_PLATFORM_ICD_SUFFIX_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_profiling_info"></a> <code>cl_profiling_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PROFILING_COMMAND_QUEUED
+CL_PROFILING_COMMAND_SUBMIT
+CL_PROFILING_COMMAND_START
+CL_PROFILING_COMMAND_END
+CL_PROFILING_COMMAND_COMPLETE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_program_binary_type"></a> <code>cl_program_binary_type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PROGRAM_BINARY_TYPE_NONE
+CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT
+CL_PROGRAM_BINARY_TYPE_LIBRARY
+CL_PROGRAM_BINARY_TYPE_EXECUTABLE
+CL_PROGRAM_BINARY_TYPE_INTERMEDIATE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_program_build_info"></a> <code>cl_program_build_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PROGRAM_BUILD_STATUS
+CL_PROGRAM_BUILD_OPTIONS
+CL_PROGRAM_BUILD_LOG
+CL_PROGRAM_BINARY_TYPE
+CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_program_info"></a> <code>cl_program_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_PROGRAM_REFERENCE_COUNT
+CL_PROGRAM_CONTEXT
+CL_PROGRAM_NUM_DEVICES
+CL_PROGRAM_DEVICES
+CL_PROGRAM_SOURCE
+CL_PROGRAM_IL
+CL_PROGRAM_BINARY_SIZES
+CL_PROGRAM_BINARIES
+CL_PROGRAM_NUM_KERNELS
+CL_PROGRAM_KERNEL_NAMES</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_sampler_info"></a> <code>cl_sampler_info</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_SAMPLER_REFERENCE_COUNT
+CL_SAMPLER_CONTEXT
+CL_SAMPLER_NORMALIZED_COORDS
+CL_SAMPLER_ADDRESSING_MODE
+CL_SAMPLER_FILTER_MODE</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_sampler_properties"></a> <code>cl_sampler_properties</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_SAMPLER_NORMALIZED_COORDS
+CL_SAMPLER_ADDRESSING_MODE
+CL_SAMPLER_FILTER_MODE
+CL_SAMPLER_MIP_FILTER_MODE_KHR
+CL_SAMPLER_LOD_MIN_KHR
+CL_SAMPLER_LOD_MAX_KHR</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="cl_svm_mem_flags"></a> <code>cl_svm_mem_flags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_MEM_READ_WRITE
+CL_MEM_WRITE_ONLY
+CL_MEM_READ_ONLY
+CL_MEM_SVM_FINE_GRAIN_BUFFER
+CL_MEM_SVM_ATOMICS</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="memory_order"></a> <code>memory_order</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>memory_order_relaxed
+memory_order_acquire
+memory_order_release
+memory_order_acq_rel
+memory_order_seq_cst</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a id="memory_scope"></a> <code>memory_scope</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>memory_scope_work_item
+memory_scope_work_group
+memory_scope_device
+memory_scope_all_svm_devices</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

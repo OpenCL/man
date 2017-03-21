@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueBarrierWithWaitList</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueBarrierWithWaitList" class="article">
+<div id="header">
+<h1>clEnqueueBarrierWithWaitList</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A synchronization point that enqueues a barrier operation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueBarrierWithWaitList(cl_command_queue command_queue,
+                                    cl_uint num_events_in_wait_list,
+                                    const cl_event *event_wait_list,
+                                    cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>A valid host command queue.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list</code>, <code>num_events_in_wait_list</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specify events that need to complete before this particular command can be executed.</p>
+</div>
+<div class="paragraph">
+<p>If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</div>
+<div class="paragraph">
+<p>If <code>event_wait_list</code> is NULL, then this particular command waits until all previous enqueued commands to command_queue have completed.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular command.
+Event objects are unique and can be used to identify this barrier command later on.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a barrier command which waits for either a list of events to complete, or if the list is empty it waits for all commands previously enqueued in <code>command_queue</code> to complete before it completes.
+This command blocks command execution, that is, any following commands enqueued after it do not execute until it completes.
+This command returns an <code>event</code> which can be waited on, i.e.
+this event can be waited on to insure that all events either in the <code>event_wait_list</code> or all previously enqueued commands, queued before this command to <code>command_queue</code>, have completed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function was successfully executed.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueFillBuffer.html"><code>clEnqueueFillBuffer</code></a>, <a href="clEnqueueCopyBuffer.html"><code>clEnqueueCopyBuffer</code></a>, <a href="clEnqueueCopyBufferRect.html"><code>clEnqueueCopyBufferRect</code></a>, <a href="clEnqueueFillImage.html"><code>clEnqueueFillImage</code></a>, <a href="clEnqueueCopyImage.html"><code>clEnqueueCopyImage</code></a>, <a href="clEnqueueCopyImageToBuffer.html"><code>clEnqueueCopyImageToBuffer</code></a>, <a href="clEnqueueCopyBufferToImage.html"><code>clEnqueueCopyBufferToImage</code></a>, <a href="clEnqueueUnmapMemObject.html"><code>clEnqueueUnmapMemObject</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=260" target="_blank">OpenCL 2.1 API Specification, page 260</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

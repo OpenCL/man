@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_throttle_hints</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_throttle_hints" class="article">
+<div id="header">
+<h1>cl_khr_throttle_hints</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Adds throttle hints for OpenCL, but does not specify the throttling behaviour or minimum guarantees.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION cl_khr_throttle_hints : enable</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This extension adds throttle hints for OpenCL, but does not specify the throttling behaviour or minimum guarantees.
+It is expected that the user guide associated with each implementation which supports this extension describe the throttling behaviour guaranteed.</p>
+</div>
+<div class="paragraph">
+<p>If this extension is supported by an implementation, the string cl_khr_throttle_hints will be present in the <code>CL_PLATFORM_EXTENSIONS</code> string described in table 4.1 (see <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>).</p>
+</div>
+<div class="paragraph">
+<p>Note that the throttle hint is orthogonal to functionality defined in <a href="cl_khr_priority_hints.html"><code>cl_khr_priority_hints</code></a>) extension.
+For example, a task may have high priority (<code>CL_QUEUE_PRIORITY_HIGH_KHR</code>) but should at the same time be executed at an optimized throttle setting (<code>CL_QUEUE_THROTTLE_LOW</code>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=179" target="_blank">OpenCL 2.1 Extensions Specification, page 179</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

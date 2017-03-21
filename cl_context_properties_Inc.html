@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<p>List of supported <code>properties</code> (Table 4.5)</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_context_properties enum</th>
+<th class="tableblock halign-left valign-top">Property value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_PLATFORM</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_platform_id</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies the platform to use.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_INTEROP_USER_SYNC</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies whether the user is responsible for synchronization between OpenCL and other APIs.
+Please refer to the specific sections in the OpenCL 2.0 extension specification that describe sharing with other APIs for restrictions on using this flag.
+If <code>CL_CONTEXT_INTEROP_USER_SYNC</code> is not specified, a default of <code>CL_FALSE</code> is assumed.
+OpenCL / OpenGL sharing does not support the <code>CL_CONTEXT_INTEROP_USER_SYNC</code> property defined in table 4.5.
+Specifying this property when creating a context with OpenCL / OpenGL sharing will return an appropriate error.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_D3D10_DEVICE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>ID3D10Device</code> *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies the <code>ID3D10Device</code> * to use for Direct3D 10 interoperability.
+The default value is NULL (applies if the extension <a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a> is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_ADAPTER_D3D9_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>IDirect3DDevice9</code> *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies an <code>IDirect3DDevice9</code> to use for D3D9 interop (applies if the <a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_ADAPTER_D3D9EX_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>IDirect3DDeviceEx</code> *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies an <code>IDirect3DDevice9Ex</code> to use for D3D9 interop (applies if the <a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_ADAPTER_DXVA_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>IDXVAHD_Device</code> *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies an <code>IDXVAHD_Device</code> to use for DXVA interop (applies if the <a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_GL_CONTEXT_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>0, OpenGL context handle</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenGL context to associated the OpenCL context with (available if the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension is enabled)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CGL_SHAREGROUP_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>0, CGL share group handle</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>CGL share group to associate the OpenCL context with (available if the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension is enabled)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_EGL_DISPLAY_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>EGL_NO_DISPLAY</code>, <code>EGLDisplay</code> handle</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>EGLDisplay an OpenGL context was created with respect to (available if the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension is enabled)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_GLX_DISPLAY_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>None, X handle</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>X Display an OpenGL context was created with respect to (available if the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension is enabled)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_WGL_HDC_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>0, HDC handle</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>HDC an OpenGL context was created with respect to (available if the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension is enabled)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_D3D11_DEVICE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>ID3D11Device</code> *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies the <code>ID3D11Device</code> * to use for Direct3D 11 interoperability.
+The default value is NULL. (Applies if the <a href="cl_khr_d3d11_sharing.html"><code>cl_khr_d3d11_sharing</code></a> extension is supported.)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_MEMORY_INITIALIZE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_context_memory- _initialize_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes which memory types for the context must be initialized.
+This is a bit-field, where the following values are currently supported:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_CONTEXT_MEMORY_INITIALIZE_LOCAL_KHR</code> - Initialize local memory to zeros.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_CONTEXT_MEMORY_INITIALIZE_PRIVATE_KHR</code> - Initialize private memory to zeros.</p>
+</div>
+<div class="paragraph">
+<p>(applies if the <a href="cl_khr_initialize_memory.html"><code>cl_khr_initialize_memory</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_TERMINATE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_bool</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies whether the context can be terminated.
+The default value is <code>CL_FALSE</code>. (applies if the <a href="cl_khr_terminate_context.html"><code>cl_khr_terminate_context</code></a> extension is supported)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

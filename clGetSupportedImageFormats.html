@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetSupportedImageFormats</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetSupportedImageFormats" class="article">
+<div id="header">
+<h1>clGetSupportedImageFormats</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Get the list of image formats supported by an OpenCL implementation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetSupportedImageFormats(cl_context context,
+                                  cl_mem_flags flags,
+                                  cl_mem_object_type image_type,
+                                  cl_uint num_entries,
+                                  cl_image_format *image_formats,
+                                  cl_uint *num_image_formats)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>A valid OpenCL context on which the image object(s) will be created.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify allocation and usage information about the image memory object being queried and is described in the table below.
+To get a list of supported image formats that can be read from or written to by a kernel, <code>flags</code> must be set to <code>CL_MEM_READ_WRITE</code> (get a list of images that can be read from and written to by different kernel instances when correctly ordered by event dependencies), <code>CL_MEM_READ_ONLY</code> (list of images that can be read from by a kernel) or <code>CL_MEM_WRITE_ONLY</code> (list of images that can be written to by a kernel).
+To get a list of supported image formats that can be both read from and written to by a kernel, <code>flags</code> must be set to <code>CL_MEM_KERNEL_READ_AND_WRITE</code>.
+Please see section 5.3.2.2 for clarification.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_mem_flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be read and written by a kernel.
+This is the default.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be written but not read by a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Reading from a buffer or image object created with <code>CL_MEM_WRITE_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> and <code>CL_MEM_WRITE_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object is a read-only memory object when used inside a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Writing to a buffer or image object created with <code>CL_MEM_READ_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> and <code>CL_MEM_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_USE_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to use memory referenced by <code>host_ptr</code> as the storage bits for the memory object.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL implementations are allowed to cache the buffer contents pointed to by <code>host_ptr</code> in device memory.
+This cached copy can be used when kernels are executed on a device.</p>
+</div>
+<div class="paragraph">
+<p>The result of OpenCL commands that operate on multiple buffer objects created with the same <code>host_ptr</code> or overlapping host regions is considered to be undefined.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the application wants the OpenCL implementation to allocate memory from host accessible memory.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to allocate memory for the memory object and copy the data from memory referenced by <code>host_ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> can be used with <code>CL_MEM_ALLOC_HOST_PTR</code> to initialize the contents of the <code>cl_mem</code> object allocated using host-accessible (e.g.
+PCIe) memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only write to the memory object (using OpenCL APIs that enqueue a write or a map for write).
+This can be used to optimize write access from the host (e.g.
+enable write-combined allocations for memory objects for devices that communicate with the host over a system bus such as PCIe).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only read the memory object (using OpenCL APIs that enqueue a read or a map for read).</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> and <code>CL_MEM_HOST_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_NO_ACCESS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will not read or write the memory object.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> or <code>CL_MEM_HOST_READ_ONLY</code> and <code>CL_MEM_HOST_NO_ACCESS</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>image_type</code></dt>
+<dd>
+<p>Describes the image type and must be either <code>CL_MEM_OBJECT_IMAGE1D</code>, <code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code>, <code>CL_MEM_OBJECT_IMAGE2D</code>, <code>CL_MEM_OBJECT_IMAGE3D</code>, <code>CL_MEM_OBJECT_IMAGE1D_ARRAY</code> or <code>CL_MEM_OBJECT_IMAGE2D_ARRAY</code>.</p>
+</dd>
+<dt class="hdlist1"><code>num_entries</code></dt>
+<dd>
+<p>Specifies the number of entries that can be returned in the memory location given by <code>image_formats</code>.</p>
+</dd>
+<dt class="hdlist1"><code>image_formats</code></dt>
+<dd>
+<p>A pointer to a memory location where the list of supported image formats are returned.
+Each entry describes a <a href="cl_image_format.html"><code>cl_image_format</code></a> structure supported by the OpenCL implementation.
+If <code>image_formats</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>num_image_formats</code></dt>
+<dd>
+<p>The actual number of supported image formats for a specific <code>context</code> and values specified by <code>flags</code>.
+If <code>num_image_formats</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clGetSupportedImageFormats</code> can be used to get the list of image formats supported by an OpenCL implementation when the following information about an image memory object is specified:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Context</p>
+</li>
+<li>
+<p>Image type - 1D, 2D, or 3D image, 1D image buffer, 1D or 2D image array.</p>
+</li>
+<li>
+<p>Image object allocation information</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>clGetSupportedImageFormats</code> returns a union of image formats supported by all devices in the context.</p>
+</div>
+<div class="paragraph">
+<p>If <code>CL_DEVICE_IMAGE_SUPPORT</code> specified in table 4.3 (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>) is <code>CL_TRUE</code>, the values assigned to <code>CL_DEVICE_MAX_READ_IMAGE_ARGS</code>, <code>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</code>, <code>CL_DEVICE_IMAGE2D_MAX_WIDTH</code>, <code>CL_DEVICE_IMAGE2D_MAX_HEIGHT</code>, <code>CL_DEVICE_IMAGE3D_MAX_WIDTH</code>, <code>CL_DEVICE_IMAGE3D_MAX_HEIGHT</code>, <code>CL_DEVICE_IMAGE3D_MAX_DEPTH</code> and <code>CL_DEVICE_MAX_SAMPLERS</code> by the implementation must be greater than or equal to the minimum values specified in table 4.3 (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>).</p>
+</div>
+<div class="paragraph">
+<div class="title">Minimum List of Supported Image Formats</div>
+<p>For 1D, 1D image from buffer, 2D, 3D image objects, 1D and 2D image array objects, the mandated minimum list of image formats that must be supported by all devices (that can be read from or written to by a kernel but not both) that support images is described in the table below (Table 5.8a):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">----
+num_channels
+----</th>
+<th class="tableblock halign-left valign-top">----
+channel_order
+----</th>
+<th class="tableblock halign-left valign-top">----
+channel_data_type
+----</th>
+<th class="tableblock halign-left valign-top">----
+read/write
+----</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>1</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_R</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SNORM_INT8
+CL_SNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>read+write</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>1</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEPTH</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT16
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>read+write</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>CL_DEPTH</code> channel order is supported only for 2D image and 2D image array objects.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>2</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_RG</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SNORM_INT8
+CL_SNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>read+write</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>4</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_RGBA</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SNORM_INT8
+CL_SNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>read+write</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>4</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_BGRA</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>read+write</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>4</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_sRGBA</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>read+write if the <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension is supported, else read only.
+sRGB channel order support is not required for 1D image buffers.
+Writes to images with sRGB channel orders requires device support of the <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>1</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEPTH_STENCIL</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT24
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>read only (applies if the
+cl_khr_gl_depth_images
+extension is enabled)</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For 1D, 1D image from buffer, 2D, 3D image objects, 1D and 2D image array objects, the mandated minimum list of image formats that must be supported by all devices (that can be read from and written to by a kernel) that support images is described in the table below (Table 5.8b):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">----
+num_channels
+----</th>
+<th class="tableblock halign-left valign-top">----
+channel_order
+----</th>
+<th class="tableblock halign-left valign-top">----
+channel_data_type
+----</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>1</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_R</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_HALF_FLOAT
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>4</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_RGBA</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_HALF_FLOAT
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>1</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_DEPTH_STENCIL (applies if the
+cl_khr_gl_depth_images
+extension is enabled)</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>CL_UNORM_INT24
+CL_FLOAT</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>.
+Image format mapping to OpenCL C image access qualifiers</p>
+</div>
+<div class="paragraph">
+<p>Image arguments to kernels may have the <code>read_only</code>, <code>write_only</code> or <code>read_write</code> qualifier.
+Not all image formats supported by the device and platform are valid to be passed to all of these access qualifiers.
+For each access qualifier, only images whose format is in the list of formats returned by clGetSupportedImageFormats with the given flag arguments in the table below are permitted.
+It is not valid to pass an image supporting writing as both a read_only image and a write_only image parameter, or to a read_write image parameter and any other image parameter.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">----
+Access Qualifier
+----</th>
+<th class="tableblock halign-left valign-top">----
+cl_mem_flags
+----</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>read_only</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_ONLY</code>, <code>CL_MEM_READ_WRITE</code>, <code>CL_MEM_KERNEL_READ_AND_WRITE</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>write_only</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_WRITE_ONLY</code>, <code>CL_MEM_READ_WRITE</code>, <code>CL_MEM_KERNEL_READ_AND_WRITE</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>read_write</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_KERNEL_READ_AND_WRITE</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<div class="title">Additional notes if the <a href="cl_khr_gl_depth_images.html"><code>cl_khr_gl_depth_images</code></a> extension is enabled:</div>
+<p>For the image format given by channel order of <code>CL_DEPTH_STENCIL</code> and channel data type of <code>CL_UNORM_INT24</code>, the depth is stored as an unsigned normalized 24-bit value.</p>
+</div>
+<div class="paragraph">
+<p>For the image format given by channel order of <code>CL DEPTH_STENCIL</code> and channel data type of <code>CL_FLOAT</code>, each pixel is two 32-bit values.
+The depth is stored as a single precision floating point value followed by the stencil which is stored as a 8-bit integer value.</p>
+</div>
+<div class="paragraph">
+<p>The stencil value cannot be read or written using the <code>read_imagef</code> and <code>write_imagef</code> built-in functions in an OpenCL kernel.</p>
+</div>
+<div class="paragraph">
+<p>Depth image objects with an image channel order = <code>CL_DEPTH_STENCIL</code> cannot be used as arguments to <a href="clEnqueueReadImage.html"><code>clEnqueueReadImage</code></a>, <a href="clEnqueueWriteImage.html"><code>clEnqueueWriteImage</code></a>, <a href="clEnqueueCopyImage.html"><code>clEnqueueCopyImage</code></a>, <a href="clEnqueueCopyImageToBuffer.html"><code>clEnqueueCopyImageToBuffer</code></a>, <a href="clEnqueueCopyBufferToImage.html"><code>clEnqueueCopyBufferToImage</code></a>, <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a> and <a href="clEnqueueFillImage.html"><code>clEnqueueFillImage</code></a> and will return a <code>CL_INVALID_OPERATION</code> error.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>flags</code> or <code>image_type</code> are not valid, or if <code>num_entries</code> is 0 and <code>image_formats</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_image_format.html"><code>cl_image_format</code></a>, <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=136" target="_blank">OpenCL 2.1 API Specification, page 136</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

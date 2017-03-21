@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clSetKernelArg</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clSetKernelArg" class="article">
+<div id="header">
+<h1>clSetKernelArg</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Set the argument value for a specific argument of a kernel.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clSetKernelArg(cl_kernel kernel,
+                      cl_uint arg_index,
+                      size_t arg_size,
+                      const void *arg_value)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>kernel</code></dt>
+<dd>
+<p>A valid kernel object.</p>
+</dd>
+<dt class="hdlist1"><code>arg_index</code></dt>
+<dd>
+<p>The argument index.
+Arguments to the kernel are referred by indices that go from 0 for the leftmost argument to <code>n</code> - 1, where <code>n</code> is the total number of arguments declared by a kernel.</p>
+</dd>
+<dt class="hdlist1"><code>arg_value</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A pointer to data that should be used as the argument value for argument specified by <code>arg_index</code>.
+The argument data pointed to by <code>arg_value</code> is copied and the <code>arg_value</code> pointer can therefore be reused by the application after <code>clSetKernelArg</code> returns.
+The argument value specified is the value used by all API calls that enqueue <code>kernel</code> (<a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>) until the argument value is changed by a call to <code>clSetKernelArg</code> for <code>kernel</code>.</p>
+</div>
+<div class="paragraph">
+<p>If the argument is a memory object (buffer, pipe, image or image array), the <code>arg_value</code> entry will be a pointer to the appropriate buffer, pipe, image or image array object.
+The memory object must be created with the context associated with the kernel object.
+If the argument is a buffer object, the <code>arg_value</code> pointer can be NULL or point to a NULL value in which case a NULL value will be used as the value for the argument declared as a pointer to <a href="global.html"><code>global</code></a> or <a href="constant.html"><code>constant</code></a> memory in the kernel.
+If the argument is declared with the <a href="local.html"><code>local</code></a> qualifier, the <code>arg_value</code> entry must be NULL.
+If the argument is of type <code>sampler_t</code>, the <code>arg_value</code> entry must be a pointer to the sampler object.
+If the argument is of type <code>queue_t</code>, the <code>arg_value</code> entry must be a pointer to the device queue object.</p>
+</div>
+<div class="paragraph">
+<p>If the argument is declared to be a pointer of a built-in scalar or vector type, or a user defined structure type in the global or constant address space, the memory object specified as argument value must be a buffer object (or NULL).
+If the argument is declared with the <a href="constant.html"><code>constant</code></a> qualifier, the size in bytes of the memory object cannot exceed <code>CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE</code> and the number of arguments declared as pointers to <a href="constant.html"><code>constant</code></a> memory cannot exceed <code>CL_DEVICE_MAX_CONSTANT_ARGS</code>.</p>
+</div>
+<div class="paragraph">
+<p>The memory object specified as argument value must be a pipe object if the argument is declared with the <code>pipe</code> qualifier.</p>
+</div>
+<div class="paragraph">
+<p>The memory object specified as argument value must be a 2D image object if the argument is declared to be of type <a href="abstractDataTypes.html"><code>image2d_t</code></a>.
+The memory object specified as argument value must be a 2D image object with image channel order = <code>CL_DEPTH</code> if the argument is declared to be of type <a href="abstractDataTypes.html"><code>image2d_depth_t</code></a>.
+The memory object specified as argument value must be a 3D image object if argument is declared to be of type <a href="abstractDataTypes.html"><code>image3d_t</code></a>.
+The memory object specified as argument value must be a 1D image object if the argument is declared to be of type <a href="abstractDataTypes.html"><code>image1d_t</code></a>.
+The memory object specified as argument value must be a 1D image buffer object if the argument is declared to be of type <a href="abstractDataTypes.html"><code>image1d_buffer_t</code></a>.
+The memory object specified as argument value must be a 1D image array object if argument is declared to be of type <a href="abstractDataTypes.html"><code>image1d_array_t</code></a>.
+The memory object specified as argument value must be a 2D image array object if argument is declared to be of type <a href="abstractDataTypes.html"><code>image2d_array_t</code></a>.
+The memory object specified as argument value must be a 2D image array object with image channel order = <code>CL_DEPTH</code> if argument is declared to be of type <a href="abstractDataTypes.html"><code>image2d_array_depth_t</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>For all other kernel arguments, the <code>arg_value</code> entry must be a pointer to the actual data to be used as argument value.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is supported, if the argument is a multi-sample 2D image, the <code>arg_value</code> entry must be a pointer to a multisample image object.
+If the argument is a multi-sample 2D depth image, the <code>arg_value</code> entry must be a pointer to a multisample depth image object.
+If the argument is a multi-sample 2D image array, the <code>arg_value</code> entry must be a pointer to a multi-sample image array object.
+If the argument is a multi-sample 2D depth image array, the <code>arg_value</code> entry must be a pointer to a multi-sample depth image array object.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>arg_size</code></dt>
+<dd>
+<p>Specifies the size of the argument value.
+If the argument is a memory object, the size is the size of the memory object.
+For arguments declared with the <a href="local.html"><code>local</code></a> qualifier, the size specified will be the size in bytes of the buffer that must be allocated for the <a href="local.html"><code>local</code></a> argument.
+If the argument is of type <code>sampler_t</code>, the <code>arg_size</code> value must be equal to <code>sizeof(cl_sampler)</code>.
+If the argument is of type <code>queue_t</code>, the <code>arg_size</code> value must be equal to <code>sizeof(cl_command_queue)</code>.
+For all other arguments, the size will be the size of argument type.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A kernel object does not update the reference count for objects such as memory, sampler objects specified as argument values by <code>clSetKernelArg</code>.
+Users may not rely on a kernel object to retain objects specified as argument values to the kernel.</p>
+</div>
+<div class="paragraph">
+<p>Implementations shall not allow <code>cl_kernel</code> objects to hold reference counts to <code>cl_kernel</code> arguments, because no mechanism is provided for the user to tell the kernel to release that ownership right.
+If the kernel holds ownership rights on kernel args, that would make it impossible for the user to tell with certainty when he may safely release user allocated resources associated with OpenCL objects such as the <code>cl_mem</code> backing store used with <code>CL_MEM_USE_HOST_PTR</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Multiple Host Threads</div>
+<p>An OpenCL API call is considered to be <em>thread-safe</em> if the internal state as managed by OpenCL remains consistent when called simultaneously by multiple <em>host</em> threads.
+OpenCL API calls that are <em>thread-safe</em> allow an application to call these functions in multiple <em>host</em> threads without having to implement mutual exclusion across these <em>host</em> threads i.e.
+they are also re-entrant-safe.</p>
+</div>
+<div class="paragraph">
+<p>All OpenCL API calls are thread-safe except those that modify the state of cl_kernel objects: <a href="#"><code>clSetKernelArg</code></a>, <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a>, <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> and <a href="clCloneKernel.html"><code>clCloneKernel</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="#"><code>clSetKernelArg</code></a> , <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a>, <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> and <a href="clCloneKernel.html"><code>clCloneKernel</code></a> are safe to call from any host thread, and safe to call re-entrantly so long as concurrent calls to any combination of these API calls operate on different cl_kernel objects.
+The state of the cl_kernel object is undefined if <a href="#"><code>clSetKernelArg</code></a>, <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a>, <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> or <a href="clCloneKernel.html"><code>clCloneKernel</code></a> are called from multiple host threads on the same cl_kernel object at the same time.
+Please note that there are additional limitations as to which OpenCL APIs may be called from OpenCL callback functions&#8201;&#8212;&#8201;please see section 5.11.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of OpenCL APIs called from an interrupt or signal handler is implementation-defined.</p>
+</div>
+<div class="paragraph">
+<p>There is an inherent race condition in the design of OpenCL that occurs between setting a kernel argument and using the kernel with <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.
+Another host thread might change the kernel arguments between when a host thread sets the kernel arguments and then enqueues the kernel, causing the wrong kernel arguments to be enqueued.
+Rather than attempt to share <code>cl_kernel</code> objects among multiple host threads, applications are strongly encouraged to make additional <code>cl_kernel</code> objects for kernel functions for each host thread.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clSetKernelArg</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_KERNEL</code> if <code>kernel</code> is not a valid kernel object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_ARG_INDEX</code> if <code>arg_index</code> is not a valid argument index.</p>
+</li>
+<li>
+<p><code>CL_INVALID_ARG_VALUE</code> if <code>arg_value</code> specified is not a valid value.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> for an argument declared to be a memory object when the specified <code>arg_value</code> is not a valid memory object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> for an argument declared to be a multi-sample image, multisample image array, multi-sample depth image or a multi-sample depth image array and the argument value specified in <code>arg_value</code> does not follow the rules described above for a depth memory object or memory array object argument. (Applies if the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is supported.)</p>
+</li>
+<li>
+<p><code>CL_INVALID_SAMPLER</code> for an argument declared to be of type <code>sampler_t</code> when the specified <code>arg_value</code> is not a valid sampler object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DEVICE_QUEUE</code> for an argument declared to be of type <code>queue_t</code> when the specified <code>arg_value</code> is not a valid device queue object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_ARG_SIZE</code> if <code>arg_size</code> does not match the size of the data type for an argument that is not a memory object or if the argument is a memory object and <code>arg_size</code> != <code>sizeof(cl_mem)</code> or if <code>arg_size</code> is zero and the argument is declared with the <a href="local.html"><code>local</code></a> qualifier or if the argument is a sampler and <code>arg_size</code> != <code>sizeof(cl_sampler)</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_ARG_VALUE</code> if the argument is an image declared with the <code>read_only</code> qualifier and <code>arg_value</code> refers to an image object created with <code>cl_mem_flags</code> of <code>CL_MEM_WRITE</code> or if the image argument is declared with the <code>write_only</code> qualifier and <code>arg_value</code> refers to an image object created with <code>cl_mem_flags</code> of <code>CL_MEM_READ</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>kernel void
+image_filter (int n, int m,
+          constant float *filter_weights,
+          read_only image2d_t src_image,
+          write_only image2d_t dst_image)
+{
+     ...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Argument index values for <code>image_filter</code> will be 0 for <code>n</code>, 1 for <code>m</code>, 2 for <code>filter_weights</code>, 3 for <code>src_image</code> and 4 for <code>dst_image</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>, <a href="clCreateKernel.html"><code>clCreateKernel</code></a>, <a href="clCreateKernelsInProgram.html"><code>clCreateKernelsInProgram</code></a>, <a href="clReleaseKernel.html"><code>clReleaseKernel</code></a>, <a href="clRetainKernel.html"><code>clRetainKernel</code></a>, <a href="clGetKernelInfo.html"><code>clGetKernelInfo</code></a>, <a href="clGetKernelWorkGroupInfo.html"><code>clGetKernelWorkGroupInfo</code></a>, <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=224" target="_blank">OpenCL 2.1 API Specification, page 224</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

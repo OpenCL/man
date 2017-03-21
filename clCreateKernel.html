@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateKernel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateKernel" class="article">
+<div id="header">
+<h1>clCreateKernel</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a kernel object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_kernel clCreateKernel(cl_program program,
+                         const char *kernel_name,
+                         cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>program</code></dt>
+<dd>
+<p>A program object with a successfully built executable.</p>
+</dd>
+<dt class="hdlist1"><code>kernel_name</code></dt>
+<dd>
+<p>A function name in the program declared with the <a href="functionQualifiers.html"><code>__kernel</code></a> qualifier.</p>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>Returns an appropriate error code.
+If <code>errcode_ret</code> is NULL, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A kernel is a function declared in a program.
+A kernel is identified by the <a href="functionQualifiers.html"><code><em>kernel</code></a> qualifier applied to any function in a program.
+A kernel object encapsulates the specific <code></em>kernel</code> function declared in a program and the argument values to be used when executing this <code>__kernel</code> function.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clCreateKernel</code> returns a valid non-zero kernel object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the kernel object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PROGRAM</code> if <code>program</code> is not a valid program object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_PROGRAM_EXECUTABLE</code> if there is no successfully built executable for <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_KERNEL_NAME</code> if <code>kernel_name</code> is not found in <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_KERNEL_DEFINITION</code> if the function definition for <code>__kernel</code> function given by <code>kernel_name</code> such as the number of arguments, the argument types are not the same for all devices for which the <code>program</code> executable has been built.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>kernel_name</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateKernelsInProgram.html"><code>clCreateKernelsInProgram</code></a>, <a href="clRetainKernel.html"><code>clRetainKernel</code></a>, <a href="clReleaseKernel.html"><code>clReleaseKernel</code></a>, <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>, <a href="clGetKernelInfo.html"><code>clGetKernelInfo</code></a>, <a href="clGetKernelWorkGroupInfo.html"><code>clGetKernelWorkGroupInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=221" target="_blank">OpenCL 2.1 API Specification, page 221</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

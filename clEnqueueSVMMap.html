@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueSVMMap</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueSVMMap" class="article">
+<div id="header">
+<h1>clEnqueueSVMMap</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command that will allow the host to update a region of a SVM buffer</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueSVMMap(cl_command_queue command_queue,
+                       cl_bool blocking_map,
+                       cl_map_flags map_flags,
+                       void *svm_ptr,
+                       size_t size,
+                       cl_uint num_events_in_wait_list,
+                       const cl_event *event_wait_list,
+                       cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>Must be a valid host command-queue.</p>
+</dd>
+<dt class="hdlist1"><code>blocking_map</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Indicates if the map operation is <code>blocking</code> or <code>non-blocking</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>blocking_map</code> is <code>CL_TRUE</code>, <code>clEnqueueSVMMap</code> does not return until the application can access the contents of the SVM region specified by <code>svm_ptr</code> and <code>size</code> on the host.</p>
+</div>
+<div class="paragraph">
+<p>If <code>blocking_map</code> is <code>CL_FALSE</code> i.e.
+map operation is non-blocking, the region specified by <code>svm_ptr</code> and <code>size</code> cannot be used until the map command has completed.
+The <code>event</code> argument returns an event object which can be used to query the execution status of the map command.
+When the map command is completed, the application can access the contents of the region specified by <code>svm_ptr</code> and <code>size</code>.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>map_flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-bield with the following supported values.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_map_flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MAP_READ</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the region being mapped in the memory object is being mapped for reading.</p>
+</div>
+<div class="paragraph">
+<p>The pointer returned by <code>clEnqueueMap{Buffer|Image}</code> is guaranteed to contain the latest bits in the region being mapped when the <code>clEnqueueMap{Buffer|Image}</code> command has completed.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MAP_WRITE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the region being mapped in the memory object is being mapped for writing.</p>
+</div>
+<div class="paragraph">
+<p>The pointer returned by <code>clEnqueueMap{Buffer|Image}</code> is guaranteed to contain the latest bits in the region being mapped when the <code>clEnqueueMap{Buffer|Image}</code> command has completed.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MAP_WRITE_INVALIDATE_REGION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the region being mapped in the memory object is being mapped for writing.</p>
+</div>
+<div class="paragraph">
+<p>The contents of the region being mapped are to be discarded.
+This is typically the case when the region being mapped is overwritten by the host.
+This flag allows the implementation to no longer guarantee that the pointer returned by <code>clEnqueueMap{Buffer|Image}</code> contains the latest bits in the region being mapped which can be a significant performance enhancement.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MAP_READ</code> or <code>CL_MAP_WRITE</code> and <code>CL_MAP_WRITE_INVALIDATE_REGION</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>svm_ptr</code> and <code>size</code></dt>
+<dd>
+<p>A pointer to a memory region and size in bytes that will be updated by the host.
+If <code>svm_ptr</code> is allocated using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a> then it must be allocated from the same context from which <code>command_queue</code> was created.
+Otherwise the behavior is undefined.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list,</code> <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+<a href="clEnqueueBarrierWithWaitList.html"><code>clEnqueueBarrierWithWaitList</code></a> can be used instead.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Note that since we are enqueuing a command with a SVM buffer, the region is already mapped in the host address space.</p>
+</div>
+<div class="paragraph">
+<p><a href="#"><code>clEnqueueSVMMap</code></a>, and <a href="clEnqueueSVMUnmap.html"><code>clEnqueueSVMUnmap</code></a> act as synchronization points for the region of the SVM buffer specified in these calls.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clEnqueueSVMMap</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>svm_ptr</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>size</code> is 0 or if values specified in <code>map_flags</code> are not valid.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</code> if the map operation is blocking and the execution status of any of the events in <code>event_wait_list</code> is a negative integer value.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="sharedVirtualMemory.html">Shared Virtual Memory Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=184" target="_blank">OpenCL 2.1 API Specification, page 184</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

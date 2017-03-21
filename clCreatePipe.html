@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreatePipe</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreatePipe" class="article">
+<div id="header">
+<h1>clCreatePipe</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a pipe object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_mem clCreatePipe(cl_context context,
+                    cl_mem_flags flags,
+                    cl_uint pipe_packet_size,
+                    cl_uint pipe_max_packets,
+                    const cl_pipe_properties * properties,
+                    cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>A valid OpenCL context used to create the pipe object.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify allocation and usage information such as the memory arena that should be used to allocate the pipe object and how it will be used.
+The table below describes the possible values for <code>flags</code>.
+Only <code>CL_MEM_READ_ONLY</code>, <code>CL_MEM_WRITE_ONLY</code>, <code>CL_MEM_READ_WRITE</code>, and <code>CL_MEM_HOST_NO_ACCESS</code> can be specified when creating a pipe object.
+If value specified for <code>flags</code> is 0, the default is used which is <code>CL_MEM_READ_WRITE</code> | <code>CL_MEM_HOST_NO_ACCESS</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_mem_flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be read and written by a kernel.
+This is the default.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be written but not read by a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Reading from a buffer or image object created with <code>CL_MEM_WRITE_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> and <code>CL_MEM_WRITE_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object is a read-only memory object when used inside a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Writing to a buffer or image object created with <code>CL_MEM_READ_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> and <code>CL_MEM_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_USE_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to use memory referenced by <code>host_ptr</code> as the storage bits for the memory object.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL implementations are allowed to cache the buffer contents pointed to by <code>host_ptr</code> in device memory.
+This cached copy can be used when kernels are executed on a device.</p>
+</div>
+<div class="paragraph">
+<p>The result of OpenCL commands that operate on multiple buffer objects created with the same <code>host_ptr</code> or overlapping host regions is considered to be undefined.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the application wants the OpenCL implementation to allocate memory from host accessible memory.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to allocate memory for the memory object and copy the data from memory referenced by <code>host_ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> can be used with <code>CL_MEM_ALLOC_HOST_PTR</code> to initialize the contents of the <code>cl_mem</code> object allocated using host-accessible (e.g.
+PCIe) memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only write to the memory object (using OpenCL APIs that enqueue a write or a map for write).
+This can be used to optimize write access from the host (e.g.
+enable write-combined allocations for memory objects for devices that communicate with the host over a system bus such as PCIe).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only read the memory object (using OpenCL APIs that enqueue a read or a map for read).</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> and <code>CL_MEM_HOST_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_NO_ACCESS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will not read or write the memory object.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> or <code>CL_MEM_HOST_READ_ONLY</code> and <code>CL_MEM_HOST_NO_ACCESS</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>pipe_packet_size</code></dt>
+<dd>
+<p>Size in bytes of a pipe packet.</p>
+</dd>
+<dt class="hdlist1"><code>pipe_max_packets</code></dt>
+<dd>
+<p>Specifies the pipe capacity by specifying the maximum number of packets the pipe can hold.</p>
+</dd>
+<dt class="hdlist1"><code>properties</code></dt>
+<dd>
+<p>A list of properties for the pipe and their corresponding values.
+Each property name is immediately followed by the corresponding desired value.
+The list is terminated with 0.
+In OpenCL 2.0, <code>properties</code> must be NULL.</p>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>Will return an appropriate error code.
+If <code>errcode_ret</code> is NULL, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pipes follow the same memory consistency model as defined for buffer and image objects.
+The pipe state i.e.
+contents of the pipe across kernel executions (on the same or different devices) is enforced at a synchronization point.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clCreatePipe</code> returns a valid non-zero pipe object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the pipe object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if values specified in <code>flags</code> are not as defined above.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>properties</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_PIPE_SIZE</code> if <code>pipe_packet_size</code> is 0 or the <code>pipe_packet_size</code> exceeds <code>CL_DEVICE_PIPE_MAX_PACKET_SIZE</code> value specified in table 4.3 (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>) for all devices in <code>context</code> or if <code>pipe_max_packets</code> is 0.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for the pipe object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateBuffer.html"><code>clCreateBuffer</code></a>, <a href="clCreateImage.html"><code>clCreateImage</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=160" target="_blank">OpenCL 2.1 API Specification, page 160</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

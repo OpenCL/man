@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Integer Built-In Functions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Integer Built-In Functions</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Click an item in the table below for details about that function.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="abs.html"><code>abs</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>|<code>x</code>|</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="abs.html"><code>abs_diff</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>|<code>x</code>-<code>y</code>| without modulo overflow</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="add_sat.html"><code>add_sat</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>x</code>+<code>y</code> and saturate result</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="hadd.html"><code>hadd</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(<code>x</code>+<code>y</code>) &gt;&gt; 1.
+The intermediate sum does not modulo overflow</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="hadd.html"><code>rhadd</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(<code>x</code>+<code>y</code>+1) &gt;&gt; 1.
+The intermediate sum does not modulo overflow.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="clamp_integer.html"><code>clamp</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>min</code>(<code>max</code>( <code>x</code>, <code>minval</code>), <code>maxval</code>)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="clz.html"><code>clz</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Number of leading 0-bits in <code>x</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ctz.html"><code>ctz</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Number of trailing 0-bits in <code>x</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="mad_hi.html"><code>mad_hi</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>mul_hi</code>(<code>a</code>,<code>b</code>)+<code>c</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="mad24.html"><code>mad24</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(Fast integer function.) Multiply 24-bit integer then add the 32-bit result to 32-bit integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="mad_sat.html"><code>mad_sat</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>a</code>*<code>b</code>+<code>c</code> and saturate the result</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="integerMax.html"><code>max</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The greater of <code>x</code> or <code>y</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="integerMax.html"><code>min</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The lesser of <code>x</code> or <code>y</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="mul_hi.html"><code>mul_hi</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>High half of the product of <code>x</code> and <code>y</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="mul24.html"><code>mul24</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(Fast integer function.) Multiply 24-bit integer values <code>a</code> and <code>b</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rotate.html"><code>rotate</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>result[<code>indx</code>]=<code>v</code>[<code>indx</code>]&lt;&lt; <code>i</code>[<code>indx</code>]</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="sub_sat.html"><code>sub_sat</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>x</code> - <code>y</code> and saturate the result</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="upsample.html"><code>upsample</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>result</code>[i] = ((gentype)<code>hi</code>[i] &lt;&lt; 8|16|32) | <code>lo</code>[i]</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="popcount.html"><code>popcount</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the number of non-zero bits in <code>x</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about built-in integer functions: Built-in integer functions take scalar or vector arguments.
+The vector versions of the integer functions operate component-wise.
+The description is per component.</p>
+</div>
+<div class="paragraph">
+<p>We use the generic type name <code>gentype</code> to indicate that the function can take <code>char</code>, <code>char{2|3|4|8|16}</code>, <code>uchar</code>, <code>uchar{2|3|4|8|16}</code>, <code>short</code>, <code>short{2|3|4|8|16}</code>, <code>ushort</code>, <code>ushort{2|3|4|8|16}</code>, <code>int</code>, <code>int{2|3|4|8|16}</code>, <code>uint</code>, <code>uint{2|3|4|8|16}</code>, <code>long</code>, <code>long{2|3|4|8|16}</code>, <code>ulong</code>, or <code>ulong{2|3|4|8|16}</code> as the type for the arguments.
+We use the generic type name <code>ugentype</code> to refer to unsigned versions of <code>gentype</code>.
+For example, if <code>gentype</code> is <code>char4</code>, <code>ugentype</code> is <code>uchar4</code>.</p>
+</div>
+<div class="paragraph">
+<p>We also use the generic type name <code>sgentype</code> to indicate that the function can take a scalar data type i.e.
+<code>char</code>, <code>uchar</code>, <code>short</code>, <code>ushort</code>, <code>int</code>, <code>uint</code>, <code>long</code>, or <code>ulong</code> as the type for the arguments.
+For built-in integer functions that take <code>gentype</code> and <code>sgentype</code> arguments, the <code>gentype</code> argument must be a vector or scalar version of the <code>sgentype</code> argument.
+For example, if <code>sgentype</code> is <code>uchar</code>, <code>gentype</code> must be <code>uchar</code> or <code>uchar{2|3|4|8|16}</code>.
+For vector versions, <code>sgentype</code> is implicitly widened to <code>gentype</code> as described in section 6.3.a of the OpenCL specification.</p>
+</div>
+<div class="paragraph">
+<p>For any specific use of a function, the actual type has to be the same for all arguments and the return type unless otherwise specified.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=82" target="_blank">OpenCL 2.0 C Language Specification, page 82</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

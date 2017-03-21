@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateImage</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateImage" class="article">
+<div id="header">
+<h1>clCreateImage</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a 1D image, 1D image buffer, 1D image array, 2D image, 2D image array or 3D image object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_mem clCreateImage(cl_context context,
+                     cl_mem_flags flags,
+                     const cl_image_format *image_format,
+                     const cl_image_desc *image_desc,
+                     void *host_ptr,
+                     cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>A valid OpenCL context on which the image object is to be created.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify allocation and usage information about the image memory object being created and is described in the table below.</p>
+</div>
+<div class="paragraph">
+<p>For all image types except <code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code>, if value specified for <code>flags</code> is 0, the default is used which is <code>CL_MEM_READ_WRITE</code>.</p>
+</div>
+<div class="paragraph">
+<p>For <code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code> image type, or an image created from another memory object (image or buffer), if the <code>CL_MEM_READ_WRITE</code>, <code>CL_MEM_READ_ONLY</code> or <code>CL_MEM_WRITE_ONLY</code> values are not specified in <code>flags</code>, they are inherited from the corresponding memory access qualifers associated with <code>mem_object</code>.
+The <code>CL_MEM_USE_HOST_PTR</code>, <code>CL_MEM_ALLOC_HOST_PTR</code> and <code>CL_MEM_COPY_HOST_PTR</code> values cannot be specified in <code>flags</code> but are inherited from the corresponding memory access qualifiers associated with <code>mem_object</code>.
+If <code>CL_MEM_COPY_HOST_PTR</code> is specified in the memory access qualifier values associated with <code>mem_object</code> it does not imply any additional copies when the image is created from <code>mem_object</code>.
+If the <code>CL_MEM_HOST_WRITE_ONLY</code>, <code>CL_MEM_HOST_READ_ONLY</code> or <code>CL_MEM_HOST_NO_ACCESS</code> values are not specified in <code>flags</code>, they are inherited from the corresponding memory access qualifiers associated with <code>mem_object</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_mem_flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be read and written by a kernel.
+This is the default.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be written but not read by a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Reading from a buffer or image object created with <code>CL_MEM_WRITE_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> and <code>CL_MEM_WRITE_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object is a read-only memory object when used inside a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Writing to a buffer or image object created with <code>CL_MEM_READ_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> and <code>CL_MEM_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_USE_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to use memory referenced by <code>host_ptr</code> as the storage bits for the memory object.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL implementations are allowed to cache the buffer contents pointed to by <code>host_ptr</code> in device memory.
+This cached copy can be used when kernels are executed on a device.</p>
+</div>
+<div class="paragraph">
+<p>The result of OpenCL commands that operate on multiple buffer objects created with the same <code>host_ptr</code> or overlapping host regions is considered to be undefined.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the application wants the OpenCL implementation to allocate memory from host accessible memory.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to allocate memory for the memory object and copy the data from memory referenced by <code>host_ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> can be used with <code>CL_MEM_ALLOC_HOST_PTR</code> to initialize the contents of the <code>cl_mem</code> object allocated using host-accessible (e.g.
+PCIe) memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only write to the memory object (using OpenCL APIs that enqueue a write or a map for write).
+This can be used to optimize write access from the host (e.g.
+enable write-combined allocations for memory objects for devices that communicate with the host over a system bus such as PCIe).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only read the memory object (using OpenCL APIs that enqueue a read or a map for read).</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> and <code>CL_MEM_HOST_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_NO_ACCESS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will not read or write the memory object.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> or <code>CL_MEM_HOST_READ_ONLY</code> and <code>CL_MEM_HOST_NO_ACCESS</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>image_format</code></dt>
+<dd>
+<p>A pointer to a structure that describes format properties of the image to be allocated.
+See <a href="cl_image_format.html"><code>cl_image_format</code></a> for a detailed description of the image format descriptor.</p>
+</dd>
+<dt class="hdlist1"><code>image_desc</code></dt>
+<dd>
+<p>A pointer to a structure that describes type and dimensions of the image to be allocated.
+See <a href="cl_image_desc.html"><code>cl_image_desc</code></a> for more information.</p>
+</dd>
+<dt class="hdlist1"><code>host_ptr</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A pointer to the image data that may already be allocated by the application.
+Refer to table below for a description of how large the buffer that <code>host_ptr</code> points to must be.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Image Type</th>
+<th class="tableblock halign-left valign-top">Size of buffer that <code>host_ptr</code> points to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OBJECT_IMAGE1D</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>≥ image_row_pitch</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>≥ image_row_pitch</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OBJECT_IMAGE2D</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>≥ image_row_pitch * image_height</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OBJECT_IMAGE3D</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>≥ image_slice_pitch * image_depth</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OBJECT_IMAGE1D_ARRAY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>≥ image_slice_pitch * image_array_size</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_OBJECT_IMAGE2D_ARRAY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>≥ image_slice_pitch * image_array_size</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code>clCreateImage</code> can be used to create a 2D image from a buffer object or a 2D image from another 2D image object.</p>
+</div>
+<div class="paragraph">
+<p>A 2D image can be created from a buffer by specifying a buffer object in the <code>image_desc&#8594;mem_object</code> passed to <code>clCreateImage</code> for <code>image_desc&#8594;image_type</code> = <code>CL_MEM_OBJECT_IMAGE2D</code>.
+If <code>image_desc&#8594;mem_object</code> is created with <code>CL_MEM_USE_HOST_PTR</code>, the <code>host_ptr</code> specified to <code>clCreateBuffer</code> must be aligned to the minimum of the <code>CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT</code> value for all devices in the context associated with <code>image_desc&#8594;mem_object</code> and that support images.</p>
+</div>
+<div class="paragraph">
+<p>A 2D image can be created from another 2D image object by specifying an image object in the <code>image_desc&#8594;mem_object</code> passed to <code>clCreateImage</code> for <code>image_desc&#8594;image_type</code> = <code>CL_MEM_OBJECT_IMAGE2D</code>.
+This allows users to create a new image object that shares the image data store with <code>mem_object</code> but views the pixels in the image with a different channel order and channel type.
+The restrictions are:</p>
+</div>
+<div class="paragraph">
+<p>(1) all the values specified in <code>image_desc</code> except for <code>mem_object</code> must match the image descriptor information associated with <code>mem_object</code>.</p>
+</div>
+<div class="paragraph">
+<p>(2) The <code>image_desc</code> used for creation of <code>mem_object</code> may not be equivalent to image descriptor information associated with <code>mem_object</code>.
+To ensure the values in <code>image_desc</code> will match one can query <code>mem_object</code> for associated information using <code>clGetImageInfo</code> function described in section 5.3.7.</p>
+</div>
+<div class="paragraph">
+<p>(3) the channel data type specified in <code>image_format</code> must match the channel data type associated with <code>mem_object</code>.
+The channel order values supported are:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">image_channel_order specified in image_format</th>
+<th class="tableblock halign-left valign-top">image channel order of mem_object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sBGRA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_BGRA</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_BGRA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sBGRA</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGBA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBA</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGBA</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGB</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGB</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGB</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGB</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGBx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBx</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_sRGBx</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEPTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_R</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>(4) The channel order specified must have the same number of channels as the channel order of <code>mem_object</code>.</p>
+</div>
+<div class="paragraph">
+<p>This allows developers to create a sRGB view of the image from a linear RGB view or vice-versa i.e.
+the pixels stored in the image can be accessed aslinear RGB or sRGB values.</p>
+</div>
+<div class="paragraph">
+<p>For a 3D image or 2D image array, the image data specified by <code>host_ptr</code> is stored as a linear sequence of adjacent 2D image slices or 2D images respectively.
+Each 2D image is a linear sequence of adjacent scanlines.
+Each scanline is a linear sequence of image elements.</p>
+</div>
+<div class="paragraph">
+<p>For a 2D image, the image data specified by <code>host_ptr</code> is stored as a linear sequence of adjacent scanlines.
+Each scanline is a linear sequence of image elements.</p>
+</div>
+<div class="paragraph">
+<p>For a 1D image array, the image data specified by <code>host_ptr</code> is stored as a linear sequence of adjacent 1D images respectively.
+Each 1D image or 1D image buffer is a single scanline which is a linear sequence of adjacent elements.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>Will return an appropriate error code.
+If <code>errcode_ret</code> is NULL, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension is enabled, then a mip-mapped 1D image, 1D image array, 2D image, 2D image array or 3D image is created by specifying <code>num_mip_levels</code> to be a value &gt; 1 in <code>cl_image_desc</code> passed to <code>clCreateImage</code>.
+The dimensions of a mip-mapped image can be a power of two or a non-power of two.
+Each successively smaller mipmap level is half the size of the previous level.
+If this half value is a fractional value, it is rounded down to the nearest integer.</p>
+</div>
+<div class="paragraph">
+<div class="title">Restrictions</div>
+<p>The following restrictions apply when mip-mapped images are created with <code>clCreateImage</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_MEM_USE_HOST_PTR</code> or <code>CL_MEM_COPY_HOST_PTR</code> cannot be specified if a mipmapped image is created.</p>
+</li>
+<li>
+<p>The <code>host_ptr</code> argument to <code>clCreateImage</code> must be a NULL value.</p>
+</li>
+<li>
+<p>Mip-mapped images cannot be created for <code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code> images, depth images or multi-sampled (i.e.
+msaa) images.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clCreateImage</code> returns a valid non-zero image object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the image object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if values specified in <code>flags</code> are not valid.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</code> if values specified in <code>image_format</code> are not valid or if <code>image_format</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</code> if a 2D image is created from a buffer and the row pitch and base address alignment does not follow the rules described for creating a 2D image from a buffer.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</code> if a 2D image is created from a 2D image object and the rules described above are not followed.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_DESCRIPTOR</code> if values specified in <code>image_desc</code> are not valid or if <code>image_desc</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_SIZE</code> if image dimensions specified in <code>image_desc</code> exceed the maximum image dimensions described in the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> for all devices in <code>context</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_HOST_PTR</code> if <code>host_ptr</code> is NULL and <code>CL_MEM_USE_HOST_PTR</code> or <code>CL_MEM_COPY_HOST_PTR</code> are set in <code>flags</code> or if <code>host_ptr</code> is not NULL but <code>CL_MEM_COPY_HOST_PTR</code> or <code>CL_MEM_USE_HOST_PTR</code> are not set in <code>flags</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if an image buffer is being created and the buffer object was created with <code>CL_MEM_WRITE_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_READ_ONLY</code>, or if the buffer object was created with <code>CL_MEM_READ_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code>, or if <code>flags</code> specifies <code>CL_MEM_USE_HOST_PTR</code> or <code>CL_MEM_ALLOC_HOST_PTR</code> or <code>CL_MEM_COPY_HOST_PTR</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if an image buffer is being created or an image is being created from another memory object (image or buffer) and the <code>mem_object</code> object was created with <code>CL_MEM_HOST_WRITE_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_HOST_READ_ONLY</code>, or if <code>mem_object</code> was created with <code>CL_MEM_HOST_READ_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_HOST_WRITE_ONLY</code>, or if <code>mem_object</code> was created with <code>CL_MEM_HOST_NO_ACCESS</code> and <code>flags</code> specifies <code>CL_MEM_HOST_READ_ONLY</code> or <code>CL_MEM_HOST_WRITE_ONLY</code>.</p>
+</li>
+<li>
+<p><code>CL_IMAGE_FORMAT_NOT_SUPPORTED</code> if the <code>image_format</code> is not supported.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for image object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if there are no devices in <code>context</code> that support images (i.e.
+<code>CL_DEVICE_IMAGE_SUPPORT</code> (specified in the table of OpenCL Device Queries for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>) is <code>CL_FALSE</code>).</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_image_desc.html"><code>cl_image_desc</code></a>, <a href="cl_image_format.html"><code>cl_image_format</code></a>, <a href="classDiagram.html">Cardinality Diagram</a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=128" target="_blank">OpenCL 2.1 API Specification, page 128</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

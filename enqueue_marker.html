@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>enqueue_marker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="enqueue_marker" class="article">
+<div id="header">
+<h1>enqueue_marker</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueue a marker command to <code>queue</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">int enqueue_marker(queue_t queue,
+                   uint num_events_in_wait_list,
+                   const clk_event_t * event_wait_list,
+                   clk_event_t * event_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueue a marker command to <code>queue</code>.
+The marker command waits for a list of events to complete, or if the list is empty it waits for all previously enqueued commands in <code>queue</code> to complete before the marker completes.</p>
+</div>
+<div class="paragraph">
+<p><code>event_ret</code> must not be NULL as otherwise this is a no-op.</p>
+</div>
+<div class="paragraph">
+<p>If an event is returned, <code>enqueue_marker</code> performs an implicit retain on the returned event.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>enqueue_marker</code> returns <code>CL_SUCCESS</code> if the marked command is enqueued successfully and returns <code>CL_ENQUEUE_FAILURE</code> otherwise.
+If the <code>–g</code> compile option is specified in compiler options passed to <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, the following errors may be returned instead of <code>CL_ENQUEUE_FAILURE</code> to indicate why <a href="#"><code>enqueue_marker</code></a> failed to enqueue the marker command:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CLK_INVALID_QUEUE</code> if <code>queue</code> is not a valid device queue.</p>
+</li>
+<li>
+<p><code>CLK_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> is greater than zero, or if <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is zero, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CLK_DEVICE_QUEUE_FULL</code> if <code>queue</code> is full.</p>
+</li>
+<li>
+<p><code>CLK_EVENT_ALLOCATION_FAILURE</code> if <code>event_ret</code> is not NULL and an event could not be allocated.</p>
+</li>
+<li>
+<p><code>CLK_OUT_OF_RESOURCES</code> if there is a failure to queue the block in <code>queue</code> because of insufficient resources needed to execute the kernel.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=170" target="_blank">OpenCL 2.0 C Language Specification, page 170</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

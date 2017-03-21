@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>shuffle</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="shuffle" class="article">
+<div id="header">
+<h1>shuffle</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Constructs a permutation of elements from one (or two) input vectors.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">gentype n shuffle(gentype m x,
+                  ugentype n mask)
+
+gentype n shuffle2(gentype m x,
+                   gentype m y,
+                   ugentype n mask)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>shuffle</code> and <code>shuffle2</code> built-in functions construct a permutation of elements from one or two input vectors respectively that are of the same type, returning a vector with the same element type as the input and length that is the same as the shuffle mask.
+The size of each element in the <code>mask</code> must match the size of each element in the result.
+For <code>shuffle</code>, only the <a href="ilogb.html"><code>ilogb</code></a>(2m-1) least significant bits of each <code>mask</code> element are considered.
+For <code>shuffle2</code>, only the <a href="ilogb.html"><code>ilogb</code></a>(2m-1)+1 least significant bits of each <code>mask</code> element are considered.
+Other bits in the <code>mask</code> shall be ignored.</p>
+</div>
+<div class="paragraph">
+<p>The elements of the input vectors are numbered from left to right across one or both of the vectors.
+For this purpose, the number of elements in a vector is given by <a href="vec_step.html"><code>vec_step</code></a>(gentypem).
+The shuffle <code>mask</code> operand specifies, for each element of the result vector, which element of the one or two input vectors the result element gets.</p>
+</div>
+<div class="paragraph">
+<p>General information about miscellaneous vector functions: We use the generic type name <code>gentypen</code> (or <code>gentypem</code>) to indicate the built-in data types <code>char{2|4|8|16}</code>, <code>uchar{2|4|8|16}</code>, <code>short{2|4|8|16}</code>, <code>ushort{2|4|8|16}</code>, <code>int{2|4|8|16}</code>, <code>uint{2|4|8|16}</code>, <code>long{2|4|8|16}</code>, <code>ulong{2|4|8|16}</code>, <code>float{2|4|8|16}</code> or <code>double{2|4|8|16}</code> as the type for the arguments unless otherwise stated.
+We use the generic name <code>ugentypen</code> to indicate the built-in unsigned integer data types.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentypen</code> (or <code>gentypem</code>) may indicate the data type <code>half{2|4|8|16}</code> if the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is supported.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>uint4 mask = (uint4)(3, 2, 1, 0);
+float4 a;
+float4 r = shuffle(a, mask);
+// r.s0123 = a.wzyx
+
+uint8 mask = (uint8)(0, 1, 2, 3, 4, 5, 6, 7);
+
+float4 a, b;
+float8 r = shuffle2(a, b, mask);
+// r.s0123 = a.xyzw
+// r.s4567 = b.xyzw
+
+uint4 mask;
+float8 a;
+float4 b;
+b = shuffle(a, mask);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples that are not valid are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>uint8 mask;
+short16 a;
+short8 b;
+b = shuffle(a, mask); // invalid</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="miscVectorFunctions.html">Miscellaneous Vector Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=113" target="_blank">OpenCL 2.0 C Language Specification, page 113</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

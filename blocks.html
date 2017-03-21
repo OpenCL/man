@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Blocks</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="Blocks" class="article">
+<div id="header">
+<h1>Blocks</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenCL C 2.0 adds support for the clang block syntax.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Example:
+int multiplier = 7;
+int (^myBlock)(int) = ^(int num) { return num * multiplier; };</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenCL C 2.0 adds support for the clang block syntax.
+Like function types, the Block type is a pair consisting of a result value type and a list of parameter types very similar to a function type.
+Blocks are intended to be used much like functions with the key distinction being that in addition to executable code they also contain various variable bindings to automatic (stack) or global memory.</p>
+</div>
+<div class="paragraph">
+<p>This syntax is already part of the clang source tree on which most vendors have based their OpenCL implementations.
+Additionally, blocks based closures are supported by the clang open source C compiler as well as Mac OS X’s C and Objective C compilers.
+Specifically, Mac OS X’s Grand Central Dispatch allows applications to queue tasks as a block.</p>
+</div>
+<div class="paragraph">
+<div class="title">Declaring and Using a Block</div>
+<p>You use the ^ operator to declare a Block variable and to indicate the beginning of a Block literal.
+The body of the Block itself is contained within {}, as shown in the example (as usual with C, ; indicates the end of the statement).</p>
+</div>
+<div class="paragraph">
+<p>The Block is able to make use of variables from the same scope in which it was defined.</p>
+</div>
+<div class="paragraph">
+<p>If you declare a Block as a variable, you can then use it just as you would a function:</p>
+</div>
+<div class="paragraph">
+<p><code>int multiplier = 7; int (^myBlock)(int) = ^(int num) { return num * multiplier; }; printf(“%d\n”, myBlock(3)); // prints 21</code></p>
+</div>
+<div class="paragraph">
+<div class="title">Declaring a Block Reference</div>
+<p>Block variables hold references to Blocks.
+You declare them using syntax similar to that you use to declare a pointer to a function, except that you use ^ instead of *.
+The Block type fully interoperates with the rest of the C type system.
+The following are valid Block variable declarations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    void (^blockReturningVoidWithVoidArgument)(void);
+    int (^blockReturningIntWithIntAndCharArguments)(int, char);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A Block that takes no arguments must specify void in the argument list.
+A Block reference may not be dereferenced via the pointer dereference operation *, and thus a Block’s size may not be computed at compile time.</p>
+</div>
+<div class="paragraph">
+<p>Blocks are designed to be fully type safe by giving the compiler a full set of metadata to use to validate use of Blocks, parameters passed to blocks, and assignment of the return value.</p>
+</div>
+<div class="paragraph">
+<p>You can also create types for Blocks—doing so is generally considered to be best practice when you use a block with a given signature in multiple places:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    typedef float (^MyBlockType)(float, float);
+
+    MyBlockType myFirstBlock = // …;
+    MyBlockType mySecondBlock = // …;</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Block Literal Expressions</div>
+<p>A Block literal expression produces a reference to a Block.
+It is introduced by the use of the ^ token as a unary operator.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    Block_literal_expression ::= ^ block_decl compound_statement_body
+    block_decl ::=
+    block_decl ::= parameter_list
+    block_decl ::= type_expression</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where type expression is extended to allow ^ as a Block reference where * is allowed as a function reference.</p>
+</div>
+<div class="paragraph">
+<p>The following Block literal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    ^ void (void) { printf("hello world\n"); }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>produces a reference to a Block with no arguments with no return value.</p>
+</div>
+<div class="paragraph">
+<p>The return type is optional and is inferred from the return statements.
+If the return statements return a value, they all must return a value of the same type.
+If there is no value returned the inferred type of the Block is void; otherwise it is the type of the return statement value.
+If the return type is omitted and the argument list is ( <code>void</code> ), the ( <code>void</code> ) argument list may also be omitted.</p>
+</div>
+<div class="paragraph">
+<p>So:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    ^ ( void ) { printf("hello world\n"); }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    ^ { printf("hello world\n"); }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>are exactly equivalent constructs for the same expression.</p>
+</div>
+<div class="paragraph">
+<p>The compound statement body establishes a new lexical scope within that of its parent.
+Variables used within the scope of the compound statement are bound to the Block in the normal manner with the exception of those in automatic (stack) storage.
+Thus one may access functions and global variables as one would expect, as well as static local variables.</p>
+</div>
+<div class="paragraph">
+<p>Local automatic (stack) variables referenced within the compound statement of a Block are imported and captured by the Block as const copies.
+The capture (binding) is performed at the time of the Block literal expression evaluation.</p>
+</div>
+<div class="paragraph">
+<p>The compiler is not required to capture a variable if it can prove that no references to the variable will actually be evaluated.</p>
+</div>
+<div class="paragraph">
+<p>The lifetime of variables declared in a Block is that of a function.</p>
+</div>
+<div class="paragraph">
+<p>Block literal expressions may occur within Block literal expressions (nested) and all variables captured by any nested blocks are implicitly also captured in the scopes of their enclosing Blocks.</p>
+</div>
+<div class="paragraph">
+<p>A Block literal expression may be used as the initialization value for Block variables at global or local static scope.</p>
+</div>
+<div class="paragraph">
+<p>You can also declare a Block as a global literal in program scope.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    int GlobalInt = 0;
+
+    int (^getGlobalInt)(void) = ^{ return GlobalInt; };</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Control Flow</div>
+<p>The compound statement of a Block is treated much like a function body with respect to control flow in that continue, break and goto do not escape the Block.</p>
+</div>
+<div class="paragraph">
+<div class="title">Restrictions</div>
+<p>The following Blocks features are currently not supported in OpenCL C.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The __block storage type.</p>
+</li>
+<li>
+<p>The Block_copy() and Block_release() functions that copy and release Blocks.</p>
+</li>
+<li>
+<p>Blocks with variadic arguments.</p>
+</li>
+<li>
+<p>Arrays of Blocks.</p>
+</li>
+<li>
+<p>Blocks as structures and union members.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Block literals are assumed to allocate memory at the point of definition and to be destroyed at the end of the same scope.
+To support these behaviors, additional restrictions in addition to the above feature restrictions are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p></p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Block variables must be defined and used in a way that allows them to be statically determinable at build or "link to executable" time.
+In particular:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Block variables assigned in one scope must be used only with the same or any nested scope.</p>
+</li>
+<li>
+<p>The "extern" storage-class specified cannot be used with program scope block variables.</p>
+</li>
+<li>
+<p>Block variable declarations must be qualified with const.
+Therefore all block variables must be initialized at declaration time and may not be reassigned.</p>
+</li>
+<li>
+<p>A block cannot be the return value of a function.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>The unary operators (* and &amp;) cannot be used with a Block.</p>
+</li>
+<li>
+<p>Blocks cannot be used as expressions of the ternary selection operator (?:).</p>
+</li>
+<li>
+<p>A Block cannot reference another Block.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>OpenCL C does not allow function pointers (see section 6.9) primarily because it is difficult or expensive to implement generic indirections to executable code in many hardware architectures that OpenCL targets.
+OpenCL C’s design of Blocks is intended to respect that same condition, yielding the restrictions listed here.
+As such, Blocks allow a form of dynamically enqueued function scheduling without providing a form of runtime synchronous dynamic dispatch analogous to function pointers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Example 1:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void foo(int *x, int (^bar)(int, int))
+{
+    *x = bar(*x, *x);
+}
+
+kernel
+void k(global int *x, global int *z)
+{
+    if (some expression)
+        *x = foo(x,
+                ^int(int x, int y){return x+y+*z;}); // legal
+    else
+        *x = foo(x,
+                ^int(int x, int y){return (x*y)-*z;}); // legal
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example 2:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel
+void k(global int *x, global int *z)
+{
+    int ^(tmp)(int, int);
+    if (some expression)
+    {
+        tmp = ^int(int x, int y){return x+y+*z;}); // illegal
+    }
+    *x = foo(x, tmp);
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example 3:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>int GlobalInt = 0;
+int (^getGlobalInt)(void) = ^{ return GlobalInt; }; // legal
+int (^getAnotherGlobalInt)(void);                   // illegal
+extern int (^getExternGlobalInt)(void);             // illegal
+
+void foo()
+{
+    ...
+    getGlobalInt = ^{ return 0; }; // illegal – cannot assign to
+                                   // a global block variable
+    ...
+}</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=64" target="_blank">OpenCL 2.0 C Language Specification, page 64</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

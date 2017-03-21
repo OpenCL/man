@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueSVMFree</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueSVMFree" class="article">
+<div id="header">
+<h1>clEnqueueSVMFree</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to free the shared virtual memory allocated using clSVMAlloc or a shared system memory pointer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueSVMFree(cl_command_queue command_queue,
+                        cl_uint num_svm_pointers,
+                        void *svm_pointers[],
+                        void (CL_CALLBACK *pfn_free_func) ( cl_command_queue queue, cl_uint num_svm_pointers, void *svm_pointers[] ),
+                        void *user_data ),
+                        void *user_data,
+                        cl_uint num_events_in_wait_list,
+                        const cl_event *event_wait_list,
+                        cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>A valid host command-queue.</p>
+</dd>
+<dt class="hdlist1"><code>svm_pointers and num_svm_pointers</code></dt>
+<dd>
+<p>Specify shared virtual memory pointers to be freed.
+Each pointer in <code>svm_pointers</code> that was allocated using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a> must have been allocated from the same context from which <code>command_queue</code> was created.
+The memory associated with <code>svm_pointers</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>pfn_free_func</code></dt>
+<dd>
+<p>Specifies the callback function to be called to free the SVM pointers.
+<code>pfn_free_func</code> takes four arguments: <code>queue</code> which is the command queue in which <code>clEnqueueSVMFree</code> was enqueued, the count and list of SVM pointers to free and <code>user_data</code> which is a pointer to user specified data.
+If <code>pfn_free_func</code> is NULL, all pointers specified in <code>svm_pointers</code> must be allocated using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a> and the OpenCL implementation will free these SVM pointers.
+<code>pfn_free_func</code> must be a valid callback function if any SVM pointer to be freed is a shared system memory pointer i.e.
+not allocated using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a>.
+If <code>pfn_free_func</code> is a valid callback function, the OpenCL implementation will call <code>pfn_free_func</code> to free all the SVM pointers specified in <code>svm_pointers</code>.</p>
+</dd>
+<dt class="hdlist1"><code>user_data</code></dt>
+<dd>
+<p>Will be passed as the <code>user_data</code> argument when <code>pfn_free_func</code> is called.
+<code>user_data</code> can be NULL.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list</code> and <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before <code>clEnqueueSVMFree</code> can be executed.
+If <code>event_wait_list</code> is NULL, then <code>clEnqueueSVMFree</code> does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_svm_pointers</code> is 0 and <code>svm_pointers</code> is non-NULL, or if <code>svm_pointers</code> is NULL and <code>num_svm_pointers</code> is not 0.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="sharedVirtualMemory.html">Shared Virtual Memory Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=179" target="_blank">OpenCL 2.1 API Specification, page 179</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

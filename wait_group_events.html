@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>wait_group_events</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="wait_group_events" class="article">
+<div id="header">
+<h1>wait_group_events</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wait for events that identify the <code>async_work_group_copy</code> operations to complete.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void wait_group_events(int num_events,
+                       event_t *event_list)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>wait_group_events</code> waits for events that identify the <a href="async_work_group_copy.html"><code>async_work_group_copy</code></a> operations to complete.
+The event objects specified in <code>event_list</code> will be released after the wait is performed.</p>
+</div>
+<div class="paragraph">
+<p>This function must be encountered by all work-items in a work-group executing the kernel with the same <code>num_events</code> and event objects specified in <code>event_list</code>; otherwise the results are undefined.
+This rule applies to ND-ranges implemented with uniform and non-uniform work-groups.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The kernel must wait for the completion of all async copies using the <code>wait_group_events</code> built-in function before exiting; otherwise the behavior is undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="asyncCopyFunctions.html">Async Copy and Prefetch Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=100" target="_blank">OpenCL 2.0 C Language Specification, page 100</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueMigrateMemObjects</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueMigrateMemObjects" class="article">
+<div id="header">
+<h1>clEnqueueMigrateMemObjects</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to indicate which device a set of memory objects should be associated with.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueMigrateMemObjects(cl_command_queue command_queue,
+                                  cl_uint num_mem_objects,
+                                  const cl_mem *mem_objects,
+                                  cl_mem_migration_flags flags,
+                                  cl_uint num_events_in_wait_list,
+                                  const cl_event *event_wait_list,
+                                  cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>A valid host command-queue.
+The specified set of memory objects in <code>mem_objects</code> will be migrated to the OpenCL device associated with <code>command_queue</code> or to the host if the <code>CL_MIGRATE_MEM_OBJECT_HOST</code> has been specified.</p>
+</dd>
+<dt class="hdlist1"><code>num_mem_objects</code></dt>
+<dd>
+<p>The number of memory objects specified in <code>mem_objects</code>.</p>
+</dd>
+<dt class="hdlist1"><code>mem_objects</code></dt>
+<dd>
+<p>A pointer to a list of memory objects.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify migration options.
+The table below describes the possible values for flags.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_mem_migration flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MIGRATE_MEM_OBJECT_HOST</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag indicates that the specified set of memory objects are to be migrated to the host, regardless of the target command-queue.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MIGRATE_MEM_OBJECT_- CONTENT_UNDEFINED</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag indicates that the contents of the set of memory objects are undefined after migration.
+The specified set of memory objects are migrated to the device associated with <code>command_queue</code> without incurring the overhead of migrating their contents.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>event_wait_list, num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes a mechanism for assigning which device an OpenCL memory object resides.
+A user may wish to have more explicit control over the location of their memory objects on creation.
+This could be used to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure that an object is allocated on a specific device prior to usage.</p>
+</li>
+<li>
+<p>Preemptively migrate an object from one device to another.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Typically, memory objects are implicitly migrated to a device for which enqueued commands, using the memory object, are targeted.
+<code>clEnqueueMigrateMemObjects</code> allows this migration to be explicitly performed ahead of the dependent commands.
+This allows a user to preemptively change the association of a memory object, through regular command queue scheduling, in order to prepare for another upcoming command.
+This also permits an application to overlap the placement of memory objects with other unrelated operations before these memory objects are needed potentially hiding transfer latencies.
+Once the event, returned from <code>clEnqueueMigrateMemObjects</code>, has been marked <code>CL_COMPLETE</code> the memory objects specified in <code>mem_objects</code> have been successfully migrated to the device associated with <code>command_queue</code>.
+The migrated memory object shall remain resident on the device until another command is enqueued that either implicitly or explicitly migrates it away.</p>
+</div>
+<div class="paragraph">
+<p><code>clEnqueueMigrateMemObjects</code> can also be used to direct the initial placement of a memory object, after creation, possibly avoiding the initial overhead of instantiating the object on the first enqueued command to use it.</p>
+</div>
+<div class="paragraph">
+<p>The user is responsible for managing the event dependencies, associated with this command, in order to avoid overlapping access to memory objects.
+Improperly specified event dependencies passed to <code>clEnqueueMigrateMemObjects</code> could result in undefined results.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clEnqueueMigrateMemObjects</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command_queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if the context associated with <code>command_queue</code> and memory objects in <code>memobj</code> are not the same or if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if any of the memory objects in <code>mem_objs</code> is not a valid memory object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_mem_objects</code> is zero or if <code>mem_objects</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>flags</code> is not 0 or is not any of the values described in the table above.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for the specified set of memory objects in <code>mem_objects</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a>, <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=168" target="_blank">OpenCL 2.1 API Specification, page 168</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

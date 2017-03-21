@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueWriteImage</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueWriteImage" class="article">
+<div id="header">
+<h1>clEnqueueWriteImage</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to write to an image or image array object from host memory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueWriteImage(cl_command_queue command_queue,
+                           cl_mem image,
+                           cl_bool blocking_write,
+                           const size_t *origin,
+                           const size_t *region,
+                           size_t input_row_pitch,
+                           size_t input_slice_pitch,
+                           const void * ptr,
+                           cl_uint num_events_in_wait_list,
+                           const cl_event *event_wait_list,
+                           cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>Refers to the host command-queue in which the write command will be queued.
+<code>command_queue</code> and <code>image</code> must be created with the same OpenCL context.</p>
+</dd>
+<dt class="hdlist1"><code>image</code></dt>
+<dd>
+<p>Refers to a valid image or image array object.</p>
+</dd>
+<dt class="hdlist1"><code>blocking_write</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Indicates if the write operation is <code>blocking</code> or <code>non-blocking</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>blocking_write</code> is <code>CL_TRUE</code> the OpenCL implementation copies the data referred to by <code>ptr</code> and enqueues the write command in the command-queue.
+The memory pointed to by <code>ptr</code> can be reused by the application after the <code>clEnqueueWriteImage</code> call returns.</p>
+</div>
+<div class="paragraph">
+<p>If <code>blocking_write</code> is <code>CL_FALSE</code> the OpenCL implementation will use <code>ptr</code> to perform a nonblocking write.
+As the write is non-blocking the implementation can return immediately.
+The memory pointed to by <code>ptr</code> cannot be reused by the application after the call returns.
+The <code>event</code> argument returns an event object which can be used to query the execution status of the write command.
+When the write command has completed, the memory pointed to by <code>ptr</code> can then be reused by the application.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>origin</code></dt>
+<dd>
+<p>Defines the (<em>x, y, z</em>) offset in pixels in the 1D, 2D, or 3D image, the (<em>x, y</em>) offset and the image index in the image array or the (x) offset and the image index in the 1D image array.
+If <code>image</code> is a 2D image object, <code>origin</code>[2] must be 0.
+If <code>image</code> is a 1D image or 1D image buffer object, <code>origin</code>[1] and <code>origin</code>[2] must be 0.
+If <code>image</code> is a 1D image array object, <code>origin</code>[2] must be 0.
+If <code>image</code> is a 1D image array object, <code>origin</code>[1] describes the image index in the 1D image array.
+If <code>image</code> is a 2D image array object, <code>origin</code>[2] describes the image index in the 2D image array.</p>
+</dd>
+<dt class="hdlist1"><code>region</code></dt>
+<dd>
+<p>Defines the (<em>width, height, depth</em>) in pixels of the 1D, 2D or 3D rectangle, the (<em>width, height</em>) in pixels of the 2D rectangle and the number of images of a 2D image array or the (<em>width</em>) in pixels of the 1D rectangle and the number of images of a 1D image array.
+If <code>image</code> is a 2D image object, <code>region</code>[2] must be 1.
+If <code>image</code> is a 1D image or 1D image buffer object, <code>region</code>[1] and <code>region</code>[2] must be 1.
+If image is a 1D image array object, <code>region</code>[2] must be 1.
+The values in <code>region</code> cannot be 0.</p>
+</dd>
+<dt class="hdlist1"><code>input_row_pitch</code></dt>
+<dd>
+<p>The length of each row in bytes.
+This value must be greater than or equal to the element size in bytes * <code>width</code>.
+If <code>input_row_pitch</code> is set to 0, the appropriate row pitch is calculated based on the size of each element in bytes multiplied by <code>width</code>.</p>
+</dd>
+<dt class="hdlist1"><code>input_slice_pitch</code></dt>
+<dd>
+<p>Size in bytes of the 2D slice of the 3D region of a 3D image or each image of a 1D or 2D image array being written.
+This must be 0 if <code>image</code> is a 1D or 2D image.
+Otherwise this value must be greater than or equal to <code>row_pitch</code> * <code>height</code>.
+If <code>input_slice_pitch</code> is set to 0, the appropriate slice pitch is calculated based on the <code>row_pitch</code> * <code>height</code>.</p>
+</dd>
+<dt class="hdlist1"><code>ptr</code></dt>
+<dd>
+<p>The pointer to a buffer in host memory where image data is to be read from.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list ,</code> <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular write command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Calling <code>clEnqueueWriteImage</code> to update the latest bits in a region of the <code>image</code> with the <code>ptr</code> argument value set to <code>host_ptr</code> + (<code>origin</code>[2] * <code>image slice pitch</code> + <code>origin</code>[1] * <code>image row pitch</code> + <code>origin</code>[0] * <code>bytes per pixel</code>), where <code>host_ptr</code> is a pointer to the memory region specified when the <code>image</code> being written is created with <code>CL_MEM_USE_HOST_PTR</code>, must meet the following requirements in order to avoid undefined behavior:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The host memory region being written contains the latest bits when the enqueued write command begins execution.</p>
+</li>
+<li>
+<p>The <code>input_row_pitch</code> and <code>input_slice_pitch</code> argument values in <code>clEnqueueWriteImage</code> must be set to the image row pitch and slice pitch.</p>
+</li>
+<li>
+<p>The image object is not mapped.</p>
+</li>
+<li>
+<p>The image object is not used by any command-queue until the write command has finished execution.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the mipmap extensions are enabled with <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a>, calls to <a href="clEnqueueReadImage.html"><code>clEnqueueReadImage</code></a>, <code>clEnqueueWriteImage</code> and <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a> can be used to read from or write to a specific mip-level of a mip-mapped image.
+If image argument is a 1D image, <code>origin</code>[1] specifies the mip-level to use.
+If image argument is a 1D image array, <code>origin</code>[2] specifies the mip-level to use.
+If image argument is a 2D image, <code>origin</code>[3] specifies the mip-level to use.
+If image argument is a 2D image array or a 3D image, <code>origin</code>[3] specifies the mip-level to use.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clEnqueueWriteImage</code> return <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if the context associated with <code>command_queue</code> and <code>image</code> are not the same or if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>image</code> is not a valid image object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if the region being written specified by <code>origin</code> and <code>region</code> is out of bounds or if <code>ptr</code> is a NULL value.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if values in <code>origin</code> and <code>region</code> do not follow rules described in the argument description for <code>origin</code> and <code>region</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_SIZE</code> if image dimensions (image width, height, specified or compute row and/or slice pitch) for <code>image</code> are not supported by device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_IMAGE_FORMAT_NOT_SUPPORTED</code> if image format (image channel order and data type) for <code>image</code> are not supported by device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for data store associated with <code>image</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the device associated with <code>command_queue</code> does not support images (i.e.
+<code>CL_DEVICE_IMAGE_SUPPORT</code> specified the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> is <code>CL_FALSE</code>).</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if <code>clEnqueueWriteImage</code> is called on <code>image</code> which has been created with <code>CL_MEM_HOST_READ_ONLY</code> or <code>CL_MEM_HOST_NO_ACCESS</code>.</p>
+</li>
+<li>
+<p><code>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</code> if the write operations are blocking and the execution status of any of the events in <code>event_wait_list</code> is a negative integer value.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueReadImage.html"><code>clEnqueueReadImage</code></a>, <a href="clEnqueueCopyImage.html"><code>clEnqueueCopyImage</code></a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=140" target="_blank">OpenCL 2.1 API Specification, page 140</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

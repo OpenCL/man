@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_egl_event</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_egl_event" class="article">
+<div id="header">
+<h1>cl_khr_egl_event</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create CL event objects linked to EGL fence sync objects.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION cl_khr_egl_event : enable</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This extension allows creating OpenCL event objects linked to EGL fence sync objects, potentially improving efficiency of sharing images and buffers between the two APIs.
+The companion EGL_KHR_cl_event extension provides the complementary functionality of creating an EGL sync object from an OpenCL event object.</p>
+</div>
+<div class="paragraph">
+<p>If this extension is supported by an implementation, the string <code>cl_khr_egl_event</code> will be present in the <code>CL_PLATFORM_EXTENSIONS</code> string described in table 4.1 (see <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>) or <code>CL_DEVICE_EXTENSIONS</code> string described in table 4.3 (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>).</p>
+</div>
+<div class="paragraph">
+<p>If the <code>cl_khr_egl_event</code> extension is supported, then the following function is enabled:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="clCreateEventFromEGLSyncKHR.html"><code>clCreateEventFromEGLSyncKHR</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>cl_khr_egl_event</code> extension enables changes to the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="clGetEventInfo.html"><code>clGetEventInfo</code></a></p>
+</li>
+<li>
+<p><a href="clWaitForEvents.html"><code>clWaitForEvents</code></a></p>
+</li>
+<li>
+<p><a href="clGetEventInfo.html"><code>clGetEventInfo</code></a></p>
+</li>
+<li>
+<p><a href="clEnqueueAcquireGLObjects.html"><code>clEnqueueAcquireGLObjects</code></a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="EXTENSION.html">EXTENSION</a>, <a href="cl_khr_egl_image.html"><code>cl_khr_egl_image</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=174" target="_blank">OpenCL 2.1 Extensions Specification, page 174</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

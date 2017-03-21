@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>async_work_group_copy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="async_work_group_copy" class="article">
+<div id="header">
+<h1>async_work_group_copy</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Perform an async copy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">event_t async_work_group_copy(__local gentype *dst,
+                              const __global gentype *src,
+                              size_t num_gentypes,
+                              event_t event)
+
+event_t async_work_group_copy(__global gentype *dst,
+                              const __local gentype *src,
+                              size_t num_gentypes,
+                              event_t event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>async_work_group_copy</code> performs an async copy of <code>num_gentypes</code> <code>gentype</code> elements from <code>src</code> to <code>dst</code>.
+The async copy is performed by all work-items in a work-group and this built-in function must therefore be encountered by all work-items in a work-group executing the kernel with the same argument values; otherwise the results are undefined.
+This rule applies to ND-ranges implemented with uniform and non-uniform work-groups.</p>
+</div>
+<div class="paragraph">
+<p>Returns an event object that can be used by <a href="wait_group_events.html"><code>wait_group_events</code></a> to wait for the async copy to finish.
+The <code>event</code> argument can also be used to associate the <code>async_work_group_copy</code> with a previous async copy allowing an event to be shared by multiple async copies; otherwise <code>event</code> should be zero.</p>
+</div>
+<div class="paragraph">
+<p>If <code>event</code> argument is not zero, the event object supplied in <code>event</code> argument will be returned.</p>
+</div>
+<div class="paragraph">
+<p>This function does not perform any implicit synchronization of source data such as using a <a href="barrier.html"><code>barrier</code></a> before performing the copy.</p>
+</div>
+<div class="paragraph">
+<p>General information about async copy functions: The generic type name <code>gentype</code> indicates the built-in data types <code>char</code>, <code>char{2|3|4|8|16}</code>, <code>uchar</code>, <code>uchar{2|3|4|8|16}</code>, <code>short</code>, <code>short{2|3|4|8|16}</code>, <code>ushort</code>, <code>ushort{2|3|4|8|16}</code>, <code>int</code>, <code>int{2|3|4|8|16}</code>, <code>uint</code>, <code>uint{2|3|4|8|16}</code>, <code>long</code>, <code>long{2|3|4|8|16}</code>, <code>ulong</code>, <code>ulong{2|3|4|8|16}</code>, <code>float</code>, <code>float{2|3|4|8|16}</code>, or <code>double</code>, <code>double{2|3|4|8|16}</code> as the type for the arguments unless otherwise stated.</p>
+</div>
+<div class="paragraph">
+<p>When extended by the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension, the generic type <code>gentypen</code> is extended to include <code>half</code>, <code>half2</code>, <code>half3</code>, <code>half4</code>, <code>half8</code>, and <code>half16</code>.</p>
+</div>
+<div class="paragraph">
+<p>The kernel must wait for the completion of all async copies using the <code>wait_group_events</code> built-in function before exiting; otherwise the behavior is undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>async_work_group_copy</code> and <code>async_work_group_strided_copy</code> for 3-component vector types behave as <code>async_work_group_copy</code> and <code>async_work_group_strided_copy</code> respectively for 4-component vector types.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="asyncCopyFunctions.html">Async Copy and Prefetch Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=100" target="_blank">OpenCL 2.0 C Language Specification, page 100</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

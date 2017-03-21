@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>atomic_store, atomic_store_explicit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="atomic_store" class="article">
+<div id="header">
+<h1>atomic_store, atomic_store_explicit</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>atomic_store, atomic_store_explicit functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void atomic_store(volatile A *object,
+                  C desired)
+
+void atomic_store_explicit(volatile A *object,
+                           C desired,
+                           memory_order order)
+
+void atomic_store_explicit(volatile A *object,
+                           C desired,
+                           memory_order order,
+                           memory_scope scope)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>object</code></dt>
+<dt class="hdlist1"><code>desired</code></dt>
+<dt class="hdlist1"><code>order</code></dt>
+<dd>
+<p>The <code>order</code> argument shall not be <code>memory_order_acquire</code>, nor <code>memory_order_acq_rel</code>.</p>
+</dd>
+<dt class="hdlist1"><code>scope</code></dt>
+<dd>
+<p>== Description</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Atomically replace the value pointed to by <code>object</code> with the value of <code>desired</code>.
+Memory is affected according to the value of <code>order</code>.</p>
+</div>
+<div class="paragraph">
+<p>In these operation definitions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An <code>A</code> refers to one of the atomic types.</p>
+</li>
+<li>
+<p>A <code>C</code> refers to its corresponding non-atomic type.</p>
+</li>
+<li>
+<p>An <code>M</code> refers to the type of the other argument for arithmetic operations.
+For atomic integer types, <code>M</code> is <code>C</code>.</p>
+</li>
+<li>
+<p>The functions not ending in explicit have the same semantics as the corresponding explicit function with <code>memory_order_seq_cst</code> for the <code>memory_order</code> argument.</p>
+</li>
+<li>
+<p>The functions that do not have <code>memory_scope</code> argument have the same semantics as the corresponding functions with the <code>memory_scope</code> argument set to <code>memory_scope_device</code>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+With fine-grained system SVM, sharing happens at the granularity of individual loads and stores anywhere in host memory.
+Memory consistency is always guaranteed at synchronization points, but to obtain finer control over consistency, the OpenCL atomics functions may be used to ensure that the updates to individual data values made by one unit of execution are visible to other execution units.
+In particular, when a host thread needs fine control over the consistency of memory that is shared with one or more OpenCL devices, it must use atomic and fence operations that are compatible with the C11 atomic operations.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We can&#8217;t require C11 atomics since host programs can be implemented in other programming languages and versions of C or C++, but we do require that the host programs use atomics and that those atomics be compatible with those in C11.</p>
+</div>
+<div class="paragraph">
+<div class="title">Restrictions</div>
+<p>All operations on atomic types must be performed using the built-in atomic functions.
+C11 and C++11 support operators on atomic types.
+OpenCL C does not support operators with atomic types.
+Using atomic types with operators should result in a compilation error.</p>
+</div>
+<div class="paragraph">
+<p>The <code>atomic_bool</code>, <code>atomic_char</code>, <code>atomic_uchar</code>, <code>atomic_short</code>, <code>atomic_ushort</code>, <code>atomic_intmax_t</code> and <code>atomic_uintmax_t</code> types are not supported by OpenCL C.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL C requires that the built-in atomic functions on atomic types are lock-free.</p>
+</div>
+<div class="paragraph">
+<p>The <code>_Atomic</code> type specifier and <code>_Atomic</code> type qualifier are not supported by OpenCL C.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of atomic operations where pointer arguments to the atomic functions refers to an atomic type in the private address space is undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="atomicFunctions.html">Atomic Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=107" target="_blank">OpenCL 2.0 C Language Specification, page 107</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

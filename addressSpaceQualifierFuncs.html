@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Address Space Qualifier Functions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="addressSpaceQualifierFuncs" class="article">
+<div id="header">
+<h1>Address Space Qualifier Functions</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Address space qualifier functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">global gentype * to_global(gentype *ptr)
+
+const global gentype * to_global(const gentype *ptr)
+
+local gentype * to_local(gentype *ptr)
+
+const local gentype * to_local(const gentype *ptr)
+
+private gentype * to_private(gentype *ptr)
+
+const private gentype * to_private(const gentype *ptr)
+
+cl_mem_fence_flags get_fence(gentype *ptr)
+
+cl_mem_fence_flags get_fence(const gentype *ptr)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>to_global</code> Returns a pointer that points to a region in the global address space if <code>to_global</code> can cast <code>ptr</code> to the global address space.
+Otherwise it returns NULL.</p>
+</div>
+<div class="paragraph">
+<p><code>to_local</code> Returns a pointer that points to a region in the local address space if <code>to_local</code> can cast <code>ptr</code> to the local address space.
+Otherwise it returns NULL.</p>
+</div>
+<div class="paragraph">
+<p><code>to_private</code> Returns a pointer that points to a region in the private address space if <code>to_private</code> can cast <code>ptr</code> to the private address space.
+Otherwise it returns NULL.</p>
+</div>
+<div class="paragraph">
+<p><code>get_fence</code> returns a valid memory fence value for <code>ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p>The generic type <code>gentype</code> is used to indicate any of the built-in data types supported by OpenCL C or a user defined type.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="qualifiers.html"><code>qualifiers</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=99" target="_blank">OpenCL 2.0 C Language Specification, page 99</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

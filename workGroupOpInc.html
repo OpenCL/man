@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">General information about work-group functions</div>
+<p>This built-in function must be encountered by all work-items in a work-group executing the kernel.
+We use the generic type name gentype to indicate the built-in data types <code>half</code> (if the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is supported), <code>int</code>, <code>uint</code>, <code>long</code>, <code>ulong</code>, <code>float</code> or <code>double</code> (if double precision is supported) as the type for the arguments.</p>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;op&gt;</em> in <code>work_group_reduce_&lt;op&gt;</code>, <code>work_group_scan_exclusive_&lt;op&gt;</code> and <code>work_group_scan_inclusive_&lt;op&gt;</code> defines the operator and can be <code>add</code>, <code>min</code> or <code>max</code>.</p>
+</div>
+<div class="paragraph">
+<p>The inclusive scan operation takes a binary operator <code>op</code> with an identity <code>I</code> and <code>n</code> (where <code>n</code> is the size of the work-group) elements <code>[a0, a1, &#8230;&#8203; an-1]</code> and returns <code>[a0, (a0 op a1), &#8230;&#8203; (a0 op a1 op &#8230;&#8203; op an-1)]</code>.
+If &lt;`op`&gt; = <code>add</code>, the identity <code>I</code> is 0.
+If &lt;`op`&gt; = <code>min</code>, the identity <code>I</code> is <code>INT_MAX</code>, <code>UINT_MAX</code>, <code>LONG_MAX</code>, <code>ULONG_MAX</code>, for <code>int</code>, <code>uint</code>, <code>long</code>, <code>ulong</code> types and is <code>+INF</code> for floating-point types.
+Similarly if &lt;`op`&gt; = max, the identity <code>I</code> is <code>INT_MIN</code>, 0, <code>LONG_MIN</code>, 0 and <code>-INF</code>.</p>
+</div>
+<div class="paragraph">
+<p>Consider the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void foo(int *p)
+{
+    ...
+    int prefix_sum_val = work_group_scan_inclusive_add(
+              p[get_local_id(0)]);
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the example above, let&#8217;s assume that the work-group size is 8 and p points to the following elements [3 1 7 0 4 1 6 3].
+Work-item 0 calls <code>work_group_scan_inclusive_add</code> with 3 and returns 3.
+Work-item 1 calls <code>work_group_scan_inclusive_add</code> with 1 and returns 4.
+The full set of values returned by <code>work_group_scan_inclusive_add</code> for work-items 0 &#8230;&#8203; 7 are [3 4 11 11 14 16 22 25].</p>
+</div>
+<div class="paragraph">
+<p>The exclusive scan operation takes a binary associative operator <code>op</code> with an identity <code>I</code> and <code>n</code> (where <code>n</code> is the size of the work-group) elements <code>[a0, a1, &#8230;&#8203; an-1]</code> and returns <code>[I, a0, (a0 op a1), &#8230;&#8203; (a0 op a1 op &#8230;&#8203; op an-2)]</code>.
+For the example above, the exclusive scan add operation on the ordered set [3 1 7 0 4 1 6 3] would return [0 3 4 11 11 14 16 22].</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The order of floating-point operations is not guaranteed for the <code>work_group_reduce_&lt;op&gt;</code>, <code>work_group_scan_inclusive_&lt;op&gt;</code> and <code>work_group_scan_exclusive_&lt;op&gt;</code> built-in functions that operate on <code>half</code>, <code>float</code> and <code>double</code> data types.
+The order of these floating-point operations is also non-deterministic for a given workgroup.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</body>
+</html>

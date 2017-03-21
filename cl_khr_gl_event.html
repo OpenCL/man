@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_gl_event</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_gl_event" class="article">
+<div id="header">
+<h1>cl_khr_gl_event</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create an OpenCL event object from a GL sync object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cl_khr_gl_event</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This extension enables the function <a href="clCreateEventFromGLsyncKHR.html"><code>clCreateEventFromGLsyncKHR</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This extension allows creating OpenCL event objects linked to OpenGL fence sync objects, potentially improving efficiency of sharing images and buffers between the two APIs.
+The companion <code>GL_ARB_cl_event</code> OpenGL extension provides the complementary functionality of creating an OpenGL sync object from an OpenCL event object.</p>
+</div>
+<div class="paragraph">
+<p>In addition, this extension modifies the behavior of <a href="clEnqueueAcquireGLObjects.html"><code>clEnqueueAcquireGLObjects</code></a> and <a href="clEnqueueReleaseGLObjects.html"><code>clEnqueueReleaseGLObjects</code></a> to implicitly guarantee synchronization with an OpenGL context bound in the same thread as the OpenCL context.</p>
+</div>
+<div class="paragraph">
+<p>If this extension is supported by an implementation, the string <code>cl_khr_gl_event</code> will be present in the <code>CL_PLATFORM_EXTENSIONS</code> (see <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>) or <code>CL_DEVICE_EXTENSIONS</code> string (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Event objects can also be used to reflect the status of an OpenGL sync object.
+The sync object in turn refers to a fence command executing in an OpenGL command stream.
+This provides another method of coordinating sharing of buffers and images between OpenGL and OpenCL (see section 9.7.6.1).</p>
+</div>
+<div class="paragraph">
+<p>If the <code>cl_khr_gl_event</code> extension is supported, then the OpenCL implementation will ensure that any such pending OpenGL operations are complete for an OpenGL context bound to the same thread as the OpenCL context.
+This is referred to as implicit synchronization.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>cl_khr_gl_event</code> extension is supported and the OpenGL context in question supports fence sync objects, completion of OpenGL commands may also be determined by placing a GL fence command after those commands using <code>glFenceSync</code>, creating an event from the resulting GL sync object using <a href="clCreateEventFromGLsyncKHR.html"><code>clCreateEventFromGLsyncKHR</code></a>, and determining completion of that event object via <a href="clEnqueueAcquireGLObjects.html"><code>clEnqueueAcquireGLObjects</code></a>.
+This method may be considerably more efficient than calling <code>glFinish</code>, and is referred to as <code>explicit synchronization</code>.
+Explicit synchronization is most useful when an OpenGL context bound to another thread is accessing the memory objects.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>cl_khr_gl_event</code> extension is not supported, completion of OpenGL commands may be determined by issuing and waiting for completion of a <code>glFinish</code> command on all OpenGL contexts with pending references to these objects.
+Some implementations may offer other efficient synchronization methods.
+If such methods exist they will be described in platform-specific documentation.</p>
+</div>
+<div class="paragraph">
+<p>Note that no synchronization method other than <code>glFinish</code> is portable between all OpenGL implementations and all OpenCL implementations.
+While this is the only way to ensure completion that is portable to all platforms, <code>glFinish</code> is an expensive operation and its use should be avoided if the <code>cl_khr_gl_event</code> extension is supported on a platform.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="EXTENSION.html">EXTENSION</a>, <a href="clCreateEventFromGLsyncKHR.html"><code>clCreateEventFromGLsyncKHR</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=59" target="_blank">OpenCL 2.1 Extensions Specification, page 59</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

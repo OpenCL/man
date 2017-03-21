@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_gl_sharing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_gl_sharing" class="article">
+<div id="header">
+<h1>cl_khr_gl_sharing</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Allow applications to use OpenGL buffer, texture and renderbuffer objects as OpenCL memory objects.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cl_khr_gl_sharing</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about GL sharing follows.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL specification in section 9.7 defines how to share data with texture and buffer objects in a parallel OpenGL implementation, but does not define how the association between an OpenCL context and an OpenGL context or share group is established.
+This extension defines optional attributes to OpenCL context creation routines which associate a GL context or share group object with a newly created OpenCL context.
+If this extension is supported by an implementation, the string "cl_khr_gl_sharing" will be present in the <code>CL_DEVICE_EXTENSIONS</code> string described in the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> or in the <code>CL_PLATFORM_EXTENSIONS</code> string described in the table of allowed values for <code>param_name</code> for <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This section discusses OpenCL functions that allow applications to use OpenGL buffer, texture, and renderbuffer objects as OpenCL memory objects.
+This allows efficient sharing of data between OpenCL and OpenGL.
+The OpenCL API may be used to execute kernels that read and/or write memory objects that are also OpenGL objects.</p>
+</div>
+<div class="paragraph">
+<p>An OpenCL image object may be created from an OpenGL texture or renderbuffer object.
+An OpenCL buffer object may be created from an OpenGL buffer object.</p>
+</div>
+<div class="paragraph">
+<p>Any supported OpenGL object defined within the GL share group object, or the share group associated with the GL context from which the CL context is created, may be shared, with the exception of the default OpenGL objects (i.e.
+objects named zero), which may not be shared.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a>, extension is supported by the OpenCL device, the <code>cl_khr_gl_sharing</code> extension adds support for creating a mip-mapped CL image from a mip-mapped GL texture.</p>
+</div>
+<div class="paragraph">
+<p>To create a mip-mapped CL image from a mip-mapped GL texture, the <code>miplevel</code> argument to <a href="clCreateFromGLTexture.html"><code>clCreateFromGLTexture</code></a>, should be a negative value.
+If <code>miplevel</code> is a negative value then a CL mipmapped image object is created from a mipmapped GL texture object instead of a CL image object for a specific miplevel of a GL texture.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+For a detailed description of how the level of detail is computed, please refer to section 3.9.7 of the OpenGL 3.0 specification.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="EXTENSION.html">EXTENSION</a>, <a href="clGetGLContextInfoKHR.html"><code>clGetGLContextInfoKHR</code></a>, <a href="clCreateFromGLBuffer.html"><code>clCreateFromGLBuffer</code></a>, <a href="clCreateFromGLTexture.html"><code>clCreateFromGLTexture</code></a>, <a href="clCreateFromGLRenderbuffer.html"><code>clCreateFromGLRenderbuffer</code></a>, <a href="clGetGLObjectInfo.html"><code>clGetGLObjectInfo</code></a>, <a href="clGetGLTextureInfo.html"><code>clGetGLTextureInfo</code></a>, <a href="clEnqueueAcquireGLObjects.html"><code>clEnqueueAcquireGLObjects</code></a>, <a href="clEnqueueReleaseGLObjects.html"><code>clEnqueueReleaseGLObjects</code></a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=37" target="_blank">OpenCL 2.1 Extensions Specification, page 37</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

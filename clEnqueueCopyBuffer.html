@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueCopyBuffer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueCopyBuffer" class="article">
+<div id="header">
+<h1>clEnqueueCopyBuffer</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to copy from one buffer object to another.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueCopyBuffer(cl_command_queue command_queue,
+                           cl_mem src_buffer,
+                           cl_mem dst_buffer,
+                           size_t src_offset,
+                           size_t dst_offset,
+                           size_t size,
+                           cl_uint num_events_in_wait_list,
+                           const cl_event *event_wait_list,
+                           cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>The host command-queue in which the copy command will be queued.
+The OpenCL context associated with <code>command_queue</code>, <code>src_buffer</code>, and <code>dst_buffer</code> must be the same.</p>
+</dd>
+<dt class="hdlist1"><code>src_offset</code></dt>
+<dd>
+<p>The offset where to begin copying data from <code>src_buffer</code>.</p>
+</dd>
+<dt class="hdlist1"><code>dst_offset</code></dt>
+<dd>
+<p>The offset where to begin copying data into <code>dst_buffer</code>.</p>
+</dd>
+<dt class="hdlist1"><code>size</code></dt>
+<dd>
+<p>Refers to the size in bytes to copy.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list</code> <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular copy command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+<a href="clEnqueueBarrierWithWaitList.html"><code>clEnqueueBarrierWithWaitList</code></a> can be used instead.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if the context associated with <code>command_queue</code>, <code>src_buffer</code>, and <code>dst_buffer</code> are not the same or if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>src_buffer</code> and <code>dst_buffer</code> are not valid buffer objects.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>src_offset</code>, <code>dst_offset</code>, <code>size</code>, <code>src_offset</code> + <code>size</code>, or <code>dst_offset</code> + <code>size</code> require accessing elements outside the <code>src_buffer</code> and <code>dst_buffer</code> buffer objects respectively.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>size</code> is 0.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> is &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_MISALIGNED_SUB_BUFFER_OFFSET</code> if <code>src_buffer</code> is a sub-buffer object and <code>offset</code> specified when the sub-buffer object is created is not aligned to <code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code> value for device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_MISALIGNED_SUB_BUFFER_OFFSET</code> if <code>dst_buffer</code> is a sub-buffer object and <code>offset</code> specified when the sub-buffer object is created is not aligned to <code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code> value for device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_MEM_COPY_OVERLAP</code> if <code>src_buffer</code> and <code>dst_buffer</code> are the same buffer or subbuffer object and the source and destination regions overlap or if <code>src_buffer</code> and <code>dst_buffer</code> are different sub-buffers of the same associated buffer object and they overlap.
+The regions overlap if <code>src_offset</code> ≤ <code>dst_offset</code> ≤ <code>src_offset</code> + size - 1, or if <code>dst_offset</code> ≤ <code>src_offset</code> ≤ <code>dst_offset</code> + size - 1.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for data store associated with <code>src_buffer</code> or <code>dst_buffer</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueReadBuffer.html"><code>clEnqueueReadBuffer</code></a>, <a href="clEnqueueWriteBuffer.html"><code>clEnqueueWriteBuffer</code></a>, <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a>, <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>, <a href="clEnqueueCopyBufferToImage.html"><code>clEnqueueCopyBufferToImage</code></a>, <a href="clEnqueueCopyImageToBuffer.html"><code>clEnqueueCopyImageToBuffer</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=117" target="_blank">OpenCL 2.1 API Specification, page 117</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

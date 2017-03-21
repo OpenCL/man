@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clSetMemObjectDestructorCallback</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clSetCommandQueueProperty" class="article">
+<div id="header">
+<h1>clSetMemObjectDestructorCallback</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Registers a user callback function with a memory object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clSetMemObjectDestructorCallback(cl_mem memobj,
+                                        void (CL_CALLBACK *pfn_notify ) ( cl_mem memobj,
+                                        void *user_data ),
+                                        void *user_data)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>memobj</code></dt>
+<dd>
+<p>A valid memory object.</p>
+</dd>
+<dt class="hdlist1"><code>pfn_notify</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The callback function that can be registered by the application.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application&#8217;s responsibility to ensure that the callback function is thread-safe.
+The parameters to this callback function are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>memobj</code>: the memory object being deleted.
+When the user callback is called by the implementation, this memory object is no longer valid.
+<code>memobj</code> is only provided for reference purposes.</p>
+</li>
+<li>
+<p><code>user_data</code>: a pointer to user supplied data.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>user_data</code></dt>
+<dd>
+<p>Will be passed as the <code>user_data</code> argument when <code>pfn_notify</code> is called.
+<code>user_data</code> can be NULL.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each call to <code>clSetMemObjectDestructorCallback</code> registers the specified user callback function on a callback stack associated with <code>memobj</code>.
+The registered user callback functions are called in the reverse order in which they were registered.
+The user callback functions are called and then the memory object&#8217;s resources are freed and the memory object is deleted.
+This provides a mechanism for the application (and libraries) using <code>memobj</code> to be notified when the memory referenced by <code>host_ptr</code>, specified when the memory object is created and used as the storage bits for the memory object, can be reused or freed.</p>
+</div>
+<div class="paragraph">
+<p>When the user callback function is called by the implementation, the contents of the memory region pointed to by <code>host_ptr</code> (if the memory object is created with <code>CL_MEM_USE_HOST_PTR</code>) are undefined.
+The callback function is typically used by the application to either free or reuse the memory region pointed to by <code>host_ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of calling expensive system routines, OpenCL API calls to create contexts or command-queues, or blocking OpenCL operations from the following list below, in a callback is undefined.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="clFinish.html"><code>clFinish</code></a></p>
+</li>
+<li>
+<p><a href="clWaitForEvents.html"><code>clWaitForEvents</code></a></p>
+</li>
+<li>
+<p>blocking calls to <a href="clEnqueueReadBuffer.html"><code>clEnqueueReadBuffer</code></a>, <a href="clEnqueueReadBufferRect.html"><code>clEnqueueReadBufferRect</code></a>, <a href="clEnqueueWriteBuffer.html"><code>clEnqueueWriteBuffer</code></a>, <a href="clEnqueueWriteBufferRect.html"><code>clEnqueueWriteBufferRect</code></a></p>
+</li>
+<li>
+<p>blocking calls to <a href="clEnqueueReadImage.html"><code>clEnqueueReadImage</code></a> and <a href="clEnqueueWriteImage.html"><code>clEnqueueWriteImage</code></a></p>
+</li>
+<li>
+<p>blocking calls to <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a> and <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a></p>
+</li>
+<li>
+<p>blocking calls to <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a>, or <a href="clLinkProgram.html"><code>clLinkProgram</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If an application needs to wait for completion of a routine from the above list in a callback, please use the non-blocking form of the function, and assign a completion callback to it to do the remainder of your work.
+Note that when a callback (or other code) enqueues commands to a command-queue, the commands are not required to begin execution until the queue is flushed.
+In standard usage, blocking enqueue calls serve this role by implicitly flushing the queue.
+Since blocking calls are not permitted in callbacks, those callbacks that enqueue commands on a command queue should either call <a href="clFlush.html"><code>clFlush</code></a> on the queue before returning or arrange for <a href="clFlush.html"><code>clFlush</code></a> to be called later on another thread.</p>
+</div>
+<div class="paragraph">
+<p>The user callback function may not call OpenCL APIs with the memory object for which the callback function is invoked and for such cases the behavior of OpenCL APIs is considered to be undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>memobj</code> is not a valid memory object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>pfn_notify</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>, <a href="clGetCommandQueueInfo.html"><code>clGetCommandQueueInfo</code></a>, <a href="clReleaseCommandQueue.html"><code>clReleaseCommandQueue</code></a>, <a href="clRetainCommandQueue.html"><code>clRetainCommandQueue</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=164" target="_blank">OpenCL 2.1 API Specification, page 164</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateFromEGLImageKHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateFromEGLImageKHR" class="article">
+<div id="header">
+<h1>clCreateFromEGLImageKHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an EGLImage target from an EGLImage source.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_mem clCreateFromEGLImageKHR(cl_context context,
+                               CLeglDisplayKHR display,
+                               CLeglImageKHR image,
+                               cl_mem_flags flags,
+                               const cl_egl_image_properties_khr * properties,
+                               cl_int * errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dt class="hdlist1"><code>display</code></dt>
+<dd>
+<p>Should be of type <code>EGLDisplay</code>, cast into the type <code>CLeglDisplayKHR</code>.</p>
+</dd>
+<dt class="hdlist1"><code>image</code></dt>
+<dd>
+<p>Should be of type <code>EGLImageKHR</code>, cast into the type <code>CLeglImageKHR</code>.
+Assuming no errors are generated in this function, the resulting image object will be an EGLImage target of the specified EGLImage <code>image</code>.
+The resulting <code>cl_mem</code> is an image object which may be used normally by all OpenCL operations.
+This maps to an <code>image2d_t</code> type in OpenCL kernel code.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify usage information about the memory object being created.
+The possible values for <code>flags</code> are: <code>CL_MEM_READ_ONLY</code>, <code>CL_MEM_WRITE_ONLY</code> and <code>CL_MEM_READ_WRITE</code>.</p>
+</div>
+<div class="paragraph">
+<p>For OpenCL 1.2 <code>flags</code> also accepts: <code>CL_MEM_HOST_WRITE_ONLY</code>, <code>CL_MEM_HOST_READ_ONLY</code> or <code>CL_MEM_HOST_NO_ACCESS</code>.</p>
+</div>
+<div class="paragraph">
+<p>This extension only requires support for <code>CL_MEM_READ_ONLY</code>, and for OpenCL 1.2 <code>CL_MEM_HOST_NO_ACCESS</code>.
+For OpenCL 1.1, a <code>CL_INVALID_OPERATION</code> will be returned for images which do not support host mapping.</p>
+</div>
+<div class="paragraph">
+<p>If the value passed in <code>flags</code> is not supported by the OpenCL implementation it will return <code>CL_INVALID_VALUE</code>.
+The accepted <code>flags</code> may be dependent upon the texture format used.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>properties</code></dt>
+<dd>
+<p>Specifies a list of property names and their corresponding values.
+Each property name is immediately followed by the corresponding desired value.
+The list is terminated with 0.
+No properties are currently supported with this version of the extension.
+<code>properties</code> can be NULL.</p>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>== Description</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>clCreateFromEGLImageKHR</code> creates an EGLImage target of type <code>cl_mem</code> from the EGLImage source provided as <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Lifetime of Shared Objects</div>
+<p>An OpenCL memory object created from an EGL image remains valid according to the lifetime behaviour as described in EGL_KHR_image_base.</p>
+</div>
+<div class="paragraph">
+<p>"Any EGLImage siblings exist in any client API context"</p>
+</div>
+<div class="paragraph">
+<p>For OpenCL this means that while the application retains a reference on the <code>cl_mem</code> (EGL sibling) the image remains valid.</p>
+</div>
+<div class="paragraph">
+<div class="title">Synchronizing OpenCL and EGL Access to Shared Objects</div>
+<p>In order to ensure data integrity, the application is responsible for synchronizing access to shared CL/EGL objects by their respective APIs.
+Failure to provide such synchronization may result in race conditions and other undefined behavior including non-portability between implementations.</p>
+</div>
+<div class="paragraph">
+<p>Prior to calling <a href="clEnqueueAcquireEGLObjectsKHR.html"><code>clEnqueueAcquireEGLObjectsKHR</code></a>, the application must ensure that any pending operations which access the objects specified in <code>mem_objects</code> have completed.
+This may be accomplished in a portable way by ceasing all client operations on the resource, and issuing and waiting for completion of a <code>glFinish</code> command on all GL contexts with pending references to these objects.
+Implementations may offer more efficient synchronization methods, such as synchronisation primitives or fence operations.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, after calling <code>clEnqueueReleaseEGLImageObjects</code>, the application is responsible for ensuring that any pending OpenCL operations which access the objects specified in <code>mem_objects</code> have completed prior to executing subsequent commands in other APIs which reference these objects.
+This may be accomplished in a portable way by calling <a href="clWaitForEvents.html"><code>clWaitForEvents</code></a> with the event object returned by <a href="clEnqueueReleaseGLObjects.html"><code>clEnqueueReleaseGLObjects</code></a> , or by calling <a href="clFinish.html"><code>clFinish</code></a>.
+As above, some implementations may offer more efficient methods.</p>
+</div>
+<div class="paragraph">
+<p>Attempting to access the data store of an EGLImage object after it has been acquired by OpenCL and before it has been released will result in undefined behavior.
+Similarly, attempting to access a shared EGLImage object from OpenCL before it has been acquired by the OpenCL command queue or after it has been released, will result in undefined behavior.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid OpenCL context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>properties</code> contains invalid values, if <code>display</code> is not a valid display object or if <code>flags</code> are not in the set defined above.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EGL_OBJECT_KHR</code> if <code>image</code> is not a valid EGLImage object.</p>
+</li>
+<li>
+<p><code>CL_IMAGE_FORMAT_NOT_SUPPORTED</code> if the OpenCL implementation is not able to create a <code>cl_mem</code> compatible with the provided <code>CLeglImageKHR</code> for an implementation-dependent reason (this could be caused by, but not limited to, reasons such as unsupported texture formats, etc).</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if there are no devices in <code>context</code> that support images (i.e.
+<code>CL_DEVICE_IMAGE_SUPPORT</code> specified in table 4.3 (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>) is <code>CL_FALSE</code>) or if the flags passed are not supported for that image type.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_khr_egl_image.html"><code>cl_khr_egl_image</code></a>, <a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=167" target="_blank">OpenCL 2.1 Extensions Specification, page 167</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

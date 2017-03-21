@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>generic</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="genericAddressSpace" class="article">
+<div id="header">
+<h1>generic</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generic Address Space.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>__generic (unnamed address space)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generic address space (glossary): An address space that include the private, local, and global address spaces available to a device.
+The generic address space supports conversion of pointers to and from private, local and global address spaces, and hence lets a programmer write a single function that at compile time can take arguments from any of the three named address spaces.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Programmers often need functions callable from kernels where the pointers manipulated by those functions can point to multiple named address spaces.
+This saves a programmer from the error- prone and wasteful practice of creating multiple copies of functions; one for each named address space.
+Therefore the global, local and private address spaces belong to a single <em>generic address space</em>.
+This is closely modeled after the concept of a generic address space used in the embedded C standard (ISO/IEC 9899:1999).
+Since they all belong to a single generic address space, the following properties are supported for pointers to named address spaces in device memory:</p>
+</div>
+<div class="paragraph">
+<p>The following rules apply when using pointers that point to the generic address space:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A pointer that points to the <code>global</code>, <code>local</code> or <code>private</code> address space can be implicitly converted to a pointer to the unnamed generic address space but not vice-versa.</p>
+</li>
+<li>
+<p>Pointer casts can be used to cast a pointer that points to the <code>global</code>, <code>local</code> or <code>private</code> space to the unnamed generic addresss space and vice-versa.</p>
+</li>
+<li>
+<p>A pointer that points to the <code>constant</code> address space cannot be cast or implicitly converted to the generic address space.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the canonical example.
+In this example, function <code>foo</code>() is declared with an argument that is a pointer with no address space qualifier.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void foo(int *a)
+{
+    *a = *a + 2;
+}
+
+kernel void k1(local int *a)
+{
+    …
+    foo(a);
+    …
+}
+kernel void k2(global int *a)
+{
+    …
+    foo(a);
+    …
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example below, <code>var</code> is in the unnamed generic address space which gets mapped to the <code>global</code> or <code>local</code> address space depending on the result of the conditional expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel void bar(global int *g, local int *l)
+{
+    int *var;
+    if (is_even(get_global_id(0))
+        var = g;
+    else
+        var = l;
+    *var = 42;
+    …
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example below is an example with one unnamed generic address space pointer with multiple named address space assignments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>int *ptr;
+global int g;
+ptr = &amp;g; // legal
+
+local int l;
+ptr = &amp;l; // legal
+
+private int p;
+ptr = &amp;p; // legal
+
+constant int c;
+ptr = &amp;c; // illegal</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example below is an example with one unnamed generic address space pointer being assigned to point to several named address spaces.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>global int * gp;
+local int *lp;
+private int *pp;
+
+int *p;
+p = gp; // legal
+p = lp; // legal
+p = pp; // legal
+
+// it is illegal to convert from a generic pointer
+// to an explicit address space pointer without a cast:
+gp = p; // compile-time error
+lp = p; // compile-time error
+pp = p; // compile-time error</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="global.html"><code><em>global</code></a>, <a href="constant.html"><code></em>constant</code></a>, <a href="private.html"><code>__private</code></a>, <a href="qualifiers.html"><code>qualifiers</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=38" target="_blank">OpenCL 2.0 C Language Specification, page 38</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

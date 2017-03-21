@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetCommandQueueInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetCommandQueueInfo" class="article">
+<div id="header">
+<h1>clGetCommandQueueInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Query information about a command-queue.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetCommandQueueInfo(cl_command_queue command_queue,
+                             cl_command_queue_info param_name,
+                             size_t param_value_size,
+                             void *param_value,
+                             size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>Specifies the command-queue being queried.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>Specifies the information to query.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table below.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data being queried by <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The list of supported <code>param_name</code> values and the information returned in <code>param_value</code> by <code>clGetCommandQueueInfo</code> is described in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_command_queue_info</th>
+<th class="tableblock halign-left valign-top">Return Type and Information returned in param_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_CONTEXT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: <code>cl_context</code></p>
+</div>
+<div class="paragraph">
+<p>Return the context specified when the command-queue is created.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_DEVICE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: <code>cl_device_id</code></p>
+</div>
+<div class="paragraph">
+<p>Return the device specified when the command-queue is created.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_REFERENCE_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: <code>cl_uint</code></p>
+</div>
+<div class="paragraph">
+<p>Return the command-queue reference count.</p>
+</div>
+<div class="paragraph">
+<p>The reference count returned with <code>CL_QUEUE_REFERENCE_COUNT</code> should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_PROPERTIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: <code>cl_command_queue_properties</code></p>
+</div>
+<div class="paragraph">
+<p>Return the currently specified properties for the command-queue.
+These properties are specified by the value associated with the <code>CL_COMMAND_QUEUE_PROPERTIES</code> passed in <code>properties</code> argument in <a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: <code>cl_uint</code></p>
+</div>
+<div class="paragraph">
+<p>Return the currently specified size for the device command-queue.
+This query is only supported for device command queues.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_DEVICE_DEFAULT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: <code>cl_command_queue</code></p>
+</div>
+<div class="paragraph">
+<p>Return the current default command queue for the underlying device.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is possible that a device(s) becomes unavailable after a context and command-queues that use this device(s) have been created and commands have been queued to command-queues.
+In this case the behavior of OpenCL API calls that use this context (and command-queues) are considered to be implementation-defined.
+The user callback function, if specified, when the context is created can be used to record appropriate information in the <code>errinfo</code>, <code>private_info</code> arguments passed to the callback function when the device becomes unavailable.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns <code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid command-queue.</p>
+</li>
+<li>
+<p>Returns <code>CL_INVALID_VALUE</code> if <code>param_name</code> is not one of the supported values or if size in bytes specified by <code>param_value_size</code> is less than size of return type and <code>param_value</code> is not a NULL value.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>, <a href="clReleaseCommandQueue.html"><code>clReleaseCommandQueue</code></a>, <a href="clRetainCommandQueue.html"><code>clRetainCommandQueue</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=101" target="_blank">OpenCL 2.1 API Specification, page 101</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

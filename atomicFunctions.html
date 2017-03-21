@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Atomic Functions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Atomic Functions</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The atomic functions are shown below.
+Click an item in the table below for details about that function.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_init.html"><code>atomic_init</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_work_item_fence.html"><code>atomic_work_item_fence</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_store.html"><code>atomic_store</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_store.html"><code>atomic_store_explicit</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_exchange.html"><code>atomic_exchange</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_exchange.html"><code>atomic_exchange_explicit</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_compare_exchange.html"><code>atomic_compare_exchange_strong</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_compare_exchange.html"><code>atomic_compare_exchange_strong_explicit</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_compare_exchange.html"><code>atomic_compare_exchange_weak</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_compare_exchange.html"><code>atomic_compare_exchange_weak_explicit</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_fetch_key.html"><code>atomic_fetch_key</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_fetch_key.html"><code>atomic_fetch_key_explicit</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_flag_test_and_set.html"><code>atomic_flag_test_and_set</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_flag_test_and_set.html"><code>atomic_flag_test_and_set_explicit</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_flag_clear.html"><code>atomic_flag_clear</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="atomic_flag_clear.html"><code>atomic_flag_clear_explicit</code></a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<div class="title">64-bit Atomics</div>
+<p>The optional extension <a href="cl_khr_int64_base_atomics.html"><code>cl_khr_int64_base_atomics</code></a> implements atomic operations on 64-bit signed and unsigned integers to locations in <code><em>global</code> and <code></em>local</code> memory.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="cl_khr_int64_extended_atomics.html"><code>cl_khr_int64_extended_atomics</code></a> extension enables additional atomic functions using types <code>long</code> and <code>unsigned long</code>.
+An application that wants to use this extension will need to include the <code>#pragma OPENCL EXTENSION cl_khr_int64_extended_atomics : enable</code> in the OpenCL program source.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As of OpenCL version 1.1, <code>cl_khr_global_int32_base_atomics</code>, <code>cl_khr_global_int32_extended_atomics</code>, <code>cl_khr_local_int32_base_atomics</code> and <code>cl_khr_local_int32_extended_atomics</code> extensions are core features.
+The built-in atomic function names are changed to use the <code>atomic_ prefix</code> instead of <code>atom_</code>.</p>
+</div>
+<div class="paragraph">
+<p>The list of supported atomic type names are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>atomic_int</code></p>
+</li>
+<li>
+<p><code>atomic_uint</code></p>
+</li>
+<li>
+<p><code>atomic_long</code></p>
+</li>
+<li>
+<p><code>atomic_ulong</code></p>
+</li>
+<li>
+<p><code>atomic_float</code></p>
+</li>
+<li>
+<p><code>atomic_double</code></p>
+</li>
+<li>
+<p><code>atomic_intptr_t</code></p>
+</li>
+<li>
+<p><code>atomic_uintptr_t</code></p>
+</li>
+<li>
+<p><code>atomic_size_t</code></p>
+</li>
+<li>
+<p><code>atomic_ptrdiff_t</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>atomic_long</code> and <code>atomic_ulong</code> types are supported if the <a href="cl_khr_int64_base_atomics.html"><code>cl_khr_int64_base_atomics</code></a> and <a href="cl_khr_int64_extended_atomics.html"><code>cl_khr_int64_extended_atomics</code></a> extensions are supported.</p>
+</div>
+<div class="paragraph">
+<p>The <code>atomic_double</code> type is only supported if double precision is supported and the <a href="cl_khr_int64_base_atomics.html"><code>cl_khr_int64_base_atomics</code></a> and <a href="cl_khr_int64_extended_atomics.html"><code>cl_khr_int64_extended_atomics</code></a> extensions are supported.</p>
+</div>
+<div class="paragraph">
+<p>If the device address space is 64-bits, the data types <code>atomic_intptr_t</code>, <code>atomic_uintptr_t</code>, <code>atomic_size_t</code> and <code>atomic_ptrdiff_t</code> are supported if the <a href="cl_khr_int64_base_atomics.html"><code>cl_khr_int64_base_atomics</code></a> and <a href="cl_khr_int64_extended_atomics.html"><code>cl_khr_int64_extended_atomics</code></a> extensions are supported.</p>
+</div>
+<div class="paragraph">
+<p>Arguments to a kernel can be declared to be a pointer to the above atomic types or the <code>atomic_flag</code> type.</p>
+</div>
+<div class="paragraph">
+<p>The representation of atomic integer, floating-point and pointer types have the same size as their corresponding regular types.
+The <code>atomic_flag</code> type must be implemented as a 32-bit integer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="memory_order.html"><code>memory_order</code></a>, <a href="memory_scope.html"><code>memory_scope</code></a>, <a href="atomic_flag.html">atomic_flag type</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=103" target="_blank">OpenCL 2.0 C Language Specification, page 103</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

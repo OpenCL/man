@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueReleaseEGLObjectsKHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueReleaseEGLObjectsKHR" class="article">
+<div id="header">
+<h1>clEnqueueReleaseEGLObjectsKHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Release OpenCL memory objects that have been created from EGL resources.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueReleaseEGLObjectsKHR(cl_command_queue command_queue,
+                                     cl_uint num_objects,
+                                     const cl_mem *mem_objects,
+                                     cl_uint num_events_in_wait_list,
+                                     const cl_event *event_wait_list,
+                                     cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>A valid command-queue.</p>
+</dd>
+<dt class="hdlist1"><code>num_objects</code></dt>
+<dd>
+<p>The number of memory objects to be acquired in <code>mem_objects</code>.</p>
+</dd>
+<dt class="hdlist1"><code>mem_objects</code></dt>
+<dd>
+<p>A pointer to a list of OpenCL memory objects that were created from EGL resources, within the context associated with <code>command_queue</code>.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list</code> <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this command and can be used to query or queue a wait for the command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This function is used to release OpenCL memory objects that have been created from EGL resources.
+The EGL objects are released by the OpenCL context associated with <code>command_queue</code>.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL memory objects created from EGL resources which have been acquired by OpenCL must be released by OpenCL before they may be accessed by EGL or by EGL client APIs.</p>
+</div>
+<div class="paragraph">
+<p>Accessing a EGL resource while its corresponding OpenCL memory object is acquired is in error and will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+If <code>num_objects</code> is 0 and <code>mem_objects</code> is NULL the function does nothing and returns <code>CL_SUCCESS</code>.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_objects</code> is zero and <code>mem_objects</code> is not a NULL value or if <code>num_objects</code> &gt; 0 and <code>mem_objects</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if memory objects in <code>mem_objects</code> are not valid OpenCL memory objects in the context associated with <code>command_queue</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EGL_OBJECT_KHR</code> if memory objects in <code>mem_objects</code> have not been created from EGL resources.</p>
+</li>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_khr_egl_image.html"><code>cl_khr_egl_image</code></a>, <a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a>, <a href="clEnqueueAcquireEGLObjectsKHR.html"><code>clEnqueueAcquireEGLObjectsKHR</code></a>, <a href="clCreateFromEGLImageKHR.html"><code>clCreateFromEGLImageKHR</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=170" target="_blank">OpenCL 2.1 Extensions Specification, page 170</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

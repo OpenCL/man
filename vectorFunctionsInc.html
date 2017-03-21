@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<p>Vector Data Load and Store Functions allow you to read and write vector types from a pointer to memory.</p>
+</div>
+<div class="paragraph">
+<p>The suffix <code>n</code> in the function names (i.e.
+vload`n`, vstore`n` etc.) represent <code>n</code>-element vectors, where <code>n</code> = 2, 3, 4, 8 or 16.</p>
+</div>
+<div class="paragraph">
+<p>The results of vector data load and store functions are undefined if the address being read from or written to is not correctly aligned.
+The pointer argument <code>p</code> can be a pointer to <a href="global.html"><code>global</code></a>, <a href="local.html"><code>local</code></a>, or <a href="private.html"><code>private</code></a> memory for store functions.
+The pointer argument <code>p</code> can be a pointer to global, local, constant or private memory for load functions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The vector data load and store functions variants that take pointer arguments which point to the generic address space are also supported.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</body>
+</html>

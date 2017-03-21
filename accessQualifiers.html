@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Access Qualifiers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="accessQualifiers" class="article">
+<div id="header">
+<h1>Access Qualifiers</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Access Qualifiers for image memory objects.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>__read_only
+__write_only
+__read_write
+read_only
+write_only
+read_write</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Image objects specified as arguments to a kernel can be declared to be read-only, write-only or read-write.
+The <code><em>read_only</code> (or <code>read_only</code>) and <code></em>write_only</code> (or <code>write_only</code>) qualifiers must be used with image object arguments to declare if the image object is being read or written by a kernel or function.
+The <code>__read_write</code> (or <code>read_write</code>) qualifier must be used with image object arguments of kernels and of user-defined functions to declare if the image object is being both read and written by the kernel.
+If no qualifier is provided, <code>read_only</code> is assumed.</p>
+</div>
+<div class="paragraph">
+<p>In the following example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel void
+foo (read_only image2d_t imageA,
+    write_only image2d_t imageB)
+{
+    ...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>imageA</code> is a read-only 2D image object, and <code>imageB</code> is a write-only 2D image object.</p>
+</div>
+<div class="paragraph">
+<p>The sampler-less read image and write image built-ins can be used with image declared with the <code><em>read_write</code> (or <code>read_write</code>) qualifier.
+Calls to built-ins that read from an image using a sampler for images declared with the <code></em>read_write</code> (or <code>read_write</code>) qualifier will be a compilation error.</p>
+</div>
+<div class="paragraph">
+<p>Pipe objects specified as arguments to a kernel also use these access qualifiers.
+Refer to section 6.13.16 for a detailed description on how these access qualifiers can be used with pipes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code><em>read_only</code>, <code></em>write_only</code>, <code>__read_write</code>, <code>read_only</code>, <code>write_only</code> and <code>read_write</code> names are reserved for use as access qualifiers and shall not be used otherwise.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="qualifiers.html"><code>qualifiers</code></a>,</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=46" target="_blank">OpenCL 2.0 C Language Specification, page 46</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

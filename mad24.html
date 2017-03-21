@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>mad24</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="mad24" class="article">
+<div id="header">
+<h1>mad24</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Fast integer function to multiply 24-bit integers and add a 32-bit value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">gentype mad24(gentype x,
+              gentype y,
+              gentype z)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>mad24</code> multiplies two 24-bit integer values <code>x</code> and <code>y</code> and adds the 32-bit integer result to the 32-bit integer <code>z</code>.
+See <a href="mul24.html"><code>mul24</code></a> to see how the 24-bit integer multiplication is performed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Fast integer functions can be used for optimizing performance of kernels.
+We use the generic type name <code>gentype</code> to indicate that the function can take <code>int</code>, <code>int2</code>, <code>int3</code>, <code>int4</code>, <code>int8</code>, <code>int16</code>, <code>uint</code>, <code>uint2</code>, <code>uint3</code>, <code>uint4</code>, <code>uint8</code>, or <code>uint16</code> as the type for the arguments.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="integerFunctions.html">Integer Functions</a>, <a href="mul24.html"><code>mul24</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=82" target="_blank">OpenCL 2.0 C Language Specification, page 82</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

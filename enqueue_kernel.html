@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>enqueue_kernel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="enqueue_kernel" class="article">
+<div id="header">
+<h1>enqueue_kernel</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueue the block for execution to <code>queue</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   void ( ^block)(void))
+
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   uint num_events_in_wait_list,
+                   const clk_event_t * event_wait_list,
+                   clk_event_t * event_ret,
+                   void ( ^block)(void))
+
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   void ( ^block)(local void *, ...),
+                   uint size0, ...)
+
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   uint num_events_in_wait_list,
+                   const clk_event_t * event_wait_list,
+                   clk_event_t * event_ret,
+                   void ( ^block)(local void *, ...),
+                   uint size0, ...)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueue the block for execution to <code>queue</code>.
+If an event is returned, <code>enqueue_kernel</code> performs an implicit retain on the returned event.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL 2.0 allows a kernel to independently enqueue to the same device, without host interaction.
+A kernel may enqueue code represented by Block syntax, and control execution order with event dependencies including user events and markers.
+There are several advantages to using the Block syntax: it is more compact; it does not require a <code>cl_kernel</code> object; and enqueuing can be done as a single semantic step.</p>
+</div>
+<div class="paragraph">
+<p>The <code>enqueue_kernel</code> built-in function allows a work-item to enqueue a block.
+Work-items can enqueue multiple blocks to a device queue(s).</p>
+</div>
+<div class="paragraph">
+<p>The <code>kernel_enqueue_flags_t</code> argument to <code>enqueue_kernel</code> built-in functions can be used to specify when the child kernel begins execution.
+Supported values are described in the table below. (Implementations are not required to honor this flag.
+Implementations may not schedule kernel launch earlier than the point specified by this flag, however):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">kernel_enqueue_flags_t enum</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CLK_ENQUEUE_FLAGS_NO_WAIT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Indicates that the enqueued kernels do not need to wait for the parent kernel to finish execution before they begin execution.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CLK_ENQUEUE_FLAGS_WAIT_KERNEL</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Indicates that all work-items of the parent kernel must finish executing and all immediate side effects committed before the enqueued child kernel may begin execution. (Immediate meaning not side effects resulting from child kernels.
+The side effects would include stores to global memory and pipe reads and writes.)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CLK_ENQUEUE_FLAGS_WAIT_WORK_GROUP</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Indicates that the enqueued kernels wait only for the workgroup that enqueued the kernels to finish before they begin execution.
+This acts as a memory synchronization point between work-items in a work-group and child kernels enqueued by work-items in the work-group.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The <code>kernel_enqueue_flags_t</code> flags are useful when a kernel enqueued from the host and executing on a device enqueues kernels on the device.
+The kernel enqueued from the host may not have an event associated with it.
+The <code>kernel_enqueue_flags_t</code> flags allow the developer to indicate when the child kernels can begin execution.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A block passed to <code>enqueue_kernel</code> can have arguments declared to be a pointer to local memory.
+The <code>enqueue_kernel</code> built-in function variants allow blocks to be enqueued with a variable number of arguments.
+Each argument must be declared to be a pointer of a data type to local memory.
+These <code>enqueue_kernel</code> built-in function variants also have a corresponding number of arguments each of type uint that follow the block argument.
+These arguments specify the size of each local memory pointer argument of the enqueued block.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_device_enqueue_local_arg_types.html"><code>cl_khr_device_enqueue_local_arg_types</code></a> extension is enabled, then replace all occurrences of <code>local void *</code> in the table above with <code>local gentype *</code>.
+We use the generic type name <code>gentype</code> to indicate the built-in OpenCL C scalar or vector integer or floating-point data types, or any user defined type built from these scalar and vector data types which can be used as the type of the pointee of the arguments of the kernel enqueue functions listed above.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Below are some examples of how to enqueue a block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel void
+my_func_A(global int *a, global int *b, global int *c)
+{
+    ...
+}
+
+kernel void
+my_func_B(global int *a, global int *b, global int *c)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // example – enqueue a kernel as a block
+    enqueue_kernel(get_default_queue(), ndrange,
+                           ^{my_func_A(a, b, c);});
+    ...
+}
+
+kernel void
+my_func_C(global int *a, global int *b, global int *c)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // note that a, b and c are variables in scope of
+    // the block
+    void (^my_block_A)(void) = ^{my_func_A(a, b, c);};
+
+    // enqueue the block variable
+    enqueue_kernel(get_default_queue(),
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange,
+                   my_block_A);
+    ...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example below shows how to declare a block literal and enqueue it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel void
+my_func(global int *a, global int *b)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // note that a, b and c are variables in scope of
+    // the block
+    void (^my_block_A)(void) =
+          ^{ size_t id = get_global_id(0);
+             b[id] += a[id];
+        };
+
+    // enqueue the block variable
+    enqueue_kernel(get_default_queue(),
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange,
+                   my_block_A);
+
+    // or we could have done the following
+    enqueue_kernel(get_default_queue(),
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange,
+                   ^{
+                     size_t id = get_global_id(0);
+                     b[id] += a[id];
+                    };
+}</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Blocks passed to <code>enqueue_kernel</code> cannot use global variables or stack variables local to the enclosing lexical scope that are a pointer type in the local or private address space.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kernel void
+foo(global int *a, local int *lptr, …)
+{
+    enqueue_kernel(get_default_queue(),
+           CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+           ndrange,
+           ^{
+              size_t id = get_global_id(0);
+              local int *p = lptr; // undefined behavior
+            };
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See section 6.13.17 of the specification for more information and examples.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>enqueue_kernel</code> returns <code>CL_SUCCESS</code> if the block is enqueued successfully and returns <code>CL_ENQUEUE_FAILURE</code> otherwise.
+If the –g compile option is specified in compiler options passed to <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clBuildProgram.html"><code>clBuildProgram</code></a> when compiling or building the parent program, the following errors may be returned instead of <code>CL_ENQUEUE_FAILURE</code> to indicate why <code>enqueue_kernel</code> failed to enqueue the block:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CLK_INVALID_QUEUE</code> if <code>queue</code> is not a valid device queue.</p>
+</li>
+<li>
+<p><code>CLK_INVALID_NDRANGE</code> if <code>ndrange</code> is not a valid ND-range descriptor or if the program was compiled with <code>–cl-uniform-work-group-size</code> and the local_work_size is specified in <code>ndrange</code> but the global_work_size specified in <code>ndrange</code> is not a multiple of the local_work_size.</p>
+</li>
+<li>
+<p><code>CLK_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or if <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CLK_DEVICE_QUEUE_FULL</code> if <code>queue</code> is full.</p>
+</li>
+<li>
+<p><code>CLK_INVALID_ARG_SIZE</code> if size of local memory arguments is 0.</p>
+</li>
+<li>
+<p><code>CLK_EVENT_ALLOCATION_FAILURE</code> if <code>event_ret</code> is not NULL and an event could not be allocated.</p>
+</li>
+<li>
+<p><code>CLK_OUT_OF_RESOURCES</code> if there is a failure to queue the block in <code>queue</code> because of insufficient resources needed to execute the kernel.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=162" target="_blank">OpenCL 2.0 C Language Specification, page 162</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

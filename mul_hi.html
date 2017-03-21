@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>mul_hi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="mul_hi" class="article">
+<div id="header">
+<h1>mul_hi</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns the high half of the product of <code>x</code> and <code>y</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">gentype mul_hi(gentype x,
+               gentype y)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>mul_hi</code> computes <code>x</code> * <code>y</code> and returns the high half of the product of <code>x</code> and <code>y</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about built-in integer functions: Built-in integer functions take scalar or vector arguments.
+The vector versions of the integer functions operate component-wise.
+The description is per component.</p>
+</div>
+<div class="paragraph">
+<p>We use the generic type name <code>gentype</code> to indicate that the function can take <code>char</code>, <code>char{2|3|4|8|16}</code>, <code>uchar</code>, <code>uchar{2|3|4|8|16}</code>, <code>short</code>, <code>short{2|3|4|8|16}</code>, <code>ushort</code>, <code>ushort{2|3|4|8|16}</code>, <code>int</code>, <code>int{2|3|4|8|16}</code>, <code>uint</code>, <code>uint{2|3|4|8|16}</code>, <code>long</code>, <code>long{2|3|4|8|16}</code>, <code>ulong</code>, or <code>ulong{2|3|4|8|16}</code> as the type for the arguments.
+We use the generic type name <code>ugentype</code> to refer to unsigned versions of <code>gentype</code>.
+For example, if <code>gentype</code> is <code>char4</code>, <code>ugentype</code> is <code>uchar4</code>.</p>
+</div>
+<div class="paragraph">
+<p>We also use the generic type name <code>sgentype</code> to indicate that the function can take a scalar data type i.e.
+<code>char</code>, <code>uchar</code>, <code>short</code>, <code>ushort</code>, <code>int</code>, <code>uint</code>, <code>long</code>, or <code>ulong</code> as the type for the arguments.
+For built-in integer functions that take <code>gentype</code> and <code>sgentype</code> arguments, the <code>gentype</code> argument must be a vector or scalar version of the <code>sgentype</code> argument.
+For example, if <code>sgentype</code> is <code>uchar</code>, <code>gentype</code> must be <code>uchar</code> or <code>uchar{2|3|4|8|16}</code>.
+For vector versions, <code>sgentype</code> is implicitly widened to <code>gentype</code> as described in section 6.3.a of the OpenCL specification.</p>
+</div>
+<div class="paragraph">
+<p>For any specific use of a function, the actual type has to be the same for all arguments and the return type unless otherwise specified.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="integerFunctions.html">Integer Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=82" target="_blank">OpenCL 2.0 C Language Specification, page 82</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

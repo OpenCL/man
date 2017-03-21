@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetHostTimer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetHostTimer" class="article">
+<div id="header">
+<h1>clGetHostTimer</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Return the current value of the host clock as seen by device.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetHostTimer(cl_device_id device,
+                      cl_ulong * host_timestamp)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>device</code></dt>
+<dd>
+<p>A device returned by <a href="clGetDeviceIDs.html"><code>clGetDeviceIDs</code></a>.</p>
+</dd>
+<dt class="hdlist1"><code>host_timestamp</code></dt>
+<dd>
+<p>Will be updated with the value of the current timer in nanoseconds.
+The resolution of the timer may be queried via <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a> and the flag <code>CL_PLATFORM_HOST_TIMER_RESOLUTION</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Return the current value of the host clock as seen by <code>device</code>.
+This value is in the same timebase as the host_timestamp returned from <a href="clGetDeviceAndHostTimer.html"><code>clGetDeviceAndHostTimer</code></a>.
+The implementation will return with as low a latency as possible to allow a correlation with a subsequent application sampled time.
+The host timestamp and device timestamp returned by this function and <a href="clGetDeviceAndHostTimer.html"><code>clGetDeviceAndHostTimer</code></a> each have an implementation defined timebase.
+The timestamps will always be in their respective timebases regardless of which query function is used.
+The timestamp returned from <a href="clGetEventProfilingInfo.html"><code>clGetEventProfilingInfo</code></a> for an event on a device and a device timestamp queried from the same device will always be in the same timebase.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clGetHostTimer</code> will return <code>CL_SUCCESS</code> with a time value in <code>host_timestamp</code> if provided.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if <code>device</code> is not a valid OpenCL device.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>host_timestamp</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetDeviceAndHostTimer.html"><code>clGetDeviceAndHostTimer</code></a>, <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=83" target="_blank">OpenCL 2.1 API Specification, page 83</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

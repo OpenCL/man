@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>vec_step</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="shuffle" class="article">
+<div id="header">
+<h1>vec_step</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Takes a built-in scalar or vector data type argument and returns an integer value representing the number of elements in the scalar or vector.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">int vec_step(gentype n a)
+
+int vec_step(char3 a)
+
+int vec_step(uchar3 a)
+
+int vec_step(short3 a)
+
+int vec_step(ushort3 a)
+
+int vec_step(half3 a)
+
+int vec_step(int3 a)
+
+int vec_step(uint3 a)
+
+int vec_step(long3 a)
+
+int vec_step(ulong3 a)
+
+int vec_step(float3 a)
+
+int vec_step(double3 a)
+
+int vec_step(type)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>vec_step</code> built-in function takes a built-in scalar or vector data type argument and returns an integer value representing the number of elements in the scalar or vector.</p>
+</div>
+<div class="paragraph">
+<p>For all scalar types, <code>vec_step</code> returns 1.</p>
+</div>
+<div class="paragraph">
+<p>The <code>vec_step</code> built-in functions that take a 3-component vector return 4.</p>
+</div>
+<div class="paragraph">
+<p><code>vec_step</code> may also take a pure type as an argument, e.g.
+<code>vec_step</code>(<code>float2</code>)</p>
+</div>
+<div class="paragraph">
+<p>We use the generic type name <code>gentypen</code> (or <code>gentypem</code>) to indicate the built-in data types <code>char{2|4|8|16}</code>, <code>uchar{2|4|8|16}</code>, <code>short{2|4|8|16}</code>, <code>ushort{2|4|8|16}</code>, <code>int{2|4|8|16}</code>, <code>uint{2|4|8|16}</code>, <code>long{2|4|8|16}</code>, <code>ulong{2|4|8|16}</code>, <code>float{2|4|8|16}</code> or <code>double{2|4|8|16}</code> as the type for the arguments unless otherwise stated.
+We use the generic name <code>ugentypen</code> to indicate the built-in unsigned integer data types.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentypen</code> (or <code>gentypem</code>) may indicate the data type <code>half{2|4|8|16}</code> if the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is supported.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="miscVectorFunctions.html">Miscellaneous Vector Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=113" target="_blank">OpenCL 2.0 C Language Specification, page 113</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

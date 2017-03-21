@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_initialize_memory</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_initialize_memory" class="article">
+<div id="header">
+<h1>cl_khr_initialize_memory</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Extension adds support for initializing local and private memory before a kernel begins execution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION cl_khr_initialize_memory : enable</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Memory is allocated in various forms in OpenCL both explicitly (global memory) or implicitly (local, private memory).
+This allocation so far does not provide a straightforward mechanism to initialize the memory on allocation.
+In other words what is lacking is the equivalent of calloc for the currently supported malloc like capability.
+This functionality is useful for a variety of reasons including ease of debugging, application controlled limiting of visibility to previous contents of memory and in some cases, optimization.</p>
+</div>
+<div class="paragraph">
+<p>This extension adds support for initializing local and private memory before a kernel begins execution.
+This extension name is <code>cl_khr_initialize_memory</code>.</p>
+</div>
+<div class="paragraph">
+<p>Add a new context property to table 4.5 in section 4.4 (see <a href="clCreateContext.html"><code>clCreateContext</code></a>):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_context_properties enum</th>
+<th class="tableblock halign-left valign-top">Property value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_MEMORY_- INITIALIZE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_context_memory_- initialize_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes which memory types for the context must be initialized.
+This is a bit-field, where the following values are currently supported:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_CONTEXT_MEMORY_INITIALIZE_LOCAL_KHR</code> – Initialize local memory to zeros.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_CONTEXT_MEMORY_INITIALIZE_PRIVATE_KHR</code> – Initialize private memory to zeros.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Updates to section 6.9 –Restrictions:</p>
+</div>
+<div class="paragraph">
+<p>If the context is created with <code>CL CONTEXT MEMORY INITIALIZE KHR</code>, appropriate memory locations as specified by the bit-field is initialized with zeroes, prior to the start of execution of any kernel.
+The driver chooses when, prior to kernel execution, the initialization of local and/or private memory is performed.
+The only requirement is there should be no values set from outside the context, which can be read during a kernel execution.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=120" target="_blank">OpenCL 2.1 Extensions Specification, page 120</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

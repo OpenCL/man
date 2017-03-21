@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">Multiple Host Threads</div>
+<p>An OpenCL API call is considered to be <em>thread-safe</em> if the internal state as managed by OpenCL remains consistent when called simultaneously by multiple <em>host</em> threads.
+OpenCL API calls that are <em>thread-safe</em> allow an application to call these functions in multiple <em>host</em> threads without having to implement mutual exclusion across these <em>host</em> threads i.e.
+they are also re-entrant-safe.</p>
+</div>
+<div class="paragraph">
+<p>All OpenCL API calls are thread-safe except those that modify the state of cl_kernel objects: <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>, <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a>, <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> and <a href="clCloneKernel.html"><code>clCloneKernel</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="clSetKernelArg.html"><code>clSetKernelArg</code></a> , <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a>, <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> and <a href="clCloneKernel.html"><code>clCloneKernel</code></a> are safe to call from any host thread, and safe to call re-entrantly so long as concurrent calls to any combination of these API calls operate on different cl_kernel objects.
+The state of the cl_kernel object is undefined if <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>, <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a>, <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> or <a href="clCloneKernel.html"><code>clCloneKernel</code></a> are called from multiple host threads on the same cl_kernel object at the same time.
+Please note that there are additional limitations as to which OpenCL APIs may be called from OpenCL callback functions&#8201;&#8212;&#8201;please see section 5.11.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of OpenCL APIs called from an interrupt or signal handler is implementation-defined.</p>
+</div>
+<div class="paragraph">
+<p>There is an inherent race condition in the design of OpenCL that occurs between setting a kernel argument and using the kernel with <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.
+Another host thread might change the kernel arguments between when a host thread sets the kernel arguments and then enqueues the kernel, causing the wrong kernel arguments to be enqueued.
+Rather than attempt to share <code>cl_kernel</code> objects among multiple host threads, applications are strongly encouraged to make additional <code>cl_kernel</code> objects for kernel functions for each host thread.</p>
+</div>
+</div>
+</body>
+</html>

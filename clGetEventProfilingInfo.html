@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetEventProfilingInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetEventProfilingInfo" class="article">
+<div id="header">
+<h1>clGetEventProfilingInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns profiling information for the command associated with event if profiling is enabled.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetEventProfilingInfo(cl_event event,
+                               cl_profiling_info param_name,
+                               size_t param_value_size,
+                               void *param_value,
+                               size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Specifies the event object.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>Specifies the profiling data to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetEventProfilingInfo</code> is described in the table of parameter queries below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+if <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The following is a table of <code>clGetEventProfilingInfo</code> parameter queries</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_profiling_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Info.
+returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROFILING_COMMAND_QUEUED</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 64-bit value that describes the current device time counter in nanoseconds when the command identified by <code>event</code> is enqueued in a command-queue by the host.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROFILING_COMMAND_SUBMIT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 64-bit value that describes the current device time counter in nanoseconds when the command identified by <code>event</code> that has been enqueued is submitted by the host to the device associated with the command-queue.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROFILING_COMMAND_START</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 64-bit value that describes the current device time counter in nanoseconds when the command identified by <code>event</code> starts execution on the device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROFILING_COMMAND_END</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 64-bit value that describes the current device time counter in nanoseconds when the command identified by <code>event</code> has finished execution on the device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROFILING_COMMAND_COMPLETE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 64-bit value that describes the current device time counter in nanoseconds when the command identified by <code>event</code> and any child commands enqueued by this command on the device have finished execution.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The unsigned 64-bit values returned can be used to measure the time in nano-seconds consumed by OpenCL commands.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL devices are required to correctly track time across changes in device frequency and power states.
+The <code>CL_DEVICE_PROFILING_TIMER_RESOLUTION</code> specifies the resolution of the timer i.e.
+the number of nanoseconds elapsed before the timer is incremented.</p>
+</div>
+<div class="paragraph">
+<p>Event objects can be used to capture profiling information that measure execution time of a command.
+Profiling of OpenCL commands can be enabled either by using a command-queue created with <code>CL_QUEUE_PROFILING_ENABLE</code> flag set in <code>properties</code> argument to <a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully and the profiling information has been recorded.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_PROFILING_INFO_NOT_AVAILABLE</code> if the <code>CL_QUEUE_PROFILING_ENABLE</code> flag is not set for the command-queue, if the execution status of the command identified by <code>event</code> is not <code>CL_COMPLETE</code> or if <code>event</code> refers to the <a href="clEnqueueSVMFree.html"><code>clEnqueueSVMFree</code></a> command or is a user event object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the above table and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT</code> if <code>event</code> is a not a valid event object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=263" target="_blank">OpenCL 2.1 API Specification, page 263</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

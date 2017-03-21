@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetKernelSubGroupInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetKernelSubGroupInfo" class="article">
+<div id="header">
+<h1>clGetKernelSubGroupInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns information about the kernel object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetKernelSubGroupInfo(cl_kernel kernel,
+                               cl_device_id device,
+                               cl_kernel_sub_group_info param_name,
+                               size_t input_value_size,
+                               const void *input_value,
+                               size_t param_value_size,
+                               void *param_value,
+                               size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>kernel</code></dt>
+<dd>
+<p>Specifies the kernel object being queried.</p>
+</dd>
+<dt class="hdlist1"><code>device</code></dt>
+<dd>
+<p>Identifies a specific device in the list of devices associated with <code>kernel</code>.
+The list of devices is the list of devices in the OpenCL context that is associated with <code>kernel</code>.
+If the list of devices associated with <code>kernel</code> is a single device, <code>device</code> can be a NULL value.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>Specifies the information to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetKernelSubGroupInfo</code> is described in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>input_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>input_value</code>.
+This size must be == size of input type as described in table below.</p>
+</dd>
+<dt class="hdlist1"><code>input_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate parameterization of the query is passed from.
+If <code>input_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Used to specify the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_kernel_sub_group_info</th>
+<th class="tableblock halign-left valign-top">Input Type</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Info.
+returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_MAX_SUB_- GROUP_SIZE_FOR_NDRANGE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the maximum sub-group size for this kernel.
+All subgroups must be the same size, while the last sub-group in any work-group (i.e.
+the sub-group with the maximum index) could be the same or smaller size.</p>
+</div>
+<div class="paragraph">
+<p>The <code>input_value</code> must be an array of <code>size_t</code> values corresponding to the local work size parameter of the intended dispatch.
+The number of dimensions in the ND-range will be inferred from the value specified for <code>input_value_size</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_SUB_GROUP_- COUNT_FOR_NDRANGE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t *</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the number of sub-groups that will be present in each work-group for a given local work size.
+All workgroups, apart from the last work-group in each dimension in the presence of non-uniform work-group sizes, will have the same number of subgroups.</p>
+</div>
+<div class="paragraph">
+<p>The <code>input_value</code> must be an array of <code>size_t</code> values corresponding to the local work size parameter of the intended dispatch.
+The number of dimensions in the ND-range will be inferred from the value specified for <code>input_value_size</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_LOCAL_SIZE_ FOR_SUB_GROUP_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t []</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the local size that will generate the requested number of sub- groups for the kernel.
+The output array must be an array of <code>size_t</code> values corresponding to the local size parameter.
+Any returned work-group will have one dimension.
+Other dimensions inferred from the value specified for <code>param_value_size</code> will be filled with the value 1.
+The returned value will produce an exact number of sub-groups and result in no partial groups for an executing kernel except in the case where the last work- group in a dimension has a size different from that of the other groups.
+If no work-group size can accommodate the requested number of sub-groups, 0 will be returned in each element of the return array.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_MAX_NUM_SUB_GROUPS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>ignored</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This provides a mechanism for the application to query the maximum number of sub-groups that may make up each work-group to execute a kernel on a specific device given by device.
+The OpenCL implementation uses the resource requirements of the kernel (register usage etc.) to determine what this work-group size should be.
+The returned value may be used to compute a work-group size to enqueue the kernel with to give a round number of sub-groups for an enqueue.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_COMPILE_NUM_SUB_GROUPS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>ignored</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the number of sub-groups specified in the kernel source or IL.
+If the sub-group count is not specified using the above attribute then 0 is returned.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if <code>device</code> is not in the list of devices associated with <code>kernel</code> or if <code>device</code> is NULL but there is more than one device associated with <code>kernel</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the table above and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is <code>CL_KERNEL_SUB_GROUP_SIZE_FOR_NDRANGE</code> and the size in bytes specified by <code>input_value_size</code> is not valid or if <code>input_value</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_KERNEL</code> if <code>kernel</code> is a not a valid kernel object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=236" target="_blank">OpenCL 2.1 API Specification, page 236</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

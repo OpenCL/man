@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>memory_order</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="memory_order" class="article">
+<div id="header">
+<h1>memory_order</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enumeration to identify memory ordering constraints.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>memory_order</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The OpenCL C programming language implements a subset of the C11 atomics (refer to section 7.17 of the C11 specification) and synchronization operations.
+These operations play a special role in making assignments in one work-item visible to another.
+A synchronization operation on one or more memory locations is either an acquire operation, a release operation, or both an acquire and release operation. (The C11 consume operation is not supported.) A synchronization operation without an associated memory location is a fence and can be either an acquire fence, a release fence or both an acquire and release fence.
+In addition, there are relaxed atomic operations, which are not synchronization operations, and atomic read-modify-write operations which have special characteristics</p>
+</div>
+<div class="paragraph">
+<p>The enumerated type <code>memory_order</code> specifies the detailed regular (non-atomic) memory synchronization operations as defined in section 5.1.2.4 of the C11 specification and may provide for operation ordering.
+Its enumeration constants are as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>     memory_order_relaxed
+     memory_order_acquire
+     memory_order_release
+     memory_order_acq_rel
+     memory_order_seq_cst</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>memory_order</code> can be used when performing atomic operations to global or local memory.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="atomicFunctions.html">Atomic Functions</a>, <a href="memory_scope.html"><code>memory_scope</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=105" target="_blank">OpenCL 2.0 C Language Specification, page 105</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

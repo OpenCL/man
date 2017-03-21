@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetContextInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetDeviceIDs" class="article">
+<div id="header">
+<h1>clGetContextInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Query information about a context.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetContextInfo(cl_context context,
+                        cl_context_info param_name,
+                        size_t param_value_size,
+                        void *param_value,
+                        size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>Specifies the OpenCL context being queried.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>An enumeration constant that specifies the information to query.
+The valid values for <code>param_name</code> are:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_context_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Information returned in param_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_REFERENCE_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the <code>context</code> reference count.
+The reference count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_NUM_DEVICES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the number of devices in <code>context</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_DEVICES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_id[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the list of devices in <code>context</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_PROPERTIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_context_- properties[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the <code>properties</code> argument specified in <a href="clCreateContext.html"><code>clCreateContext</code></a> or <a href="clCreateContextFromType.html"><code>clCreateContextFromType</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>properties</code> argument specified in <a href="clCreateContext.html"><code>clCreateContext</code></a> or <a href="clCreateContextFromType.html"><code>clCreateContextFromType</code></a> used to create <code>context</code> is not NULL, the implementation must return the values specified in the <code>properties</code> argument.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>properties</code> argument specified in <a href="clCreateContext.html"><code>clCreateContext</code></a> or <a href="clCreateContextFromType.html"><code>clCreateContextFromType</code></a> used to create <code>context</code> is NULL, the implementation may return either a <code>param_value_size_ret</code> of 0, i.e.
+there is no context property value to be returned or can return a context property value of 0 (where 0 is used to terminate the context properties list) in the memory that <code>param_value</code> points to.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_D3D10_PREFER_- SHARED_RESOURCES_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a> extension is enabled, returns <code>CL_TRUE</code> if Direct3D 10 resources created as shared by setting <code>MiscFlags</code> to include <code>D3D10_RESOURCE_MISC_SHARED</code> will perform faster when shared with OpenCL, compared with resources which have not set this flag.
+Otherwise returns <code>CL_FALSE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_CONTEXT_D3D11_PREFER_- SHARED_RESOURCES_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_d3d11_sharing.html"><code>cl_khr_d3d11_sharing</code></a> extension is enabled, returns <code>CL_TRUE</code> if Direct3D 11 resources created as shared by setting <code>MiscFlags</code> to include <code>D3D11_RESOURCE_MISC_SHARED</code> will perform faster when shared with OpenCL, compared with resources which have not set this flag.
+Otherwise returns <code>CL_FALSE</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be greater than or equal to the size of return type as described in the table above.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data being queried by <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function executed successfully, or one of the errors below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not one of the supported values or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as specified in the table above and <code>param_value</code> is not a <code>NULL</code> value.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=94" target="_blank">OpenCL 2.1 API Specification, page 94</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

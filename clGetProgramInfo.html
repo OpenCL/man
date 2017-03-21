@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetProgramInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetProgramInfo" class="article">
+<div id="header">
+<h1>clGetProgramInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns information about the program object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetProgramInfo(cl_program program,
+                        cl_program_info param_name,
+                        size_t param_value_size,
+                        void *param_value,
+                        size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>program</code></dt>
+<dd>
+<p>Specifies the program object being queried.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the information to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetProgramInfo</code> is described in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_program_info</th>
+<th class="tableblock halign-left valign-top">Return Type and Info.
+returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_REFERENCE_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: cl_uint</p>
+</div>
+<div class="paragraph">
+<p>Return the <code>program</code> reference count.</p>
+</div>
+<div class="paragraph">
+<p>The reference count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_CONTEXT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: cl_context</p>
+</div>
+<div class="paragraph">
+<p>Return the context specified when the program object is created</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_NUM_DEVICES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: cl_uint</p>
+</div>
+<div class="paragraph">
+<p>Return the number of devices associated with <code>program</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_DEVICES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: cl_device_id[]</p>
+</div>
+<div class="paragraph">
+<p>Return the list of devices associated with the program object.
+This can be the devices associated with context on which the program object has been created or can be a subset of devices that are specified when a progam object is created using <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_SOURCE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: char[]</p>
+</div>
+<div class="paragraph">
+<p>Return the program source code specified by <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a>.
+The source string returned is a concatenation of all source strings specified to <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a> with a null terminator.
+The concatenation strips any nulls in the original source strings.</p>
+</div>
+<div class="paragraph">
+<p>If <code>program</code> is created using <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>, <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a>, or <a href="clCreateProgramWithBuiltInKernels.html"><code>clCreateProgramWithBuiltInKernels</code></a>, a null string or the appropriate program source code is returned depending on whether or not the program source code is stored in the binary.</p>
+</div>
+<div class="paragraph">
+<p>The actual number of characters that represents the program source code including the null terminator is returned in <code>param_value_size_ret</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_IL</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: void *</p>
+</div>
+<div class="paragraph">
+<p>Returns the program IL for programs created with <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>program</code> is created with <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a>, <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> or <a href="clCreateProgramWithBuiltInKernels.html"><code>clCreateProgramWithBuiltInKernels</code></a> the memory pointed to by <code>param_value</code> will be unchanged and <code>param_value_size_ret</code> will be set to 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_SIZES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: size_t[]</p>
+</div>
+<div class="paragraph">
+<p>Returns an array that contains the size in bytes of the program binary (could be an executable binary, compiled binary or library binary) for each device associated with <code>program</code>.
+The size of the array is the number of devices associated with <code>program</code>.
+If a binary is not available for a device(s), a size of zero is returned.</p>
+</div>
+<div class="paragraph">
+<p>If <code>program</code> is created using <a href="clCreateProgramWithBuiltInKernels.html"><code>clCreateProgramWithBuiltInKernels</code></a>, the implementation may return zero in any entries of the returned array.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BINARIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: unsigned char *[]</p>
+</div>
+<div class="paragraph">
+<p>Return the program binaries (could be an executable binary, compiled binary or library binary) for all devices associated with <code>program</code>.
+For each device in <code>program</code>, the binary returned can be the binary specified for the device when <code>program</code> is created with <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> or it can be the executable binary generated by <a href="clBuildProgram.html"><code>clBuildProgram</code></a> or <a href="clLinkProgram.html"><code>clLinkProgram</code></a>.
+If <code>program</code> is created with <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a> or <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a>, the binary returned is the binary generated by <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a>, or <a href="clLinkProgram.html"><code>clLinkProgram</code></a>.
+The bits returned can be an implementation-specific intermediate representation (a.k.a.
+IR) or device specific executable bits or both.
+The decision on which information is returned in the binary is up to the OpenCL implementation.</p>
+</div>
+<div class="paragraph">
+<p><code>param_value</code> points to an array of <code>n</code> pointers allocated by the caller, where <code>n</code> is the number of devices associated with program.
+The buffer sizes needed to allocate the memory that these <code>n</code> pointers refer to can be queried using the <code>CL_PROGRAM_BINARY_SIZES</code> query as described in this table.</p>
+</div>
+<div class="paragraph">
+<p>Each entry in this array is used by the implementation as the location in memory where to copy the program binary for a specific device, if there is a binary available.
+To find out which device the program binary in the array refers to, use the <code>CL_PROGRAM_DEVICES</code> query to get the list of devices.
+There is a one-to-one correspondence between the array of <code>n</code> pointers returned by <code>CL_PROGRAM_BINARIES</code> and array of devices returned by <code>CL_PROGRAM_DEVICES.</code></p>
+</div>
+<div class="paragraph">
+<p>If an entry value in the array is NULL, the implementation skips copying the program binary for the specific device identified by the array index.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_NUM_KERNELS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: size_t</p>
+</div>
+<div class="paragraph">
+<p>Returns the number of kernels declared in <code>program</code> that can be created with <a href="clCreateKernel.html"><code>clCreateKernel</code></a>.
+This information is only available after a successful program executable has been built for at least one device in the list of devices associated with <code>program</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_KERNEL_NAMES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: char[]</p>
+</div>
+<div class="paragraph">
+<p>Returns a semi-colon separated list of kernel names in <code>program</code> that can be created with <a href="clCreateKernel.html"><code>clCreateKernel</code></a>.
+This information is only available after a successful program executable has been built for at least one device in the list of devices associated with <code>program</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Used to specify the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table above.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the table above and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_PROGRAM</code> if <code>program</code> is not a valid program object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_PROGRAM_EXECUTABLE</code> if <code>param_name</code> is <code>CL_PROGRAM_NUM_KERNELS</code> or <code>CL_PROGRAM_KERNEL_NAMES</code> and a successful program executable has not been built for at least one device in the list of devices associated with <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetProgramBuildInfo.html"><code>clGetProgramBuildInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=214" target="_blank">OpenCL 2.1 API Specification, page 214</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

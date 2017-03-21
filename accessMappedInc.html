@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">Accessing mapped regions of a memory object</div>
+<p>This section describes the behavior of OpenCL commands that access mapped regions of a memory object.</p>
+</div>
+<div class="paragraph">
+<p>The contents of the region of a memory object and associated memory objects (sub-buffer objects or 1D image buffer objects that overlap this region) mapped for writing (i.e.
+<code>CL_MAP_WRITE</code> or <code>CL_MAP_WRITE_INVALIDATE_REGION</code> is set in <code>map_flags</code> argument to <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a> or <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a>) are considered to be undefined until this region is unmapped.</p>
+</div>
+<div class="paragraph">
+<p>Multiple commands in command-queues can map a region or overlapping regions of a memory object and associated memory objects (sub-buffer objects or 1D image buffer objects that overlap this region) for reading (i.e.
+<code>map_flags</code> = <code>CL_MAP_READ</code>).
+The contents of the regions of a memory object mapped for reading can also be read by kernels and other OpenCL commands (such as <a href="clEnqueueCopyBuffer.html"><code>clEnqueueCopyBuffer</code></a>) executing on a device(s).</p>
+</div>
+<div class="paragraph">
+<p>Mapping (and unmapping) overlapped regions in a memory object and/or associated memory objects (sub-buffer objects or 1D image buffer objects that overlap this region) for writing is an error and will result in <code>CL_INVALID_OPERATION</code> error returned by <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a> or <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If a memory object is currently mapped for writing, the application must ensure that the memory object is unmapped before any enqueued kernels or commands that read from or write to this memory object or any of its associated memory objects (sub-buffer or 1D image buffer objects) or its parent object (if the memory object is a sub-buffer or 1D image buffer object) begin execution; otherwise the behavior is undefined.</p>
+</div>
+<div class="paragraph">
+<p>If a memory object is currently mapped for reading, the application must ensure that the memory object is unmapped before any enqueued kernels or commands that write to this memory object or any of its associated memory objects (sub-buffer or 1D image buffer objects) or its parent object (if the memory object is a sub-buffer or 1D image buffer object) begin execution; otherwise the behavior is undefined.</p>
+</div>
+<div class="paragraph">
+<p>A memory object is considered as mapped if there are one or more active mappings for the memory object irrespective of whether the mapped regions span the entire memory object.</p>
+</div>
+<div class="paragraph">
+<p>Accessing the contents of the memory region referred to by the mapped pointer that has been unmapped is undefined.</p>
+</div>
+<div class="paragraph">
+<p>The mapped pointer returned by <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a> or <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a> can be used as <code>ptr</code> argument value to <a href="clEnqueueReadBuffer.html"><code>clEnqueueReadBuffer</code></a>, <a href="clEnqueueWriteBuffer.html"><code>clEnqueueWriteBuffer</code></a>, <a href="clEnqueueReadBufferRect.html"><code>clEnqueueReadBufferRect</code></a>, <a href="clEnqueueWriteBufferRect.html"><code>clEnqueueWriteBufferRect</code></a>, <a href="clEnqueueReadImage.html"><code>clEnqueueReadImage</code></a>, and <a href="clEnqueueWriteImage.html"><code>clEnqueueWriteImage</code></a>, provided the rules described above are adhered to.</p>
+</div>
+</div>
+</body>
+</html>

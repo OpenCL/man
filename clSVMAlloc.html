@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clSVMAlloc</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clSVMAlloc" class="article">
+<div id="header">
+<h1>clSVMAlloc</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Allocates a shared virtual memory (SVM) buffer that can be shared by the host and all devices in an OpenCL context that support shared virtual memory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void * clSVMAlloc(cl_context context,
+                  cl_svm_mem_flags flags,
+                  size_t size,
+                  cl_uint alignment)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>A valid OpenCL context used to create the SVM buffer.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify allocation and usage information.
+The following table describes the possible values for <code>flags</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_svm_mem_flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the SVM buffer will be read and written by a kernel.
+This is the default.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the SVM buffer will be written but not read by a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Reading from a SVM buffer created with <code>CL_MEM_WRITE_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> and <code>CL_MEM_WRITE_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the SVM buffer object is a read-only memory object when used inside a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Writing to a SVM buffer created with <code>CL_MEM_READ_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> and <code>CL_MEM_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_SVM_FINE_GRAIN_BUFFER</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This specifies that the application wants the OpenCL implementation to do a fine-grained allocation.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_SVM_ATOMICS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>CL_MEM_SVM_FINE_GRAIN_BUFFER</code> is specified in <code>flags</code>.
+It is used to indicate that SVM atomic operations can control visibility of memory accesses in this SVM buffer.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>size</code></dt>
+<dd>
+<p>The size in bytes of the SVM buffer to be allocated.</p>
+</dd>
+<dt class="hdlist1"><code>alignment</code></dt>
+<dd>
+<p>The minimum alignment in bytes that is required for the newly created buffer’s memory region.
+It must be a power of two up to the largest data type supported by the OpenCL device.
+For the full profile, the largest data type is <code>long16</code>.
+For the embedded profile, it is <code>long16</code> if the device supports 64-bit integers; otherwise it is <code>int16</code>.
+If alignment is 0, a default alignment will be used that is equal to the size of largest data type supported by the OpenCL implementation.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If <code>CL_MEM_SVM_FINE_GRAIN_BUFFER</code> is not specified, the buffer can be created as a coarse grained SVM allocation.
+Similarly, if <code>CL_MEM_SVM_ATOMICS</code> is not specified, the buffer can be created without support for SVM atomic operations (refer to the OpenCL C++ kernel language and IL specifications).</p>
+</div>
+<div class="paragraph">
+<p>Calling <code>clSVMAlloc</code> does not itself provide consistency for the shared memory region.
+When the host can’t use the SVM atomic operations, it must rely on OpenCL’s guaranteed memory consistency at synchronization points.</p>
+</div>
+<div class="paragraph">
+<p>For SVM to be used efficiently, the host and any devices sharing a buffer containing virtual memory pointers should have the same endianness.
+If the context passed to <code>clSVMAlloc</code> has devices with mixed endianness and the OpenCL implementation is unable to implement SVM because of that mixed endianness, <code>clSVMAlloc</code> will fail and return NULL.</p>
+</div>
+<div class="paragraph">
+<p>Although SVM is generally not supported for image objects, <a href="clCreateImage.html"><code>clCreateImage</code></a> may create an image from a buffer (a 1D image from a buffer or a 2D image from buffer) if the buffer specified in its image description parameter is a SVM buffer.
+Such images have a linear memory representation so their memory can be shared using SVM.
+However, fine grained sharing and atomics are not supported for image reads and writes in a kernel.</p>
+</div>
+<div class="paragraph">
+<p>If <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> is called with a pointer returned by <code>clSVMAlloc</code> as its <code>host_ptr</code> argument, and <code>CL_MEM_USE_HOST_PTR</code> is set in its <code>flags</code> argument, <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> will succeed and return a valid non-zero buffer object as long as the <code>size</code> argument to <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> is no larger than the <code>size</code> argument passed in the original <code>clSVMAlloc</code> call.
+The new buffer object returned has the shared memory as the underlying storage.
+Locations in the buffer&#8217;s underlying shared memory can be operated on using atomic operations to the device&#8217;s level of support as defined in the memory model.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns a valid non-NULL shared virtual memory address if the SVM buffer is successfully allocated.
+Otherwise, like malloc, it returns a NULL pointer value.
+<code>clSVMAlloc</code> will fail if:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>flags</code> does not contain <code>CL_MEM_SVM_FINE_GRAIN_BUFFER</code> but does contain <code>CL_MEM_SVM_ATOMICS</code>.</p>
+</li>
+<li>
+<p>Values specified in <code>flags</code> do not follow rules described for supported values in the table above.</p>
+</li>
+<li>
+<p><code>CL_MEM_SVM_FINE_GRAIN_BUFFER</code> or <code>CL_MEM_SVM_ATOMICS</code> is specified in <code>flags</code> and these are not supported by at least one device in <code>context</code>.</p>
+</li>
+<li>
+<p>The values specified in <code>flags</code> are not valid i.e.
+don’t match those defined in the table above.</p>
+</li>
+<li>
+<p><code>size</code> is 0 or &gt; <code>CL_DEVICE_MAX_MEM_ALLOC_SIZE</code> value for any device in <code>context</code>.</p>
+</li>
+<li>
+<p><code>alignment</code> is not a power of two or the OpenCL implementation cannot support the specified alignment for at least one device in <code>context</code>.</p>
+</li>
+<li>
+<p>There was a failure to allocate resources.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clSVMFree.html"><code>clSVMFree</code></a>, <a href="sharedVirtualMemory.html">Shared Virtual Memory Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=175" target="_blank">OpenCL 2.1 API Specification, page 175</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

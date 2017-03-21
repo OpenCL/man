@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>FP_CONTRACT, FP_FAST_FMAF, FP_FAST_FMA_HALF</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="FP_CONTRACT" class="article">
+<div id="header">
+<h1>FP_CONTRACT, FP_FAST_FMAF, FP_FAST_FMA_HALF</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Control expression contraction; fast fma()</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL FP_CONTRACT on-off-switch
+
+on-off-switch is one of:
+     ON, OFF or DEFAULT.
+     The DEFAULT value is ON.
+
+FP_FAST_FMAF
+FP_FAST_FMA
+FP_FAST_FMA_HALF</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fpcontract">FP_CONTRACT</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>FP_CONTRACT</code> pragma takes the form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL FP_CONTRACT on-off-switch</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>FP_CONTRACT</code> can be used to allow (if the state is <code>on</code>) or disallow (if the state is <code>off</code>) the implementation to contract expressions.
+Each pragma can occur either outside external declarations or preceding all explicit declarations and statements inside a compound statement.</p>
+</div>
+<div class="paragraph">
+<p>The parameter <code>on-off-switch</code> is one of ON, OFF or DEFAULT.
+The DEFAULT value is ON.</p>
+</div>
+<div class="paragraph">
+<p>When outside external declarations, the pragma takes effect from its occurrence until another <code>FP_CONTRACT</code> pragma is encountered, or until the end of the translation unit.
+When inside a compound statement, the pragma takes effect from its occurrence until another <code>FP_CONTRACT</code> pragma is encountered (including within a nested compound statement), or until the end of the compound statement; at the end of a compound statement the state for the pragma is restored to its condition just before the compound statement.
+If this pragma is used in any other context, the behavior is undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fpfastfma">FP_FAST_FMAF, FP_FAST_FMA, and FP_FAST_FMA_HALF</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>FP_FAST_FMAF</code> macro indicates whether the <a href="fma.html"><code>fma</code></a> function is fast compared with direct code for single precision floating-point.
+If defined, the <code>FP_FAST_FMAF</code> macro shall indicate that the <a href="fma.html"><code>fma</code></a>() function generally executes about as fast as, or faster than, a multiply and an add of float operands.</p>
+</div>
+<div class="paragraph">
+<p>The <code>FP_FAST_FMA</code> macro indicates whether the <a href="fma.html"><code>fma</code></a> family of functions are fast compared with direct code for double precision floating-point.
+If defined, the <code>FP_FAST_FMA</code> macro shall indicate that the <a href="fma.html"><code>fma</code></a>() function generally executes about as fast as, or faster than, a multiply and an add of double operands.</p>
+</div>
+<div class="paragraph">
+<p>The <code>FP_FAST_FMA_HALF</code> macro indicates whether the <a href="fma.html"><code>fma</code></a>() family of functions are fast compared with direct code for half precision floating-point.
+If defined, the <code>FP_FAST_FMA_HALF</code> macro shall indicate that the <a href="fma.html"><code>fma</code></a>() function generally executes about as fast as, or faster than, a multiply and an add of half operands</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="mathFunctions.html">Math Functions</a>, <a href="mathConstants.html">Symbolic Math Constants</a>, <a href="macroLimits.html">Macros and Limits</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=79" target="_blank">OpenCL 2.0 C Language Specification, page 79</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

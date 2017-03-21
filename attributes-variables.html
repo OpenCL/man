@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Attributes of Variables</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="AttributesofVariables" class="article">
+<div id="header">
+<h1>Attributes of Variables</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Attributes of Variables.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    __attribute__ ((aligned))
+    __attribute__ ((aligned (n)))
+    __attribute__ ((packed))
+    __attribute__ ((endian(host)))
+    __attribute__ ((endian(device)))</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The keyword <code><em>attribute</em></code> allows you to specify special attributes of variables or structure fields.
+This keyword is followed by an attribute specification inside double parentheses.
+The <code>aligned</code>, <code>packed</code>, and <code>endian</code> attribute qualifiers are defined below.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aligned">aligned (<code>alignment</code>)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This attribute specifies a minimum alignment for the variable or structure field, measured in bytes.
+For example, the declaration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            int x __attribute__ ((aligned (16))) = 0;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>causes the compiler to allocate the global variable <code>x</code> on a 16-byte boundary.
+The alignment value specified must be a power of two.</p>
+</div>
+<div class="paragraph">
+<p>You can also specify the alignment of structure fields.
+For example, to create double-word aligned <code>int</code> pair, you could write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            struct foo { int x[2] __attribute__ ((aligned (8))); };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is an alternative to creating a union with a <code>double</code> member that forces the union to be double-word aligned.</p>
+</div>
+<div class="paragraph">
+<p>As in the preceding examples, you can explicitly specify the alignment (in bytes) that you wish the compiler to use for a given variable or structure field.
+Alternatively, you can leave out the alignment factor and just ask the compiler to align a variable or field to the maximum useful alignment for the target machine you are compiling for.
+For example, you could write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            short array[3] __attribute__ ((aligned));</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whenever you leave out the alignment factor in an <code>aligned</code> attribute specification, the OpenCL compiler automatically sets the alignment for the declared variable or field to the largest alignment which is ever used for any data type on the target device you are compiling for.</p>
+</div>
+<div class="paragraph">
+<p>When used on a <code>struct</code>, or <code>struct</code> member, the aligned <code>attribute</code> can only increase the alignment; in order to decrease it, the <code>packed</code> attribute must be specified as well.
+When used as part of a <code>typedef</code>, the <code>aligned</code> attribute can both increase and decrease alignment, and specifying the <code>packed</code> attribute will generate a warning.</p>
+</div>
+<div class="paragraph">
+<p>Note that the effectiveness of aligned attributes may be limited by inherent limitations of the OpenCL device and compiler.
+For some devices, the OpenCL compiler may only be able to arrange for variables to be aligned up to a certain maximum alignment.
+If the OpenCL compiler is only able to align variables up to a maximum of 8 byte alignment, then specifying <code>aligned(16)</code> in an <code><em>attribute</em></code> will still only provide you with 8 byte alignment.
+See your platform-specific documentation for further information.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="packed">packed</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>packed</code> attribute specifies that a variable or structure field should have the smallest possible alignment&#8201;&#8212;&#8201;one byte for a variable, unless you specify a larger value with the <code>aligned</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>Here is a structure in which the field <code>x</code> is packed, so that it immediately follows <code>a</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            struct foo
+    {
+        char a;
+        int x[2] __attribute__ ((packed));
+    };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An attribute list placed at the beginning of a user-defined type applies to the variable of that type and not the type, while attributes following the type body apply to the type.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            /* a has alignment of 128 */
+    __attribute__((aligned(128))) struct A {int i;} a;
+
+    /* b has alignment of 16 */
+    __attribute__((aligned(16))) struct B {double d;}
+                      __attribute__((aligned(32))) b ;
+
+    struct A a1; /* a1 has alignment of 4 */
+
+    struct B b1; /* b1 has alignment of 32 */</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="endian">endian (<code>endiantype</code>)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>endian</code> attribute determines the byte ordering of a variable.
+<code>endiantype</code> can be set to <code>host</code> indicating the variable uses the endianness of the host processor or can be set to <code>device</code> indicating the variable uses the endianness of the device on which the kernel will be executed.
+The default is <code>device</code>.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            global float4 *p   __attribute__ ((endian(host)));</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>specifies that data stored in memory pointed to by <code>p</code> will be in the host endian format.</p>
+</div>
+<div class="paragraph">
+<p>The endian attribute can only be applied to pointer types that are in the <code>global</code> or <code>constant</code> address space.
+The <code>endian</code> attribute cannot be used for variables that are not a pointer type.
+The <code>endian</code> attribute value for both pointers must be the same when one pointer is assigned to another.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="attribute.html"><code><em>attribute</em></code></a>, <a href="attributes-blocksAndControlFlow.html">Blocks and Control-Flow Statement Attributes</a>, <a href="attributes-types.html">Types Attributes</a>, <a href="attributes-loopUnroll.html">Loop Unroll Attributes</a>, <a href="qualifiers.html">Qualifiers</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=59" target="_blank">OpenCL 2.0 C Language Specification, page 59</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

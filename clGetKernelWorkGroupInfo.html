@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetKernelWorkGroupInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetKernelWorkGroupInfo" class="article">
+<div id="header">
+<h1>clGetKernelWorkGroupInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns information about the kernel object that may be specific to a device.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetKernelWorkGroupInfo(cl_kernel kernel,
+                                cl_device_id device,
+                                cl_kernel_work_group_info param_name,
+                                size_t param_value_size,
+                                void *param_value,
+                                size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>kernel</code></dt>
+<dd>
+<p>Specifies the kernel object being queried.</p>
+</dd>
+<dt class="hdlist1"><code>device</code></dt>
+<dd>
+<p>Identifies a specific device in the list of devices associated with <code>kernel</code>.
+The list of devices is the list of devices in the OpenCL context that is associated with <code>kernel</code>.
+If the list of devices associated with <code>kernel</code> is a single device, <code>device</code> can be a NULL value.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>Specifies the information to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetKernelWorkGroupInfo</code> is described in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Used to specify the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_kernel_work_group_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Info.
+returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_GLOBAL_WORK_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t[3]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This provides a mechanism for the application to query the maximum global size that can be used to execute a kernel (i.e.
+<code>global_work_size</code> argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>) on a custom device given by <code>device</code> or a built-in kernel on an OpenCL device given by <code>device</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>device</code> is not a custom device or <code>kernel</code> is not a built-in kernel, <code>clGetKernelWorkGroupInfo</code> returns the error <code>CL_INVALID_VALUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_WORK_GROUP_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This provides a mechanism for the application to query the maximum work-group size that can be used to execute the kernel on a specific device given by <code>device</code>.
+The OpenCL implementation uses the resource requirements of the kernel (register usage etc.) to determine what this work-group size should be.</p>
+</div>
+<div class="paragraph">
+<p>As a result and unlike <code>CL_DEVICE_MAX_WORK_GROUP_SIZE</code> this value may vary from one kernel to another as well as one device to another.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_KERNEL_WORK_GROUP_SIZE</code> will be less than or equal to <code>CL_DEVICE_MAX_WORK_GROUP_SIZE</code> for a given kernel object.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_COMPILE_- WORK_GROUP_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t[3]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the work-group size specified in the kernel source or IL.
+If the work-group size is not specified in the kernel source or IL, (0, 0, 0) is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_LOCAL_MEM_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the amount of local memory in bytes being used by a kernel.
+This includes local memory that may be needed by an implementation to execute the kernel, variables declared inside the kernel with the <a href="local.html"><code><em>local</code></a> address qualifier and local memory to be allocated for arguments to the kernel declared as pointers with the <a href="local.html"><code></em>local</code></a> address qualifier and whose size is specified with <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If the local memory size, for any pointer argument to the kernel declared with the <a href="local.html"><code>__local</code></a> address qualifier, is not specified, its size is assumed to be 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_PREFERRED_WORK_- GROUP_SIZE_MULTIPLE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the preferred multiple of workgroup size for launch.
+This is a performance hint.
+Specifying a workgroup size that is not a multiple of the value returned by this query as the value of the local work size argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> will not fail to enqueue the kernel for execution unless the work-group size specified is larger than the device maximum.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_KERNEL_PRIVATE_MEM_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the minimum amount of private memory, in bytes, used by each work-item in the kernel.
+This value may include any private memory needed by an implementation to execute the kernel, including that used by the language built-ins and variable declared inside the kernel with the <a href="private.html"><code>__private</code></a> qualifier.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if <code>device</code> is not in the list of devices associated with <code>kernel</code> or if <code>device</code> is NULL but there is more than one device associated with <code>kernel</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the table above and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is <code>CL_KERNEL_GLOBAL_WORK_SIZE</code> and <code>device</code> is not a custom device and <code>kernel</code> is not a built-in kernel.</p>
+</li>
+<li>
+<p><code>CL_INVALID_KERNEL</code> if <code>kernel</code> is a not a valid kernel object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateKernel.html"><code>clCreateKernel</code></a>, <a href="clCreateKernelsInProgram.html"><code>clCreateKernelsInProgram</code></a>, <a href="clReleaseKernel.html"><code>clReleaseKernel</code></a>, <a href="clRetainKernel.html"><code>clRetainKernel</code></a>, <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>, <a href="clGetKernelInfo.html"><code>clGetKernelInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=233" target="_blank">OpenCL 2.1 API Specification, page 233</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

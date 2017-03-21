@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cross</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cross" class="article">
+<div id="header">
+<h1>cross</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cross product.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">float4 cross(float4 p0,
+             float4 p1)
+
+float3 cross(float3 p0,
+             float3 p1)
+
+double4 cross(double4 p0,
+              double4 p1)
+
+double3 cross(double3 p0,
+              double3 p1)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>half4 cross
+     (half4 p0,
+       half4 p1)   // if half extension enabled
+
+half3 cross
+     (half3 p0,
+       half3 p1)   // if half extension enabled</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns the cross product of <code>p0.xyz</code> and <code>p1.xyz</code>.
+For the form that returns <code>float4</code>, the <code>w</code> component of <code>float4</code> result returned will be 0.0.
+For the forms that returns <code>half3</code> or <code>half4</code>, the <code>w</code> component of <code>double</code> result will be 0.0.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about built-in geometric functions: Built-in geometric functions operate component-wise.
+The description is per-component.
+<code>floatn</code> is <code>float</code>, <code>float2</code>, <code>float3</code>, or <code>float4</code> and <code>doublen</code> is <code>double</code>, <code>double2</code>, <code>double3</code>, or <code>double4</code>.
+The built-in geometric functions are implemented using the round to nearest even rounding mode.</p>
+</div>
+<div class="paragraph">
+<p>The geometric functions can be implemented using contractions such as <a href="mad.html"><code>mad</code></a> or <a href="fma.html"><code>fma</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>An application that wants to use <code>half</code> and <code>halfn</code> types will need to include the <code>#pragma OPENCL EXTENSION cl_khr_fp16 : enable</code> directive.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="geometricFunctions.html">Geometric Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=88" target="_blank">OpenCL 2.0 C Language Specification, page 88</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

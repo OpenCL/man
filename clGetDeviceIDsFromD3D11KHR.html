@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetDeviceIDsFromD3D11KHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetDeviceIDsFromD3D10KHR" class="article">
+<div id="header">
+<h1>clGetDeviceIDsFromD3D11KHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Querying OpenCL Devices Corresponding to Direct3D 11 Devices.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetDeviceIDsFromD3D11KHR(cl_platform_id platform,
+                                  cl_d3d11_device_source_khr d3d_device_source,
+                                  void *d3d_object,
+                                  cl_d3d11_device_set_khr d3d_device_set,
+                                  cl_uint num_entries,
+                                  cl_device_id *devices,
+                                  cl_uint *num_devices)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>platform</code></dt>
+<dd>
+<p>Refers to the platform ID returned by <a href="clGetPlatformIDs.html"><code>clGetPlatformIDs</code></a>.</p>
+</dd>
+<dt class="hdlist1"><code>d3d_device_source</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the type of <code>d3d_object</code> and may be one of the following (Table 9.11.1):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_d3d_device_source_khr</th>
+<th class="tableblock halign-left valign-top">Type of <code>d3d_object</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_D3D11_DEVICE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>ID3D11Device *</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_D3D11_DXGI_ADAPTER_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>IDXGIAdapter *</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>d3d_object</code></dt>
+<dd>
+<p>Specifies the object whose corresponding OpenCL devices are being queried.
+The type of <code>d3d_object</code> must be as specified in the table above.</p>
+</dd>
+<dt class="hdlist1"><code>d3d_device_set</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the set of devices to return, and must be one of the following (Table 9.11.2):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_d3d_device_set_khr</th>
+<th class="tableblock halign-left valign-top">Devices returned in <code>devices</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PREFERRED_DEVICES_FOR_D3D11_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The OpenCL devices associated with the specified Direct3D object.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_ALL_DEVICES_FOR_D3D11_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>All OpenCL devices which may interoperate with the specified Direct3D object.
+Performance of sharing data on these devices may be considerably less than on the preferred devices.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>num_entries</code></dt>
+<dd>
+<p>The number of <code>cl_device_id</code> entries that can be added to <code>devices</code>.
+If <code>devices</code> is not NULL, the <code>num_entries</code> must be greater than zero.</p>
+</dd>
+<dt class="hdlist1"><code>devices</code></dt>
+<dd>
+<p>Returns a list of OpenCL devices found.
+The <code>cl_device_id</code> values returned in <code>devices</code> can be used to identify a specific OpenCL device.
+If <code>devices</code> is NULL, this argument is ignored.
+The number of OpenCL devices returned is the mininum of the value specified by <code>num_entries</code> and the number of OpenCL devices corresponding to <code>d3d_object</code>.</p>
+</dd>
+<dt class="hdlist1"><code>num_devices</code></dt>
+<dd>
+<p>Returns the number of OpenCL devices available that correspond to <code>d3d_object</code>.
+If <code>num_devices</code> is NULL, this argument is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The OpenCL devices corresponding to a Direct3D 11 device may be queried.
+The OpenCL devices corresponding to a DXGI adapter may also be queried.
+The OpenCL devices corresponding to a Direct3D 11 device will be a subset of the OpenCL devices corresponding to the DXGI adapter against which the Direct3D 11 device was created.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<div class="title">Sharing Memory Objects with Direct3D 11 Resources</div>
+<p>The goal of this extension is to provide interoperability between OpenCL and Direct3D 11.
+This is designed to function analogously to the <a href="cl_khr_gl_sharing.html">OpenGL interoperability</a> as defined in sections 9.7 and 9.8.
+If this extension is supported by an implementation, the string "cl_khr_d3d11_sharing" will be present in the <code>CL_PLATFORM_EXTENSIONS</code> or <code>CL_DEVICE_EXTENSIONS</code> string described in the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> or <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>As currently proposed the interfaces for this extension would be provided in <code>cl_d3d11.h</code>.</p>
+</div>
+<div class="paragraph">
+<p>This section discusses OpenCL functions that allow applications to use Direct3D 11 resources as OpenCL memory objects.
+This allows efficient sharing of data between OpenCL and Direct3D 11.
+The OpenCL API may be used to execute kernels that read and/or write memory objects that are also Direct3D 11 resources.
+An OpenCL image object may be created from a Direct3D 11 texture resource.
+An OpenCL buffer object may be created from a Direct3D 11 buffer resource.
+OpenCL memory objects may be created from Direct3D 11 objects if and only if the OpenCL context has been created from a Direct3D 11 device.</p>
+</div>
+<div class="paragraph">
+<div class="title">Lifetime of Shared Objects</div>
+<p>An OpenCL memory object created from a Direct3D 11 resource remains valid as long as the corresponding Direct3D 11 resource has not been deleted.
+If the Direct3D 11 resource is deleted through the Direct3D 11 API, subsequent use of the OpenCL memory object will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+<div class="paragraph">
+<p>The successful creation of a cl_context against a Direct3D 11 device specified via the context create parameter <code>CL_CONTEXT_D3D11_DEVICE_KHR</code> will increment the internal Direct3D reference count on the specified Direct3D 11 device.
+The internal Direct3D reference count on that Direct3D 11 device will be decremented when the OpenCL reference count on the returned OpenCL context drops to zero.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL context and corresponding command-queues are dependent on the existence of the Direct3D 11 device from which the OpenCL context was created.
+If the Direct3D 11 device is deleted through the Direct3D 11 API, subsequent use of the OpenCL context will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+<div class="paragraph">
+<p>Properties of Direct3D 11 objects may be queried using <a href="clGetMemObjectInfo.html"><code>clGetMemObjectInfo</code></a> and <a href="clGetImageInfo.html"><code>clGetImageInfo</code></a> with <code>param_name</code> <code>CL_MEM_D3D11_RESOURCE_KHR</code> and <code>CL_IMAGE_D3D11_SUBRESOURCE_KHR</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise it may return:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PLATFORM</code> if <code>platform</code> is not a valid platform.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>d3d_device_source</code> is not a valid value, <code>d3d_device_set</code> is not a valid value, <code>num_entries</code> is equal to zero and <code>devices</code> is not NULL, or if both <code>num_devices</code> and <code>devices</code> are NULL.</p>
+</li>
+<li>
+<p><code>CL_DEVICE_NOT_FOUND</code> if no OpenCL devices that correspond to <code>d3d_object</code> were found.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_khr_d3d11_sharing.html"><code>cl_khr_d3d11_sharing</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=100" target="_blank">OpenCL 2.1 Extensions Specification, page 100</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>atomic_work_item_fence</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="atomic_work_item_fence" class="article">
+<div id="header">
+<h1>atomic_work_item_fence</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>atomic_work_item_fence functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void atomic_work_item_fence(cl_mem_fence_flags flags,
+                            memory_order order,
+                            memory_scope scope)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<p>Must be set to <code>CLK_GLOBAL_MEM_FENCE</code>, <code>CLK_LOCAL_MEM_FENCE</code>, <code>CLK_IMAGE_MEM_FENCE</code> or a combination of these values ORed together; otherwise the behavior is undefined.
+The behavior of calling <code>atomic_work_item_fence</code> with <code>CLK_IMAGE_MEM_FENCE</code> ORed together with either <code>CLK_GLOBAL_MEM_FENCE</code> or <code>CLK_LOCAL_MEM_FENCE</code> is equivalent to calling <code>atomic_work_item_fence</code> individually for <code>CLK_IMAGE_MEM_FENCE</code> and the other flags.
+Passing both <code>CLK_GLOBAL_MEM_FENCE</code> and <code>CLK_LOCAL_MEM_FENCE</code> to <code>atomic_work_item_fence</code> will synchronize memory operations to both local and global memory through some shared atomic action, as described in section 3.3.6.2 of the OpenCL API specficiation.</p>
+</dd>
+<dt class="hdlist1"><code>order</code></dt>
+<dt class="hdlist1"><code>scope</code></dt>
+<dd>
+<p>== Description</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Depending on the value of order, this operation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>has no effects, if <code>order</code> == <code>memory_order_relaxed</code>.</p>
+</li>
+<li>
+<p>is an acquire fence, if <code>order</code> == <code>memory_order_acquire</code>.</p>
+</li>
+<li>
+<p>is a release fence, if <code>order</code> == <code>memory_order_release</code>.</p>
+</li>
+<li>
+<p>is both an acquire fence and a release fence, if <code>order</code> == <code>memory_order_acq_rel</code>.</p>
+</li>
+<li>
+<p>is a sequentially consistent acquire and release fence, if <code>order</code> == <code>memory_order_seq_cst</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For images declared with the <code>read_write</code> qualifier, the <code>atomic_work_item_fence</code> must be called to make sure that writes to the image by a work-item become visible to that workitem on subsequent reads to that image by that work-item.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="atomicFunctions.html">Atomic Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=105" target="_blank">OpenCL 2.0 C Language Specification, page 105</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

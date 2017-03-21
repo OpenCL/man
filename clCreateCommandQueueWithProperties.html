@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateCommandQueueWithProperties</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateCommandQueueWithProperties" class="article">
+<div id="header">
+<h1>clCreateCommandQueueWithProperties</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create a host or device command-queue on a specific device.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_command_queue clCreateCommandQueueWithProperties(cl_context context,
+                                                    cl_device_id device,
+                                                    const cl_queue_properties *properties,
+                                                    cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>Must be a valid OpenCL context.</p>
+</dd>
+<dt class="hdlist1"><code>device</code></dt>
+<dd>
+<p>Must be a device or sub-device associated with <code>context</code>.
+It can either be in the list of devices and sub-devices specified when <code>context</code> is created using <a href="clCreateContext.html"><code>clCreateContext</code></a> or be a root device with the same device type as specified when the <code>context</code> is created using <a href="clCreateContextFromType.html"><code>clCreateContextFromType</code></a>.</p>
+</dd>
+<dt class="hdlist1"><code>properties</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies a list of properties for the command-queue and their corresponding values.
+Each property name is immediately followed by the corresponding desired value.
+The list is terminated with 0.
+The list of supported properties is described in the table below.
+If a supported property and its value is not specified in <code>properties</code>, its default value will be used.
+<code>properties</code> can be NULL in which case the default values for supported command-queue properties will be used.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Queue Properties</th>
+<th class="tableblock halign-left valign-top">Property Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_PROPERTIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_command_queue_- properties</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This is a bitfield and can be set to a combination of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> - Determines whether the commands queued in the command-queue are executed in-order or out-of-order.
+If set, the commands in the command-queue are executed out-of-order.
+Otherwise, commands are executed in-order.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_PROFILING_ENABLE</code> - Enable or disable profiling of commands in the command-queue.
+If set, the profiling of commands is enabled.
+Otherwise profiling of commands is disabled.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_ON_DEVICE</code> - Indicates that this is a device queue.
+If <code>CL_QUEUE_ON_DEVICE</code> is set, <code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> must also be set.
+Only out-of-order device queues are supported.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_ON_DEVICE_DEFAULT</code> - indicates that this is the default device queue.
+This can only be used with <code>CL_QUEUE_ON_DEVICE</code>.
+The application must create the default device queue if any kernels containing calls to get_default_queue are enqueued.
+There can only be one default device queue for each device within a context.
+clCreateCommandQueueWithProperties with <code>CL_QUEUE_PROPERTIES</code> set to <code>CL_QUEUE_ON_DEVICE</code> | <code>CL_QUEUE_ON_DEVICE_DEFAULT</code> will return the default device queue that has already been created and increment its retain count by 1.</p>
+</div>
+<div class="paragraph">
+<p>If <code>CL_QUEUE_PROPERTIES</code> is not specified an in-order host command queue is created for the specified device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_uint</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies the size of the device queue in bytes.</p>
+</div>
+<div class="paragraph">
+<p>This can only be specified if <code>CL_QUEUE_ON_DEVICE</code> is set in <code>CL_QUEUE_PROPERTIES</code>.
+This must be a value ≤ <code>CL_DEVICE_QUEUE_ON_DEVICE_MAX_SIZE</code>.</p>
+</div>
+<div class="paragraph">
+<p>For best performance, this should be ≤ <code>CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>CL_QUEUE_SIZE</code> is not specified, the device queue is created with <code>CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE</code> as the size of the queue.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_PRIORITY_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_queue_priority_khr</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Applies only if the <a href="cl_khr_priority_hints.html"><code>cl_khr_priority_hints</code></a> extension is enabled.</p>
+</div>
+<div class="paragraph">
+<p>Can be one of <code>CL_QUEUE_PRIORITY_HIGH_KHR</code>, <code>CL_QUEUE_PRIORITY_MED_KHR</code>, or <code>CL_QUEUE_PRIORITY_LOW_KHR</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>CL_QUEUE_PRIORITY_KHR</code> is not specified then the default priority is <code>CL_QUEUE_PRIORITY_MED_KHR</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_QUEUE_THROTTLE_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Applies only if the <a href="cl_khr_throttle_hints.html"><code>cl_khr_throttle_hints</code></a> extension is enabled.</p>
+</div>
+<div class="paragraph">
+<p>Can be one of <code>CL_QUEUE_THROTTLE_HIGH_KHR</code>, <code>CL_QUEUE_THROTTLE_MED_KHR</code>, <code>CL_QUEUE_THROTTLE_LOW_KHR</code></p>
+</div>
+<div class="paragraph">
+<p>If <code>CL_QUEUE_THROTTLE_KHR</code> is not specified then the default priority is <code>CL_QUEUE_THROTTLE_MED_KHR</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>Returns an appropriate error code.
+If <code>errcode_ret</code> is <code>NULL</code>, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenCL objects such as memory, program and kernel objects are created using a context.
+Operations on these objects are performed using a command-queue.
+The command-queue can be used to queue a set of operations (referred to as commands) in order.
+Having multiple command-queues allows applications to queue multiple independent commands without requiring synchronization.
+Note that this should work as long as these objects are not being shared.
+Sharing of objects across multiple command-queues will require the application to perform appropriate synchronization.
+This is described in Appendix A of the specification.</p>
+</div>
+<div class="paragraph">
+<div class="title">Out-of-order Execution of Kernels and Memory Object Commands</div>
+<p>The OpenCL functions that are submitted to a command-queue are enqueued in the order the calls are made but can be configured to execute in-order or out-of-order.
+The <code>properties</code> argument in <code>clCreateCommandQueueWithProperties</code> can be used to specify the execution order.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> property of a command-queue is not set, the commands enqueued to a command-queue execute in order.
+For example, if an application calls <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> to execute kernel A followed by a <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> to execute kernel B, the application can assume that kernel A finishes first and then kernel B is executed.
+If the memory objects output by kernel A are inputs to kernel B then kernel B will see the correct data in memory objects produced by execution of kernel A.
+If the <code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> property of a command-queue is set, then there is no guarantee that kernel A will finish before kernel B starts execution.</p>
+</div>
+<div class="paragraph">
+<p>Applications can configure the commands enqueued to a command-queue to execute out-of-order by setting the <code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> property of the command-queue.
+This can be specified when the command-queue is created.
+In out-of-order execution mode there is no guarantee that the enqueued commands will finish execution in the order they were queued.
+As there is no guarantee that kernels will be executed in order, i.e.
+based on when the <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> calls are made within a command-queue, it is therefore possible that an earlier <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> call to execute kernel A identified by event A may execute and/or finish later than a <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> call to execute kernel B which was called by the application at a later point in time.
+To guarantee a specific order of execution of kernels, a wait on a particular event (in this case event A) can be used.
+The wait for event A can be specified in the <code>event_wait_list</code> argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> for kernel B.</p>
+</div>
+<div class="paragraph">
+<p>In addition, a wait for events (<a href="clEnqueueMarkerWithWaitList.html"><code>clEnqueueMarkerWithWaitList</code></a>) or a barrier (<a href="clEnqueueBarrierWithWaitList.html"><code>clEnqueueBarrierWithWaitList</code></a>) command can be enqueued to the command-queue.
+The wait for events command ensures that previously enqueued commands identified by the list of events to wait for have finished before the next batch of commands is executed.
+The barrier command ensures that all previously enqueued commands in a command-queue have finished execution before the next batch of commands is executed.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, commands to read, write, copy or map memory objects that are enqueued after <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> or <a href="clEnqueueNativeKernel.html"><code>clEnqueueNativeKernel</code></a> commands are not guaranteed to wait for kernels scheduled for execution to have completed (if the <code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> property is set).
+To ensure correct ordering of commands, the event object returned by <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> or <a href="clEnqueueNativeKernel.html"><code>clEnqueueNativeKernel</code></a> can be used to enqueue a wait for event or a barrier command can be enqueued that must complete before reads or writes to the memory object(s) occur.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clCreateCommandQueueWithProperties</code> returns a valid non-zero command-queue and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the command-queue is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if <code>device</code> is not a valid device or is not associated with <code>context</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if values specified in <code>properties</code> are not valid.</p>
+</li>
+<li>
+<p><code>CL_INVALID_QUEUE_PROPERTIES</code> if values specified in <code>properties</code> are valid but are not supported by the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+<li>
+<p><code>CL_INVALID_QUEUE_PROPERTIES</code> if extension <a href="cl_khr_priority_hints.html"><code>cl_khr_priority_hints</code></a> is enabled and the <code>CL_QUEUE_PRIORITY_KHR</code> property is specified and the queue is a <code>CL_QUEUE_ON_DEVICE</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_QUEUE_PROPERTIES</code> if extension <a href="cl_khr_throttle_hints.html"><code>cl_khr_throttle_hints</code></a> is enabled and the <code>CL_QUEUE_PRIORITY_KHR</code> property is specified and the queue is a <code>CL_QUEUE_ON_DEVICE</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetCommandQueueInfo.html"><code>clGetCommandQueueInfo</code></a>, <a href="clReleaseCommandQueue.html"><code>clReleaseCommandQueue</code></a>, <a href="clRetainCommandQueue.html"><code>clRetainCommandQueue</code></a>, <a href="clCreateContext.html"><code>clCreateContext</code></a>, <a href="clCreateContextFromType.html"><code>clCreateContextFromType</code></a>, <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=97" target="_blank">OpenCL 2.1 API Specification, page 97</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

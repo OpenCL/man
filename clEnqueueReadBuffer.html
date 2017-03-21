@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueReadBuffer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueReadBuffer" class="article">
+<div id="header">
+<h1>clEnqueueReadBuffer</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueue commands to read from a buffer object to host memory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueReadBuffer(cl_command_queue command_queue,
+                           cl_mem buffer,
+                           cl_bool blocking_read,
+                           size_t offset,
+                           size_t size,
+                           void *ptr,
+                           cl_uint num_events_in_wait_list,
+                           const cl_event *event_wait_list,
+                           cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>Is a valid host command-queue in which the read command will be queued.
+<code>command_queue</code> and <code>buffer</code> must be created with the same OpenCL context.</p>
+</dd>
+<dt class="hdlist1"><code>buffer</code></dt>
+<dd>
+<p>Refers to a valid buffer object.</p>
+</dd>
+<dt class="hdlist1"><code>blocking_read</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Indicates if the read operations are <code>blocking</code> or <code>non-blocking</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>blocking_read</code> is <code>CL_TRUE</code> i.e.
+the read command is blocking, <code>clEnqueueReadBuffer</code> does not return until the buffer data has been read and copied into memory pointed to by <code>ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>blocking_read</code> is <code>CL_FALSE</code> i.e.
+the read command is <code>non-blocking</code>, <code>clEnqueueReadBuffer</code> queues a <code>non-blocking</code> read command and returns.
+The contents of the buffer that <code>ptr</code> points to cannot be used until the read command has completed.
+The <code>event</code> argument returns an event object which can be used to query the execution status of the read command.
+When the read command has completed, the contents of the buffer that <code>ptr</code> points to can be used by the application.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>offset</code></dt>
+<dd>
+<p>The offset in bytes in the buffer object to read from.</p>
+</dd>
+<dt class="hdlist1"><code>size</code></dt>
+<dd>
+<p>The size in bytes of data being read.</p>
+</dd>
+<dt class="hdlist1"><code>ptr</code></dt>
+<dd>
+<p>The pointer to buffer in host memory where data is to be read into.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list</code> <code>num_events_in_wait_list</code></dt>
+<dd>
+<p><code>event_wait_list</code> and <code>num_events_in_wait_list</code> specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular read command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Calling <code>clEnqueueReadBuffer</code> to read a region of the buffer object with the <code>ptr</code> argument value set to <code>host_ptr</code> + <code>offset</code>, where <code>host_ptr</code> is a pointer to the memory region specified when the buffer object being read is created with <code>CL_MEM_USE_HOST_PTR</code>, must meet the following requirements in order to avoid undefined behavior:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>All commands that use this buffer object or a memory object (buffer or image) created from this buffer object have finished execution before the read command begins execution.</p>
+</li>
+<li>
+<p>The buffer object or memory objects created from this buffer object are not mapped.</p>
+</li>
+<li>
+<p>The buffer object or memory objects created from this buffer object are not used by any command-queue until the read command has finished execution.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clEnqueueReadBuffer</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if the context associated with <code>command_queue</code> and <code>buffer</code> are not the same or if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>buffer</code> is not a valid buffer object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if the region being read specified by (<code>offset</code>, <code>size</code>) is out of bounds or if <code>ptr</code> is a NULL value.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_MISALIGNED_SUB_BUFFER_OFFSET</code> if <code>buffer</code> is a sub-buffer object and <code>offset</code> specified when the sub-buffer object is created is not aligned to <code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code> value for device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</code> if the read and write operations are blocking and the execution status of any of the events in <code>event_wait_list</code> is a negative integer value.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for data store associated with <code>buffer</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if <code>clEnqueueReadBuffer</code> is called on <code>buffer</code> which has been created with <code>CL_MEM_HOST_WRITE_ONLY</code> or <code>CL_MEM_HOST_NO_ACCESS</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueCopyBuffer.html"><code>clEnqueueCopyBuffer</code></a>, <a href="clEnqueueWriteBuffer.html"><code>clEnqueueWriteBuffer</code></a>, <a href="clEnqueueWriteBufferRect.html"><code>clEnqueueWriteBufferRect</code></a>, <a href="clEnqueueReadBufferRect.html"><code>clEnqueueReadBufferRect</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=110" target="_blank">OpenCL 2.1 API Specification, page 110</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

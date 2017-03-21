@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>attribute</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="attribute" class="article">
+<div id="header">
+<h1><em>attribute</em></h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>__attribute__ ((attribute-list))
+
+attribute-list:
+     attributeopt
+     attribute-list, attributeopt
+
+attribute:
+     attribute-token attribute-argument-clauseopt
+
+attribute-token:
+     identifier
+
+attribute-argument-clause:
+     ( attribute-argument-list )
+
+attribute-argument-list:
+     attribute-argument
+     attribute-argument-list, attribute-argument
+
+attribute-argument:
+     assignment-expression</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes the syntax with which <code><em>attribute</em></code> may be used, and the constructs to which attribute specifiers bind.</p>
+</div>
+<div class="paragraph">
+<p>An attribute specifier is of the form <code><em>attribute</em> attribute-list</code>.</p>
+</div>
+<div class="paragraph">
+<p>This syntax is taken directly from GCC but unlike GCC, which allows attributes to be applied only to functions, types, and variables, OpenCL attributes can be associated with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="attributes-types.html"><code>types</code></a></p>
+</li>
+<li>
+<p><a href="functionQualifiers.html"><code>functions</code></a></p>
+</li>
+<li>
+<p><a href="attributes-variables.html"><code>variables</code></a></p>
+</li>
+<li>
+<p><a href="attributes-blocksAndControlFlow.html"><code>blocks</code></a></p>
+</li>
+<li>
+<p><a href="attributes-blocksAndControlFlow.html">control-flow statements</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In general, the rules for how an attribute binds for a given context are non-trivial and the reader is pointed to GCC&#8217;s documentation and Maurer and Wong&#8217;s paper (See the "References" section in the OpenCL specification for details.)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="attributes-types.html">Type Attributes</a>, <a href="attributes-variables.html">Variable Attributes</a>, <a href="attributes-blocksAndControlFlow.html">Block and Control-Flow Statement Attributes</a>, <a href="functionQualifiers.html">Function Qualifiers</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=56" target="_blank">OpenCL 2.0 C Language Specification, page 56</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

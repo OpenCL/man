@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCloneKernel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCloneKernel" class="article">
+<div id="header">
+<h1>clCloneKernel</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Make a shallow copy of the kernel object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_kernel clCloneKernel(cl_kernel source_kernel,
+                        cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>source_kernel</code></dt>
+<dd>
+<p>A valid <code>cl_kernel</code> object that will be copied.
+<code>source_kernel</code> will not be modified in any way by this function.</p>
+</dd>
+<dt class="hdlist1"><code>errcode_ret</code></dt>
+<dd>
+<p>Assigned an appropriate error code.
+If <code>errcode_ret</code> is <code>NULL</code>, no error code is returned.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Makes a shallow copy of the kernel object, its arguments and any information passed to the kernel object using <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a>.
+If the kernel object was ready to be enqueued before copying it, the clone of the kernel object is ready to enqueue.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The returned kernel object is an exact copy of <code>source_kernel</code>, with one caveat: the reference count on the returned kernel object is set as if it had been returned by <a href="clCreateKernel.html"><code>clCreateKernel</code></a> . The reference count of <code>source_kernel</code> will not be changed.</p>
+</div>
+<div class="paragraph">
+<p>The resulting kernel will be in the same state as if <a href="clCreateKernel.html"><code>clCreateKernel</code></a> is called to create the resultant kernel with the same arguments as those used to create <code>source_kernel</code>, the latest call to <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a> or <a href="clSetKernelArgSVMPointer.html"><code>clSetKernelArgSVMPointer</code></a> for each argument index applied to kernel and the last call to <a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a> for each value of the param name parameter are applied to the new kernel object.</p>
+</div>
+<div class="paragraph">
+<p>All arguments of the new kernel object must be intact and it may be correctly used in the same situations as kernel except those that assume a pre-existing reference count.
+Setting arguments on the new kernel object will not affect <code>source_kernel</code> except insofar as the argument points to a shared underlying entity and in that situation behavior is as if two kernel objects had been created and the same argument applied to each.
+Only the data stored in the kernel object is copied; data referenced by the kernel’s arguments are not copied.
+For example, if a buffer or pointer argument is set on a kernel object, the pointer is copied but the underlying memory allocation is not.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns a valid non-zero kernel object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the kernel is successfully copied.
+Otherwise it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_KERNEL</code> if <code>kernel</code> is not a valid kernel object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clSetKernelExecInfo.html"><code>clSetKernelExecInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=230" target="_blank">OpenCL 2.1 API Specification, page 230</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

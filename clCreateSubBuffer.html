@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateSubBuffer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateSubBuffer" class="article">
+<div id="header">
+<h1>clCreateSubBuffer</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a new buffer object (referred to as a sub-buffer object) from an existing buffer object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_mem clCreateSubBuffer(cl_mem buffer,
+                         cl_mem_flags flags,
+                         cl_buffer_create_type buffer_create_type,
+                         const void *buffer_create_info,
+                         cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>buffer</code></dt>
+<dd>
+<p>A valid buffer object and cannot be a sub-buffer object.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bit-field that is used to specify allocation and usage information about the sub-buffer memory object being created and is described in the table below.
+If the <code>CL_MEM_READ_WRITE</code>, <code>CL_MEM_READ_ONLY</code> or <code>CL_MEM_WRITE_ONLY</code> values are not specified in <code>flags</code>, they are inherited from the corresponding memory access qualifers associated with <code>buffer</code>.
+The <code>CL_MEM_USE_HOST_PTR</code>, <code>CL_MEM_ALLOC_HOST_PTR</code> and <code>CL_MEM_COPY_HOST_PTR</code> values cannot be specified in <code>flags</code> but are inherited from the corresponding memory access qualifiers associated with <code>buffer</code>.
+If <code>CL_MEM_COPY_HOST_PTR</code> is specified in the memory access qualifier values associated with <code>buffer</code> it does not imply any additional copies when the sub-buffer is created from <code>buffer</code>.
+If the <code>CL_MEM_HOST_WRITE_ONLY</code>, <code>CL_MEM_HOST_READ_ONLY</code> or <code>CL_MEM_HOST_NO_ACCESS</code> values are not specified in <code>flags</code>, they are inherited from the corresponding memory access qualifiers associated with <code>buffer</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_mem_flags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be read and written by a kernel.
+This is the default.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object will be written but not read by a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Reading from a buffer or image object created with <code>CL_MEM_WRITE_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> and <code>CL_MEM_WRITE_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the memory object is a read-only memory object when used inside a kernel.</p>
+</div>
+<div class="paragraph">
+<p>Writing to a buffer or image object created with <code>CL_MEM_READ_ONLY</code> inside a kernel is undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> and <code>CL_MEM_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_USE_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to use memory referenced by <code>host_ptr</code> as the storage bits for the memory object.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL implementations are allowed to cache the buffer contents pointed to by <code>host_ptr</code> in device memory.
+This cached copy can be used when kernels are executed on a device.</p>
+</div>
+<div class="paragraph">
+<p>The result of OpenCL commands that operate on multiple buffer objects created with the same <code>host_ptr</code> or overlapping host regions is considered to be undefined.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the application wants the OpenCL implementation to allocate memory from host accessible memory.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_ALLOC_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag is valid only if <code>host_ptr</code> is not NULL.
+If specified, it indicates that the application wants the OpenCL implementation to allocate memory for the memory object and copy the data from memory referenced by <code>host_ptr</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> and <code>CL_MEM_USE_HOST_PTR</code> are mutually exclusive.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_COPY_HOST_PTR</code> can be used with <code>CL_MEM_ALLOC_HOST_PTR</code> to initialize the contents of the <code>cl_mem</code> object allocated using host-accessible (e.g.
+PCIe) memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only write to the memory object (using OpenCL APIs that enqueue a write or a map for write).
+This can be used to optimize write access from the host (e.g.
+enable write-combined allocations for memory objects for devices that communicate with the host over a system bus such as PCIe).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_READ_ONLY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will only read the memory object (using OpenCL APIs that enqueue a read or a map for read).</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> and <code>CL_MEM_HOST_READ_ONLY</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_MEM_HOST_NO_ACCESS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This flag specifies that the host will not read or write the memory object.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MEM_HOST_WRITE_ONLY</code> or <code>CL_MEM_HOST_READ_ONLY</code> and <code>CL_MEM_HOST_NO_ACCESS</code> are mutually exclusive.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>buffer_create_type</code> and <code>buffer_create_info</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Describes the type of buffer object to be created.
+The list of supported values for <code>buffer_create_type</code> and corresponding descriptor that <code>buffer_create_info</code> points to is described below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_buffer_create_type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_BUFFER_CREATE_TYPE_REGION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Create a buffer object that represents a specific region in <code>buffer</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>buffer_create_info</code> is a pointer to the following structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>typedef struct _cl_buffer_region {
+    size_t origin;
+    size_t size;
+} cl_buffer_region;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(<code>origin, size</code>) defines the offset and size in bytes in <code>buffer</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>buffer</code> is created with <code>CL_MEM_USE_HOST_PTR</code>, the <code>host_ptr</code> associated with the buffer object returned is <code>host_ptr</code> + <code>origin</code>.</p>
+</div>
+<div class="paragraph">
+<p>The buffer object returned references the data store allocated for <code>buffer</code> and points to a specific region given by (<code>origin, size</code>) in this data store.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_INVALID_VALUE</code> is returned in <code>errcode_ret</code> if the region specified by (<code>origin, size</code>) is out of bounds in <code>buffer</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_INVALID_BUFFER_SIZE</code> if <code>size</code> is 0.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_MISALIGNED_SUB_BUFFER_OFFSET</code> is returned in <code>errcode_ret</code> if there are no devices in context associated with <code>buffer</code> for which the <code>origin</code> value is aligned to the <code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code> value.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Concurrent reading from, writing to and copying between both a buffer object and its sub-buffer object(s) is undefined.
+Concurrent reading from, writing to and copying between overlapping sub-buffer objects created with the same buffer object is undefined.
+Only reading from both a buffer object and its sub-buffer objects or reading from multiple overlapping sub-buffer objects is defined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors in <code>errcode_ret</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>buffer</code> is not a valid buffer object or is a sub-buffer object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>buffer</code> was created with <code>CL_MEM_WRITE_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_READ_ONLY</code>, or if <code>buffer</code> was created with <code>CL_MEM_READ_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code>, or if <code>flags</code> specifies <code>CL_MEM_USE_HOST_PTR</code> or <code>CL_MEM_ALLOC_HOST_PTR</code> or <code>CL_MEM_COPY_HOST_PTR</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>buffer</code> was created with <code>CL_MEM_HOST_WRITE_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_HOST_READ_ONLY</code> or if <code>buffer</code> was created with <code>CL_MEM_HOST_READ_ONLY</code> and <code>flags</code> specifies <code>CL_MEM_HOST_WRITE_ONLY</code>, or if <code>buffer</code> was created with <code>CL_MEM_HOST_NO_ACCESS</code> and <code>flags</code> specifies <code>CL_MEM_HOST_READ_ONLY</code> or <code>CL_MEM_HOST_WRITE_ONLY</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if value specified in <code>buffer_create_type</code> is not valid.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if value(s) specified in <code>buffer_create_info</code> (for a given <code>buffer_create_type</code>) is not valid or if <code>buffer_create_info</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_BUFFER_SIZE</code> if size is 0.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for sub-buffer object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateBuffer.html"><code>clCreateBuffer</code></a>, <a href="clEnqueueReadBuffer.html"><code>clEnqueueReadBuffer</code></a>, <a href="clEnqueueWriteBuffer.html"><code>clEnqueueWriteBuffer</code></a>, <a href="clEnqueueCopyBuffer.html"><code>clEnqueueCopyBuffer</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=107" target="_blank">OpenCL 2.1 API Specification, page 107</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

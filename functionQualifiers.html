@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Function Qualifiers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="FunctionQualifiers" class="article">
+<div id="header">
+<h1>Function Qualifiers</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Qualifiers for kernel functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>__kernel
+kernel
+
+__attribute__((vec_type_hint(&lt;type&gt;)))
+__attribute__((work_group_size_hint(X, Y, Z)))
+__attribute__((reqd_work_group_size(X, Y, Z)))
+__attribute__((nosvm))</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>__kernel</code> (or <code>kernel</code>) qualifier declares a function to be a kernel that can be executed by an application on an OpenCL device(s).
+The following rules apply to functions that are declared with this qualifier:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It can be executed on the device only</p>
+</li>
+<li>
+<p>It can be called by the host</p>
+</li>
+<li>
+<p>It is just a regular function call if a <code>__kernel</code> function is called by another kernel function.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Kernel functions with variables declared inside the function with the <a href="local.html"><code>__local</code></a> or <a href="local.html"><code>local</code></a> qualifier can be called by the host using appropriate APIs such as <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>__kernel</code> and <code>kernel</code> names are reserved for use as functions qualifiers and shall not be used otherwise.</p>
+</div>
+<div class="paragraph">
+<div class="title">Optional Attribute Qualifiers</div>
+<p>The <code><em>kernel</code> qualifier can be used with the keyword <a href="attribute.html"><code></em>attribute__</code></a> to declare additional information about the kernel function as described below.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code><em>attribute</em>vec_type_hint(&lt;type&gt;)</code> is a hint to the compiler and is intended to be a representation of the computational <em>width</em> of the <code><em>kernel</code>, and should serve as the basis for calculating processor bandwidth utilization when the compiler is looking to autovectorize the code.
+In the <code></em>attribute<em>vec_type_hint(&lt;type&gt;)</code> qualifier &lt;type&gt; is one of the built-in vector types or the constituent scalar element types.
+If <code>vec_type_hint (&lt;type&gt;)</code> is not specified, the kernel is assumed to have the <code></em>attribute__vec_type_hint(int)</code> qualifier.</p>
+</div>
+<div class="paragraph">
+<p>Implicit in autovectorization is the assumption that any libraries called from the <code>__kernel</code> must be recompilable at run time to handle cases where the compiler decides to merge or separate workitems.
+This probably means that such libraries can never be hard coded binaries or that hard coded binaries must be accompanied either by source or some retargetable intermediate representation.
+This may be a code security question for some.</p>
+</div>
+<div class="paragraph">
+<p>For example, where the developer specified a width of <code>float4</code>, the compiler should assume that the computation usually uses up 4 lanes of a float vector, and would decide to merge work-items or possibly even separate one work-item into many threads to better match the hardware capabilities.
+A conforming implementation is not required to autovectorize code, but shall support the hint.
+A compiler may autovectorize, even if no hint is provided.
+If an implementation merges <code>N</code> work-items into one thread, it is responsible for correctly handling cases where the number of global or local work-items in any dimension modulo <code>N</code> is not zero.</p>
+</div>
+<div class="paragraph">
+<p>If for example, a <code><em>kernel</code> function is declared with <code></em>attribute<em>vec_type_hint (float4)</code> (meaning that most operations in the <code></em>kernel</code> are explicitly vectorized using <code>float4</code>) and the kernel is running using Intel® Advanced Vector Instructions (Intel® AVX) which implements a 8-float-wide vector unit, the autovectorizer might choose to merge two work-items to one thread, running a second work-item in the high half of the 256-bit AVX register.</p>
+</div>
+<div class="paragraph">
+<p>As another example, a Power4 machine has two scalar double precision floating-point units with an 6-cycle deep pipe.
+An autovectorizer for the Power4 machine might choose to interleave six kernels declared with the <code><em>attribute</em>vec_type_hint (double2)</code> qualifier into one hardware thread, to ensure that there is always 12-way parallelism available to saturate the FPUs.
+It might also choose to merge 4 or 8 work-items (or some other number) if it concludes that these are better choices, due to resource utilization concerns or some preference for divisibility by 2.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code><em>attribute</em>work_group_size_hint(X, Y, Z)</code> is a hint to the compiler and is intended to specify the work-group size that may be used i.e.
+value most likely to be specified by the <code>local_work_size</code> argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.
+For example the <code><em>attribute</em>work_group_size_hint(1, 1, 1)</code> is a hint to the compiler that the kernel will most likely be executed with a work-group size of 1.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code><em>attribute</em>reqd_work_group_size(X, Y, Z)</code> is the work-group size that must be used as the <code>local_work_size</code> argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.
+This allows the compiler to optimize the generated code appropriately for this kernel.</p>
+</div>
+<div class="paragraph">
+<p>If <code>Z</code> is one, the <code>work_dim</code> argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> can be 2 or 3.
+If <code>Y</code> and <code>Z</code> are one, the <code>work_dim</code> argument to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a> can be 1, 2 or 3.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code><em>attribute</em>nosvm</code> qualifier can be used with a pointer variable to inform the compiler that the pointer does not refer to a shared virtual memory region.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>// autovectorize assuming float4 as the
+// basic computation width
+__kernel __attribute__((vec_type_hint(float4)))
+void foo( __global float4 *p ) { .... }
+
+// autovectorize assuming double as the
+// basic computation width
+__kernel __attribute__((vec_type_hint(double)))
+void foo( __global float4 *p ){ .... }
+
+// autovectorize assuming int (default)
+// as the basic computation width
+__kernel
+void foo( __global float4 *p ){ .... }</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="attribute.html"><code><em>attribute</em></code></a>, <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>, <a href="qualifiers.html"><code>qualifiers</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=47" target="_blank">OpenCL 2.0 C Language Specification, page 47</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

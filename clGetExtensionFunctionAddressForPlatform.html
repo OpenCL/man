@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetExtensionFunctionAddressForPlatform</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetExtensionFunctionAddressForPlatform" class="article">
+<div id="header">
+<h1>clGetExtensionFunctionAddressForPlatform</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns the address of the extension function named by <code>funcname</code> for a given <code>platform</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void* clGetExtensionFunctionAddressForPlatform(cl_platform_id platform,
+                                               const char *funcname)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>funcname</code></dt>
+<dd>
+<p>Name of an extension function.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The function <code>clGetExtensionFunctionAddressForPlatform</code> returns the address of the extension function named by <code>funcname</code> for a given <code>platform</code>.
+The pointer returned should be cast to a function pointer type matching the extension function&#8217;s definition defined in the appropriate extension specification and header file.</p>
+</div>
+<div class="paragraph">
+<p>A return value of NULL indicates that the specified function does not exist for the implementation or <code>platform</code> is not a valid platform.
+A non-NULL return value for <code>clGetExtensionFunctionAddressForPlatform</code> does not guarantee that an extension function is actually supported by the platform.
+The application must also make a corresponding query using <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a> (platform, <code>CL_PLATFORM_EXTENSIONS</code>, &#8230;&#8203; ) or <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> (device,<code>CL_DEVICE_EXTENSIONS</code>, &#8230;&#8203; ) to determine if an extension is supported by the OpenCL implementation.</p>
+</div>
+<div class="paragraph">
+<p><code>clGetExtensionFunctionAddressForPlatform</code> may not be queried for core (non-extension) functions in OpenCL.
+For functions that are queryable with <code>clGetExtensionFunctionAddressForPlatform</code>, implementations may choose to also export those functions statically from the object libraries implementing those functions.
+However, portable applications cannot rely on this behavior.</p>
+</div>
+<div class="paragraph">
+<p>Function pointer typedefs must be declared for all extensions that add API entrypoints.
+These typedefs are a required part of the extension interface, to be provided in an appropriate header (such as <code>cl_ext.h</code> if the extension is an OpenCL extension, or <code>cl_gl_ext.h</code> if the extension is an OpenCL/OpenGL sharing extension).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since there is no way to qualify the query with a device, the function pointer returned must work for all implementations of that extension on different devices for a platform.
+The behavior of calling a device extension function on a device not supporting that extension is undefined.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_icd.html"><code>cl_khr_icd</code></a> extension is enabled, for functions supported by the ICD Loader, <code>clGetExtensionFunctionAddress</code> will return the function pointer of the ICD Loader implementation.
+For extension functions which the ICD Loader is unaware of, the function <code>clGetExtensionFunctionAddress</code> will determine the vendor implementation to return based on the string passed in.
+The ICD Loader will return the result from querying <code>clGetExtensionFunctionAddress</code> on the vendor ICD enumerated by the ICD Loader whose ICD suffix is a suffix of the function name being queried.
+If no such vendor exists or the suffix of the function is <code>KHR</code> or <code>EXT</code> then <code>clGetExtensionFunctionAddress</code> will return NULL.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following convention must be followed for all extensions affecting the host API, where TAG can be <code>KHR</code>, <code>EXT</code> or vendor-specific:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                        #ifndef extension_name
+#define extension_name       1
+
+// all data typedefs, token #defines, prototypes, and
+// function pointer typedefs for this extension
+
+// function pointer typedefs must use the
+// following naming convention
+typedef CL_API_ENTRY return type
+      (CL_API_CALL *clextension_func_nameTAG_fn)(...);
+
+#endif // extension_name</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Consider, for example, the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension.
+This extension would add the following to <code>cl_gl_ext.h</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                        #ifndef cl_khr_gl_sharing
+#define cl_khr_gl_sharing     1
+
+// all data typedefs, token #defines, prototypes, and
+// function pointer typedefs for this extension
+#define CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR -1000
+#define CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR   0x2006
+#define CL_DEVICES_FOR_GL_CONTEXT_KHR          0x2007
+#define CL_GL_CONTEXT_KHR                      0x2008
+#define CL_EGL_DISPLAY_KHR                     0x2009
+#define CL_GLX_DISPLAY_KHR                     0x200A
+#define CL_WGL_HDC_KHR                         0x200B
+#define CL_CGL_SHAREGROUP_KHR                  0x200C
+
+// function pointer typedefs must use the
+// following naming convention
+typedef CL_API_ENTRY cl_int
+     (CL_API_CALL *clGetGLContextInfoKHR_fn)(
+              const cl_context_properties * /* properties */,
+              cl_gl_context_info /* param_name */,
+              size_t /* param_value_size */,
+              void * /* param_value */,
+              size_t * /*param_value_size_ret*/);
+#endif // cl_khr_gl_sharing</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="EXTENSION.html">EXTENSION</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=9" target="_blank">OpenCL 2.1 Extensions Specification, page 9</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

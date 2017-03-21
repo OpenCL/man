@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Other Data Types</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="OtherDataTypes" class="article">
+<div id="header">
+<h1>Other Data Types</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Other Built-in Data Types</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following table describes other data types supported by OpenCL:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D image.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image3d_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 3D image.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_array_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D image array.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image1d_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 1D image.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image1d_buffer_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 1D image created from a buffer object.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image1d_array_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 1D image array.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_depth_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D depth image.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_array_depth_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D depth image array.
+See individual <a href="imageFunctions.html">Image Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="sampler_t.html"><code>sampler_t</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A sampler type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>queue_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A device command queue.
+This queue can only be used to enqueue commands from kernels executing on the device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>ndrange_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The N-dimensional range over which a kernel executes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>clk_event_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A device side event that identifies a command enqueue to a device command queue.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>reserve_id_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A reservation ID.
+This opaque type is used to identify the reservation for reading and writing a pipe.
+Refer to section 6.13.16.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>event_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>An event.
+This can be used to identify async copies from global to local memory and vice-versa.
+See individual <a href="asyncCopyFunctions.html">Async Copy and Prefetch Functions</a> for more information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_mem_fence_flags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This is a bitfield and can be 0 or a combination of the following values ORed together:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CLK_GLOBAL_MEM_FENCE
+CLK_LOCAL_MEM_FENCE
+CLK_IMAGE_MEM_FENCE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These flags are described in detail in section 6.13.8 of the OpenCL specification (see <a href="syncFunctions.html"><code>syncFunctions</code></a>).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_msaa_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is enabled: A 2D multi-sample color image.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_array_msaa_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is enabled: A 2D multi-sample color image array.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_msaa_depth_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is enabled: A 2D multi-sample depth image.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_array_msaa_depth_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a> extension is enabled: A 2D multi-sample depth image array.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The <code>image2d_t</code>, <code>image3d_t</code>, <code>image2d_array_t</code>, <code>image1d_t</code>, <code>image1d_buffer_t</code>, <code>image1d_array_t</code>, <code>image2d_depth_t</code>, <code>image2d_array_depth_t</code> and <code>sampler_t</code> types are only defined if the device supports images i.e.
+<code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.
+See the table for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> for details.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The C99 derived types (arrays, structs, union, function, and pointers), constructed from the built-in data types described in <a href="scalarDataTypes.html">Scalar Data Types</a>, <a href="vectorDataTypes.html">Vector Data Types</a>, and <a href="#">Other Data Types</a> are also supported with certain <a href="restrictions.html"><code>restrictions</code></a> described in section 6.9.</p>
+</div>
+<div class="paragraph">
+<p>The following tables describe the other built-in data types in OpenCL described in table 6.3 and the corresponding data type available to the application:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type in OpenCL C</th>
+<th class="tableblock halign-left valign-top">API type for application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>queue_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_command_queue</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>clk_event_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>cl_event</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="macroLimits.html">Macros and Limits</a>, <a href="scalarDataTypes.html">Scalar Data Types</a>, <a href="vectorDataTypes.html">Vector Data Types</a>, <a href="reservedDataTypes.html">Reserved Data Types</a>, <a href="abstractDataTypes.html">Abstract Data Types</a>, <a href="enums.html">Enumerated Data Types</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=10" target="_blank">OpenCL 2.0 C Language Specification, page 10</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

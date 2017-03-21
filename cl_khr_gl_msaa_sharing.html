@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_gl_msaa_sharing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_gl_msaa_sharing" class="article">
+<div id="header">
+<h1>cl_khr_gl_msaa_sharing</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Extends the CL/GL sharing to support GL multi-sampled texture (color or depth).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION cl_khr_gl_msaa_sharing : enable</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This extension name is <code>cl_khr_gl_msaa_sharing</code>.
+This extension requires <a href="cl_khr_gl_depth_images.html"><code>cl_khr_gl_depth_images</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This extension adds read_image and write_image functions to the <a href="imageFunctions.html">Image Read and Write Functions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Multi-sample CL image objects (MSAA) can only be read from a kernel.
+Multi-sample CL image objects cannot be used as arguments to <a href="clEnqueueReadImage.html"><code>clEnqueueReadImage</code></a> , <a href="clEnqueueWriteImage.html"><code>clEnqueueWriteImage</code></a>, <a href="clEnqueueCopyImage.html"><code>clEnqueueCopyImage</code></a>, <a href="clEnqueueCopyImageToBuffer.html"><code>clEnqueueCopyImageToBuffer</code></a>, <a href="clEnqueueCopyBufferToImage.html"><code>clEnqueueCopyBufferToImage</code></a>, <a href="clEnqueueMapImage.html"><code>clEnqueueMapImage</code></a> and <a href="clEnqueueFillImage.html"><code>clEnqueueFillImage</code></a> and will return a <code>CL_INVALID_OPERATION</code> error.</p>
+</div>
+<div class="paragraph">
+<p>Add the following new data types to table 6.3 in section 6.1.3 of the OpenCL 2.1 specification (see <a href="otherDataTypes.html"><code>otherDataTypes</code></a>):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_msaa_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D multi-sample color image.
+Refer to section 6.13.14 for a detailed description of the built-in functions that use this type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_array_msaa_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D multi-sample color image array.
+Refer to section 6.13.14 for a detailed description of the built-in functions that use this type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_msaa_depth_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D multi-sample depth image.
+Refer to section 6.13.14 for a detailed description of the built-in functions that use this type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>image2d_array_msaa_depth_t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A 2D multi-sample depth image array.
+Refer to section 6.13.14 for a detailed description of the built-in functions that use this type.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+When a multisample image is accessed in a kernel, the access takes one vector of integers describing which pixel to fetch and an integer corresponding to the sample numbers describing which sample within the pixel to fetch.
+sample identifies the sample position in the multi-sample image.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For best performance, we recommend that <code>sample</code> be a literal value so it is known at compile time and the OpenCL compiler can perform appropriate optimizations for multisample reads on the device.</p>
+</div>
+<div class="paragraph">
+<p>No standard sampling instructions are allowed on the multisample image.
+Accessing a coordinate outside the image and/or a sample that is outside the number of samples associated with each pixel in the image is undefined</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="imageFunctions.html">Image Read and Write Functions</a>, <a href="clGetGLTextureInfo.html"><code>clGetGLTextureInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=113" target="_blank">OpenCL 2.1 Extensions Specification, page 113</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

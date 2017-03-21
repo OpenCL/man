@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clSVMFree</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetDeviceIDs" class="article">
+<div id="header">
+<h1>clSVMFree</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Frees a shared virtual memory buffer allocated using clSVMAlloc.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void clSVMFree(cl_context context,
+               void *svm_pointer)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>A valid OpenCL context used to create the SVM buffer.</p>
+</dd>
+<dt class="hdlist1"><code>svm_pointer</code></dt>
+<dd>
+<p>Must be the value returned by a call to <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a>.
+If a NULL pointer is passed in <code>svm_pointer</code>, no action occurs.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Note that <code>clSVMFree</code> does not wait for previously enqueued commands that may be using <code>svm_pointer</code> to finish before freeing <code>svm_pointer</code>.
+It is the responsibility of the application to make sure that enqueued commands that use <code>svm_pointer</code> have finished before freeing <code>svm_pointer</code>.
+This can be done by enqueuing a blocking operation such as <a href="clFinish.html"><code>clFinish</code></a>, <a href="clWaitForEvents.html"><code>clWaitForEvents</code></a>, <a href="clEnqueueReadBuffer.html"><code>clEnqueueReadBuffer</code></a> or by registering a callback with the events associated with enqueued commands and when the last enqueued comamnd has finished freeing <code>svm_pointer</code>.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of using <code>svm_pointer</code> after it has been freed is undefined.
+In addition, if a buffer object is created using <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a> with <code>svm_pointer</code>, the buffer object must first be released before the <code>svm_pointer</code> is freed.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="clEnqueueSVMFree.html"><code>clEnqueueSVMFree</code></a> API can also be used to enqueue a callback to free the shared virtual memory buffer allocated using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a> or a shared system memory pointer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clSVMAlloc.html"><code>clSVMAlloc</code></a>, <a href="sharedVirtualMemory.html">Shared Virtual Memory Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=178" target="_blank">OpenCL 2.1 API Specification, page 178</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

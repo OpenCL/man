@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Explicit conversions with convert_T()</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="convert_T" class="article">
+<div id="header">
+<h1>Explicit conversions with convert_T()</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Explicit type conversions using convert_`T`()</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>convert_destType(sourceType)
+destType convert_destType&lt;_sat&gt;&lt;roundingMode&gt; (sourceType)
+destTypen convert_destTypen&lt;_sat&gt;&lt;roundingMode&gt; (sourceType)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Explicit conversions may be performed using the <code>convert_destType(sourceType)</code> suite of functions.
+These provide a full set of type conversions between supported types (see <a href="scalarDataTypes.html">Scalar Data Types</a>) except for the following types: <code>bool</code>, <code>half</code>, <code>size_t</code>, <code>ptrdiff_t</code>, <code>intptr_t</code>, <code>uintptr_t</code>, and <code>void</code>.</p>
+</div>
+<div class="paragraph">
+<p>The number of elements in the source and destination vectors must match.</p>
+</div>
+<div class="paragraph">
+<p>The behavior of the conversion may be modified by one or two optional modifiers that specify saturation for out-of-range inputs and rounding behavior.</p>
+</div>
+<div class="paragraph">
+<p>The full form of the scalar convert function is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>          destType
+          convert_destType&lt;_sat&gt;&lt;_roundingMode&gt;(sourceType)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The full form of the vector convert function is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>          destTypen
+          convert_destTypen&lt;_sat&gt;&lt;_roundingMode&gt;(sourceTypen)</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Data Types</div>
+<p>Conversions are available for the following scalar types: <code>char</code>, <code>uchar</code>, <code>short</code>, <code>ushort</code>, <code>int</code>, <code>uint</code>, <code>long</code>, <code>ulong</code>, <code>float</code>, and built-in vector types derived therefrom.
+The operand and result type must have the same number of elements.
+The operand and result type may be the same type in which case the conversion has no effect on the type or value of an expression.</p>
+</div>
+<div class="paragraph">
+<p>Conversions between integer types follow the conversion rules specified in sections 6.3.1.1 and 6.3.1.3 of the C99 specification except for out-of-range behavior and saturated conversions which are described in section 6.2.3.3 below.</p>
+</div>
+<div class="paragraph">
+<div class="title">Rounding Modes</div>
+<p>Conversions to and from floating-point type shall conform to IEEE-754 rounding rules.
+Conversions may have an optional rounding mode modifier described in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Modifier</th>
+<th class="tableblock halign-left valign-top">Rounding Mode Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>_rte</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Round to nearest even</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>_rtz</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Round towards zero</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>_rtp</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Round toward positive infinity</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>_rtn</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Round toward negative infinity</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>no modifier specified</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Use the default rounding mode for this destination type, <code>_rtz</code> for conversion to integers or the default rounding mode for conversion to floating-point types.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>By default, conversions to integer type use the <code>_rtz</code> (round toward zero) rounding mode and conversions to floating-point type use the default rounding mode.
+The only default floating-point rounding mode supported is round to nearest even, i.e the default rounding mode will be <code>_rte</code> for floating-point types.</p>
+</div>
+<div class="paragraph">
+<p>For conversions to floating-point format, when a finite source value exceeds the maximum representable finite floating-point destination value, the rounding mode will affect whether the result is the maximum finite floating point value or infinity of same sign as the source value, per IEEE-754 rules for rounding.</p>
+</div>
+<div class="paragraph">
+<div class="title">Out-of-Range Behavior and Saturated Conversions</div>
+<p>When the conversion operand is either greater than the greatest representable destination value or less than the least representable destination value, it is said to be out-of-range.
+The result of out-of-range conversion is determined by the conversion rules specified by the C99 specification in section 6.3.
+When converting from a floating-point type to integer type, the behavior is implementation-defined.</p>
+</div>
+<div class="paragraph">
+<p>Conversions to integer type may opt to convert using the optional saturated mode by appending the <code>_sat</code> modifier to the conversion function name.
+When in saturated mode, values that are outside the representable range shall clamp to the nearest representable value in the destination format. (NaN should be converted to 0).</p>
+</div>
+<div class="paragraph">
+<p>Conversions to floating-point type shall conform to IEEE-754 rounding rules.
+The <code>_sat</code> modifier may not be used for conversions to floating-point formats.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenCL provides <code>convert_</code> operators for conversion between all types.
+C99 does not define what happens when a floating-point type is converted to integer type and the floating-point value lies outside the representable range of the integer type after rounding.
+When the <code><em>sat</code> variant of the conversion is used, the float shall be converted to the nearest representable integer value.
+Similarly, OpenCL also makes recommendations about what should happen with NaN.
+Hardware manufacturers that provide the saturated conversion in hardware may use the saturated conversion hardware for both the saturated and non-saturated versions of the OpenCL <code>convert</em></code> operator.
+OpenCL does not define what happens for the non-saturated conversions when floating-point operands are outside the range representable integers after rounding.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example0">Examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the following example, <code>convert_int4</code> converts a <code>uchar4</code> vector <code>u</code> to an <code>int4</code> vector <code>c</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>uchar4 u;
+int4   c = convert_int4(u);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the following example, <code>convert_int</code> converts a float scalar <code>f</code> to an int scalar <code>i</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>float   f;
+int    i = convert_int(f);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>short4  s;
+
+// negative values clamped to 0
+ushort4 u = convert_ushort4_sat( s );
+
+// values &gt; CHAR_MAX converted to CHAR_MAX
+// values &lt; CHAR_MIN converted to CHAR_MIN
+char4 c = convert_char4_sat( s );</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>float4 f;
+
+// values implementation defined for
+// f &gt; INT_MAX, f &lt; INT_MIN or NaN
+int4   i = convert_int4( f );
+
+// values &gt; INT_MAX clamp to INT_MAX, values &lt; INT_MIN clamp
+// to INT_MIN. NaN should produce 0.
+
+// The _rtz rounding mode is
+// used to produce the integer values.
+int4   i2 = convert_int4_sat( f );
+
+// similar to convert_int4, except that
+// floating-point values are rounded to the nearest
+// integer instead of truncated
+int4   i3 = convert_int4_rte( f );
+
+// similar to convert_int4_sat, except that
+// floating-point values are rounded to the
+// nearest integer instead of truncated
+int4   i4 = convert_int4_sat_rte( f );</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>int4   i;
+
+// convert ints to floats using the default rounding mode.
+float4 f = convert_float4( i );
+
+// convert ints to floats. integer values that cannot
+// be exactly represented as floats should round up to the
+// next representable float.
+float4 f = convert_float4_rtp( i );</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="scalarDataTypes.html">Scalar Data Types</a>, <a href="vectorDataTypes.html">Vector Data Types</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=20" target="_blank">OpenCL 2.0 C Language Specification, page 20</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

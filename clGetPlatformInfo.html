@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetPlatformInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetPlatformInfo" class="article">
+<div id="header">
+<h1>clGetPlatformInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Get specific information about the OpenCL platform.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetPlatformInfo(cl_platform_id platform,
+                         cl_platform_info param_name,
+                         size_t param_value_size,
+                         void *param_value,
+                         size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>platform</code></dt>
+<dd>
+<p>The platform ID returned by <a href="clGetPlatformIDs.html"><code>clGetPlatformIDs</code></a> or can be NULL.
+If <code>platform</code> is NULL, the behavior is implementation-defined.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>An enumeration constant that identifies the platform information being queried.
+It can be one of the values specified in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory location where appropriate values for a given <code>param_name</code> will be returned.
+Possible <code>param_value</code> values returned are listed in the table below.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size in bytes must be ≥ size of return type specified in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data being queried by <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored</p>
+</dd>
+</dl>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. OpenCL Platform Queries</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_platform_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_PROFILE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenCL profile string.
+Returns the profile name supported by the implementation.
+The profile name returned can be one of the following strings:</p>
+</div>
+<div class="paragraph">
+<p>FULL_PROFILE - if the implementation supports the OpenCL specification (functionality defined as part of the core specification and does not require any extensions to be supported).</p>
+</div>
+<div class="paragraph">
+<p>EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile.
+The embedded profile is defined to be a subset for each version of OpenCL.
+The embedded profile for OpenCL 2.1 is described in section 7.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_VERSION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenCL version string.
+Returns the OpenCL version supported by the implementation.
+This version string has the following format:</p>
+</div>
+<div class="paragraph">
+<p><code>OpenCL&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;platform-specific information&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>The <code>major_version.minor_version</code> value returned will be 2.1.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_NAME</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Platform name string.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_VENDOR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Platform vendor string.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_EXTENSIONS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns a space-separated list of extension names (the extension names themselves do not contain any spaces) supported by the platform.
+Extensions defined here must be supported by all devices associated with this platform.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_HOST_TIMER_RESOLUTION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the resolution of the host timer in nanoseconds as used by <a href="clGetDeviceAndHostTimer.html"><code>clGetDeviceAndHostTimer</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PLATFORM_ICD_SUFFIX_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_icd.html"><code>cl_khr_icd</code></a> extension is enabled, the function name suffix used to identify extension functions to be directed to this platform by the ICD Loader.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A null terminated string is returned by OpenCL query function calls if the return type of the information being queried is a char[].</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns the following: (The OpenCL specification does not describe the order of precedence for error codes returned by API calls)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PLATFORM</code> if <code>platform</code> is not a valid platform.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not one of the supported values or if size in bytes specified by <code>param_value_size</code> is less than size of return type and <code>param_value</code> is not a NULL value.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetPlatformIDs.html"><code>clGetPlatformIDs</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=62" target="_blank">OpenCL 2.1 API Specification, page 62</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>as_type(), as_type_n_()</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="ReinterpretingTypesUsingas_typen" class="article">
+<div id="header">
+<h1>as_type(), as_type_n_()</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>as_type()
+
+as_typen()</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All data types described in <a href="scalarDataTypes.html">Scalar Data Types</a> and <a href="vectorDataTypes.html">Vector Data Types</a> (except <code>bool</code>, <code>half</code> (unless the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is supported), and <code>void</code>) may be also reinterpreted as another data type of the same size using the <code>as_type()</code> operator for scalar data types and the <code>as_typen()</code> operator for vector data types.
+When the operand and result type contain the same number of elements, the bits in the operand shall be returned directly without modification as the new type.
+The usual type promotion for function arguments shall not be performed.</p>
+</div>
+<div class="paragraph">
+<p>For example, <code>as_float(0x3f800000)</code> returns <code>1.0f</code>, which is the value that the bit pattern <code>0x3f800000</code> has if viewed as an IEEE-754 single precision value.</p>
+</div>
+<div class="paragraph">
+<p>When the operand and result type contain a different number of elements, the result shall be implementation-defined except if the operand is a 4-component vector and the result is a 3-component vector.
+In this case, the bits in the operand shall be returned directly without modification as the new type.
+That is, a conforming implementation shall explicitly define a behavior, but two conforming implementations need not have the same behavior when the number of elements in the result and operand types does not match.
+The implementation may define the result to contain all, some or none of the original bits in whatever order it chooses.
+It is an error to use the <code>as_type()</code> or <code>as_typen()</code> operators to reinterpret data to a type of a different number of bytes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While the union is intended to reflect the organization of data in memory, the <code>as_type()</code> and <code>as_typen()</code> constructs are intended to reflect the organization of data in register.
+The <code>as_type()</code> and <code>as_typen()</code> constructs are intended to compile to no instructions on devices that use a shared register file designed to operate on both the operand and result types.</p>
+</div>
+<div class="paragraph">
+<p>Note that while differences in memory organization are expected to largely be limited to those arising from endianness, the register based representation may also differ due to size of the element in register. (For example, an architecture may load a char into a 32-bit register, or a char vector into a SIMD vector register with fixed 32-bit element size.)</p>
+</div>
+<div class="paragraph">
+<p>If the element count does not match, then the implementation should pick a data representation that most closely matches what would happen if an appropriate result type operator was applied to a register containing data of the source type.
+If the number of elements matches, then the <code>as_typen()</code> should faithfully reproduce the behavior expected from a similar data type reinterpretation using memory/unions.
+So, for example if an implementation stores all single precision data as double in register, it should implement as_int( float ) by first downconverting the double to single precision and then (if necessary) moving the single precision bits to a register suitable for operating on integer data.</p>
+</div>
+<div class="paragraph">
+<p>If data stored in different address spaces do not have the same endianness, then the "dominant endianness" of the device should prevail.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>float f = 1.0f;
+uint u = as_uint(f);  // Legal. Contains:  0x3f800000
+
+float4 f = (float4)(1.0f, 2.0f, 3.0f, 4.0f);
+// Legal. Contains: (int4)
+// (0x3f800000, 0x40000000, 0x40400000, 0x40800000)
+int4 i = as_int4(f);
+
+float4 f, g;
+int4 is_less = f &lt; g;
+
+// Legal. f[i] = f[i] &lt; g[i] ? f[i] : 0.0f
+f = as_float4(as_int4(f) &amp; is_less);
+
+int i;
+// Legal. Result is implementation-defined.
+short2 j = as_short2(i);
+
+int4 i;
+// Legal. Result is implementation-defined.
+short8 j = as_short8(i);
+
+float4 f;
+//Error. result and operand have different size
+double4 g = as_double4(f);   // Only if double is supported.
+
+float4 f;
+// Legal. g.xyz will have same values as f.xyz. g.w is undefined
+float3 g = as_float3(f);</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="scalarDataTypes.html">Scalar Data Types</a>, <a href="vectorDataTypes.html">Vector Data Types</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=24" target="_blank">OpenCL 2.0 C Language Specification, page 24</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

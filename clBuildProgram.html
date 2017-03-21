@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clBuildProgram</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clBuildProgram" class="article">
+<div id="header">
+<h1>clBuildProgram</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Builds (compiles and links) a program executable from the program source or binary.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clBuildProgram(cl_program program,
+                      cl_uint num_devices,
+                      const cl_device_id *device_list,
+                      const char *options,
+                      void (CL_CALLBACK *pfn_notify)( cl_program program, void *user_data),
+                      void *user_data)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>program</code></dt>
+<dd>
+<p>The program object.</p>
+</dd>
+<dt class="hdlist1"><code>device_list</code></dt>
+<dd>
+<p>A pointer to a list of devices associated with <code>program</code>.
+If <code>device_list</code> is a NULL value, the program executable is built for all devices associated with <code>program</code> for which a source or binary has been loaded.
+If <code>device_list</code> is a non-NULL value, the program executable is built for devices specified in this list for which a source or binary has been loaded.</p>
+</dd>
+<dt class="hdlist1"><code>num_devices</code></dt>
+<dd>
+<p>The number of devices listed in <code>device_list</code>.</p>
+</dd>
+<dt class="hdlist1"><code>options</code></dt>
+<dd>
+<p>A pointer to a null-terminated string of characters that describes the build options to be used for building the program executable.
+Certain options are ignored when <code>program</code> is created with IL.
+The list of supported options is described below.</p>
+</dd>
+<dt class="hdlist1"><code>pfn_notify</code></dt>
+<dd>
+<p>A function pointer to a notification routine.
+The notification routine is a callback function that an application can register and which will be called when the program executable has been built (successfully or unsuccessfully).
+If <code>pfn_notify</code> is not NULL, <code>clBuildProgram</code> does not need to wait for the build to complete and can return immediately once the build operation can begin.
+The build operation can begin if the context, program whose sources are being compiled and linked, list of devices and build options specified are all valid and appropriate host and device resources needed to perform the build are available.
+If <code>pfn_notify</code> is NULL, <code>clBuildProgram</code> does not return until the build has completed.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application’s responsibility to ensure that the callback function is thread-safe.</p>
+</dd>
+<dt class="hdlist1"><code>user_data</code></dt>
+<dd>
+<p>Passed as an argument when <code>pfn_notify</code> is called.
+<code>user_data</code> can be NULL.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Builds (compiles &amp; links) a program executable from the program source or binary for all the devices or a specific device(s) in the OpenCL context associated with <code>program</code>.
+OpenCL allows program executables to be built using the source or the binary.
+<code>clBuildProgram</code> must be called for <code>program</code> created using either <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a>, <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a>, or <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> to build the program executable for one or more devices associated with <code>program</code>.
+If <code>program</code> is created with <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>, then the program binary must be an executable binary (not a compiled binary or library).</p>
+</div>
+<div class="paragraph">
+<p>The executable binary can be queried using <a href="clGetProgramInfo.html"><code>clGetProgramInfo</code></a>(<code>program</code>, <code>CL_PROGRAM_BINARIES</code>, &#8230;&#8203;) and can be specified to <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> to create a new program object.</p>
+</div>
+<div class="paragraph">
+<p><code>clBuildProgram</code> does not return until the build has completed.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application’s responsibility to ensure that the callback function is thread-safe.</p>
+</div>
+<div class="paragraph">
+<div class="title">Compiler Options</div>
+<p>The compiler options are categorized as pre-processor options, options for math intrinsics, options that control optimization and miscellaneous options.
+This specification defines a standard set of options that must be supported by the OpenCL C compiler when building program executables online or offline.
+These may be extended by a set of vendor- or platform specific options.</p>
+</div>
+<div class="paragraph">
+<div class="title">Preprocessor Options</div>
+<p>These options control the OpenCL C preprocessor which is run on each program source before actual compilation.</p>
+</div>
+<div class="paragraph">
+<p>-D options are processed in the order they are given in the <code>options</code> argument to <code>clBuildProgram</code> or <code>clCompileProgram</code>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-D name</dt>
+<dd>
+<p>Predefine <code>name</code> as a macro, with definition 1.</p>
+</dd>
+<dt class="hdlist1">-D name=definition</dt>
+<dd>
+<p>The contents of <code>definition</code> are tokenized and processed as if they appeared during translation phase three in a '#define' directive.
+In particular, the definition will be truncated by embedded newline characters.</p>
+</dd>
+<dt class="hdlist1">-I dir</dt>
+<dd>
+<p>Add the directory <code>dir</code> to the list of directories to be searched for header files.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Math Intrinsics Options</div>
+<p>These options control compiler behavior regarding floating-point arithmetic.
+These options trade off between speed and correctness.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-cl-single-precision-constant</dt>
+<dd>
+<p>Treat double precision floating-point constant as single precision constant.</p>
+</dd>
+<dt class="hdlist1">-cl-denorms-are-zero</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>This option controls how single precision and double precision denormalized numbers are handled.
+If specified as a build option, the single precision denormalized numbers may be flushed to zero; double precision denormalized numbers may also be flushed to zero if the optional extension for double precsion is supported.
+This is intended to be a performance hint and the OpenCL compiler can choose not to flush denorms to zero if the device supports single precision (or double precision) denormalized numbers.</p>
+</div>
+<div class="paragraph">
+<p>This option is ignored for single precision numbers if the device does not support single precision denormalized numbers i.e.
+<code>CL_FP_DENORM</code> bit is not set in <code>CL_DEVICE_SINGLE_FP_CONFIG</code>.</p>
+</div>
+<div class="paragraph">
+<p>This option is ignored for double precision numbers if the device does not support double precision or if it does support double precison but not double precision denormalized numbers i.e.
+<code>CL_FP_DENORM</code> bit is not set in <code>CL_DEVICE_DOUBLE_FP_CONFIG</code>.</p>
+</div>
+<div class="paragraph">
+<p>This flag only applies for scalar and vector single precision floating-point variables and computations on these floating-point variables inside a program.
+It does not apply to reading from or writing to image objects.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">-cl-fp32-correctly-rounded-divide-sqrt</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The <code>-cl-fp32-correctly-rounded-divide-sqrt</code> build option to <code>clBuildProgram</code> or <code>clCompileProgram</code> allows an application to specify that single precision floating-point divide (x/y and 1/x) and sqrt used in the program source are correctly rounded.
+If this build option is not specified, the minimum numerical accuracy of single precision floating-point divide and sqrt are as defined in section 7.4 of the OpenCL specification.</p>
+</div>
+<div class="paragraph">
+<p>This build option can only be specified if the <code>CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT</code> is set in <code>CL_DEVICE_SINGLE_FP_CONFIG</code> (as defined in in the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>) for devices that the program is being build.
+<code>clBuildProgram</code> or <code>clCompileProgram</code> will fail to compile the program for a device if the <code>-cl-fp32-correctly-rounded-divide-sqrt</code> option is specified and <code>CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT</code> is not set for the device.</p>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Optimization Options</div>
+<p>These options control various sorts of optimizations.
+Turning on optimization flags makes the compiler attempt to improve the performance and/or code size at the expense of compilation time and possibly the ability to debug the program.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-cl-opt-disable</dt>
+<dd>
+<p>This option disables all optimizations.
+The default is optimizations are enabled.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following options control compiler behavior regarding floating-point arithmetic.
+These options trade off between performance and correctness and must be specifically enabled.
+These options are not turned on by default since it can result in incorrect output for programs which depend on an exact implementation of IEEE 754 rules/specifications for math functions.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-cl-mad-enable</dt>
+<dd>
+<p>Allow <code>a * b + c</code> to be replaced by a <code>mad</code>.
+The <code>mad</code> computes <code>a * b + c</code> with reduced accuracy.
+For example, some OpenCL devices implement <code>mad</code> as truncate the result of <code>a * b</code> before adding it to <code>c</code>.</p>
+</dd>
+<dt class="hdlist1">-cl-no-signed-zeros</dt>
+<dd>
+<p>Allow optimizations for floating-point arithmetic that ignore the signedness of zero.
+IEEE 754 arithmetic specifies the distinct behavior of <code>+0.0</code> and <code>-0.0</code> values, which then prohibits simplification of expressions such as <code>x+0.0</code> or <code>0.0*x</code> (even with <code>-clfinite-math</code> only).
+This option implies that the sign of a zero result isn&#8217;t significant.</p>
+</dd>
+<dt class="hdlist1">-cl-unsafe-math-optimizations</dt>
+<dd>
+<p>Allow optimizations for floating-point arithmetic that (a) assume that arguments and results are valid, (b) may violate IEEE 754 standard and (c) may violate the OpenCL numerical compliance requirements as defined in section 7.4 for single precision and double precision floating-point, and edge case behavior in section 7.5.
+This option includes the <code>-cl-no-signed-zeros</code> and <code>-cl-mad-enable</code> options.</p>
+</dd>
+<dt class="hdlist1">-cl-finite-math-only</dt>
+<dd>
+<p>Allow optimizations for floating-point arithmetic that assume that arguments and results are not NaNs or ±∞.
+This option may violate the OpenCL numerical compliance requirements defined in section 7.4 for single precision and double precision floating point, and edge case behavior in section 7.5.</p>
+</dd>
+<dt class="hdlist1">-cl-fast-relaxed-math</dt>
+<dd>
+<p>Sets the optimization options <code>-cl-finite-math-only</code> and <code>-cl-unsafe-math-optimizations</code>.
+This allows optimizations for floating-point arithmetic that may violate the IEEE 754 standard and the OpenCL numerical compliance requirements defined in the specification in section 7.4 for single-precision and double precision floating-point, and edge case behavior in section 7.5.
+This option also relaxes the precision of commonly used math functions (refer to table 7.2 defined in section 7.4).
+This option causes the preprocessor macro <code><em>FAST_RELAXED_MATH</em></code> to be defined in the OpenCL program.</p>
+</dd>
+<dt class="hdlist1">-cl-uniform-work-group-size</dt>
+<dd>
+<p>This requires that the global work-size be a multiple of the work-group size specified to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.
+Allow optimizations that are made possible by this restriction.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Options to Request or Suppress Warnings</div>
+<p>Warnings are diagnostic messages that report constructions which are not inherently erroneous but which are risky or suggest there may have been an error.
+The following language independent options do not enable specific warnings but control the kinds of diagnostics produced by the OpenCL compiler.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-w</dt>
+<dd>
+<p>Inhibit all warning messages.</p>
+</dd>
+<dt class="hdlist1">-Werror</dt>
+<dd>
+<p>Make all warnings into errors.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Options Controlling the OpenCL C Version</div>
+<p>The following option controls the version of OpenCL C that the compiler accepts.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-cl-std=</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Determine the OpenCL C language version to use.
+A value for this option must be provided.
+Valid values are:</p>
+</div>
+<div class="paragraph">
+<p><code>CL1.1</code> - Support all OpenCL C programs that use the OpenCL C language features defined in section 6 of the OpenCL 1.1 specification.</p>
+</div>
+<div class="paragraph">
+<p><code>CL1.2</code> - Support all OpenCL C programs that use the OpenCL C language features defined in section 6 of the OpenCL 1.2 specification.</p>
+</div>
+<div class="paragraph">
+<p><code>CL2.0</code> - Support all OpenCL C programs that use the OpenCL C language features defined in section 6 of the OpenCL 2.0 specification.</p>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Calls to <code>clBuildProgram</code> or <code>clCompileProgram</code> with the <code>-cl-std=CL1.1</code> option will fail to compile the program for any devices with <code>CL_DEVICE_OPENCL_C_VERSION</code> = OpenCL C 1.0.</p>
+</div>
+<div class="paragraph">
+<p>Calls to <code>clBuildProgram</code> or <code>clCompileProgram</code> with the <code>-cl-std=CL1.2</code> option will fail to compile the program for any devices with <code>CL_DEVICE_OPENCL_C_VERSION</code> = OpenCL C 1.0 or OpenCL C 1.1.</p>
+</div>
+<div class="paragraph">
+<p>Calls to <code>clBuildProgram</code> or <code>clCompileProgram</code> with the <code>-cl-std=CL2.0</code> option will fail to compile the program for any devices with <code>CL_DEVICE_OPENCL_C_VERSION</code> = OpenCL C 1.0, OpenCL C 1.1, or OpenCL C 1.2.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>–cl-std</code> build option is not specified, the highest OpenCL C 1.x language version supported by each device is used when compiling the program for each device.
+Applications are required to specify the <code>–cl-std=CL2.0</code> option if they want to compile or build their programs with OpenCL C 2.0.</p>
+</div>
+<div class="dlist">
+<div class="title">Options enabled by the cl_khr_spir extension</div>
+<dl>
+<dt class="hdlist1">-x spir</dt>
+<dd>
+<p>Indicates that the binary is in SPIR format.</p>
+</dd>
+<dt class="hdlist1">-spir-std</dt>
+<dd>
+<p>Specifies the version of the SPIR specification that describes the format and meaning of the binary.
+For example, if the binary is as described in SPIR version 1.2, then <code>-spir-std=1.2</code> must be specified.
+Failing to specify these compile options may result in implementation defined behavior.</p>
+</dd>
+</dl>
+</div>
+<div class="dlist">
+<div class="title">Options for Querying Kernel Argument Information</div>
+<dl>
+<dt class="hdlist1">-cl-kernel-arg-info</dt>
+<dd>
+<p>This option allows the compiler to store information about the arguments of a kernel(s) in the program executable.
+The argument information stored includes the argument name, its type, the address and access qualifiers used.
+Refer to description of <a href="clGetKernelArgInfo.html"><code>clGetKernelArgInfo</code></a> on how to query this information.</p>
+</dd>
+</dl>
+</div>
+<div class="dlist">
+<div class="title">Options for debugging your program</div>
+<dl>
+<dt class="hdlist1">-g</dt>
+<dd>
+<p>This option can currently be used to generate additional errors for the built-in functions that allow you to enqueue commands on a device (refer to section 6.13.17).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Linker Options</div>
+<p>This specification defines a standard set of linker options that must be supported by the OpenCL C compiler when linking compiled programs online or offline.
+These linker options are categorized as library linking options and program linking options.
+These may be extended by a set of vendor- or platform-specific options.</p>
+</div>
+<div class="paragraph">
+<div class="title">Library Linking Options</div>
+<p>The following options can be specified when creating a library of compiled binaries.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-create-library</dt>
+<dd>
+<p>Create a library of compiled binaries specified in <code>input_programs</code> argument to <a href="clLinkProgram.html"><code>clLinkProgram</code></a>.</p>
+</dd>
+<dt class="hdlist1">-enable-link-options</dt>
+<dd>
+<p>Allows the linker to modify the library behavior based on one or more link options (described in Program Linking Options, below) when this library is linked with a program executable.
+This option must be specified with the <code>-create-library</code> option.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Program Linking Options</div>
+<p>The following options can be specified when linking a program executable.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-cl-denorms-are-zero</code></p>
+</li>
+<li>
+<p><code>-cl-no-signed-zeroes</code></p>
+</li>
+<li>
+<p><code>-cl-unsafe-math-optimizations</code></p>
+</li>
+<li>
+<p><code>-cl-finite-math-only</code></p>
+</li>
+<li>
+<p><code>-cl-fast-relaxed-mat</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The linker may apply these options to all compiled program objects specified to <a href="clLinkProgram.html"><code>clLinkProgram</code></a>.
+The linker may apply these options only to libraries which were created with the <code>-enable-link-option</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Separate Compilation and Linking of Programs</div>
+<p>OpenCL programs are compiled and linked to support the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Separate compilation and link stages.
+Program sources can be compiled to generate a compiled binary object and linked in a separate stage with other compiled program objects to the program exectuable.</p>
+</li>
+<li>
+<p>Embedded headers.
+In OpenCL 1.0 and 1.1, the <code>-I</code> build option could be used to specify the list of directories to be searched for headers files that are included by a program source(s).
+OpenCL 1.2 extends this by allowing the header sources to come from program objects instead of just header files.</p>
+</li>
+<li>
+<p>Libraries.
+The linker can be used to link compiled objects and libraries into a program executable or to create a library of compiled binaries.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clBuildProgram</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PROGRAM</code> if <code>program</code> is not a valid program object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>device_list</code> is NULL and <code>num_devices</code> is greater than zero, or if <code>device_list</code> is not NULL and <code>num_devices</code> is zero.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>pfn_notify</code> is NULL but <code>user_data</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if OpenCL devices listed in <code>device_list</code> are not in the list of devices associated with <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_BINARY</code> if <code>program</code> is created with <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> and devices listed in <code>device_list</code> do not have a valid program binary loaded.</p>
+</li>
+<li>
+<p><code>CL_INVALID_BUILD_OPTIONS</code> if the build options specified by <code>options</code> are invalid.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the build of a program executable for any of the devices listed in <code>device_list</code> by a previous call to <code>clBuildProgram</code> for <code>program</code> has not completed.</p>
+</li>
+<li>
+<p><code>CL_COMPILER_NOT_AVAILABLE</code> if <code>program</code> is created with <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a> and a compiler is not available i.e.
+<code>CL_DEVICE_COMPILER_AVAILABLE</code> specified in the table of OpenCL Device Queries for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> is set to <code>CL_FALSE</code>.</p>
+</li>
+<li>
+<p><code>CL_BUILD_PROGRAM_FAILURE</code> if there is a failure to build the program executable.
+This error will be returned if <code>clBuildProgram</code> does not return until the build has completed.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if there are kernel objects attached to <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if <code>program</code> was not created with <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a>, <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a>, or <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the <code>program</code> requires independent forward progress of sub-groups but one or more of the devices listed in <code>device_list</code> does not return <code>CL_TRUE</code> for the <code>CL_DEVICE_SUBGROUP_INDEPENDENT_FORWARD_PROGRESS</code> query.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>, <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>, <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a>, <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a>, <a href="clLinkProgram.html"><code>clLinkProgram</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=200" target="_blank">OpenCL 2.1 API Specification, page 200</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

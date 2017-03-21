@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_spir</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_spir" class="article">
+<div id="header">
+<h1>cl_khr_spir</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Extension adds support to create an OpenCL program object from a Standard Portable Intermediate Representation (SPIR) instance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION cl_khr_spir : enable</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This extension adds support to create an OpenCL program object from a Standard Portable Intermediate Representation (SPIR) instance.
+SPIR is a vendor neutral non-source representation for OpenCL C programs that has since been superceded by the SPIR-V standard.</p>
+</div>
+<div class="paragraph">
+<p><a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> can be used to load a SPIR binary.
+Once a program object has been created from a SPIR binary, <a href="clBuildProgram.html"><code>clBuildProgram</code></a> can be called to build a program executable or <a href="clCompileProgram.html"><code>clCompileProgram</code></a> can be called to compile the SPIR binary.</p>
+</div>
+<div class="paragraph">
+<p>This extension adds changes to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                        clGetDeviceInfo
+
+                        clGetProgramBuildInfo
+
+                        clGetKernelArgInfo</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="EXTENSION.html">EXTENSION</a>, <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>, <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a>, <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>, <a href="clGetProgramBuildInfo.html"><code>clGetProgramBuildInfo</code></a>, <a href="clGetKernelArgInfo.html"><code>clGetKernelArgInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=125" target="_blank">OpenCL 2.1 Extensions Specification, page 125</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Deprecated OpenCL Functions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Deprecated OpenCL Functions</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Deprecation (glossary definition): A feature that is deprecated in a given version of the specification will be excluded from the text of that revision of the specification.
+All listed features detailed in earlier versions of the specification that have been deprecated are required to be supported by the current version of the specification as described in the version of the specification in which the feature was last defined.
+These features may be removed entirely in a future version.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="DepIn21">OpenCL Features Deprecated in OpenCL 2.1</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>OpenCL 2.0 KHR extension <a href="cl_khr_spir.html"><code>cl_khr_spir</code></a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="DepIn20">OpenCL Features Deprecated in OpenCL 2.0</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>clCreateCommandQueue</p>
+</li>
+<li>
+<p>clCreateSampler</p>
+</li>
+<li>
+<p>clEnqueueTask</p>
+</li>
+<li>
+<p>The <code>CL_DEVICE_HOST_UNIFIED_MEMORY</code> <code>param_name</code> argument to <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>.</p>
+</li>
+<li>
+<p>The <code>CL_DEVICE_QUEUE_PROPERTIES</code> <code>param_name</code> argument to <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> (replaced by <code>CL_DEVICE_QUEUE_ON_HOST_PROPERTIES</code>).</p>
+</li>
+<li>
+<p>The <code>CL_IMAGE_BUFFER</code> <code>param_name</code> argument to <a href="clGetImageInfo.html"><code>clGetImageInfo</code></a>.</p>
+</li>
+<li>
+<p>The explicit memory fence functions defined in section 6.12.9 of the OpenCL 1.2 specification.</p>
+</li>
+<li>
+<p>The OpenCL 1.2 atomic built-in functions for 32-bit integer and floating-point data types defined in section 6.12.11 of the OpenCL 1.2 specification.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="DepIn12">OpenCL 1.1 Features Deprecated in OpenCL 1.2</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>clEnqueueMarker, clEnqueueBarrier, clEnqueueWaitForEvents</p>
+</li>
+<li>
+<p>clCreateImage2D, clCreateImage3D</p>
+</li>
+<li>
+<p>clUnloadCompiler, clGetExtensionFunctionAddress</p>
+</li>
+<li>
+<p>clCreateFromGLTexture2D, clCreateFromGLTexture3D</p>
+</li>
+<li>
+<p><code>CL_DEVICE_MIN_DATA_TYPE_ALIGN_SIZE</code> value for the <code>param_name</code> argument to <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="DepIn11">OpenCL 1.0 Features Deprecated in OpenCL 1.1</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>clSetCommandQueueProperty</p>
+</li>
+<li>
+<p><code><em>ROUNDING_MODE</em></code> macro</p>
+</li>
+<li>
+<p><code>-cl-strict-aliasing</code> option for the <code>options</code> argument to <a href="clBuildProgram.html"><code>clBuildProgram</code></a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=291" target="_blank">OpenCL 2.1 API Specification, page 291</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

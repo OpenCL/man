@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>isless</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="isless" class="article">
+<div id="header">
+<h1>isless</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Compare of <code>x</code> &lt; <code>y</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">int isless(float x,
+           float y)
+
+int n isless(float n x,
+             float n y)
+
+int isless(double x,
+           double y)
+
+long n isless(double n x,
+              double n y)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>int isless
+     (half x,
+       half y)   // if half extension enabled
+
+shortn isless
+     (halfn x,
+       halfn y)   // if half extension enabled</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns the component-wise compare of <code>x</code> &lt; <code>y</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If an implementation extends this specification to support IEEE-754 flags or exceptions, then all built-in relational functions shall proceed without raising the <code>invalid</code> floating-point exception when one or more of the operands are NaNs.</p>
+</div>
+<div class="paragraph">
+<p>The built-in relational functions are extended with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> to include versions that take <code>half</code>, and <code>half{2|3|4|8|16}</code> as arguments.</p>
+</div>
+<div class="paragraph">
+<p>The function returns a 0 if the specified relation is <code>false</code> and a 1 if the specified relation is <code>true</code> for scalar argument types.
+These functions shall return a 0 if the specified relation is <code>false</code> and a - 1 (i.e.
+all bits set) if the specified relation is <code>true</code> for vector argument types.</p>
+</div>
+<div class="paragraph">
+<p>The function returns 0 if either argument is not a number (NaN).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="relationalFunctions.html">Relational Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=90" target="_blank">OpenCL 2.0 C Language Specification, page 90</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

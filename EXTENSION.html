@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>EXTENSION</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="EXTENSION" class="article">
+<div id="header">
+<h1>EXTENSION</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A #pragma directive to set the behavior for OpenCL extensions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION extension_name : behavior
+#pragma OPENCL EXTENSION all : behavior</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>extension_name</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The name of the extension.
+The <code>extension_name</code> will have names of the form <code>cl_khr_</code>&lt;`name`&gt; for an extension approved by the OpenCL working group and will have names of the form <code>cl_</code>&lt;`vendor_name`&gt;_&lt;`name`&gt; for vendor extensions.
+The token <code>all</code> means that the behavior applies to all extensions supported by the compiler.
+The table below shows the legal values for <code>extension_name</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Extension name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_3d_image_writes.html"><code>cl_khr_3d_image_writes</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Writes to 3D image objects</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_byte_addressable_store.html"><code>cl_khr_byte_addressable_store</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_context_abort.html"><code>cl_khr_context_abort</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Sharing memory objects wth Direct3D 10</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_d3d11_sharing.html"><code>cl_khr_d3d11_sharing</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Sharing memory objects wth Direct3D 11</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_depth_images.html"><code>cl_khr_depth_images</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_device_enqueue_local_arg_types.html"><code>cl_khr_device_enqueue_local_arg_types</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_dx9_media_sharing.html"><code>cl_khr_dx9_media_sharing</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Sharing memory objects wth Direct3D 9</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Create OpenCL event objects linked to EGL fence sync objects</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_egl_image.html"><code>cl_khr_egl_image</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Create derived resources from EGLImages</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Half-precision floating-point</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_fp64.html"><code>cl_khr_fp64</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Dobule-precision floating-point</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_gl_depth_images.html"><code>cl_khr_gl_depth_images</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>GL depth or depth-stencil compatibility</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_gl_event.html"><code>cl_khr_gl_event</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>CL event objects from GL sync objects</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>GL multi-sampled (MSAA) compatibility</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenGL sharing</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_global_int32_base_atomics.html"><code>cl_khr_global_int32_base_atomics</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_global_int32_extended_atomics.html"><code>cl_khr_global_int32_extended_atomics</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_icd.html"><code>cl_khr_icd</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Access Khronos OpenCL installable client driver loader (ICD Loader</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_il_program.html"><code>cl_khr_il_program</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_image2d_from_buffer.html"><code>cl_khr_image2d_from_buffer</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_initialize_memory.html"><code>cl_khr_initialize_memory</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Initialize local or private memory</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_int64_base_atomics.html"><code>cl_khr_int64_base_atomics</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>64-bit integer base atomic operations</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_int64_extended_atomics.html"><code>cl_khr_int64_extended_atomics</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>64-bit integer extended atomic operations</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_local_int32_base_atomics.html"><code>cl_khr_local_int32_base_atomics</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_local_int32_extended_atomics.html"><code>cl_khr_local_int32_extended_atomics</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image_writes</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_priority_hints.html"><code>cl_khr_priority_hints</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_spir.html"><code>cl_khr_spir</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>For writing to sRGB images</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_subgroups.html"><code>cl_khr_subgroups</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Implementation-controlled subgroups</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_terminate_context.html"><code>cl_khr_terminate_context</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Termiate an OpenCL context on a device</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="cl_khr_throttle_hints.html"><code>cl_khr_throttle_hints</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Standard Portable Intermediate Representation (SPIR) support</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cles_khr_int64</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>behavior</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>One of the following values:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">behavior</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>enable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Behave as specified by the extension <code>extension_name</code>.
+Report an error on the <code>#pragma OPENCL EXTENSION</code> if the <code>extension_name</code> is not supported, or if <code>all</code> is specified.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>disable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Behave (including issuing errors and warnings) as if the extension <code>extension_name</code> is not part of the language definition.
+If <code>all</code> is specified, then behavior must revert back to that of the non-extended core version of the language being compiled to.
+Warn on the <code>#pragma OPENCL EXTENSION</code> if the extension <code>extension_name</code> is not supported.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>#pragma OPENCL EXTENSION</code> directive is a simple, low-level mechanism to set the behavior for each extension.
+It does not define policies such as which combinations are appropriate; those must be defined elsewhere.
+The order of directives matter in setting the behavior for each extension.
+Directives that occur later override those seen earlier.
+The <code>all</code> variant sets the behavior for all extensions, overriding all previously issued extension directives, but only if the <code>behavior</code> is set to <code>disable</code>.</p>
+</div>
+<div class="paragraph">
+<p>The initial state of the compiler is as if the directive <code>#pragma OPENCL EXTENSION all : disable</code> was issued, telling the compiler that all error and warning reporting must be done according to this specification, ignoring any extensions.</p>
+</div>
+<div class="paragraph">
+<p>Every extension which affects the OpenCL language semantics, syntax or adds built-in functions to the language must create a preprocessor <code>#define</code> that matches the extension name string.
+This <code>#define</code> would be available in the language if and only if the extension is supported on a given implementation.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document describes the list of optional features supported by OpenCL 2.1.
+Optional extensions may be supported by some OpenCL devices.
+Optional extensions are not required to be supported by a conformant OpenCL implementation, but are expected to be widely available; they define functionality that is likely to move into the required feature set in a future revision of the OpenCL specification</p>
+</div>
+<div class="paragraph">
+<p>OpenCL extensions approved by the OpenCL working group can be promoted to required core features in later revisions of OpenCL.
+When this occurs, the extension specifications are merged into the core specification.
+Functions and enumerants that are part of such promoted extensions will have the <code>KHR</code> affix removed.
+OpenCL implementations of such later revisions must also export the name strings of promoted extensions in the <code>CL_PLATFORM_EXTENSIONS</code> or <code>CL_DEVICE_EXTENSIONS</code> string, and support the KHR-affixed versions of functions and enumerants as a transition aid.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An extension which adds the extension string "cl_khr_3d_image_writes" should also add a preprocessor <code>#define</code> called <code>cl_khr_3d_image_writes</code>.
+A kernel can now use this preprocessor <code>#define</code> to do something like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#ifdef cl_khr_3d_image_writes
+      // do something using the extension
+#else
+      // do something else or #error!
+#endif</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetExtensionFunctionAddressForPlatform.html"><code>clGetExtensionFunctionAddressForPlatform</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=7" target="_blank">OpenCL 2.1 Extensions Specification, page 7</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

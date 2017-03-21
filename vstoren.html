@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>vstore_n_</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="vstoren" class="article">
+<div id="header">
+<h1>vstore_n_</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Write sizeof bytes (<code>gentypen</code>) to memory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void vstore n(gentype n data,
+              size_t offset,
+              gentype *p)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Write <code>sizeof(gentypen)</code> bytes given by <code>data</code> to address (<code>p</code> + (<code>offset</code> * <code>n</code>)).
+The address computed as (<code>p</code> + (<code>offset</code> * <code>n</code>)) must be 8-bit aligned if <code>gentype</code> is <code>char</code> or <code>uchar</code>; 16-bit aligned if <code>gentype</code> is <code>short</code>, <code>ushort</code>, or <code>half</code>; 32-bit aligned if <code>gentype</code> is <code>int</code>, <code>uint</code>, or <code>float</code>; 64-bit aligned if <code>gentype</code> is <code>long</code> or <code>ulong</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The generic type <code>gentype</code> is used to indicate the built-in data types <code>char</code>, <code>uchar</code>, <code>short</code>, <code>ushort</code>, <code>int</code>, <code>uint</code>, <code>long</code>, <code>ulong</code>, <code>float</code>, or <code>double</code>.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentypen</code> represents n-element vectors of <code>gentype</code> elements.
+The suffix n is also used in the function names (i.e.
+<code>vloadn</code>, <code>vstoren</code>, etc.), where n = 2, 3, 4, 8, or 16.</p>
+</div>
+<div class="paragraph">
+<p>Vector Data Load and Store Functions allow you to read and write vector types from a pointer to memory.</p>
+</div>
+<div class="paragraph">
+<p>The suffix <code>n</code> in the function names (i.e.
+vload`n`, vstore`n` etc.) represent <code>n</code>-element vectors, where <code>n</code> = 2, 3, 4, 8 or 16.</p>
+</div>
+<div class="paragraph">
+<p>The results of vector data load and store functions are undefined if the address being read from or written to is not correctly aligned.
+The pointer argument <code>p</code> can be a pointer to <a href="global.html"><code>global</code></a>, <a href="local.html"><code>local</code></a>, or <a href="private.html"><code>private</code></a> memory for store functions.
+The pointer argument <code>p</code> can be a pointer to global, local, constant or private memory for load functions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The vector data load and store functions variants that take pointer arguments which point to the generic address space are also supported.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When extended by the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension, the generic type <code>gentypen</code> is extended to include <code>half</code>, <code>half2</code>, <code>half3</code>, <code>half4</code>, <code>half8</code>, and <code>half16</code>.</p>
+</div>
+<div class="paragraph">
+<p>When the half extension is enabled, the address computed as (<code>p</code> + (<code>offset</code> * <code>n</code>)) must be 16-bit aligned.</p>
+</div>
+<div class="paragraph">
+<p><code>vstore3</code>, and <code>vstore_half3</code> write <code>x</code>, <code>y</code>, <code>z</code> components from a 3-component vector to address (<code>p</code> + (<code>offset</code> * 3)).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="vectorDataLoadandStoreFunctions.html">Vector Data Load and Store Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=93" target="_blank">OpenCL 2.0 C Language Specification, page 93</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

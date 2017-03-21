@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>sampler_t</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="sampler_t" class="article">
+<div id="header">
+<h1>sampler_t</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A type used to control how elements of an image object are read by read_image{f<a href="imageFunctions.html"><code>|</code></a>i|ui}.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>const sampler_t &lt;sampler name&gt; = &lt;value&gt;
+constant sampler_t &lt;sampler name&gt; = &lt;value&gt;
+__constant sampler_t &lt;sampler name&gt; = &lt;value&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The image read functions take a sampler argument.
+The sampler can be passed as an argument to the kernel using <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>, or can be declared in the outermost scope of <code>kernel</code> functions, or it can be a constant variable of type <code>sampler_t</code> declared in the program source.</p>
+</div>
+<div class="paragraph">
+<p>Sampler variables in a program are declared to be of type <code>sampler_t</code>.
+A variable of <code>sampler_t</code> type declared in the program source must be initialized with a 32-bit unsigned integer constant, which is interpreted as a bit-field specifiying the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Addressing Mode</p>
+</li>
+<li>
+<p>Filter Mode</p>
+</li>
+<li>
+<p>Normalized Coordinates</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These properties control how elements of an image object are read by <a href="imageFunctions.html"><code>read_image{f|i|ui}</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Samplers can also be declared as global constants in the program source using the syntax shown at the top of this page.</p>
+</div>
+<div class="paragraph">
+<p>The sampler fields are described in the table below:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Sampler State</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>&lt;normalized coords&gt;</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies whether the <code>x</code>, <code>y</code> and <code>z</code> coordinates are passed in as normalized or unnormalized values.
+This must be a literal value and can be one of the following predefined enums:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CLK_NORMALIZED_COORDS_TRUE or
+CLK_NORMALIZED_COORDS_FALSE.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The samplers used with an image in multiple calls to <a href="imageFunctions.html"><code>read_image</code></a>{f|i|ui} declared in a kernel must use the same value for <code>&lt;normalized coords&gt;</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>&lt;addressing mode&gt;</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies the image addressing-mode i.e.
+how out-of-range image coordinates are handled.
+This must be a literal value and can be one of the following predefined enums:</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_ADDRESS_MIRRORED_REPEAT</code> - Flip the image coordinate at every integer junction.
+This addressing mode can only be used with normalized coordinates.
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_ADDRESS_REPEAT</code> - out-of-range image coordinates are wrapped to the valid range.
+This <code>address mode</code> can only be used with normalized coordinates.
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_ADDRESS_CLAMP_TO_EDGE</code> - out-of-range image coordinates are clamped to the extent.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_ADDRESS_CLAMP</code> - out-of-range image coordinates will return a border color.
+This is similar to the <code>GL_ADDRESS_CLAMP_TO_BORDER</code> addressing mode.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_ADDRESS_NONE</code> - for this addressing mode the programmer guarantees that the image coordinates used to sample elements of the image refer to a location inside the image; otherwise the results are undefined.</p>
+</div>
+<div class="paragraph">
+<p>For 1D and 2D image arrays, the addressing mode applies only to the x and <em>(x, y)</em> coordinates.
+The addressing mode for the coordinate which specifies the array index is always <code>CLK_ADDRESS_CLAMP_TO_EDGE</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>&lt;filter mode&gt;</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specifies the filtering mode to use.
+This must be a literal value and can be one of the following predefined enums: <code>CLK_FILTER_NEAREST</code> or <code>CLK_FILTER_LINEAR</code>.
+Refer to section 8.2 for a description of these filter modes.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The sampler_t type is only defined if the device supports images i.e.
+<code>CL_DEVICE_IMAGE_SUPPORT</code> as described in table 4.3 is <code>CL_TRUE</code>.</p>
+</div>
+<div class="paragraph">
+<p>Note that samplers declared using the <code>constant</code> qualifier are not counted towards the maximum number of arguments pointing to the constant address space or the maximum size of the constant address space allowed per device (i.e.
+<code>CL_DEVICE_MAX_CONSTANT_ARGS</code> and <code>CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE</code> as described in table 4.3).</p>
+</div>
+<div class="paragraph">
+<p>The maximum number of samplers that can be declared in a kernel can be queried using the <code>CL_DEVICE_MAX_SAMPLERS</code> token in <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>&lt;addressing mode&gt;</code> in sampler is <code>CLK_ADDRESS_CLAMP</code>, then out-of-range image coordinates return the border color.
+The border color selected depends on the image channel order and can be one of the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the image channel order is <code>CL_A</code>, <code>CL_INTENSITY</code>, <code>CL_Rx</code>, <code>CL_RA</code>, <code>CL_RGx</code>, <code>CL_RGBx</code>, <code>CL_sRGBx</code>, <code>CL_ARGB</code>, <code>CL_BGRA</code>, <code>CL_ABGR</code>, <code>CL_RGBA</code>, <code>CL_sRGBA</code> or <code>CL_sBGRA</code>, the border color is (0.0f, 0.0f,0.0f, 0.0f).</p>
+</li>
+<li>
+<p>If the image channel order is <code>CL_R</code>, <code>CL_RG</code>, <code>CL_RGB</code>, or <code>CL_LUMINANCE</code>, the border color is (0.0f, 0.0f, 0.0f, 1.0f)</p>
+</li>
+<li>
+<p>If the image channel order is <code>CL_DEPTH</code>, the border value is 0.0f.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A kernel that uses a sampler with the <code>CL_ADDRESS_CLAMP</code> addressing mode with multiple images may result in additional samplers being used internally by an implementation.
+If the same sampler is used with multiple images called via <a href="imageFunctions.html"><code>read_image{f|i|ui}</code></a>, then it is possible that an implementation may need to allocate an additional sampler to handle the different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values supported by the device and given by <code>CL_DEVICE_MAX_SAMPLERS</code>.
+Enqueuing a kernel that requires more samplers than the implementation can support will result in a <code>CL_OUT_OF_RESOURCES</code> error being returned.</p>
+</div>
+<div class="paragraph">
+<p>The sampler type (sampler_t) can only be used as the type of a function argument or a variable declared in the program scope or the outermost scope of a kernel function.
+The behavior of a sampler variable declared in a non-outermost scope of a kernel function is implementation-defined.
+A sampler argument or variable cannot be modified.</p>
+</div>
+<div class="paragraph">
+<p>The sampler type cannot be used to declare a structure or union field, an array of samplers, a pointer to a sampler, or the return type of a function.
+The sampler type cannot be used with the <code><em>local</code> and <code></em>global</code> address space qualifiers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>const sampler_t samplerA = CLK_NORMALIZED_COORDS_TRUE |
+                           CLK_ADDRESS_REPEAT         |
+                           CLK_FILTER_NEAREST;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>samplerA specifies a sampler that uses normalized coordinates, the repeat addressing mode and a nearest filter.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="otherDataTypes.html">Other Data Types</a>, <a href="imageFunctions.html">Image Read and Write Functions</a>, <a href="classDiagram.html">Cardinality Diagram</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=123" target="_blank">OpenCL 2.0 C Language Specification, page 123</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

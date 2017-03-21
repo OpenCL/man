@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clIcdGetPlatformIDsKHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clIcdGetPlatformIDsKHR" class="article">
+<div id="header">
+<h1>clIcdGetPlatformIDsKHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Obtain the list of platforms accessible through the Khronos ICD Loader.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clIcdGetPlatformIDsKHR(cl_uint num_entries,
+                              cl_platform_id *platforms,
+                              cl_uint *num_platforms)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>num_entries</code></dt>
+<dd>
+<p>The number of <code>cl_platform_id</code> entries that can be added to <code>platforms</code>.
+If <code>platforms</code> is not NULL, then <code>num_entries</code> must be greater than zero.</p>
+</dd>
+<dt class="hdlist1"><code>platforms</code></dt>
+<dd>
+<p>Returns a list of OpenCL platforms available for access through the Khronos ICD Loader.
+The <code>cl_platform_id</code> values returned in <code>platforms</code> are ICD compatible and can be used to identify a specific OpenCL platform.
+If the <code>platforms</code> argument is NULL, then this argument is ignored.
+The number of OpenCL platforms returned is the minimum of the value specified by <code>num_entries</code> or the number of OpenCL platforms available.</p>
+</dd>
+<dt class="hdlist1"><code>num_platforms</code></dt>
+<dd>
+<p>Returns the number of OpenCL platforms available.
+If <code>num_platforms</code> is NULL, then this argument is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This function is enabled by the <a href="cl_khr_icd.html"><code>cl_khr_icd</code></a> extension.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully and there are a non zero number of platforms available, else it returns on the errors below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_PLATFORM_NOT_FOUND_KHR</code> if zero platforms are available.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_entries</code> is equal to zero and <code>platforms</code> is not NULL or if both <code>num_platforms</code> and <code>platforms</code> are NULL.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetPlatformIDs.html"><code>clGetPlatformIDs</code></a>, <a href="cl_khr_icd.html"><code>cl_khr_icd</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=130" target="_blank">OpenCL 2.1 Extensions Specification, page 130</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

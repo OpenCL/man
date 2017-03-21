@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetDeviceIDs</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetDeviceIDs" class="article">
+<div id="header">
+<h1>clGetDeviceIDs</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Obtain the list of devices available on a platform.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetDeviceIDs(cl_platform_id platform,
+                      cl_device_type device_type,
+                      cl_uint num_entries,
+                      cl_device_id *devices,
+                      cl_uint *num_devices)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>platform</code></dt>
+<dd>
+<p>Refers to the platform ID returned by <a href="clGetPlatformIDs.html"><code>clGetPlatformIDs</code></a> or can be NULL.
+If <code>platform</code> is NULL, the behavior is implementation-defined.</p>
+</dd>
+<dt class="hdlist1"><code>device_type</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A bitfield that identifies the type of OpenCL device.
+The <code>device_type</code> can be used to query specific OpenCL devices or all OpenCL devices available.
+The valid values for <code>device_type</code> are specified in the following table.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_device_type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE_CPU</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>An OpenCL device that is the host processor.
+The host processor runs the OpenCL implementations and is a single or multi-core CPU.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE_GPU</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>An OpenCL device that is a GPU.
+By this we mean that the device can also be used to accelerate a 3D API such as OpenGL or DirectX.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE_ACCELERATOR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Dedicated OpenCL accelerators (for example the IBM CELL Blade).
+These devices communicate with the host processor using a peripheral interconnect such as PCIe.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE_CUSTOM</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Dedicated accelerators that do not support programs written in OpenCL C.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE_DEFAULT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The default OpenCL device in the system.
+The default device cannot be a <code>CL_DEVICE_TYPE_CUSTOM</code> device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE_ALL</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>All OpenCL devices available in the system except <code>CL_DEVICE_TYPE_CUSTOM</code> devices.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>num_entries</code></dt>
+<dd>
+<p>The number of <code>cl_device_id</code> entries that can be added to <code>devices</code>.
+If <code>devices</code> is not NULL, the <code>num_entries</code> must be greater than zero.</p>
+</dd>
+<dt class="hdlist1"><code>devices</code></dt>
+<dd>
+<p>A list of OpenCL devices found.
+The <code>cl_device_id</code> values returned in <code>devices</code> can be used to identify a specific OpenCL device.
+If <code>devices</code> argument is NULL, this argument is ignored.
+The number of OpenCL devices returned is the mininum of the value specified by <code>num_entries</code> or the number of OpenCL devices whose type matches <code>device_type</code>.</p>
+</dd>
+<dt class="hdlist1"><code>num_devices</code></dt>
+<dd>
+<p>The number of OpenCL devices available that match <code>device_type</code>.
+If <code>num_devices</code> is NULL, this argument is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clGetDeviceIDs</code> may return all or a subset of the actual physical devices present in the platform and that match <code>device_type</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clGetDeviceIDs</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PLATFORM</code> if <code>platform</code> is not a valid platform.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DEVICE_TYPE</code> if <code>device_type</code> is not a valid value.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_entries</code> is equal to zero and <code>devices</code> is not NULL or if both <code>num_devices</code> and <code>devices</code> are NULL.</p>
+</li>
+<li>
+<p><code>CL_DEVICE_NOT_FOUND</code> if no OpenCL devices that matched <code>device_type</code> were found.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>, <a href="clGetPlatformIDs.html"><code>clGetPlatformIDs</code></a>, <a href="clCreateContext.html"><code>clCreateContext</code></a>, <a href="classDiagram.html">Cardinality Diagram</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=64" target="_blank">OpenCL 2.1 API Specification, page 64</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

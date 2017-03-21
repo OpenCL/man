@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueFillBuffer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueFillBuffer" class="article">
+<div id="header">
+<h1>clEnqueueFillBuffer</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to fill a buffer object with a pattern of a given pattern size.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueFillBuffer(cl_command_queue command_queue,
+                           cl_mem buffer,
+                           const void *pattern,
+                           size_t pattern_size,
+                           size_t offset,
+                           size_t size,
+                           cl_uint num_events_in_wait_list,
+                           const cl_event *event_wait_list,
+                           cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>Refers to the host command-queue in which the fill command will be queued.
+The OpenCL context associated with <code>command_queue</code> and <code>buffer</code> must be the same.</p>
+</dd>
+<dt class="hdlist1"><code>buffer</code></dt>
+<dd>
+<p>A valid buffer object.</p>
+</dd>
+<dt class="hdlist1"><code>pattern</code></dt>
+<dd>
+<p>A pointer to the data pattern of size <code>pattern_size</code> in bytes.
+<code>pattern</code> will be used to fill a region in <code>buffer</code> starting at <code>offset</code> and is <code>size</code> bytes in size.
+The data pattern must be a scalar or vector integer or floating-point data type.
+For example, if <code>buffer</code> is to be filled with a pattern of <code>float4</code> values, then <code>pattern</code> will be a pointer to a <code>cl_float4</code> value and <code>pattern_size</code> will be <code>sizeof(cl_float4)</code>.
+The maximum value of <code>pattern_size</code> is the size of the largest integer or floating-point vector data type supported by the OpenCL device.
+The memory associated with <code>pattern</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>offset</code></dt>
+<dd>
+<p>The location in bytes of the region being filled in <code>buffer</code> and must be a multiple of <code>pattern_size</code>.</p>
+</dd>
+<dt class="hdlist1"><code>size</code></dt>
+<dd>
+<p>The size in bytes of region being filled in <code>buffer</code> and must be a multiple of <code>pattern_size</code>.</p>
+</dd>
+<dt class="hdlist1"><code>event_wait_list ,</code> <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular write command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+<a href="clEnqueueBarrierWithWaitList.html"><code>clEnqueueBarrierWithWaitList</code></a> can be used instead.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to fill a buffer object with a pattern of a given pattern size.
+The usage information which indicates whether the memory object can be read or written by a kernel and/or the host and is given by the <code>cl_mem_flags</code> argument value specified when <code>buffer</code> is created is ignored by <code>clEnqueueFillBuffer</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clEnqueueFillBuffer</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns one of the following errors.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if the context associated with <code>command_queue</code> and <code>buffer</code> are not the same or if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if <code>buffer</code> is not a valid buffer object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>offset</code> or <code>offset</code> + <code>size</code> require accessing elements outside the <code>buffer</code> buffer object respectively.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>pattern</code> is NULL or if <code>pattern_size</code> is 0 or if <code>pattern_size</code> is not one of {1, 2, 4, 8, 16, 32, 64, 128}.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>offset</code> and <code>size</code> are not a multiple of <code>pattern_size</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_MISALIGNED_SUB_BUFFER_OFFSET</code> if <code>buffer</code> is a sub-buffer object and offset specified when the sub-buffer object is created is not aligned to <code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code> value for device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for data store associated with <code>buffer</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clEnqueueBarrierWithWaitList.html"><code>clEnqueueBarrierWithWaitList</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=122" target="_blank">OpenCL 2.1 API Specification, page 122</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

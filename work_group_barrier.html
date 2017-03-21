@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>work_group_barrier</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="work_group_barrier" class="article">
+<div id="header">
+<h1>work_group_barrier</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>All work-items in a work-group executing the kernel on a processor must execute this function before any are allowed to continue execution beyond the work_group_barrier.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">void work_group_barrier(cl_mem_fence_flags flags)
+
+void work_group_barrier(cl_mem_fence_flags flags,
+                        memory_scope scope)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The built-in function <code>barrier</code> has been renamed <code>work_group_barrier</code>.
+For backward compatibility, <code>barrier</code> is also supported.</p>
+</div>
+<div class="paragraph">
+<p>All work-items in a work-group executing the kernel on a processor must execute this function before any are allowed to continue execution beyond the <code>work_group_barrier</code>.
+This function must be encountered by all work-items in a work-group executing the kernel.
+These rules apply to ND-ranges implemented with uniform and non-uniform work-groups.</p>
+</div>
+<div class="paragraph">
+<p>If <code>work_group_barrier</code> is inside a conditional statement, then all work-items must enter the conditional if any work-item enters the conditional statement and executes the <code>work_group_barrier</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>work_group_barrier</code> is inside a loop, all work-items must execute the <code>work_group_barrier</code> for each iteration of the loop before any are allowed to continue execution beyond the <code>work_group_barrier</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>work_group_barrier</code> function also supports a variant that specifies the memory scope.
+For the <code>work_group_barrier</code> variant that does not take a memory scope, the <code>scope</code> is <code>memory_scope_work_group</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>scope</code> argument specifies whether the memory accesses of work-items in the work-group to memory address space(s) identified by <code>flags</code> become visible to all work-items in the work-group, the device or all SVM devices.</p>
+</div>
+<div class="paragraph">
+<p>The <code>work_group_barrier</code> function can also be used to specify which memory operations i.e.
+to global memory, local memory or images become visible to the appropriate memory scope identified by <code>scope</code>.
+The <code>flags</code> argument specifies the memory address spaces and can be set to 0 or a combination of the following values ORed together.
+When these flags are OR’ed together the <code>work_group_barrier</code> acts as a combined barrier for all address spaces specified by the flags ordering memory accesses both within and across the specified address spaces.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_LOCAL_MEM_FENCE</code> - The <code>work_group_barrier</code> function will ensure that all local memory accesses become visible to all workitems in the work-group.
+Note that the value of <code>scope</code> is ignored as the memory scope is always <code>memory_scope_work_group</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_GLOBAL_MEM_FENCE</code> – The <code>work_group_barrier</code> function ensure that all global memory accesses become visible to the appropriate scope as given by <code>scope</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CLK_IMAGE_MEM_FENCE</code> – The <code>work_group_barrier</code> function will ensure that all image memory accesses become visible to the appropriate scope as given by <code>scope</code>.
+The value of <code>scope</code> must be <code>memory_scope_work_group</code> or <code>memory_scope_device</code>.</p>
+</div>
+<div class="paragraph">
+<p>The values of <code>flags</code> and <code>scope</code> must be the same for all work-items in the work-group.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=97" target="_blank">OpenCL 2.0 C Language Specification, page 97</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

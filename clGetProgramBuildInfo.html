@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetProgramBuildInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetProgramBuildInfo" class="article">
+<div id="header">
+<h1>clGetProgramBuildInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns build information for each device in the program object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetProgramBuildInfo(cl_program program,
+                             cl_device_id device,
+                             cl_program_build_info param_name,
+                             size_t param_value_size,
+                             void *param_value,
+                             size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>program</code></dt>
+<dd>
+<p>Specifies the program object being queried.</p>
+</dd>
+<dt class="hdlist1"><code>device</code></dt>
+<dd>
+<p>Specifies the device for which build information is being queried.
+<code>device</code> must be a valid device associated with <code>program</code>.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the information to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetProgramBuildInfo</code> is described in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_program_build_info</th>
+<th class="tableblock halign-left valign-top">Return Type and Info.
+returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BUILD_STATUS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: cl_build_status</p>
+</div>
+<div class="paragraph">
+<p>Returns the build, compile or link status, whichever was performed last on <code>program</code> for <code>device</code>.</p>
+</div>
+<div class="paragraph">
+<p>This can be one of the following:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_BUILD_NONE</code>.
+The build status returned if no <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clLinkProgram.html"><code>clLinkProgram</code></a> has been performed on the specified program object for <code>device</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_BUILD_ERROR</code>.
+The build status returned if <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clLinkProgram.html"><code>clLinkProgram</code></a> whichever was performed last on the specified program object for <code>device</code> generated an error.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_BUILD_SUCCESS</code>.
+The build status returned if <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clLinkProgram.html"><code>clLinkProgram</code></a> whichever was performed last on the specified program object for <code>device</code> was successful.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_BUILD_IN_PROGRESS</code>.
+The build status returned if <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clLinkProgram.html"><code>clLinkProgram</code></a> whichever was performed last on the specified program object for <code>device</code> has not finished.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BUILD_OPTIONS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: char[]</p>
+</div>
+<div class="paragraph">
+<p>Return the build, compile or link options specified by the <code>options</code> argument in <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clLinkProgram.html"><code>clLinkProgram</code></a>, whichever was performed last on <code>program</code> for <code>device</code>.</p>
+</div>
+<div class="paragraph">
+<p>If build status of <code>program</code> for <code>device</code> is <code>CL_BUILD_NONE</code>, an empty string is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BUILD_LOG</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: char[]</p>
+</div>
+<div class="paragraph">
+<p>Return the build, compile or link log for <a href="clBuildProgram.html"><code>clBuildProgram</code></a> or <a href="clCompileProgram.html"><code>clCompileProgram</code></a> whichever was performed last on <code>program</code> for <code>device</code>.</p>
+</div>
+<div class="paragraph">
+<p>If build status of <code>program</code> for <code>device</code> is <code>CL_BUILD_NONE</code>, an empty string is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: cl_program_binary_type</p>
+</div>
+<div class="paragraph">
+<p>Return the program binary type for <code>device</code>.
+This can be one of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_TYPE_NONE</code>.
+There is no binary associated with <code>device</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT</code>.
+A compiled binary is associated with <code>device</code>.
+This is the case if <code>program</code> was created using <a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a> and compiled using <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or a compiled binary is loaded using <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_TYPE_LIBRARY</code>.
+A library binary is associated with <code>device</code>.
+This is the case if <code>program</code> was created by <a href="clLinkProgram.html"><code>clLinkProgram</code></a> which is called with the <code>–create-library</code> link option or if a library binary is loaded using <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_TYPE_EXECUTABLE</code>.
+An executable binary is associated with <code>device</code>.
+This is the case if <code>program</code> was created by <a href="clLinkProgram.html"><code>clLinkProgram</code></a> without the <code>–create-library</code> link option or program was created by <a href="clBuildProgram.html"><code>clBuildProgram</code></a> or an executable binary is loaded using <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_PROGRAM_BINARY_TYPE_INTERMEDIATE</code>. (Applies if extension <a href="cl_khr_spir.html"><code>cl_khr_spir</code></a> is enabled.) An intermediate (non-source) representation for the program is loaded as a binary.
+The program must be further processed with <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clBuildProgram.html"><code>clBuildProgram</code></a>.
+If processed with <a href="clCompileProgram.html"><code>clCompileProgram</code></a>, the result will be a binary of type <code>CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT</code> or <code>CL_PROGRAM_BINARY_TYPE_LIBRARY</code>.
+If processed with <a href="clBuildProgram.html"><code>clBuildProgram</code></a>, the result will be a binary of type <code>CL_PROGRAM_BINARY_TYPE_EXECUTABLE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_PROGRAM_BUILD_GLOBAL_- VARIABLE_TOTAL_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return type: size_t</p>
+</div>
+<div class="paragraph">
+<p>The total amount of storage, in bytes, used by program variables in the global address space.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of return type as described in the table above.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A program binary (compiled binary, library binary or executable binary) built for a parent device can be used by all its sub-devices.
+If a program binary has not been built for a sub-device, the program binary associated with the parent device will be used.</p>
+</div>
+<div class="paragraph">
+<p>A program binary for a device specified with <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> or queried using <a href="clGetProgramInfo.html"><code>clGetProgramInfo</code></a> can be used as the binary for the associated root device, and all sub-devices created from the root-level device or sub-devices thereof.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise it returns the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns <code>CL_INVALID_DEVICE</code> if <code>device</code> is not in the list of devices associated with <code>program</code>.</p>
+</li>
+<li>
+<p>Returns <code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the table above and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p>Returns <code>CL_INVALID_PROGRAM</code> if <code>program</code> is a not a valid program object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetProgramInfo.html"><code>clGetProgramInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=217" target="_blank">OpenCL 2.1 API Specification, page 217</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

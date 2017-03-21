@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateKernelsInProgram</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateKernelsInProgram" class="article">
+<div id="header">
+<h1>clCreateKernelsInProgram</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates kernel objects for all kernel functions in a program object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clCreateKernelsInProgram(cl_program program,
+                                cl_uint num_kernels,
+                                cl_kernel *kernels,
+                                cl_uint *num_kernels_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>program</code></dt>
+<dd>
+<p>A program object with a successfully built executable.</p>
+</dd>
+<dt class="hdlist1"><code>num_kernels</code></dt>
+<dd>
+<p>The size of memory pointed to by <code>kernels</code> specified as the number of <code>cl_kernel</code> entries.</p>
+</dd>
+<dt class="hdlist1"><code>kernels</code></dt>
+<dd>
+<p>The buffer where the kernel objects for kernels in <code>program</code> will be returned.
+If <code>kernels</code> is NULL, it is ignored.
+If <code>kernels</code> is not NULL, <code>num_kernels</code> must be greater than or equal to the number of kernels in <code>program</code>.</p>
+</dd>
+<dt class="hdlist1"><code>num_kernels_ret</code></dt>
+<dd>
+<p>The number of kernels in <code>program</code>.
+If <code>num_kernels_ret</code> is NULL, it is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates kernel objects for all kernel functions in <code>program</code>.
+Kernel objects are not created for any <a href="functionQualifiers.html"><code>__kernel</code></a> functions in <code>program</code> that do not have the same function definition across all devices for which a program executable has been successfully built.</p>
+</div>
+<div class="paragraph">
+<p>Kernel objects can only be created once you have a program object with a valid program source or binary loaded into the program object and the program executable has been successfully built for one or more devices associated with program.
+No changes to the program executable are allowed while there are kernel objects associated with a program object.
+This means that calls to <a href="clBuildProgram.html"><code>clBuildProgram</code></a> and <a href="clCompileProgram.html"><code>clCompileProgram</code></a> return <code>CL_INVALID_OPERATION</code> if there are kernel objects attached to a program object.
+The OpenCL context associated with <code>program</code> will be the context associated with <code>kernel</code>.
+The list of devices associated with <code>program</code> are the devices associated with <code>kernel</code>.
+Devices associated with a program object for which a valid program executable has been built can be used to execute kernels declared in the program object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the kernel objects are successfully allocated.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PROGRAM</code> if <code>program</code> is not a valid program object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_PROGRAM_EXECUTABLE</code> if there is no successfully built executable for any device in <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>kernels</code> is not NULL and <code>num_kernels</code> is less than the number of kernels in <code>program</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateKernel.html"><code>clCreateKernel</code></a>, <a href="clRetainKernel.html"><code>clRetainKernel</code></a>, <a href="clReleaseKernel.html"><code>clReleaseKernel</code></a>, <a href="clSetKernelArg.html"><code>clSetKernelArg</code></a>, <a href="clGetKernelInfo.html"><code>clGetKernelInfo</code></a>, <a href="clGetKernelWorkGroupInfo.html"><code>clGetKernelWorkGroupInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=222" target="_blank">OpenCL 2.1 API Specification, page 222</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

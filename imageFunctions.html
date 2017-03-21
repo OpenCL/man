@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Image Read and Write Functions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Image Read and Write Functions</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Built-in functions to read, write, and query image memory objects.
+Click an item in the table below for details about that function.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imagef1d.html"><code>read_imagef</code></a> for 1D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Do an element lookup in the 1D image object with or without a sampler, returning floating-point values (including optional mipmap support).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imagei1d.html"><code>read_image{i|ui}</code></a> for 1D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Do an element lookup in the 1D image object with or without a sampler, returning unnormalized signed integer and unsigned integer values (including optional mipmap support).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imageh1d.html"><code>read_imageh</code></a> for 1D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OPTIONAL function to do an element lookup in the 1D image object with or without a sampler, returning floating-point values.
+Enabled with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="write_image1d.html">write_image {f|i|ui|h}</a> for 1D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Write <code>color</code> value to location in the 2D image object (including optional mipmap support).
+The <code>half</code> type is enabled with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imagef2d.html"><code>read_imagef</code></a> for 2D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Do an element lookup in the 2D image object with or without a sampler, returning floating-point values (including optional mipmap support).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imagei2d.html"><code>read_image{i|ui}</code></a> for 2D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Do an element lookup in the 2D image object with or without a sampler, returning unnormalized signed integer and unsigned integer values (including optional mipmap support).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imageh2d.html"><code>read_imageh</code></a> for 2D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OPTIONAL function to do an element lookup in the 2D image object with or without a sampler, returning floating-point values.
+Enabled with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="write_image2d.html">write_image {f|i|ui|h}</a> for 2D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Write <code>color</code> value to location in the 2D image object (including optional mipmap support).
+The <code>half</code> type is enabled with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imagef3d.html"><code>read_imagef</code></a> for 3D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Do an element lookup in the 3D image object with or without a sampler, returning floating-point values (including optional mipmap support).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imagei3d.html"><code>read_image{i|ui}</code></a> for 3D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Do an element lookup in the 3D image object with or without a sampler, returning unnormalized signed integer and unsigned integer values (including optional mipmap support).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="read_imageh3d.html"><code>read_imageh</code></a> for 3D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OPTIONAL function to do an element lookup in the 3D image object with or without a sampler, returning floating-point values.
+Enabled with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="write_image3d.html">write_image {f|i|ui|h}</a> for 3D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Write <code>color</code> value to location in the 2D image object (including optional mipmap support).
+The <code>half</code> type is enabled with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_width.html"><code>get_image_width</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the image width in pixels</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_height.html"><code>get_image_height</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the image height in pixels.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_depth.html"><code>get_image_depth</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the 3D image depth in pixels</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_channel_data_type.html"><code>get_image_channel_data_type</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the image channel data type</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_channel_order.html"><code>get_image_channel_order</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the image channel order</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_dim.html"><code>get_image_dim</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the image dimensions</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_array_size.html"><code>get_image_array_size</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the number of images in an image array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_num_mip_levels.html"><code>get_image_num_mip_levels</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the number of mip-levels.
+Enabled with extension <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="get_image_num_samples.html"><code>get_image_num_samples</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the number of samples in the 2D MSAA image.
+Enabled with extension <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The built-in functions defined in this section can only be used with image memory objects.
+An image memory object can be accessed by specific function calls that read from and/or write to specific locations in the image.</p>
+</div>
+<div class="paragraph">
+<p>Note that image writes to sRGB images are only supported if the <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension is supported; otherwise the behavior of writing to a sRGB image is undefined.</p>
+</div>
+<div class="paragraph">
+<p>Image memory objects that are being read by a kernel should be declared with the <a href="accessQualifiers.html"><code>read_only</code></a> qualifier.
+<code>write_image</code> calls to image memory objects declared with the <a href="accessQualifiers.html"><code>read_only</code></a> qualifier will generate a compilation error.
+Image memory objects that are being written to by a kernel should be declared with the <a href="accessQualifiers.html"><code>write_only</code></a> qualifier.
+<code>read_image</code> calls to image memory objects declared with the <a href="accessQualifiers.html"><code>write_only</code></a> qualifier will generate a compilation error.
+<code>read_image</code> and <code>write_image</code> calls to the same image memory object in a kernel are not supported.
+Image memory objects that are being read and written by a kernel should be declared with the <a href="accessQualifiers.html"><code>read_write</code></a> qualifier.</p>
+</div>
+<div class="paragraph">
+<p>The <code>read_image</code> calls returns a four component floating-point, integer or unsigned integer color value.
+The color values returned by <code>read_image</code> are identified as <code>x, y, z, w</code> where <code>x</code> refers to the red component, <code>y</code> refers to the green component, <code>z</code> refers to the blue component and <code>w</code> refers to the alpha component.</p>
+</div>
+<div class="paragraph">
+<p>The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to <code>CLK_FILTER_NEAREST</code>, normalized coordinates set to <code>CLK_NORMALIZED_COORDS_FALSE</code> and addressing mode to <code>CLK_ADDRESS_NONE</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">sRGB Images</div>
+<p>The built-in image read functions will perform sRGB to linear RGB conversions if the image is an sRGB image.
+Writing to sRGB images from a kernel is an optional extension.
+The <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension will be reported in the <code>CL_DEVICE_EXTENSIONS</code> string if a device supports writing to sRGB images using <a href="#"><code>write_imagef</code></a>.
+<a href="clGetSupportedImageFormats.html"><code>clGetSupportedImageFormats</code></a> will return the supported sRGB images if <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> is specified in <code>flags</code> argument and the device supports writing to an sRGB image.
+If <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> is supported, the built-in image write functions will perform the linear to sRGB conversion.</p>
+</div>
+<div class="paragraph">
+<p>Only the R, G and B components are converted from linear to sRGB and vice-versa.
+The alpha component is returned as is.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="sampler_t.html"><code>sampler_t</code></a>, <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=127" target="_blank">OpenCL 2.0 C Language Specification, page 127</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

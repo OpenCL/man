@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>read_imagef (1D)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="read_image2d" class="article">
+<div id="header">
+<h1>read_imagef (1D)</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Do an element lookup in the 1D image object, returning floating-point values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">float4 read_imagef(read_only image1d_t image,
+                   sampler_t sampler,
+                   int coord)
+
+float4 read_imagef(read_only image1d_t image,
+                   sampler_t sampler,
+                   float coord)
+
+float4 read_imagef(read_only image1d_array_t image,
+                   sampler_t sampler,
+                   float2 coord)
+
+float4 read_imagef(image1d_t image,
+                   sampler_t sampler,
+                   float coord,
+                   float lod)
+
+float4 read_imagef(image1d_t image,
+                   sampler_t sampler,
+                   float coord,
+                   float gradient_x,
+                   float gradient_y)
+
+float4 read_imagef(image1d_array_t image,
+                   sampler_t sampler,
+                   float2 coord,
+                   float lod)
+
+float4 read_imagef(image1d_array_t image,
+                   sampler_t sampler,
+                   float2 coord,
+                   float gradient_x,
+                   float gradient_y)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Functions to read 1D images and image arrays</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For forms that take <code>image1d_t</code>, use <em>coord</em> to do an element lookup in the 1D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For forms that take <code>image1d_array_t</code>, use <em>coord.x</em> to do an element lookup in the 1D image identified by <em>coord.y</em> in the 1D image array specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to <code>CLK_FILTER_NEAREST</code>, normalized coordinates set to <code>CLK_NORMALIZED_COORDS_FALSE</code> and addressing mode to <code>CLK_ADDRESS_NONE</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>read_imagef</code> returns floating-point values in the range [0.0&#8230;&#8203; 1.0] for image objects created with <code>image_channel_data_type</code> set to one of the predefined packed formats or <code>CL_UNORM_INT8</code> or <code>CL_UNORM_INT16</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>read_imagef</code> returns floating-point values in the range [-1.0&#8230;&#8203; 1.0] for image objects created with <code>image_channel_data_type</code> set to <code>CL_SNORM_INT8</code>, or <code>CL_SNORM_INT16</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>read_imagef</code> returns floating-point values for image objects created with <code>image_channel_data_type</code> set to <code>CL_HALF_FLOAT</code> or <code>CL_FLOAT</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>read_imagef</code> calls that take integer coordinates must use a sampler with filter mode set to <code>CLK_FILTER_NEAREST</code>, normalized coordinates set to <code>CLK_NORMALIZED_COORDS_FALSE</code> and addressing mode set to <code>CLK_ADDRESS_CLAMP_TO_EDGE</code>, <code>CLK_ADDRESS_CLAMP</code> or <code>CLK_ADDRESS_NONE</code>; otherwise the values returned are undefined.</p>
+</div>
+<div class="paragraph">
+<p>Values returned by <code>read_imagef</code> for image objects with <code>image_channel_data_type</code> values not specified in the description above are undefined.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a> extension is supported, The image read and write functions (see sections 6.13.14.2, 6.13.14.3 and 6.13.14.4) read from and write to mip-level 0 if the image argument is a mip-mapped image.</p>
+</div>
+<div class="paragraph">
+<div class="title">Mipmap read image functions:</div>
+<p>For the forms that take an <code>image1d_t</code> object, use the coordinate <em>coord</em> to do an element lookup in the mip-level specified by <code>lod</code> in the 1D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the forms that use gradients, use the gradients to compute the lod and coordinate <em>coord</em> to do an element lookup in the mip-level specified by the computed lod in the 1D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the forms that take an <code>image1d_array_t</code> object, use the coordinate <em>coord.x</em> to do an element lookup in the 1D image identified by <em>coord.x</em> and mip-level specified by <code>lod</code> in the 1D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>When a multisample image is accessed in a kernel, the access takes one vector of integers describing which pixel to fetch and an integer corresponding to the sample numbers describing which sample within the pixel to fetch.
+sample identifies the sample position in the multi-sample image.</p>
+</div>
+<div class="paragraph">
+<p>For best performance, we recommend that <code>sample</code> be a literal value so it is known at compile time and the OpenCL compiler can perform appropriate optimizationsfor multisample reads on the device.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>CL_SAMPLER_NORMALIZED_COORDS</code> must be <code>CL_TRUE</code> for built-in functions described in the table above that read from a mip-mapped image; otherwise the behavior is undefined.
+The value specified in the <code>lod</code> argument is clamped to the minimum of (actual number of mip-levels - 1) in the image or value specified for <code>CL_SAMPLER_LOD_MAX</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about the <code>read_image</code>* functions follows.</p>
+</div>
+<div class="paragraph">
+<p>The built-in functions defined in this section can only be used with image memory objects.
+An image memory object can be accessed by specific function calls that read from and/or write to specific locations in the image.</p>
+</div>
+<div class="paragraph">
+<p>Note that image writes to sRGB images are only supported if the <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension is supported; otherwise the behavior of writing to a sRGB image is undefined.</p>
+</div>
+<div class="paragraph">
+<p>Image memory objects that are being read by a kernel should be declared with the <a href="accessQualifiers.html"><code>read_only</code></a> qualifier.
+<code>write_image</code> calls to image memory objects declared with the <a href="accessQualifiers.html"><code>read_only</code></a> qualifier will generate a compilation error.
+Image memory objects that are being written to by a kernel should be declared with the <a href="accessQualifiers.html"><code>write_only</code></a> qualifier.
+<code>read_image</code> calls to image memory objects declared with the <a href="accessQualifiers.html"><code>write_only</code></a> qualifier will generate a compilation error.
+<code>read_image</code> and <code>write_image</code> calls to the same image memory object in a kernel are not supported.
+Image memory objects that are being read and written by a kernel should be declared with the <a href="accessQualifiers.html"><code>read_write</code></a> qualifier.</p>
+</div>
+<div class="paragraph">
+<p>The <code>read_image</code> calls returns a four component floating-point, integer or unsigned integer color value.
+The color values returned by <code>read_image</code> are identified as <code>x, y, z, w</code> where <code>x</code> refers to the red component, <code>y</code> refers to the green component, <code>z</code> refers to the blue component and <code>w</code> refers to the alpha component.</p>
+</div>
+<div class="paragraph">
+<p>The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to <code>CLK_FILTER_NEAREST</code>, normalized coordinates set to <code>CLK_NORMALIZED_COORDS_FALSE</code> and addressing mode to <code>CLK_ADDRESS_NONE</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">sRGB Images</div>
+<p>The built-in image read functions will perform sRGB to linear RGB conversions if the image is an sRGB image.
+Writing to sRGB images from a kernel is an optional extension.
+The <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> extension will be reported in the <code>CL_DEVICE_EXTENSIONS</code> string if a device supports writing to sRGB images using <a href="imageFunctions.html"><code>write_imagef</code></a>.
+<a href="clGetSupportedImageFormats.html"><code>clGetSupportedImageFormats</code></a> will return the supported sRGB images if <code>CL_MEM_READ_WRITE</code> or <code>CL_MEM_WRITE_ONLY</code> is specified in <code>flags</code> argument and the device supports writing to an sRGB image.
+If <a href="cl_khr_srgb_image_writes.html"><code>cl_khr_srgb_image_writes</code></a> is supported, the built-in image write functions will perform the linear to sRGB conversion.</p>
+</div>
+<div class="paragraph">
+<p>Only the R, G and B components are converted from linear to sRGB and vice-versa.
+The alpha component is returned as is.</p>
+</div>
+<div class="paragraph">
+<div class="title">Mapping image channels to color values</div>
+<p>The following table describes the mapping of the number of channels of an image element to the appropriate components in the <code>float4</code>, <code>int4</code> or <code>uint4</code> vector data type for the color values returned by <code>read_image{f|i|ui}</code> or supplied to <code>write_image{f|i|ui}</code>.
+The unmapped components will be set to <code>0.0</code> for red, green and blue channels and will be set to <code>1.0</code> for the alpha channel.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Channel Order</th>
+<th class="tableblock halign-left valign-top"><code>float4</code>, <code>int4</code> or <code>uint4</code> components of channel data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_R</code>, <code>CL_Rx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, 0.0, 0.0, 1.0)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_A</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(0.0, 0.0, 0.0, a)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RG</code>, <code>CL_RGx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, g, 0.0, 1.0)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, 0.0, 0.0, a)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGB</code>, <code>CL_RGBx</code>, <code>CL_sRGB</code>, <code>CL_sRGBx</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, g, b, 1.0)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_RGBA, CL_BGRA, CL_ARGB, CL_ABGR, CL_sRGBA, CL_sBGRA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(r, g, b, a)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_INTENSITY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(I, I, I, I)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_LUMINANCE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>(L, L, L, 1.0)</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For <code>CL_DEPTH</code> images, a scalar value is returned by <code>read_imagef</code> or supplied to <code>write_imagef</code>.</p>
+</div>
+<div class="paragraph">
+<p>A kernel that uses a sampler with the <code>CL_ADDRESS_CLAMP</code> addressing mode with multiple images may result in additional samplers being used internally by an implementation.
+If the same sampler is used with multiple images called via <code>read_image{f|i|ui}</code>, then it is possible that an implementation may need to allocate an additional sampler to handle the different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values supported by the device and given by <code>CL_DEVICE_MAX_SAMPLERS</code>.
+Enqueuing a kernel that requires more samplers than the implementation can support will result in a <code>CL_OUT_OF_RESOURCES</code> error being returned.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="imageFunctions.html">Image Functions</a>, <a href="cl_khr_mipmap_image.html"><code>cl_khr_mipmap_image</code></a>, <a href="sampler_t.html"><code>sampler_t</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=127" target="_blank">OpenCL 2.0 C Language Specification, page 127</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

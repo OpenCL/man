@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetEventInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetEventInfo" class="article">
+<div id="header">
+<h1>clGetEventInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns information about the event object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetEventInfo(cl_event event,
+                      cl_event_info param_name,
+                      size_t param_value_size,
+                      void *param_value,
+                      size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Specifies the event object being queried.</p>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory where the appropriate result being queried is returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size must be ≥ size of the return type as described in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data copied to <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the information to query.
+The list of supported <code>param_name</code> types and the information returned in <code>param_value</code> by <code>clGetEventInfo</code> is described in the table below (Table 5.22):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_event_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Information returned in <code>param_value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_EVENT_COMMAND_QUEUE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_command_queue</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the command-queue associated with <code>event</code>.
+For user event objects, a NULL value is returned.
+If the <a href="cl_khr_gl_sharing.html"><code>cl_khr_gl_sharing</code></a> extension is enabled, the command queue of a linked event NULL, because the event is not associated with any OpenCL command queue.
+If the <a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a> extension is enabled, the <code>CL_EVENT_COMMAND_QUEUE</code> of a linked event is <code>NULL</code>, because the event is not associated with any OpenCL command queue.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_EVENT_CONTEXT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_context</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the context associated with <code>event</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_EVENT_COMMAND_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_command_type</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the command associated with <code>event</code>.
+Can be one of the following values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CL_COMMAND_NDRANGE_KERNEL
+CL_COMMAND_NATIVE_KERNEL
+CL_COMMAND_READ_BUFFER
+CL_COMMAND_WRITE_BUFFER
+CL_COMMAND_COPY_BUFFER
+CL_COMMAND_READ_IMAGE
+CL_COMMAND_WRITE_IMAGE
+CL_COMMAND_COPY_IMAGE
+CL_COMMAND_COPY_BUFFER_TO_IMAGE
+CL_COMMAND_COPY_IMAGE_TO_BUFFER
+CL_COMMAND_MAP_BUFFER
+CL_COMMAND_MAP_IMAGE
+CL_COMMAND_UNMAP_MEM_OBJECT
+CL_COMMAND_MARKER
+CL_COMMAND_ACQUIRE_GL_OBJECTS
+CL_COMMAND_RELEASE_GL_OBJECTS
+
+CL_COMMAND_READ_BUFFER_RECT
+CL_COMMAND_WRITE_BUFFER_RECT
+CL_COMMAND_COPY_BUFFER_RECT
+CL_COMMAND_USER
+CL_COMMAND_BARRIER
+CL_COMMAND_MIGRATE_MEM_OBJECTS
+CL_COMMAND_FILL_BUFFER
+CL_COMMAND_FILL_IMAGE
+
+CL_COMMAND_SVM_FREE
+CL_COMMAND_SVM_MEMCPY
+CL_COMMAND_SVM_MEMFILL
+CL_COMMAND_SVM_MAP
+CL_COMMAND_SVM_UNMAP
+
+CL_COMMAND_GL_FENCE_SYNC_OBJECT_KHR
+  (if cl_khr_gl_event
+is enabled, indicating that the event is
+associated with a GL sync object, rather than an OpenCL command)
+CL_COMMAND_ACQUIRE_D3D10_OBJECTS_KHR
+  (if cl_khr_d3d10_sharing is enabled)
+CL_COMMAND_RELEASE_D3D10_OBJECTS_KHR
+  (if cl_khr_d3d10_sharing is enabled)
+CL_COMMAND_ACQUIRE_DX9_MEDIA_SURFACES_KHR
+  (if cl_khr_dx9_media_sharing is enabled)
+CL_COMMAND_RELEASE_DX9_MEDIA_SURFACES_KHR
+  (if cl_khr_dx9_media_sharing is enabled)
+CL_COMMAND_ACQUIRE_D3D11_OBJECTS_KHR
+  (if  cl_khr_d3d11_sharing is enabled)
+CL_COMMAND_RELEASE_D3D11_OBJECTS_KHR
+  (if  cl_khr_d3d11_sharing is enabled)
+CL_COMMAND_EGL_FENCE_SYNC_OBJECT_KHR
+  (if  cl_khr_egl_event is enabled)</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_EVENT_COMMAND_ EXECUTION_STATUS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_int</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the execution status of the command identified by <code>event</code>.
+The valid values are:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUED</code> (command has been enqueued in the command-queue),</p>
+</div>
+<div class="paragraph">
+<p><code>CL_SUBMITTED</code> (enqueued command has been submitted by the host to the device associated with the command-queue),</p>
+</div>
+<div class="paragraph">
+<p><code>CL_RUNNING</code> (device is currently executing this command),</p>
+</div>
+<div class="paragraph">
+<p><code>CL_COMPLETE</code> (the command has completed), or</p>
+</div>
+<div class="paragraph">
+<p>Error code given by a negative integer value. (command was abnormally terminated – this may be caused by a bad memory access etc.) These error codes come from the same set of error codes that are returned from the platform or runtime API calls as return values or <code>errcode_ret</code> values.</p>
+</div>
+<div class="paragraph">
+<p>The error code values are negative, and event state values are positive.
+The event state values are ordered from the largest value (<code>CL_QUEUED</code>) for the first or initial state to the smallest value (<code>CL_COMPLETE</code> or negative integer value) for the last or complete state.
+The value of <code>CL_COMPLETE</code> and <code>CL_SUCCESS</code> are the same.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_gl_event.html"><code>cl_khr_gl_event</code></a> extension is enabled, the status of a linked event is either <code>CL_SUBMITTED</code>, indicating that the fence command associated with the sync object has not yet completed, or <code>CL_COMPLETE</code>, indicating that the fence command has completed.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a> extension is enabled, the status of a linked event is either <code>CL_SUBMITTED</code>, indicating that the fence command associated with the sync object has not yet completed, or <code>CL_COMPLETE</code>, indicating that the fence command has completed.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_EVENT_REFERENCE_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Return the <code>event</code> reference count.
+The reference count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using <code>clGetEventInfo</code> to determine if a command identified by <code>event</code> has finished execution (i.e.
+<code>CL_EVENT_COMMAND_EXECUTION_STATUS</code> returns <code>CL_COMPLETE</code>) is not a synchronization point.
+There are no guarantees that the memory objects being modified by command associated with <code>event</code> will be visible to other enqueued commands.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function executed successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not valid, or if size in bytes specified by <code>param_value_size</code> is &lt; size of return type as described in the table above and <code>param_value</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if information to query given in <code>param_name</code> cannot be queried for event.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT</code> if <code>event</code> is not a valid <code>event</code> object.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="enums.html"><code>enums</code></a>, <a href="clReleaseEvent.html"><code>clReleaseEvent</code></a>, <a href="clRetainEvent.html"><code>clRetainEvent</code></a>, <a href="clWaitForEvents.html"><code>clWaitForEvents</code></a>, <a href="cl_khr_gl_event.html"><code>cl_khr_gl_event</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=252" target="_blank">OpenCL 2.1 API Specification, page 252</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

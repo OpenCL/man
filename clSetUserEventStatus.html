@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clSetUserEventStatus</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateBuffer" class="article">
+<div id="header">
+<h1>clSetUserEventStatus</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sets the execution status of a user event object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clSetUserEventStatus(cl_event event,
+                            cl_int execution_status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>A user event object created using <a href="clCreateUserEvent.html"><code>clCreateUserEvent</code></a>.</p>
+</dd>
+<dt class="hdlist1"><code>execution_status</code></dt>
+<dd>
+<p>Specifies the new execution status to be set and can be <code>CL_COMPLETE</code> or a negative integer value to indicate an error.
+A negative integer value causes all enqueued commands that wait on this user event to be terminated.
+<code>clSetUserEventStatus</code> can only be called once to change the execution status of <code>event</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If there are enqueued commands with user events in the <code>event_wait_list</code> argument of <code>clEnqueue***</code> commands, the user must ensure that the status of these user events being waited on are set using <code>clSetUserEventStatus</code> before any OpenCL APIs that release OpenCL objects except for event objects are called; otherwise the behavior is undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function was executed successfully.
+Otherwise, it returns one of the following errors</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_EVENT</code> if <code>event</code> is not a valid user event.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if the <code>execution_status</code> is not <code>CL_COMPLETE</code> or a negative integer value.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the <code>execution_status</code> for <code>event</code> has already been changed by a previous call to <code>clSetUserEventStatus</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For example, the following code sequence will result in undefined behavior of <a href="clReleaseMemObject.html"><code>clReleaseMemObject</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ev1 = clCreateUserEvent(ctx, NULL);
+clEnqueueWriteBuffer(cq, buf1, CL_FALSE, ..., 1, &amp;ev1, NULL;
+clEnqueueWriteBuffer(cq, buf2, CL_FALSE,...);
+clReleaseMemObject(buf2);
+clSetUserEventStatus(ev1, CL_COMPLETE);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following code sequence, however, works correctly.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ev1 = clCreateUserEvent(ctx, NULL);
+clEnqueueWriteBuffer(cq, buf1, CL_FALSE, ..., 1, &amp;ev1, NULL;
+clEnqueueWriteBuffer(cq, buf2, CL_FALSE,...);
+clSetUserEventStatus(ev1, CL_COMPLETE);
+clReleaseMemObject(buf2);</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateUserEvent.html"><code>clCreateUserEvent</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=250" target="_blank">OpenCL 2.1 API Specification, page 250</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

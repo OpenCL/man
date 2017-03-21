@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Storage-class Specifiers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="Storage-classSpecifiers" class="article">
+<div id="header">
+<h1>Storage-class Specifiers</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The typedef, extern and static storage-class specifiers.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>typedef
+extern
+static</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>typedef</code>, <code>extern</code>, and <code>static</code> storage-class specifiers are supported.
+The <code>auto</code> and <code>register</code> storage-class specifiers are not supported.</p>
+</div>
+<div class="paragraph">
+<p>The <code>extern</code> storage-class specifier can only be used for functions (kernel and non-kernel functions) and global variables declared in program scope or variables declared inside a function (kernel and non-kernel functions) The <code>static</code> storage-class specifier can only be used for non-kernel functions and global variables declared in program scope and variables inside a function declared in the <code>global</code> or <code>constant</code> address space.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>        extern constant float4 noise_table[256];
+        static constant float4 color_table[256];
+
+        extern kernel void my_foo(image2d_t img);
+        extern void my_bar(global float *a);
+
+        kernel void my_func(image2d_t img, global float *a)
+        {
+            extern constant float4 a;
+            static constant float4 b = (float4)(1.0f); // OK.
+            static float c; // Error: No implicit address space
+            global int hurl; // Error: Must be static
+            ...
+            my_foo(img);
+            ...
+            my_bar(a);
+            ...
+            while (1)
+            {
+                static global int inside; // OK.
+                ...
+            }
+            ...
+        }</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="qualifiers.html"><code>qualifiers</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=50" target="_blank">OpenCL 2.0 C Language Specification, page 50</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

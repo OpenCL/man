@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>asin, asinh, asinpi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="asin" class="article">
+<div id="header">
+<h1>asin, asinh, asinpi</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sine functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">gentype asin(gentype)
+
+gentype asinh(gentype)
+
+gentype asinpi(gentype x)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>asin</code> is the arc sine function.</p>
+</div>
+<div class="paragraph">
+<p><code>asinh</code> is the inverse hyperbolic sine function.</p>
+</div>
+<div class="paragraph">
+<p><code>asinpi</code> computes <code>asin</code> (<code>x</code>) / π.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General information about built-in math functions: The built-in math functions are categorized into the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A list of built-in functions that have scalar or vector argument versions, and,</p>
+</li>
+<li>
+<p>A list of built-in functions that only take scalar float arguments.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The vector versions of the math functions operate component-wise.
+The description is per-component.</p>
+</div>
+<div class="paragraph">
+<p>The built-in math functions are not affected by the prevailing rounding mode in the calling environment, and always return the same value as they would if called with the round to nearest even rounding mode.</p>
+</div>
+<div class="paragraph">
+<p>The built-in math functions take scalar or vector arguments.
+For any specific use of these function, the actual type has to be the same for all arguments and the return type unless otherwise specified.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentype</code> is used to indicate that the function can take <code>float</code>, <code>float2</code>, <code>float3</code>, <code>float4</code>, <code>float8</code>, <code>float16</code>, <code>double</code>, <code>double2</code>, <code>double3</code>, <code>double4</code>, <code>double8</code>, or <code>double16</code> as the type for the arguments.</p>
+</div>
+<div class="paragraph">
+<p>If extended with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>, generic type name <code>gentype</code> may indicate <code>half</code> and <code>half{2|3|4|8|16}</code> as arguments and return values.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentypef</code> is used to indicate that the function can take <code>float</code>, <code>float2</code>, <code>float3</code>, <code>float4</code>, <code>float8</code>, or <code>float16</code> as the type for the arguments.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentyped</code> is used to indicate that the function can take <code>double</code>, <code>double2</code>, <code>double3</code>, <code>double4</code>, <code>double8</code>, or <code>double16</code> as the type for the arguments.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="mathFunctions.html">Math Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=72" target="_blank">OpenCL 2.0 C Language Specification, page 72</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

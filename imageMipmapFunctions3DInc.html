@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">Mipmap read image functions:</div>
+<p>For the forms that take an <code>image3d_t</code> object, use the coordinate <em>coord.xyz</em> to do an element lookup in the mip-level specified by <code>lod</code> in the 3D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the forms that use gradients, use the gradients to compute the lod and coordinate <em>coord.xyz</em> to do an element lookup in the mip-level specified by the computed lod in the 3D image object specified by <code>image</code>.</p>
+</div>
+<div class="paragraph">
+<p>When a multisample image is accessed in a kernel, the access takes one vector of integers describing which pixel to fetch and an integer corresponding to the sample numbers describing which sample within the pixel to fetch.
+sample identifies the sample position in the multi-sample image.</p>
+</div>
+</div>
+</body>
+</html>

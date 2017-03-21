@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>__local</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="__local" class="article">
+<div id="header">
+<h1>__local</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Address Space Qualifier.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>__local
+local</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code><em>local</code> or <code>local</code> address space name is used to describe variables that need to be allocated in local memory and are shared by all work-items of a work-group.
+Pointers to the <code></em>local</code> address space are allowed as arguments to functions (including kernel functions).
+Variables allocated in the <code>__local</code> address space inside a kernel function must occur at kernel function scope.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<div class="title">General information about address space qualifiers</div>
+<p>OpenCL implements the following disjoint named address spaces: <code><em>global</code>, <code></em>local</code>, <code><em>constant</code>, and <code></em>private</code>.
+The address space qualifier may be used in variable declarations to specify the region of memory that is used to allocate the object.
+The C syntax for type qualifiers is extended in OpenCL to include an address space name as a valid type qualifier.
+If the type of an object is qualified by an address space name, the object is allocated in the specified address name; otherwise, the object is allocated in the generic address space.</p>
+</div>
+<div class="paragraph">
+<p>The address space names without the <em> prefix i.e.
+<code>global</code>, <code>local</code>, <code>constant</code> and <code>private</code> may be substituted for the corresponding address space names with the </em> prefix.</p>
+</div>
+<div class="paragraph">
+<p>The address space name for arguments to a function in a program, or local variables of a function is <code><em>private</code>.
+All function arguments shall be in the <code></em>private</code> address space.
+The address space for a variable at program scope or a static variable inside a function can either be <code><em>global</code> or <code></em>constant</code>, but defaults to <code>__global</code> if not specified.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL 2.0 adds support for an unnamed <code>generic</code> address space.
+Pointers that are declared without pointing to a named address space point to the <code>generic</code> address space.
+Before referring to the region pointed to, the pointer must be associated with a named address space.
+Functions may be written with arguments and return values that point to the <code>generic</code> address space.</p>
+</div>
+<div class="paragraph">
+<p>kernel function arguments declared to be a pointer or an array of a type must point to one of the named address spaces <code><em>global</code>, <code></em>local</code> or <code>__constant</code>.</p>
+</div>
+<div class="paragraph">
+<p>The named address spaces are a subset of the generic address space except for the <code>constant</code> address space.</p>
+</div>
+<div class="paragraph">
+<p>A pointer to address space A can only be assigned to a pointer to the same address space A or a pointer to the <code>generic</code> address space.
+Casting a pointer to address space A to a pointer to address space B is illegal if A and B are named address spaces and A is not the same as B.</p>
+</div>
+<div class="paragraph">
+<p>The <code><em>global</code>, <code></em>constant</code>, <code><em>local</code>, <code></em>private</code>, <code><em>generic</code>, <code>global</code>, <code>constant</code>, <code>local</code>, and <code>private</code> names are reserved for use as address space qualifiers and shall not be used otherwise.
+The <code></em>generic</code> and <code>generic</code> names are reserved for future use.</p>
+</div>
+<div class="paragraph">
+<p>The size of pointers to different address spaces may differ.
+It is not correct to assume that, for example, <code>sizeof(<em>global int *)</code> always equals <code>sizeof(</em>local int *)</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>// Examples of variables allocated in the __local address space
+// inside a kernel function
+
+kernel void my_func(...)
+{
+      local float      a;       // A single float allocated
+                                // in local address space
+
+      local float      b[10];   // An array of 10 floats
+                                // allocated in local address space.
+      if (...)
+      {
+          // example of variable in __local address space but not
+          // declared at __kernel function scope.
+          local float c;        // not allowed.
+      }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Variables allocated in the <code>__local</code> address space inside a kernel function cannot be initialized.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    kernel void my_func(...)
+    {
+       local float a = 1;    // not allowed
+
+       local float b;
+       b = 1;                // allowed
+    }</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Variables allocated in the <code>__local</code> address space inside a kernel function are allocated for each work-group executing the kernel and exist only for the lifetime of the work-group executing the kernel.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>General qualifier examples follow:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// declares a pointer p in the private address space that
+// points to an object in address space global
+global int *p;
+
+void foo (...)
+{
+    // declares an array of 4 floats in the private address space
+    float x[4];
+    ...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>private int f() { ... } // should generate an error
+local int *f() { ... } // allowed
+local int * private f() { ... }; // should generate an error.</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="global.html"><code><em>global</code></a>, <a href="constant.html"><code></em>constant</code></a>, <a href="private.html"><code>__private</code></a>, <a href="qualifiers.html"><code>qualifiers</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=34" target="_blank">OpenCL 2.0 C Language Specification, page 34</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

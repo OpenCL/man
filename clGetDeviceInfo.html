@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetDeviceInfo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetDeviceInfo" class="article">
+<div id="header">
+<h1>clGetDeviceInfo</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Get information about an OpenCL device.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetDeviceInfo(cl_device_id device,
+                       cl_device_info param_name,
+                       size_t param_value_size,
+                       void *param_value,
+                       size_t *param_value_size_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>device</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A device returned by <a href="clGetDeviceIDs.html"><code>clGetDeviceIDs</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>May be a device returned by <a href="clGetDeviceIDs.html"><code>clGetDeviceIDs</code></a> or a sub-device created by <a href="clCreateSubDevices.html"><code>clCreateSubDevices</code></a>.
+If <code>device</code> is a sub-device, the specific information for the sub-device will be returned.
+The information that can be queried using <code>clGetDeviceInfo</code> is specified in the table below (Table 4.3).</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>param_value</code></dt>
+<dd>
+<p>A pointer to memory location where appropriate values for a given <code>param_name</code> as specified in the table below will be returned.
+If <code>param_value</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size</code></dt>
+<dd>
+<p>Specifies the size in bytes of memory pointed to by <code>param_value</code>.
+This size in bytes must be ≥ size of return type specified in the table below.</p>
+</dd>
+<dt class="hdlist1"><code>param_value_size_ret</code></dt>
+<dd>
+<p>Returns the actual size in bytes of data being queried by <code>param_value</code>.
+If <code>param_value_size_ret</code> is NULL, it is ignored.</p>
+</dd>
+<dt class="hdlist1"><code>param_name</code></dt>
+<dd>
+<p>An enumeration constant that identifies the device information being queried.
+It can be one of the values as specified in the table below.</p>
+</dd>
+<dt class="hdlist1"></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Table 4.3:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">cl_device_info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_ADDRESS_BITS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The default compute device address space size of the global address space specified as an unsigned integer value in bits.
+Currently supported values are 32 or 64 bits.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_AVAILABLE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_TRUE</code> if the device is available and <code>CL_FALSE</code> otherwise.
+A device is considered to be available if the device can be expected to successfully execute commands enqueued to the device</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_BUILT_IN_KERNELS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A semi-colon separated list of built-in kernels supported by the device.
+An empty string is returned if no built-in kernels are supported by the device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_COMPILER_AVAILABLE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_FALSE</code> if the implementation does not have a compiler available to compile the program source.
+Is <code>CL_TRUE</code> if the compiler is available.
+This can be <code>CL_FALSE</code> for the embedded platform profile only.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_DOUBLE_FP_CONFIG</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_-</p>
+</div>
+<div class="paragraph">
+<p>fp_config</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes double precision floating-point capability of the OpenCL device.
+This is a bit-field that describes one or more of the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_FP_DENORM</code> - denorms are supported.</p>
+</li>
+<li>
+<p><code>CL_FP_INF_NAN</code> - INF and NaNs are supported.</p>
+</li>
+<li>
+<p><code>CL_FP_ROUND_TO_NEAREST</code> - round to nearest even rounding mode supported.</p>
+</li>
+<li>
+<p><code>CL_FP_ROUND_TO_ZERO</code> - round to zero rounding mode supported.</p>
+</li>
+<li>
+<p><code>CL_FP_ROUND_TO_INF</code> - round to positive and negative infinity rounding modes supported.</p>
+</li>
+<li>
+<p><code>CL_FP_FMA</code> - IEEE754-2008 fused multiply-add is supported.</p>
+</li>
+<li>
+<p><code>CL_FP_SOFT_FLOAT</code> - Basic floating-point operations (such as addition, subtraction, multiplication) are implemented in software.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Double precision is an optional feature so the mandated minimum double precision floating-point capability is 0.</p>
+</div>
+<div class="paragraph">
+<p>If double precision is supported by the device, then the minimum double precision floating-point capability must be: <code>CL_FP_FMA</code> | <code>CL_FP_ROUND_TO_NEAREST</code> | <code>CL_FP_INF_NAN</code> | <code>CL_FP_DENORM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_ENDIAN_LITTLE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_TRUE</code> if the OpenCL device is a little endian device and <code>CL_FALSE</code> otherwise.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_ERROR_ CORRECTION_SUPPORT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_TRUE</code> if the device implements error correction for all accesses to compute device memory (global and constant).
+Is <code>CL_FALSE</code> if the device does not implement such error correction.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_EXECUTION_CAPABILITIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_-</p>
+</div>
+<div class="paragraph">
+<p>exec_capabilities</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes the execution capabilities of the device.
+This is a bit-field that describes one or more of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_EXEC_KERNEL</code> - The OpenCL device can execute OpenCL kernels.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_EXEC_NATIVE_KERNEL</code> - The OpenCL device can execute native kernels.</p>
+</div>
+<div class="paragraph">
+<p>The mandated minimum capability is <code>CL_EXEC_KERNEL</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_EXTENSIONS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns a space separated list of extension names (the extension names themselves do not contain any spaces) supported by the device.
+The list of extension names returned can be vendor supported extension names and one or more of the following Khronos approved extension names:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cl_khr_int64_base_atomics
+cl_khr_int64_extended_atomics
+cl_khr_fp16
+cl_khr_gl_sharing
+cl_khr_gl_event
+cl_khr_d3d10_sharing
+cl_khr_dx9_media_sharing
+cl_khr_d3d11_sharing
+cl_khr_gl_depth_images
+cl_khr_gl_msaa_sharing
+cl_khr_initialize_memory
+cl_khr_context_abort
+cl_khr_spir
+cl_khr_srgb_image_writes</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following approved Khronos extension names must be returned by all device that support OpenCL C 2.0:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cl_khr_byte_addressable_store
+cl_khr_fp64 (for backward compatibility if double precision is supported)
+cl_khr_3d_image_writes
+cl_khr_image2d_from_buffer
+cl_khr_depth_images</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Please refer to the OpenCL 2.0 Extension Specification for a detailed description of these extensions.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_GLOBAL_MEM_CACHE_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Size of global memory cache in bytes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_GLOBAL_MEM_CACHE_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_mem-</p>
+</div>
+<div class="paragraph">
+<p>_cache_type</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Type of global memory cache supported.
+Valid values are: <code>CL_NONE</code>, <code>CL_READ_ONLY_CACHE</code>, and <code>CL_READ_WRITE_CACHE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_GLOBAL_ MEM_CACHELINE_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Size of global memory cache line in bytes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_GLOBAL_MEM_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Size of global device memory in bytes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_GLOBAL_VARIABLE_ PREFERRED_TOTAL_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum preferred total size, in bytes, of all program variables in the global address space.
+This is a performance hint.
+An implementation may place such variables in storage with optimized device access.
+This query returns the capacity of such storage.
+The minimum value is 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IL_VERSION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char []</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The intermediate languages that can be supported by <a href="clCreateProgramWithIL.html"><code>clCreateProgramWithIL</code></a> for this device.
+Returns a space-separated list of IL version strings of the form &lt;IL_Prefix&gt;_&lt;Major_Version&gt;.&lt;Minor_Version&gt;.
+For OpenCL 2.1, "SPIR-V" is a required IL prefix.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE2D_MAX_HEIGHT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max height of 2D image in pixels.
+The minimum value is 16384 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE2D_MAX_WIDTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max width of 2D image or 1D image not created from a buffer object in pixels.
+The minimum value is 16384 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE3D_MAX_DEPTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max depth of 3D image in pixels.
+The minimum value is 2048 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE3D_MAX_HEIGHT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max height of 3D image in pixels.
+The minimum value is 2048 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE3D_MAX_WIDTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max width of 3D image in pixels.
+The minimum value is 2048 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE_BASE_ ADDRESS_ALIGNMENT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This query should be used when a 2D image is created from a buffer which was created using <code>CL_MEM_USE_HOST_PTR</code>.
+The value returned must be a power of 2.
+This query specifies the minimum alignment in pixels of the <code>host_ptr</code> specified to <a href="clCreateBuffer.html"><code>clCreateBuffer</code></a>.
+If the device does not support images, this value must be 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE_MAX_ARRAY_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max number of images in a 1D or 2D image array.
+The minimum value is 2048 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE_MAX_BUFFER_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max number of pixels for a 1D image created from a buffer object.
+The minimum value is 65536 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE_PITCH_ALIGNMENT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The row pitch alignment size in pixels for 2D images created from a buffer.
+The value returned must be a power of 2.
+If the device does not support images, this value must be 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_IMAGE_SUPPORT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_TRUE</code> if images are supported by the OpenCL device and <code>CL_FALSE</code> otherwise.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_LINKER_AVAILABLE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_FALSE</code> if the implementation does not have a linker available.
+Is <code>CL_TRUE</code> if the linker is available.
+This can be <code>CL_FALSE</code> for the embedded platform profile only.
+This must be <code>CL_TRUE</code> if <code>CL_DEVICE_COMPILER_AVAILABLE</code> is <code>CL_TRUE</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_LOCAL_MEM_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Size of local memory region in bytes.
+The minimum value is 32 KB for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_LOCAL_MEM_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_-</p>
+</div>
+<div class="paragraph">
+<p>local_mem_type</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Type of local memory supported.
+This can be set to <code>CL_LOCAL</code> implying dedicated local memory storage such as SRAM, or <code>CL_GLOBAL</code>.
+For custom devices, <code>CL_NONE</code> can also be returned indicating no local memory support.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_CLOCK_FREQUENCY</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum configured clock frequency of the device in MHz.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_COMPUTE_UNITS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The number of parallel compute units on the OpenCL device.
+A work-group executes on a single compute unit.
+The minimum value is 1.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_CONSTANT_ARGS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max number of arguments declared with the <a href="constant.html"><code>__constant</code></a> qualifier in a kernel.
+The minimum value is 8 for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_CONSTANT_ BUFFER_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max size in bytes of a constant buffer allocation.
+The minimum value is 64 KB for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_GLOBAL_ VARIABLE_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The maximum number of bytes of storage that may be allocated for any single variable in program scope or inside a function in OpenCL C declared in the global address space.
+The minimum value is 64 KB.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_MEM_ALLOC_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_ulong</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max size of memory object allocation in bytes.
+The minimum value is max(min(1024*1024*1024, 1/4th of <code>CL_DEVICE_GLOBAL_MEM_SIZE</code>), 32*1024*1024) for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_NUM_SUB_GROUPS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum number of sub-groups in a work-group that a device is capable of executing on a single compute unit, for any given kernel-instance running on the device.
+The minimum value is 1. (Refer also to <a href="clGetKernelSubGroupInfo.html"><code>clGetKernelSubGroupInfo</code></a>.)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_ON_DEVICE_EVENTS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The maximum number of events in use by a device queue.
+These refer to events returned by the <code>enqueue_</code> built-in functions to a device queue or user events returned by the <a href="create_user_event.html"><code>create_user_event</code></a> built-in function that have not been released.
+The minimum value is 1024.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_ON_DEVICE_QUEUES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The maximum number of device queues that can be created per context.
+The minimum value is 1.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_PARAMETER_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max size in bytes of all arguments that can be passed to a kernel.
+The minimum value is 1024 for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.
+For this minimum value, only a maximum of 128 arguments can be passed to a kernel.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_PIPE_ARGS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The maximum number of pipe objects that can be passed as arguments to a kernel.
+The minimum value is 16.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_READ_IMAGE_ARGS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max number of image objects arguments of a kernel declared with the <code>read_only</code> qualifier.
+The minimum value is 128 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_READ_ WRITE_IMAGE_ARGS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max number of image objects arguments of a kernel declared with the <code>write_only</code> or <code>read_write</code> qualifier.
+The minimum value is 64 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.
+NOTE: <code>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</code> is only there for backward compatibility.
+<code>CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS</code> should be used instead.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_SAMPLERS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum number of samplers that can be used in a kernel.
+The minimum value is 16 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>. (Also see <a href="sampler_t.html"><code>sampler_t</code></a>.)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_WORK_GROUP_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum number of work-items in a work-group that a device is capable of executing on a single compute unit, for any given kernel-instance running on the device. (Refer also to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>) and <code>CL_KERNEL_WORK_GROUP_SIZE</code>).
+The minimum value is 1.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_WORK_ITEM_ DIMENSIONS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model. (Refer to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>).
+The minimum value is 3 for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_WORK_ITEM_SIZES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum number of work-items that can be specified in each dimension of the work-group to <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Returns <code>n</code> <code>size_t</code> entries, where <code>n</code> is the value returned by the query for <code>CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS</code>.</p>
+</div>
+<div class="paragraph">
+<p>The minimum value is (1, 1, 1) for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Max number of image objects arguments of a kernel declared with the <code>write_only</code> qualifier.
+The minimum value is 64 if <code>CL_DEVICE_IMAGE_SUPPORT</code> is <code>CL_TRUE</code>.
+NOTE: <code>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</code> is only there for backward compatibility.
+<code>CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS</code> should be used instead.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Alignment requirement (in bits) for sub-buffer offsets.
+The minimum value is the size (in bits) of the largest OpenCL built-in data type supported by the device (<code>long16</code> in FULL profile, <code>long16</code> or <code>int16</code> in EMBEDDED profile) for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_NAME</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Device name string.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_CHAR</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_SHORT</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_INT</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_LONG</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_FLOAT</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_DOUBLE</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_NATIVE_ VECTOR_WIDTH_HALF</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the native ISA vector width.
+The vector width is defined as the number of scalar elements that can be stored in the vector.</p>
+</div>
+<div class="paragraph">
+<p>If double precision is not supported, <code>CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE</code> must return 0.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is not supported, <code>CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF</code> must return 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_OPENCL_C_VERSION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenCL C version string.
+Returns the highest OpenCL C version supported by the compiler for this device that is not of type <code>CL_DEVICE_TYPE_CUSTOM</code>.
+This version string has the following format:</p>
+</div>
+<div class="paragraph">
+<p><code>OpenCL&lt;space&gt;C&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>The <code>major_version.minor_version</code> value returned must be 2.0 if <code>CL_DEVICE_VERSION</code> is OpenCL 2.0.</p>
+</div>
+<div class="paragraph">
+<p>The <code>major_version.minor_version</code> value returned must be 1.2 if <code>CL_DEVICE_VERSION</code> is OpenCL 1.2.</p>
+</div>
+<div class="paragraph">
+<p>The <code>major_version.minor_version</code> value returned must be 1.1 if <code>CL_DEVICE_VERSION</code> is OpenCL 1.1.</p>
+</div>
+<div class="paragraph">
+<p>The <code>major_version.minor_version</code> value returned can be 1.0 or 1.1 if <code>CL_DEVICE_VERSION</code> is OpenCL 1.0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PARENT_DEVICE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_id</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the <code>cl_device_id</code> of the parent device to which this sub-device belongs.
+If <code>device</code> is a root-level device, a NULL value is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PARTITION_ AFFINITY_DOMAIN</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_aff-</p>
+</div>
+<div class="paragraph">
+<p>inity_domain</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the list of supported affinity domains for partitioning the <code>device</code> using <code>CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN</code>.
+This is a bit-field that describes one or more of the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_NUMA</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the device does not support any affinity domains, a value of 0 will be returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PARTITION_MAX_ SUB_DEVICES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the maximum number of sub-devices that can be created when a device is partitioned.
+The value returned cannot exceed <code>CL_DEVICE_MAX_COMPUTE_UNITS</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PARTITION_PROPERTIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_partit-</p>
+</div>
+<div class="paragraph">
+<p>ion_property[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the list of partition types supported by <code>device</code>.
+This is an array of <code>cl_device_partition_property</code> values drawn from the following list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_DEVICE_PARTITION_EQUALLY</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_PARTITION_BY_COUNTS</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the device cannot be partitioned (i.e.
+there is no partitioning scheme supported by the device that will return at least two subdevices), a value of 0 will be returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PARTITION_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_part-</p>
+</div>
+<div class="paragraph">
+<p>ition_property[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the <code>properties</code> argument specified in <a href="clCreateSubDevices.html"><code>clCreateSubDevices</code></a> if <code>device</code> is a subdevice.
+In the case where the <code>properties</code> argument to <a href="clCreateSubDevices.html"><code>clCreateSubDevices</code></a> is <code>CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN</code>, <code>CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE</code>, the affinity domain used to perform the partition will be returned.
+This can be one of the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_NUMA</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Otherwise the implementation may either return a <code>param_value_size_ret</code> of 0 i.e.
+there is no partition type associated with <code>device</code> or can return a property value of 0 (where 0 is used to terminate the partition property list) in the memory that <code>param_value</code> points to.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PIPE_MAX_ ACTIVE_RESERVATIONS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The maximum number of reservations that can be active for a pipe per work-item in a kernel.
+A work-group reservation is counted as one reservation per work-item.
+The minimum value is 1.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PIPE_MAX_PACKET_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The maximum size of pipe packet in bytes.
+The minimum value is 1024 bytes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PLATFORM</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="abstractDataTypes.html"><code>cl_platform_id</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The platform associated with this device.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ GLOBAL_ATOMIC_ALIGNMENT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the value representing the preferred alignment in bytes for OpenCL 2.0 atomic types to global memory.
+This query can return 0 which indicates that the preferred alignment is aligned to the natural size of the type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ INTEROP_USER_SYNC</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_TRUE</code> if the device&#8217;s preference is for the user to be responsible for synchronization, when sharing memory objects between OpenCL and other APIs such as DirectX, <code>CL_FALSE</code> if the device / implementation has a performant path for performing synchronization of memory object shared between OpenCL and other APIs such as DirectX</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ LOCAL_ATOMIC_ALIGNMENT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the value representing the preferred alignment in bytes for OpenCL 2.0 atomic types to local memory.
+This query can return 0 which indicates that the preferred alignment is aligned to the natural size of the type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ PLATFORM_ATOMIC_ALIGNMENT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the value representing the preferred alignment in bytes for OpenCL 2.0 fine-grained SVM atomic types.
+This query can return 0 which indicates that the preferred alignment is aligned to the natural size of the type.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_CHAR</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_SHORT</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_INT</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_LONG</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_FLOAT</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_DOUBLE</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_PREFERRED_ VECTOR_WIDTH_HALF</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Preferred native vector width size for built-in scalar types that can be put into vectors.
+The vector width is defined as the number of scalar elements that can be stored in the vector.</p>
+</div>
+<div class="paragraph">
+<p>If double precision is not supported, <code>CL_DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE</code> must return 0.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is not supported, <code>CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF</code> must return 0.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PRINTF_BUFFER_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Maximum size in bytes of the internal buffer that holds the output of <a href="printfFunction.html"><code>printf</code></a> calls from a kernel.
+The minimum value for the FULL profile is 1 MB.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PROFILE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenCL profile string.
+Returns the profile name supported by the device (see note).
+The profile name returned can be one of the following strings:</p>
+</div>
+<div class="paragraph">
+<p>FULL_PROFILE - if the device supports the OpenCL specification (functionality defined as part of the core specification and does not require any extensions to be supported).</p>
+</div>
+<div class="paragraph">
+<p>EMBEDDED_PROFILE - if the device supports the OpenCL embedded profile.</p>
+</div>
+<div class="paragraph">
+<p>The platform profile returns the profile that is implemented by the OpenCL framework.
+If the platform profile returned is <code>FULL_PROFILE</code>, the OpenCL framework will support devices that are <code>FULL_PROFILE</code> and may also support devices that are <code>EMBEDDED_PROFILE</code>.
+The compiler must be available for all devices i.e.
+<code>CL_DEVICE_COMPILER_AVAILABLE</code> is <code>CL_TRUE</code>.
+If the platform profile returned is <code>EMBEDDED_PROFILE</code>, then devices that are only <code>EMBEDDED_PROFILE</code> are supported.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_PROFILING_ TIMER_RESOLUTION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>size_t</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes the resolution of device timer.
+This is measured in nanoseconds.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_QUEUE_ON_ DEVICE_MAX_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The max.
+size of the device queue in bytes.
+The minimum value is 256 KB for the full profile and 64 KB for the embedded profile</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_QUEUE_ON_ DEVICE_PREFERRED_SIZE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The size of the device queue in bytes preferred by the implementation.
+Applications should use this size for the device queue to ensure good performance.
+The minimum value is 16 KB.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_QUEUE_ ON_DEVICE_PROPERTIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_command_-</p>
+</div>
+<div class="paragraph">
+<p>queue_properties</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes the on device command-queue properties supported by the device.
+This is a bit-field that describes one or more of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_PROFILING_ENABLE</code></p>
+</div>
+<div class="paragraph">
+<p>These properties are described in the table for <a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>.
+The mandated minimum capability is <code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code> | <code>CL_QUEUE_PROFILING_ENABLE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_QUEUE_ON_ HOST_PROPERTIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_command_-</p>
+</div>
+<div class="paragraph">
+<p>queue_properties</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes the on host command-queue properties supported by the device.
+This is a bit-field that describes one or more of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</code></p>
+</div>
+<div class="paragraph">
+<p><code>CL_QUEUE_PROFILING_ENABLE</code></p>
+</div>
+<div class="paragraph">
+<p>These properties are described in the table for <a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>.
+The mandated minimum capability is <code>CL_QUEUE_PROFILING_ENABLE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_REFERENCE_COUNT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Returns the <code>device</code> reference count.
+If the device is a root-level device, a reference count of one is returned.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_SINGLE_FP_CONFIG</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_-</p>
+</div>
+<div class="paragraph">
+<p>fp_config</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes single precision floating-point capability of the device.
+This is a bit-field that describes one or more of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_DENORM</code> - denorms are supported</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_INF_NAN</code> - INF and quiet NaNs are supported</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_ROUND_TO_NEAREST</code> - round to nearest even rounding mode supported</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_ROUND_TO_ZERO</code> - round to zero rounding mode supported</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_ROUND_TO_INF</code> - round to +ve and -ve infinity rounding modes supported</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_FMA</code> - IEEE754-2008 fused multiply-add is supported</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT</code> - divide and sqrt are correctly rounded as defined by the IEEE754 specification.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_FP_SOFT_FLOAT</code> - Basic floating-point operations (such as addition, subtraction, multiplication) are implemented in software.</p>
+</div>
+<div class="paragraph">
+<p>For the full profile, the mandated minimum floating-point capability for devices that are not of type <code>CL_DEVICE_TYPE_CUSTOM</code> is <code>CL_FP_ROUND_TO_NEAREST</code> | <code>CL_FP_INF_NAN</code>.
+For the embedded profile, see section 10.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_SPIR_VERSIONS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char []</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_spir.html"><code>cl_khr_spir</code></a> extension is enabled, a space separated list of SPIR versions supported by the device.
+For example returning “1.2 2.0” in this query implies that SPIR version 1.2 and 2.0 are supported by the implementation.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_SUBGROUP_ INDEPENDENT_ FORWARD_PROGRESS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_bool</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Is <code>CL_TRUE</code> if this device supports independent forward progress of sub-groups, <code>CL_FALSE</code> otherwise.
+If <a href="cl_khr_subgroups.html"><code>cl_khr_subgroups</code></a> is supported by the device this must return <code>CL_TRUE</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_SVM_CAPABILITIES</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_svm_-</p>
+</div>
+<div class="paragraph">
+<p>capabilities</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Describes the various shared virtual memory (a.k.a.
+SVM) memory allocation types the device supports.
+Coarse-grain SVM allocations are required to be supported by all OpenCL 2.0 devices.
+This is a bit-field that describes a combination of the following values:</p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_SVM_COARSE_GRAIN_BUFFER</code> – Support for coarse-grain buffer sharing using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a>.
+Memory consistency is guaranteed at synchronization points and the host must use calls to <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a> and <a href="clEnqueueUnmapMemObject.html"><code>clEnqueueUnmapMemObject</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_SVM_FINE_GRAIN_BUFFER</code> – Support for fine-grain buffer sharing using <a href="clSVMAlloc.html"><code>clSVMAlloc</code></a>.
+Memory consistency is guaranteed atsynchronization points without need for <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a> and <a href="clEnqueueUnmapMemObject.html"><code>clEnqueueUnmapMemObject</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_SVM_FINE_GRAIN_SYSTEM</code> – Support for sharing the host’s entire virtual memory including memory allocated using malloc.
+Memory consistency is guaranteed at synchronization points.</p>
+</div>
+<div class="paragraph">
+<p><code>CL_DEVICE_SVM_ATOMICS</code> – Support for the OpenCL 2.0 atomic operations that provide memory consistency across the host and all OpenCL devices supporting fine-grain SVM allocations.</p>
+</div>
+<div class="paragraph">
+<p>The mandated minimum capability is <code>CL_DEVICE_SVM_COARSE_GRAIN_BUFFER</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TERMINATE- _CAPABILITY_KHR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_terminate- _capability_khr</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the <a href="cl_khr_terminate_context.html"><code>cl_khr_terminate_context</code></a> extension is enabled, describes the termination capability of the OpenCL device.
+This is a bitfield where a value of <code>CL_DEVICE_TERMINATE_CAPABILITY_CONTEXT_KHR</code> indicates that context termination is supported.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_TYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_device_type</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The OpenCL device type.
+Currently supported values are: <code>CL_DEVICE_TYPE_CPU</code>, <code>CL_DEVICE_TYPE_GPU</code>, <code>CL_DEVICE_TYPE_ACCELERATOR</code>, <code>CL_DEVICE_TYPE_DEFAULT</code>, a combination of the above types, or <code>CL_DEVICE_TYPE_CUSTOM</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_VENDOR</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Vendor name string.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_VENDOR_ID</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>cl_uint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>A unique device vendor identifier.
+An example of a unique device identifier could be the PCIe ID.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DEVICE_VERSION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenCL version string.
+Returns the OpenCL version supported by the device.
+This version string has the following format:</p>
+</div>
+<div class="paragraph">
+<p><code>OpenCL&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>The <code>major_version.minor_version</code> value returned will be 2.1.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>CL_DRIVER_VERSION</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>char[]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>OpenCL software driver version string in the form <code>major_number.minor_number</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>CL_DEVICE_PROFILE</code>: The platform profile returns the profile that is implemented by the OpenCL framework.
+If the platform profile returned is <code>FULL_PROFILE</code>, the OpenCL framework will support devices that are <code>FULL_PROFILE</code> and may also support devices that are <code>EMBEDDED_PROFILE</code>.
+The compiler must be available for all devices i.e.
+<code>CL_DEVICE_COMPILER_AVAILABLE</code> is <code>CL_TRUE</code>.
+If the platform profile returned is <code>EMBEDDED_PROFILE</code>, then devices that are only <code>EMBEDDED_PROFILE</code> are supported.</p>
+</div>
+<div class="paragraph">
+<p>The device queries described in the table above should return the same information for a root-level device i.e.
+a device returned by <a href="clGetDeviceIDs.html"><code>clGetDeviceIDs</code></a> and any sub-devices created from this device except for the following queries:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_DEVICE_GLOBAL_MEM_CACHE_SIZE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_BUILT_IN_KERNELS</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_PARENT_DEVICE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_PARTITION_TYPE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_REFERENCE_COUNT</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clGetDeviceInfo</code> returns <code>CL_SUCCESS</code> if the function is executed successfully.
+Otherwise, it returns the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if <code>device</code> is not valid.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>param_name</code> is not one of the supported values or if size in bytes specified by <code>param_value_size</code> is less than size of return type as shown in the table above and <code>param_value</code> is not a <code>NULL</code> value or if <code>param_name</code> is a value that is available as an extension and the corresponding extension is not supported by the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetDeviceIDs.html"><code>clGetDeviceIDs</code></a>, <a href="cl_khr_fp64.html"><code>cl_khr_fp64</code></a>, <a href="constant.html"><code>__constant</code></a>, <a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>, <a href="clRetainCommandQueue.html"><code>clRetainCommandQueue</code></a>, <a href="clEnqueueNDRangeKernel.html"><code>clEnqueueNDRangeKernel</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=66" target="_blank">OpenCL 2.1 API Specification, page 66</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

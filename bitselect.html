@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>bitselect</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="bitselect" class="article">
+<div id="header">
+<h1>bitselect</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each bit of result is corresponding bit of <code>a</code> if corresponding bit of <code>c</code> is 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">gentype bitselect(gentype a,
+                  gentype b,
+                  gentype c)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>halfn bitselect (halfn a, halfn b,
+              halfn c)      // if half extension enabled</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each bit of result is corresponding bit of <code>a</code> if corresponding bit of <code>c</code> is 0.
+Otherwise it is the corresponding bit of <code>b</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If an implementation extends this specification to support IEEE-754 flags or exceptions, then all built-in relational functions shall proceed without raising the <code>invalid</code> floating-point exception when one or more of the operands are NaNs.</p>
+</div>
+<div class="paragraph">
+<p>The built-in relational functions are extended with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> to include versions that take <code>half</code>, and <code>half{2|3|4|8|16}</code> as arguments.</p>
+</div>
+<div class="paragraph">
+<p>The argment type <code>gentype</code> can be <code>char</code>, <code>charn</code>, <code>uchar</code>, <code>ucharn</code>, <code>short</code>, <code>shortn</code>, <code>ushort</code>, <code>ushortn</code>, <code>int</code>, <code>intn</code>, <code>uint</code>, <code>uintn</code>, <code>long</code>, <code>longn</code>, <code>ulong</code>, <code>ulongn</code>, <code>float</code>, <code>floatn</code>, <code>double</code>, and <code>doublen</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="relationalFunctions.html">Relational Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=90" target="_blank">OpenCL 2.0 C Language Specification, page 90</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

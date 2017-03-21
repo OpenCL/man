@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_image_desc</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_image_desc" class="article">
+<div id="header">
+<h1>cl_image_desc</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The image descriptor structure describes the type and dimensions of the image or image array and is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                        typedef struct _cl_image_desc {
+          cl_mem_object_type image_type;
+          size_t image_width;
+          size_t image_height;
+          size_t image_depth;
+          size_t image_array_size;
+          size_t image_row_pitch;
+          size_t image_slice_pitch;
+          cl_uint num_mip_levels;
+          cl_uint num_samples;
+          cl_mem buffer;
+} cl_image_desc;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Members</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">image_type</dt>
+<dd>
+<p>Describes the image type and must be either <code>CL_MEM_OBJECT_IMAGE1D</code>, <code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code>, <code>CL_MEM_OBJECT_IMAGE1D_ARRAY</code>, <code>CL_MEM_OBJECT_IMAGE2D</code>, <code>CL_MEM_OBJECT_IMAGE2D_ARRAY</code>, or <code>CL_MEM_OBJECT_IMAGE3D</code>.</p>
+</dd>
+<dt class="hdlist1">image_width</dt>
+<dd>
+<p>The width of the image in pixels.
+For a 2D image and image array, the image width must be a value &gt;= 1 and ≤ <code>CL_DEVICE_IMAGE2D_MAX_WIDTH</code>.
+For a 3D image, the image width must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE3D_MAX_WIDTH</code>.
+For a 1D image buffer, the image width must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE_MAX_BUFFER_SIZE</code>.
+For a 1D image and 1D image array, the image width must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE2D_MAX_WIDTH</code>.</p>
+</dd>
+<dt class="hdlist1">image_height</dt>
+<dd>
+<p>The height of the image in pixels.
+This is only used if the image is a 2D or 3D image, or a 2D image array.
+For a 2D image or image array, the image height must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE2D_MAX_HEIGHT</code>.
+For a 3D image, the image height must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE3D_MAX_HEIGHT</code>.</p>
+</dd>
+<dt class="hdlist1">image_depth</dt>
+<dd>
+<p>The depth of the image in pixels.
+This is only used if the image is a 3D image and must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE3D_MAX_DEPTH</code>.</p>
+</dd>
+<dt class="hdlist1">image_array_size</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The number of images in the image array.
+This is only used if the image is a 1D or 2D image array.
+The values for <code>image_array_size</code>, if specified, must be a value ≥ 1 and ≤ <code>CL_DEVICE_IMAGE_MAX_ARRAY_SIZE</code>.</p>
+</div>
+<div class="paragraph">
+<p>Note that reading and writing 2D image arrays from a kernel with <code>image_array_size</code> = 1 may be lower performance than 2D images.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">image_row_pitch</dt>
+<dd>
+<p>The scan-line pitch in bytes.
+This must be 0 if <code>host_ptr</code> is NULL and can be either 0 or ≥ <code>image_width</code> * size of element in bytes if <code>host_ptr</code> is not NULL.
+If <code>host_ptr</code> is not NULL and <code>image_row_pitch</code> = 0, <code>image_row_pitch</code> is calculated as <code>image_width</code> * size of element in bytes.
+If <code>image_row_pitch</code> is not 0, it must be a multiple of the image element size in bytes.
+For a 2D image created from a buffer, the pitch specified (or computed if pitch specified is 0) must be a multiple of the maximum of the <code>CL_DEVICE_IMAGE_PITCH_ALIGNMENT</code> value for all devices in the context associated with <code>image_desc&#8594;mem_object</code> and that support images.</p>
+</dd>
+<dt class="hdlist1">image_slice_pitch</dt>
+<dd>
+<p>The size in bytes of each 2D slice in the 3D image or the size in bytes of each image in a 1D or 2D image array.
+This must be 0 if <code>host_ptr</code> is NULL.
+If <code>host_ptr</code> is not NULL, <code>image_slice_pitch</code> can be either 0 or ≥ <code>image_row_pitch</code> * <code>image_height</code> for a 2D image array or 3D image and can be either 0 or ≥ <code>image_row_pitch</code> for a 1D image array.
+If <code>host_ptr</code> is not NULL and <code>image_slice_pitch</code> = 0, <code>image_slice_pitch</code> is calculated as <code>image_row_pitch</code> * <code>image_height</code> for a 2D image array or 3D image and <code>image_row_pitch</code> for a 1D image array.
+If <code>image_slice_pitch</code> is not 0, it must be a multiple of the <code>image_row_pitch</code>.</p>
+</dd>
+<dt class="hdlist1">num_mip_levelnum_samples</dt>
+<dd>
+<p>Must be 0.</p>
+</dd>
+<dt class="hdlist1">mem_object</dt>
+<dd>
+<p>Refers to a valid buffer or image memory object.
+<code>mem_object</code> can be a buffer memory object if image_type is <code>CL_MEM_OBJECT_IMAGE1D_BUFFER</code> or <code>CL_MEM_OBJECT_IMAGE2D</code> (To create a 2D image from a buffer object that share the data store between the image and buffer object) . <code>mem_object</code> can be a image object if <code>image_type</code> is <code>CL_MEM_OBJECT_IMAGE2D</code> (To create an image object from another image object that share the data store between these image objects).
+Otherwise it must be NULL.
+The image pixels are taken from the memory object’s data store.
+When the contents of the specified memory object’s data store are modified, those changes are reflected in the contents of the image object and vice-versa at corresponding sychronization points.
+For a 1D image buffer object, the <code>image_width</code> * size of element in bytes must be ≤ size of buffer object data store.
+For a 2D image created from a buffer, the <code>image_row_pitch * image_height</code> must be ≤ size of buffer object data store.
+For an image object created from another image object, the values specified in the image descriptor except for <code>mem_object</code> must match the image descriptor information associated with <code>mem_object</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="note">Note</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Concurrent reading from, writing to and copying between both a buffer object and 1D image buffer or 2D image object associated with the buffer object is undefined.
+Only reading from both a buffer object and 1D image buffer or 2D image object associated with the buffer object is defined.</p>
+</div>
+<div class="paragraph">
+<p>Writing to an image created from a buffer and then reading from this buffer in a kernel even if appropriate synchronization operations (such as a barrier) are performed between the writes and reads is undefined.
+Similarly, writing to the buffer and reading from the image created from this buffer with appropriate synchronization between the writes and reads is undefined.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_image_format.html"><code>cl_image_format</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=134" target="_blank">OpenCL 2.1 API Specification, page 134</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>get_kernel_preferred_work_group_size_multiple</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="get_kernel_preferred_work_group_size_multiple" class="article">
+<div id="header">
+<h1>get_kernel_preferred_work_group_size_multiple</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns the preferred multiple of work-group size for launch.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">uint get_kernel_preferred_work_group_size_multiple(void (^block)(void))
+
+uint get_kernel_preferred_work_group_size_multiple(void (^block)(local void*, ...))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This kernel query function returns the preferred multiple of work-group size for launch.
+This is a performance hint.
+Specifying a work-group size that is not a multiple of the value returned by this query as the value of the local work size argument to <code>enqueue_kernel</code> will not fail to enqueue the block for execution unless the work-group size specified is larger than the device maximum.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the <a href="cl_khr_device_enqueue_local_arg_types.html"><code>cl_khr_device_enqueue_local_arg_types</code></a> extension is enabled, then replace all occurrences of <code>local void *</code> in the table above with <code>local gentype *</code>.
+We use the generic type name <code>gentype</code> to indicate the built-in OpenCL C scalar or vector integer or floating-point data types, or any user defined type built from these scalar and vector data types which can be used as the type of the pointee of the arguments of the kernel enqueue functions listed above.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="get_kernel_work_group_size.html"><code>get_kernel_work_group_size</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=169" target="_blank">OpenCL 2.0 C Language Specification, page 169</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

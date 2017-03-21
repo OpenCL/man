@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>get_image_channel_data_type</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="get_image_channel_data_type" class="article">
+<div id="header">
+<h1>get_image_channel_data_type</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Return the channel data type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">int get_image_channel_data_type(aQual image1d_t image)
+
+int get_image_channel_data_type(aQual image1d_buffer_t image)
+
+int get_image_channel_data_type(aQual image2d_t image)
+
+int get_image_channel_data_type(aQual image3d_t image)
+
+int get_image_channel_data_type(aQual image1d_array_t image)
+
+int get_image_channel_data_type(aQual image2d_array_t image)
+
+int get_image_channel_data_type(aQual image2d_depth_t image)
+
+int get_image_channel_data_type(aQual image2d_array_depth_t image)
+
+int get_image_channel_data_type(image2d_msaa_t image)
+
+int get_image_channel_data_type(image2d_array_msaa_t image)
+
+int get_image_channel_data_type(image2d_msaa_depth_t image)
+
+int get_image_channel_data_type(image2d_array_msaa_depth_t image)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>aQual</code> refers to one of the access qualifiers <code>read_only</code>, <code>write_only</code>, or <code>read_write</code>.</p>
+</div>
+<div class="paragraph">
+<p>Return the channel data type.
+Valid values are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CLK_SNORM_INT8
+CLK_SNORM_INT16
+CLK_UNORM_INT8
+CLK_UNORM_INT16
+CLK_UNORM_SHORT_565
+CLK_UNORM_SHORT_555
+CLK_UNORM_SHORT_101010
+CLK_SIGNED_INT8
+CLK_SIGNED_INT16
+CLK_SIGNED_INT32
+CLK_UNSIGNED_INT8
+CLK_UNSIGNED_INT16
+CLK_UNSIGNED_INT32
+CLK_HALF_FLOAT
+CLK_FLOAT</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The values returned by <code>get_image_channel_data_type</code> and <code>get_image_channel_order</code> as specified the table above with the <code>CLK_</code> prefixes correspond to the <code>CL_</code> prefixes used to describe the image channel order and data type in tables 5.4 (see <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>) and 5.5 (see <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a>).
+For example, both <code>CL_UNORM_INT8</code> and <code>CLK_UNORM_INT8</code> refer to an image channel data type that is an unnormalized unsigned 8-bit integer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="imageFunctions.html">Image Functions</a>, <a href="cl_khr_gl_msaa_sharing.html"><code>cl_khr_gl_msaa_sharing</code></a>, <a href="clCreateSubBuffer.html"><code>clCreateSubBuffer</code></a>, <a href="clEnqueueMapBuffer.html"><code>clEnqueueMapBuffer</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=127" target="_blank">OpenCL 2.0 C Language Specification, page 127</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

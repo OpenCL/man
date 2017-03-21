@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Restrictions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="restrictionsref" class="article">
+<div id="header">
+<h1>Restrictions</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p></p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>The use of pointers is somewhat restricted.
+The following rules apply:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Arguments to kernel functions declared in a program that are pointers must be declared with the <a href="global.html"><code><em>global</code></a>, <a href="constant.html"><code></em>constant</code></a>, or <a href="local.html"><code>__local</code></a> qualifier.</p>
+</li>
+<li>
+<p>A pointer declared with the <a href="constant.html"><code><em>constant</code></a> qualifier can only be assigned to a pointer declared with the </em>constant qualifier.</p>
+</li>
+<li>
+<p>Pointers to functions are not allowed.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p></p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>An image type ( <a href="otherDataTypes.html"><code>image2d_t</code></a>, <a href="otherDataTypes.html"><code>image3d_t</code></a>, <a href="otherDataTypes.html"><code>image2d_array_t</code></a>, <a href="otherDataTypes.html"><code>image1d_t</code></a>, <a href="otherDataTypes.html"><code>image1d_buffer_t</code></a>, or <a href="otherDataTypes.html"><code>image1d_array_t</code></a>) can only be used as the type of a function argument.
+An image function argument cannot be modified.
+Elements of an image can only be accessed using the <a href="imageFunctions.html">Built-in Image Functions</a>.</p>
+</div>
+<div class="paragraph">
+<p>An image type cannot be used to declare a variable, a structure or union field, an array of images, a pointer to an image, or the return type of a function.
+An image type cannot be used with the <a href="global.html"><code><em>global</code></a>, <a href="private.html"><code></em>private</code></a>, <a href="local.html"><code><em>local</code></a> and <a href="constant.html"><code></em>constant</code></a> address space qualifiers.</p>
+</div>
+<div class="paragraph">
+<p>The sampler type (<a href="sampler_t.html"><code>sampler_t</code></a>) can only be used as the type of a function argument or a variable declared in the program scope or the outermost scope of a kernel function.
+The behavior of a sampler variable declared in a non-outermost scope of a kernel function is implementation-defined.
+A sampler argument or variable cannot be modified.</p>
+</div>
+<div class="paragraph">
+<p>The sampler type cannot be used to declare a structure or union field, an array of samplers, a pointer to a sampler, or the return type of a function.
+The sampler type cannot be used with the <a href="local.html"><code><em>local</code></a> and <a href="global.html"><code></em>global</code></a> address space qualifiers.</p>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Bit-fields struct members are currently not supported.</p>
+</li>
+<li>
+<p>Variable length arrays and structures with flexible (or unsized) arrays are not supported.</p>
+</li>
+<li>
+<p>Variadic macros and functions with the exception of <a href="printfFunction.html"><code>printf</code></a> and <a href="enqueue_kernel.html"><code>enqueue_kernel</code></a> are not supported.</p>
+</li>
+<li>
+<p>The library functions defined in the C99 standard headers <code>assert.h</code>, <code>ctype.h</code>, <code>complex.h</code>, <code>errno.h</code>, <code>fenv.h</code>, <code>float.h</code>, <code>inttypes.h</code>, <code>limits.h</code>, <code>locale.h</code>, <code>setjmp.h</code>, <code>signal.h</code>, <code>stdarg.h</code>, <code>stdio.h</code>, <code>stdlib.h</code>, <code>string.h</code>, <code>tgmath.h</code>, <code>time.h</code>, <code>wchar.h</code>, and <code>wctype.h</code> are not available and cannot be included by a program.</p>
+</li>
+<li>
+<p>The <code>auto</code> and <code>register</code> storage-class specifiers are not supported.</p>
+</li>
+<li>
+<p>Recursion is not supported.</p>
+</li>
+<li>
+<p>The return type of a kernel function must be <code>void</code>.</p>
+</li>
+<li>
+<p>Arguments to kernel functions in a program cannot be declared with the built-in scalar types <code>bool</code>, <code>half</code>, <code>size_t</code>, <code>ptrdiff_t</code>, <code>intptr_t</code>, and <code>uintptr_t</code>, or a struct and/or union that contain fields declared to be one of these built-in scalar types.
+The size in bytes of these types except <code>half</code> are implementation-defined and in addition can also be different for the OpenCL device and the host processor making it difficult to allocate buffer objects to be passed as arguments to a kernel declared as pointer to these types.
+<code>half</code> is not supported as <code>half</code> can be used as a storage format only (unless the <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a> extension is supported) and is not a data type on which floating-point arithmetic can be performed.</p>
+</li>
+<li>
+<p>Whether or not irreducible control flow is illegal is implementation defined.</p>
+</li>
+<li>
+<p>The type qualifiers <code>const</code>, <code>restrict</code> and <code>volatile</code> as defined by the C99 specification are supported.
+These qualifiers cannot be used with <a href="otherDataTypes.html"><code>image2d_t</code></a>, <a href="otherDataTypes.html"><code>image3d_t</code></a>, <a href="otherDataTypes.html"><code>image2d_array_t</code></a>, <a href="otherDataTypes.html"><code>image2d_depth_t</code></a>, <a href="otherDataTypes.html"><code>image2d_array_depth_t</code></a>, <a href="otherDataTypes.html"><code>image1d_t</code></a>, <a href="otherDataTypes.html"><code>image1d_buffer_t</code></a> and <a href="otherDataTypes.html"><code>image1d_array_t</code></a> types.
+Types other than pointer types shall not use the <code>restrict</code> qualifier.</p>
+</li>
+<li>
+<p>The event type (<a href="otherDataTypes.html"><code>event_t</code></a>) cannot be used as the type of a kernel function argument.
+The event type cannot be used to declare a program scope variable.
+The event type cannot be used to declare a structure or union field.
+The event type cannot be used with the <a href="local.html"><code><em>local</code></a>, <a href="constant.html"><code></em>constant</code></a> and <a href="global.html"><code>__global</code></a> address space qualifiers.</p>
+</li>
+<li>
+<p>The <code>clk_event_t</code>, <code>ndrange_t</code> and <code>reserve_id_t</code> types cannot be used as arguments to kernel functions that get enqueued from the host.
+The <code>clk_event_t</code> and <code>reserve_id_t</code> types cannot be declared in program scope.</p>
+</li>
+<li>
+<p>The behavior of applying the <code>sizeof</code> operator to the <code>queue_t</code>, <code>clk_event_t</code>, <code>ndrange_t</code> and <code>reserve_id_t</code> types is implementation-defined.</p>
+</li>
+<li>
+<p>Kernels enqueued by the host must continue to have their arguments that are a pointer to a type declared to point to a named address space.</p>
+</li>
+<li>
+<p>A function in an OpenCL program cannot be called <code>main</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="imageFunctions.html">Image Functions</a>, <a href="functionQualifiers.html">Function Qualifiers</a>, <a href="qualifiers.html">Qualifiers</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=51" target="_blank">OpenCL 2.0 C Language Specification, page 51</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

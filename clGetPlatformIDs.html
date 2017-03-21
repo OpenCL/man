@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clGetPlatformIDs</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clGetPlatformIDs" class="article">
+<div id="header">
+<h1>clGetPlatformIDs</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Obtain the list of platforms available.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clGetPlatformIDs(cl_uint num_entries,
+                        cl_platform_id *platforms,
+                        cl_uint *num_platforms)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>num_entries</code></dt>
+<dd>
+<p>The number of <a href="abstractDataTypes.html"><code>cl_platform_id</code></a> entries that can be added to <code>platforms</code>.
+If <code>platforms</code> is not NULL, the <code>num_entries</code> must be greater than zero.</p>
+</dd>
+<dt class="hdlist1"><code>platforms</code></dt>
+<dd>
+<p>Returns a list of OpenCL platforms found.
+The <a href="abstractDataTypes.html"><code>cl_platform_id</code></a> values returned in <code>platforms</code> can be used to identify a specific OpenCL platform.
+If <code>platforms</code> argument is NULL, this argument is ignored.
+The number of OpenCL platforms returned is the mininum of the value specified by <code>num_entries</code> or the number of OpenCL platforms available.</p>
+</dd>
+<dt class="hdlist1"><code>num_platforms</code></dt>
+<dd>
+<p>Returns the number of OpenCL platforms available.
+If <code>num_platforms</code> is NULL, this argument is ignored.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+If the <a href="cl_khr_icd.html"><code>cl_khr_icd</code></a> extension is enabled, <code>clGetPlatformIDs</code> returns <code>CL_SUCCESS</code> if the function is executed successfully and there are a non zero number of platforms available.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_entries</code> is equal to zero and <code>platforms</code> is not NULL or if both <code>num_platforms</code> and <code>platforms</code> are NULL.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+<li>
+<p><code>CL_PLATFORM_NOT_FOUND_KHR</code> if the <a href="cl_khr_icd.html"><code>cl_khr_icd</code></a> extension is enabled and no platforms are found.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>, <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>, <a href="classDiagram.html">Cardinality Diagram</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=62" target="_blank">OpenCL 2.1 API Specification, page 62</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

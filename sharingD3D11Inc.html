@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>Untitled</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<div class="title">Sharing Memory Objects with Direct3D 11 Resources</div>
+<p>The goal of this extension is to provide interoperability between OpenCL and Direct3D 11.
+This is designed to function analogously to the <a href="cl_khr_gl_sharing.html">OpenGL interoperability</a> as defined in sections 9.7 and 9.8.
+If this extension is supported by an implementation, the string "cl_khr_d3d11_sharing" will be present in the <code>CL_PLATFORM_EXTENSIONS</code> or <code>CL_DEVICE_EXTENSIONS</code> string described in the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> or <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>As currently proposed the interfaces for this extension would be provided in <code>cl_d3d11.h</code>.</p>
+</div>
+<div class="paragraph">
+<p>This section discusses OpenCL functions that allow applications to use Direct3D 11 resources as OpenCL memory objects.
+This allows efficient sharing of data between OpenCL and Direct3D 11.
+The OpenCL API may be used to execute kernels that read and/or write memory objects that are also Direct3D 11 resources.
+An OpenCL image object may be created from a Direct3D 11 texture resource.
+An OpenCL buffer object may be created from a Direct3D 11 buffer resource.
+OpenCL memory objects may be created from Direct3D 11 objects if and only if the OpenCL context has been created from a Direct3D 11 device.</p>
+</div>
+<div class="paragraph">
+<div class="title">Lifetime of Shared Objects</div>
+<p>An OpenCL memory object created from a Direct3D 11 resource remains valid as long as the corresponding Direct3D 11 resource has not been deleted.
+If the Direct3D 11 resource is deleted through the Direct3D 11 API, subsequent use of the OpenCL memory object will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+<div class="paragraph">
+<p>The successful creation of a cl_context against a Direct3D 11 device specified via the context create parameter <code>CL_CONTEXT_D3D11_DEVICE_KHR</code> will increment the internal Direct3D reference count on the specified Direct3D 11 device.
+The internal Direct3D reference count on that Direct3D 11 device will be decremented when the OpenCL reference count on the returned OpenCL context drops to zero.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL context and corresponding command-queues are dependent on the existence of the Direct3D 11 device from which the OpenCL context was created.
+If the Direct3D 11 device is deleted through the Direct3D 11 API, subsequent use of the OpenCL context will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+<div class="paragraph">
+<p>Properties of Direct3D 11 objects may be queried using <a href="clGetMemObjectInfo.html"><code>clGetMemObjectInfo</code></a> and <a href="clGetImageInfo.html"><code>clGetImageInfo</code></a> with <code>param_name</code> <code>CL_MEM_D3D11_RESOURCE_KHR</code> and <code>CL_IMAGE_D3D11_SUBRESOURCE_KHR</code>.</p>
+</div>
+</div>
+</body>
+</html>

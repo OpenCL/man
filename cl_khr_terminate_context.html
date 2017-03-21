@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>cl_khr_terminate_context</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="cl_khr_terminate_context" class="article">
+<div id="header">
+<h1>cl_khr_terminate_context</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Extension to allow an API to release a context.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#pragma OPENCL EXTENSION cl_khr_terminate_context : enable</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Today, OpenCL provides an API to release a context.
+This operation is done only after all queues, memory object, programs and kernels are released, which in turn might wait for all ongoing operations to complete.
+However, there are cases in which a fast release is required, or release operation cannot be done, as commands are stuck in mid execution.
+An example of the first case can be program termination due to exception, or quick shutdown due to low power.
+Examples of the second case are when a kernel is running too long, or gets stuck, or it may result from user action which makes the results of the computation unnecessary.</p>
+</div>
+<div class="paragraph">
+<p>In many cases, the driver or the device is capable of speeding up the closure of ongoing operations when the results are no longer required in a much more expedient manner than waiting for all previously enqueued operations to finish.</p>
+</div>
+<div class="paragraph">
+<p>This extension implements a new query to check whether a device can terminate an OpenCL context and adds an API to terminate a context.</p>
+</div>
+<div class="paragraph">
+<p>This extensions enables the following function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            clTerminateContextKHR</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This extensions adds changes to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>                            clGetDeviceInfo
+
+                            clCreateContext</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clTerminateContextKHR.html"><code>clTerminateContextKHR</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=122" target="_blank">OpenCL 2.1 Extensions Specification, page 122</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

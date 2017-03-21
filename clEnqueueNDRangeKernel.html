@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueNDRangeKernel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueNDRangeKernel" class="article">
+<div id="header">
+<h1>clEnqueueNDRangeKernel</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enqueues a command to execute a kernel on a device.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueNDRangeKernel(cl_command_queue command_queue,
+                              cl_kernel kernel,
+                              cl_uint work_dim,
+                              const size_t *global_work_offset,
+                              const size_t *global_work_size,
+                              const size_t *local_work_size,
+                              cl_uint num_events_in_wait_list,
+                              const cl_event *event_wait_list,
+                              cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>A valid host command-queue.
+The kernel will be queued for execution on the device associated with <code>command_queue</code>.</p>
+</dd>
+<dt class="hdlist1"><code>kernel</code></dt>
+<dd>
+<p>A valid kernel object.
+The OpenCL context associated with <code>kernel</code> and <code>command_queue</code> must be the same.</p>
+</dd>
+<dt class="hdlist1"><code>work_dim</code></dt>
+<dd>
+<p>The number of dimensions used to specify the global work-items and work-items in the work-group.
+<code>work_dim</code> must be greater than zero and less than or equal to <code>CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS</code>.
+If <code>global_work_size</code> is NULL, or the value in any passed dimension is 0 then the kernel command will trivially succeed after its event dependencies are satisfied and subsequently update its completion event.
+The behavior in this situation is similar to that of an enqueued marker, except that unlike a marker, an enqueued kernel with no events passed to <code>event_wait_list</code> may run at any time.</p>
+</dd>
+<dt class="hdlist1"><code>global_work_offset</code></dt>
+<dd>
+<p><code>global_work_offset</code> can be used to specify an array of <code>work_dim</code> unsigned values that describe the offset used to calculate the global ID of a work-item.
+If <code>global_work_offset</code> is NULL, the global IDs start at offset (0, 0, &#8230;&#8203; 0).</p>
+</dd>
+<dt class="hdlist1"><code>global_work_size</code></dt>
+<dd>
+<p>Points to an array of <code>work_dim</code> unsigned values that describe the number of global work-items in <code>work_dim</code> dimensions that will execute the kernel function.
+The total number of global work-items is computed as <code>global_work_size</code>[0] <strong>&#8230;&#8203;</strong> <code>global_work_size</code>[<code>work_dim</code> - 1].</p>
+</dd>
+<dt class="hdlist1"><code>local_work_size</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Points to an array of <code>work_dim</code> unsigned values that describe the number of work-items that make up a work-group (also referred to as the size of the work-group) that will execute the kernel specified by <code>kernel</code>.
+The total number of work-items in a work-group is computed as <code>local_work_size</code>[0] *&#8230;&#8203; * <code>local_work_size</code>[<code>work_dim</code> - 1].
+The total number of work-items in the work-group must be less than or equal to the <code>CL_KERNEL_WORK_GROUP_SIZE</code> value specified in table of OpenCL Device Queries for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> and the number of work-items specified in <code>local_work_size</code>[0],&#8230;&#8203; <code>local_work_size</code>[<code>work_dim</code> - 1] must be less than or equal to the corresponding values specified by <code>CL_DEVICE_MAX_WORK_ITEM_SIZES</code>[0],&#8230;&#8203;. <code>CL_DEVICE_MAX_WORK_ITEM_SIZES</code>[<code>work_dim</code> - 1].
+The explicitly specified <code>local_work_size</code> will be used to determine how to break the global work-items specified by <code>global_work_size</code> into appropriate work-group instances.</p>
+</div>
+<div class="paragraph">
+<p>Enabling non-uniform work-groups requires a kernel to be compiled with the -cl-std=CL2.0 flag and without the -cl-uniform-work-group-size flag.
+If the program was created using clLinkProgram and any of the linked programs were compiled in a way that only supports uniform work-group sizes, the linked program only supports uniform work group sizes.
+If local_work_size is specified and the OpenCL kernel is compiled without non-uniform work- groups enabled, the values specified in global_work_size[0], &#8230;&#8203; global_work_size[work_dim - 1] must be evenly divisible by the corresponding values specified in local_work_ size[0], &#8230;&#8203; local_work_size[work_dim – 1].</p>
+</div>
+<div class="paragraph">
+<p>If non-uniform work-groups are enabled for the kernel, any single dimension for which the global size is not divisible by the local size will be partitioned into two regions.
+One region will have work-groups that have the same number of work items as was specified by the local size parameter in that dimension.
+The other region will have work-groups with less than the number of work items specified by the local size parameter in that dimension.
+The global IDs and group IDs of the work items in the first region will be numerically lower than those in the second, and the second region will be at most one work-group wide in that dimension.
+Work-group sizes could be non-uniform in multiple dimensions, potentially producing work-groups of up to 4 different sizes in a 2D range and 8 different sizes in a 3D range.</p>
+</div>
+<div class="paragraph">
+<p>If <code>local_work_size</code> is NULL and the kernel is compiled without support for non-uniform work- groups, the OpenCL runtime will implement the ND-range with uniform work-group sizes.
+If <code>local_work_size</code> is NULL and non-uniform-work-groups are enabled, the OpenCL runtime is free to implement the ND-range using uniform or non-uniform work-group sizes, regardless of the divisibility of the global work size.
+If the ND-range is implemented using non-uniform work-group sizes, the work-group sizes, global IDs and group IDs will follow the same pattern as described in above paragraph.</p>
+</div>
+<div class="paragraph">
+<p>The work-group size to be used for <code>kernel</code> can also be specified in the program source or intermediate language.
+In this case the size of work group specified by <code>local_work_size</code> must match the value specified in the program source.</p>
+</div>
+<div class="paragraph">
+<p>These work-group instances are executed in parallel across multiple compute units or concurrently on the same compute unit.</p>
+</div>
+<div class="paragraph">
+<p>Each work-item is uniquely identified by a global identifier.
+The global ID, which can be read inside the kernel, is computed using the value given by <code>global_work_size</code> and <code>global_work_offset</code>.
+In addition, a work-item is also identified within a work-group by a unique local ID.
+The local ID, which can also be read by the kernel, is computed using the value given by <code>local_work_size</code>.
+The starting local ID is always (0, 0, &#8230;&#8203; 0).</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>event_wait_list</code> and <code>num_events_in_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.
+The context associated with events in <code>event_wait_list</code> and <code>command_queue</code> must be the same.
+The memory associated with <code>event_wait_list</code> can be reused or freed after the function returns.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns an event object that identifies this particular kernel-instance.
+Event objects are unique and can be used to identify a particular kernel execution instance later on.
+If <code>event</code> is NULL, no event will be created for this kernel execution instance and therefore it will not be possible for the application to query or queue a wait for this particular kernel execution instance.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the kernel execution was successfully queued.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_PROGRAM_EXECUTABLE</code> if there is no successfully built program executable available for device associated with <code>command_queue</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid host command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_KERNEL</code> if <code>kernel</code> is not a valid kernel object.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if context associated with <code>command_queue</code> and <code>kernel</code> are not the same or if the context associated with <code>command_queue</code> and events in <code>event_wait_list</code> are not the same.</p>
+</li>
+<li>
+<p><code>CL_INVALID_KERNEL_ARGS</code> if the kernel argument values have not been specified or if a kernel argument declared to be a pointer to a type does not point to a named address space.</p>
+</li>
+<li>
+<p><code>CL_INVALID_WORK_DIMENSION</code> if <code>work_dim</code> is not a valid value (i.e.
+a value between 1 and 3).</p>
+</li>
+<li>
+<p><code>CL_INVALID_GLOBAL_WORK_SIZE</code> if any of the values specified in <code>global_work_size</code>[0], &#8230;&#8203;<code>global_work_size</code> [<code>work_dim</code> - 1] exceed the range given by the <code>sizeof(size_t)</code> for the device on which the kernel execution will be enqueued.</p>
+</li>
+<li>
+<p><code>CL_INVALID_GLOBAL_OFFSET</code> if the value specified in <code>global_work_size</code> + the corresponding values in <code>global_work_offset</code> for any dimensions is greater than the <code>sizeof(size_t)</code> for the device on which the kernel execution will be enqueued.</p>
+</li>
+<li>
+<p><code>CL_INVALID_WORK_GROUP_SIZE</code> if <code>local_work_size</code> is specified and does not match the required work-group size for <code>kernel</code> in the program source.</p>
+</li>
+<li>
+<p><code>CL_INVALID_WORK_GROUP_SIZE</code> if <code>local_work_size</code> is specified and is not consistent with the required number of sub-groups for <code>kernel</code> in the program source.</p>
+</li>
+<li>
+<p><code>CL_INVALID_WORK_GROUP_SIZE</code> if <code>local_work_size</code> is specified and the total number of work-items in the work-group computed as <code>local_work_size</code>[0] * &#8230;&#8203; <code>local_work_size</code>[<code>work_dim</code> – 1] is greater than the value specified by <code>CL_KERNEL_WORK_GROUP_SIZE</code> in table 5.21.</p>
+</li>
+<li>
+<p><code>CL_INVALID_WORK_GROUP_SIZE</code> if the program was compiled with <code>–cl-uniform-work-group-size</code> and the number of work-items specified by <code>global_work_size</code> is not evenly divisible by size of work-group given by <code>local_work_size</code> or by the required work- group size specified in the kernel source.</p>
+</li>
+<li>
+<p><code>CL_INVALID_WORK_ITEM_SIZE</code> if the number of work-items specified in any of <code>local_work_size</code>[0], &#8230;&#8203; <code>local_work_size</code>[<code>work_dim</code> - 1] is greater than the corresponding values specified by <code>CL_DEVICE_MAX_WORK_ITEM_SIZES</code>[0], &#8230;&#8203;. <code>CL_DEVICE_MAX_WORK_ITEM_SIZES</code>[<code>work_dim</code> - 1].</p>
+</li>
+<li>
+<p><code>CL_MISALIGNED_SUB_BUFFER_OFFSET</code> if a sub-buffer object is specified as the value for an argument that is a buffer object and the <code>offset</code> specified when the sub-buffer object is created is not aligned to <code>CL_DEVICE_MEM_BASE_ADDR_ALIGN</code> value for device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_IMAGE_SIZE</code> if an image object is specified as an argument value and the image dimensions (image width, height, specified or compute row and/or slice pitch) are not supported by device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_IMAGE_FORMAT_NOT_SUPPORTED</code> if an image object is specified as an argument value and the image format (image channel order and data type) is not supported by device associated with <code>queue</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to queue the execution instance of <code>kernel</code> on the command-queue because of insufficient resources needed to execute the kernel.
+For example, the explicitly specified <code>local_work_size</code> causes a failure to execute the kernel because of insufficient resources such as registers or local memory.
+Another example would be the number of read-only image args used in <code>kernel</code> exceed the <code>CL_DEVICE_MAX_READ_IMAGE_ARGS</code> value for device or the number of write-only image args used in <code>kernel</code> exceed the <code>CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS</code> value for device or the number of samplers used in <code>kernel</code> exceed <code>CL_DEVICE_MAX_SAMPLERS</code> for device.</p>
+</li>
+<li>
+<p><code>CL_MEM_OBJECT_ALLOCATION_FAILURE</code> if there is a failure to allocate memory for data store associated with image or buffer objects specified as arguments to <code>kernel</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_events_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_events_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if SVM pointers are passed as arguments to a kernel and the device does not support SVM or if system pointers are passed as arguments to a kernel and/or stored inside SVM allocations passed as kernel arguments and the device does not support fine grain system SVM allocations.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateCommandQueueWithProperties.html"><code>clCreateCommandQueueWithProperties</code></a>, <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>, <a href="clEnqueueNativeKernel.html"><code>clEnqueueNativeKernel</code></a>, <a href="workItemFunctions.html">Work-Item Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=242" target="_blank">OpenCL 2.1 API Specification, page 242</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

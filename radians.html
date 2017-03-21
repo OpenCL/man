@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>radians</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="radians" class="article">
+<div id="header">
+<h1>radians</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Converts degrees to radians.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">gentype radians(gentype degrees)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Converts <code>degrees</code> to radians, i.e. (pi / 180) * <code>degrees</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These all operate component-wise.
+The description is per-component.
+The generic type name <code>gentype</code> is used to indicate that the function can take <code>float</code>, <code>float2</code>, <code>float3</code>, <code>float4</code>, <code>float8</code>, <code>float16</code>, <code>double</code>, <code>double2</code>, <code>double3</code>, <code>double4</code>, <code>double8</code>, or <code>double16</code> as the type for the arguments.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentypef</code> is used to indicate that the function can take <code>float</code>, <code>float2</code>, <code>float3</code>, <code>float4</code>, <code>float8</code>, or <code>float16</code> as the type for the arguments.</p>
+</div>
+<div class="paragraph">
+<p>The generic type name <code>gentyped</code> is used to indicate that the function can take <code>double</code>, <code>double2</code>, <code>double3</code>, <code>double4</code>, <code>double8</code>, or <code>double16</code> as the type for the arguments.</p>
+</div>
+<div class="paragraph">
+<p>The built-in common functions are implemented using the round to nearest even rounding mode.</p>
+</div>
+<div class="paragraph">
+<p>If extended with <a href="cl_khr_fp16.html"><code>cl_khr_fp16</code></a>, generic type name <code>gentype</code> also includes <code>half</code> and <code>half{2|3|4|8|16}</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="commonFunctions.html">Common Functions</a>, <a href="degrees.html"><code>degrees</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=86" target="_blank">OpenCL 2.0 C Language Specification, page 86</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

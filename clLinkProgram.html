@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clLinkProgram</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clLinkProgram" class="article">
+<div id="header">
+<h1>clLinkProgram</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Links a set of compiled program objects and libraries for all the devices or a specific device(s) in the OpenCL context and creates a library or executable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_program clLinkProgram(cl_context context,
+                         cl_uint num_devices,
+                         const cl_device_id *device_list,
+                         const char *options,
+                         cl_uint num_input_programs,
+                         const cl_program *input_programs,
+                         void (CL_CALLBACK *pfn_notify) ( cl_program program, void *user_data),
+                         void *user_data,
+                         cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>Must be a valid OpenCL context.</p>
+</dd>
+<dt class="hdlist1"><code>device_list</code></dt>
+<dd>
+<p>A pointer to a list of devices that are in <code>context</code>.
+If <code>device_list</code> is a NULL value, the link is performed for all devices associated with <code>context</code> for which a compiled object is available.
+If <code>device_list</code> is a non-NULL value, the compile is performed for devices specified in this list for which a compiled object is available.</p>
+</dd>
+<dt class="hdlist1"><code>num_devices</code></dt>
+<dd>
+<p>The number of devices listed in <code>device_list</code>.</p>
+</dd>
+<dt class="hdlist1"><code>options</code></dt>
+<dd>
+<p>A pointer to a null-terminated string of characters that describes the link options to be used for building the program executable.
+See <a href="clBuildProgram.html"><code>clBuildProgram</code></a> for a list of supported compiler and linker options.</p>
+</dd>
+<dt class="hdlist1"><code>num_input_programs</code></dt>
+<dd>
+<p>Specifies the number of programs in array referenced by <code>input_programs</code>.</p>
+</dd>
+<dt class="hdlist1"><code>input_programs</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>An array of program objects that are compiled binaries or libraries that are to be linked to create the program executable.
+For each device in <code>device_list</code> or if <code>device_list</code> is NULL the list of devices associated with <code>context</code>, the following cases occur:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>All programs specified by <code>input_programs</code> contain a compiled binary or library for the device.
+In this case, a link is performed to generate a program executable for this device.</p>
+</li>
+<li>
+<p>None of the programs contain a compiled binary or library for that device.
+In this case, no link is performed and there will be no program executable generated for this device.</p>
+</li>
+<li>
+<p>All other cases will return a <code>CL_INVALID_OPERATION</code> error.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>pfn_notify</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A function pointer to a notification routine.
+The notification routine is a callback function that an application can register and which will be called when the program executable has been built (successfully or unsuccessfully).</p>
+</div>
+<div class="paragraph">
+<p>If <code>pfn_notify</code> is not NULL, <code>clLinkProgram</code> does not need to wait for the linker to complete and can return immediately once the linking operation can begin.
+Once the linker has completed, the <code>pfn_notify</code> callback function is called which returns the program object returned by <code>clLinkProgram</code>.
+The application can query the link status and log for this program object.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application’s responsibility to ensure that the callback function is thread-safe.</p>
+</div>
+<div class="paragraph">
+<p>If <code>pfn_notify</code> is NULL, <code>clLinkProgram</code> does not return until the linker has completed.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>user_data</code></dt>
+<dd>
+<p>Will be passed as an argument when <code>pfn_notify</code> is called.
+<code>user_data</code> can be NULL.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>clLinkProgram</code> creates a new program object which contains the library or executable.
+<a href="#"><code>clLinkProgram</code></a> creates a new program object which contains the library or executable.
+The library or executable binary can be queried using <a href="clGetProgramInfo.html"><code>clGetProgramInfo</code></a>(<code>program</code>, <code>CL_PROGRAM_BINARIES</code>, &#8230;&#8203;) and can be specified to <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a> to create a new program object.</p>
+</div>
+<div class="paragraph">
+<p>The devices associated with the returned program object will be the list of devices specified by <code>device_list</code> or if <code>device_list</code> is NULL it will be the list of devices associated with <code>context</code>.</p>
+</div>
+<div class="paragraph">
+<p>The linking operation can begin if the context, list of devices, input programs and linker options specified are all valid and appropriate host and device resources needed to perform the link are available.
+If the linking operation can begin, <code>clLinkProgram</code> returns a valid non-zero program object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If <code>pfn_notify</code> is NULL, the <code>errcode_ret</code> will be set to <code>CL_SUCCESS</code> if the link operation was successful and <code>CL_LINK_FAILURE</code> if there is a failure to link the compiled binaries and/or libraries.</p>
+</div>
+<div class="paragraph">
+<p>If <code>pfn_notify</code> is not NULL, <code>clLinkProgram</code> does not have to wait until the linker to complete and can return <code>CL_SUCCESS</code> in <code>errcode_ret</code> if the linking operation can begin.
+The <code>pfn_notify</code> callback function will return a <code>CL_SUCCESS</code> or <code>CL_LINK_FAILURE</code> if the linking operation was successful or not.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise <code>clLinkProgram</code> returns a NULL program object with an appropriate error in <code>errcode_ret</code>.
+The application should query the linker status of this program object to check if the link was successful or not.
+The list of errors that can be returned are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>device_list</code> is NULL and <code>num_devices</code> is greater than zero, or if <code>device_list</code> is not NULL and <code>num_devices</code> is zero.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_input_programs</code> is zero and <code>input_programs</code> is NULL or if <code>num_input_programs</code> is zero and <code>input_programs</code> is not NULL or if <code>num_input_programs</code> is not zero and <code>input_programs</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_PROGRAM</code> if programs specified in <code>input_programs</code> are not valid program objects.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>pfn_notify</code> is NULL but <code>user_data</code> is not NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if OpenCL devices listed in <code>device_list</code> are not in the list of devices associated with <code>context</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_LINKER_OPTIONS</code> if the linker options specified by <code>options</code> are invalid</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the compilation or build of a program executable for any of the devices listed in <code>device_list</code> by a previous call to <a href="clCompileProgram.html"><code>clCompileProgram</code></a> or <a href="clBuildProgram.html"><code>clBuildProgram</code></a> for <code>program</code> has not completed.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the rules for devices containing compiled binaries or libraries as described in <code>input_programs</code> argument above are not followed.</p>
+</li>
+<li>
+<p><code>CL_INVALID_OPERATION</code> if the one or more of the programs specified in <code>input_programs</code> requires independent forward progress of sub-groups but one or more of the devices listed in <code>device_list</code> does not return <code>CL_TRUE</code> for the <code>CL_DEVICE_SUBGROUP_INDEPENDENT_FORWARD_PROGRESS</code> query.</p>
+</li>
+<li>
+<p><code>CL_LINKER_NOT_AVAILABLE</code> if a linker is not available i.e.
+<code>CL_DEVICE_LINKER_AVAILABLE</code> specified in the table of allowed values for <code>param_name</code> for <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a> is set to <code>CL_FALSE</code>.</p>
+</li>
+<li>
+<p><code>CL_LINK_PROGRAM_FAILURE</code> if there is a failure to link the compiled binaries and/or libraries.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=205" target="_blank">OpenCL 2.1 API Specification, page 205</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

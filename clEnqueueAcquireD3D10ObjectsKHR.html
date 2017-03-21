@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clEnqueueAcquireD3D10ObjectsKHR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clEnqueueAcquireD3D10ObjectsKHR" class="article">
+<div id="header">
+<h1>clEnqueueAcquireD3D10ObjectsKHR</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Acquire OpenCL memory objects that have been created from Direct3D 10 resources</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clEnqueueAcquireD3D10ObjectsKHR(cl_command_queue command_queue,
+                                       cl_uint num_objects,
+                                       const cl_mem *mem_objects,
+                                       cl_uint num_events_in_wait_list,
+                                       const cl_event *event_wait_list,
+                                       cl_event *event)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>command_queue</code></dt>
+<dd>
+<p>A valid command-queue.</p>
+</dd>
+<dt class="hdlist1"><code>num_objects</code></dt>
+<dd>
+<p>The number of memory objects to be acquired in <code>mem_objects</code>.</p>
+</dd>
+<dt class="hdlist1"><code>mem_objects</code></dt>
+<dd>
+<p>A pointer to a list of OpenCL memory objects that were created from Direct3D 10 resources.</p>
+</dd>
+<dt class="hdlist1"><code>num_events_in_wait_list</code>, <code>event_wait_list</code></dt>
+<dd>
+<p>Specify events that need to complete before this particular command can be executed.
+If <code>event_wait_list</code> is NULL, then this particular command does not wait on any event to complete.
+If <code>event_wait_list</code> is NULL, <code>num_events_in_wait_list</code> must be 0.
+If <code>event_wait_list</code> is not NULL, the list of events pointed to by <code>event_wait_list</code> must be valid and <code>num_events_in_wait_list</code> must be greater than 0.
+The events specified in <code>event_wait_list</code> act as synchronization points.</p>
+</dd>
+<dt class="hdlist1"><code>event</code></dt>
+<dd>
+<p>Returns n event object that identifies this particular command and can be used to query or queue a wait for this particular command to complete.
+<code>event</code> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the <code>event_wait_list</code> and the <code>event</code> arguments are not NULL, the <code>event</code> argument should not refer to an element of the <code>event_wait_list</code> array.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="notes">Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Direct3D 10 objects are acquired by the OpenCL context associated with <code>command-queue</code> and can therefore be used by all command-queues associated with the OpenCL context.</p>
+</div>
+<div class="paragraph">
+<p>OpenCL memory objects created from Direct3D 10 resources must be acquired before they can be used by any OpenCL commands queued to a command-queue.
+If an OpenCL memory object created from a Direct3D 10 resource is used while it is not currently acquired by OpenCL, the call attempting to use that OpenCL memory object will return <code>CL_D3D10_RESOURCE_NOT_ACQUIRED_KHR</code>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>CL_CONTEXT_INTEROP_USER_SYNC</code> is not specified as <code>CL_TRUE</code> during context creation, <code>clEnqueueAcquireD3D10ObjectsKHR</code> provides the synchronization guarantee that any Direct3D 10 calls involving the interop device(s) used in the OpenCL context made before <code>clEnqueueAcquireD3D10ObjectsKHR</code> is called will complete executing before <code>event</code> reports completion and before the execution of any subsequent OpenCL work issued in <code>command_queue</code> begins.
+If the context was created with properties specifying <code>CL_CONTEXT_INTEROP_USER_SYNC</code> as <code>CL_TRUE</code>, the user is responsible for guaranteeing that any Direct3D 10 calls involving the interop device(s) used in the OpenCL context made before <code>clEnqueueAcquireD3D10ObjectsKHR</code> is called have completed before calling <code>clEnqueueAcquireD3D10ObjectsKHR</code>.</p>
+</div>
+<div class="paragraph">
+<p>General information about sharing memory objects with Direct3D 10 follows.</p>
+</div>
+<div class="paragraph">
+<p>The goal of this extension is to provide interoperability between OpenCL and Direct3D 10.
+This is designed to function analogously to the <a href="cl_khr_gl_sharing.html">OpenGL interoperability</a> as defined in sections 9.7 and 9.8.
+If this extension is supported by an implementation, the string "cl_khr_d3d10_sharing" will be present in the <code>CL_PLATFORM_EXTENSIONS</code> (see <a href="clGetPlatformInfo.html"><code>clGetPlatformInfo</code></a>) or <code>CL_DEVICE_EXTENSIONS</code> (see <a href="clGetDeviceInfo.html"><code>clGetDeviceInfo</code></a>).</p>
+</div>
+<div class="paragraph">
+<p>As currently proposed the interfaces for this extension would be provided in <code>cl_d3d10.h</code>.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL functions enabled by the <code>cl_khr_d3d10_sharing</code> extension allow applications to use Direct3D 10 resources as OpenCL memory objects.
+This allows efficient sharing of data between OpenCL and Direct3D 10.
+The OpenCL API may be used to execute kernels that read and/or write memory objects that are also Direct3D 10 resources.
+An OpenCL image object may be created from a Direct3D 10 texture resource.
+An OpenCL buffer object may be created from a Direct3D 10 buffer resource.
+OpenCL memory objects may be created from Direct3D 10 objects if and only if the OpenCL context has been created from a Direct3D 10 device.</p>
+</div>
+<div class="paragraph">
+<div class="title">Lifetime of Shared [D3D10] Objects</div>
+<p>An OpenCL memory object created from a Direct3D 10 resource remains valid as long as the corresponding Direct3D 10 resource has not been deleted.
+If the Direct3D 10 resource is deleted through the Direct3D 10 API, subsequent use of the OpenCL memory object will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+<div class="paragraph">
+<p>The successful creation of a cl_context against a Direct3D 10 device specified via the context create parameter <code>CL_CONTEXT_D3D10_DEVICE_KHR</code> will increment the internal Direct3D reference count on the specified Direct3D 10 device.
+The internal Direct3D reference count on that Direct3D 10 device will be decremented when the OpenCL reference count on the returned OpenCL context drops to zero.</p>
+</div>
+<div class="paragraph">
+<p>The OpenCL context and corresponding command-queues are dependent on the existence of the Direct3D 10 device from which the OpenCL context was created.
+If the Direct3D 10 device is deleted through the Direct3D 10 API, subsequent use of the OpenCL context will result in undefined behavior, including but not limited to possible OpenCL errors, data corruption, and program termination.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the function is executed successfully.
+If <code>num_objects</code> is 0 and <code>mem_objects</code> is NULL then the function does nothing and returns <code>CL_SUCCESS</code>.
+Otherwise it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_objects</code> is zero and <code>mem_objects</code> is not a NULL value or if <code>num_objects</code> &gt; 0 and <code>mem_objects</code> is NULL.</p>
+</li>
+<li>
+<p><code>CL_INVALID_MEM_OBJECT</code> if memory objects in <code>mem_objects</code> are not valid OpenCL memory objects or if memory objects in <code>mem_objects</code> have not been created from Direct3D 10 resources.</p>
+</li>
+<li>
+<p><code>CL_INVALID_COMMAND_QUEUE</code> if <code>command_queue</code> is not a valid command-queue.</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if context associated with <code>command_queue</code> was not created from an Direct3D 10 context.</p>
+</li>
+<li>
+<p><code>CL_D3D10_RESOURCE_ALREADY_ACQUIRED_KHR</code> when any of <code>mem_objects</code> are currently acquired using <code>clEnqueueAcquireD3D10ObjectsKHR</code> but have not been released using <a href="clEnqueueReleaseD3D10ObjectsKHR.html"><code>clEnqueueReleaseD3D10ObjectsKHR</code></a>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT_WAIT_LIST</code> if <code>event_wait_list</code> is NULL and <code>num_event_in_wait_list</code> &gt; 0, or <code>event_wait_list</code> is not NULL and <code>num_event_in_wait_list</code> is 0, or if event objects in <code>event_wait_list</code> are not valid events.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="cl_khr_d3d10_sharing.html"><code>cl_khr_d3d10_sharing</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1-extensions.pdf#page=75" target="_blank">OpenCL 2.1 Extensions Specification, page 75</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

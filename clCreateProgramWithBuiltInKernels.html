@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clCreateProgramWithBuiltInKernels</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clCreateProgramWithBuiltInKernels" class="article">
+<div id="header">
+<h1>clCreateProgramWithBuiltInKernels</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a program object for a context, and loads the information related to the built-in kernels into a program object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_program clCreateProgramWithBuiltInKernels(cl_context context,
+                                             cl_uint num_devices,
+                                             const cl_device_id *device_list,
+                                             const char *kernel_names,
+                                             cl_int *errcode_ret)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>context</code></dt>
+<dd>
+<p>Must be a valid OpenCL context.</p>
+</dd>
+<dt class="hdlist1"><code>num_devices</code></dt>
+<dd>
+<p>The number of devices listed in <code>device_list</code>.</p>
+</dd>
+<dt class="hdlist1"><code>device_list</code></dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>A pointer to a list of devices that are in <code>context</code>.
+<code>device_list</code> must be a non-NULL value.
+The built-in kernels are loaded for devices specified in this list.</p>
+</div>
+<div class="paragraph">
+<p>The devices associated with the program object will be the list of devices specified by <code>device_list</code>.
+The list of devices specified by <code>device_list</code> must be devices associated with <code>context</code>.</p>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>kernel_names</code></dt>
+<dd>
+<p>A semi-colon separated list of built-in kernel names.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns a valid non-zero program object and <code>errcode_ret</code> is set to <code>CL_SUCCESS</code> if the program object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in <code>errcode_ret</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if <code>context</code> is not a valid context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>device_list</code> is NULL or <code>num_devices</code> is zero;</p>
+</li>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>kernel_names</code> is NULL or <code>kernel_names</code> contains a kernel name that is not supported by any of the devices in <code>device_list</code>.</p>
+</li>
+<li>
+<p><code>CL_INVALID_DEVICE</code> if devices listed in <code>device_list</code> are not in the list of devices associated with <code>context</code>.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clCreateProgramWithSource.html"><code>clCreateProgramWithSource</code></a>, <a href="clCreateProgramWithBinary.html"><code>clCreateProgramWithBinary</code></a>, <a href="clReleaseProgram.html"><code>clReleaseProgram</code></a>, <a href="clRetainProgram.html"><code>clRetainProgram</code></a>, <a href="classDiagram.html">Cardinality Diagram</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=198" target="_blank">OpenCL 2.1 API Specification, page 198</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

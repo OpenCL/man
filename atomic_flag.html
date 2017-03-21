@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>atomic_flag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="atomic_flag" class="article">
+<div id="header">
+<h1>atomic_flag</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The atomic_flag type provides the classic test-and-set functionality.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>atomic_flag</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>atomic_flag</code> type provides the classic test-and-set functionality.
+It has two states, set (value is non-zero) and clear (value is 0).
+Operations on an object of type <code>atomic_flag</code> shall be lock free.</p>
+</div>
+<div class="paragraph">
+<p>The macro <code>ATOMIC_FLAG_INIT</code> may be used to initialize an <code>atomic_flag</code> to the clear state.
+An <code>atomic_flag</code> that is not explicitly initialized with <code>ATOMIC_FLAG_INIT</code> is initially in an indeterminate state.</p>
+</div>
+<div class="paragraph">
+<p>This macro can only be used for atomic objects that are declared in program scope in the global address space with the <code>atomic_flag</code> type.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example1">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>global atomic_flag guard = ATOMIC_FLAG_INIT;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="atomicFunctions.html">Atomic Functions</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.0-openclc.pdf#page=110" target="_blank">OpenCL 2.0 C Language Specification, page 110</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

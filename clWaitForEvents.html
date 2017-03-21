@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>clWaitForEvents</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body id="clWaitForEvents" class="article">
+<div id="header">
+<h1>clWaitForEvents</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Waits on the host thread for commands identified by event objects to complete.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-c" data-lang="c">cl_int clWaitForEvents(cl_uint num_events,
+                       const cl_event *event_list)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameters">Parameters</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>event_list</code></dt>
+<dd>
+<p>== Notes</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Waits on the host thread for commands identified by event objects in <code>event_list</code> to complete.
+A command is considered complete if its execution status is <code>CL_COMPLETE</code> or a negative value.
+The events specified in <code>event_list</code> act as synchronization points.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_gl_event.html"><code>cl_khr_gl_event</code></a> extension is enabled, event objects can also be used to reflect the status of an OpenGL sync object.
+The sync object in turn refers to a fence command executing in an OpenGL command stream.
+This provides another method of coordinating sharing of buffers and images between OpenGL and OpenCL.</p>
+</div>
+<div class="paragraph">
+<p>If the <a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a> extension is enabled, Event objects can also be used to reflect the status of an EGL fence sync object.
+The sync object in turn refers to a fence command executing in an EGL client API command stream.
+This provides another method of coordinating sharing of EGL / EGL client API objects with OpenCL.
+Completion of EGL / EGL client API commands may be determined by placing an EGL fence command after commands using <code>eglCreateSyncKHR</code>, creating an event from the resulting EGL sync object using <a href="clCreateEventFromEGLSyncKHR.html"><code>clCreateEventFromEGLSyncKHR</code></a> and then specifying it in the <code>event_wait_list</code> of a <code>clEnqueueAcquire***</code> command.
+This method may be considerably more efficient than calling operations like <code>glFinish</code>, and is referred to as <em>explicit synchronization</em>.
+The application is responsible for ensuring the command stream associated with the EGL fence is flushed to ensure the CL queue is submitted to the device.
+Explicit synchronization is most useful when an EGL client API context bound to another thread is accessing the memory objects."</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errors">Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Returns <code>CL_SUCCESS</code> if the execution status of all events in <code>event_list</code> is <code>CL_COMPLETE</code>.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_VALUE</code> if <code>num_events</code> is zero or <code>event_list</code> is NULL..</p>
+</li>
+<li>
+<p><code>CL_INVALID_CONTEXT</code> if events specified in <code>event_list</code> do not belong to the same context.</p>
+</li>
+<li>
+<p><code>CL_INVALID_EVENT</code> if event objects specified in <code>event_list</code> are not valid event objects.</p>
+</li>
+<li>
+<p><code>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</code> if the execution status of any of the events in <code>event_list</code> is a negative integer value.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_RESOURCES</code> if there is a failure to allocate resources required by the OpenCL implementation on the device.</p>
+</li>
+<li>
+<p><code>CL_OUT_OF_HOST_MEMORY</code> if there is a failure to allocate resources required by the OpenCL implementation on the host.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="seealso">Also see</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="clGetEventInfo.html"><code>clGetEventInfo</code></a>, <a href="clReleaseEvent.html"><code>clReleaseEvent</code></a>, <a href="clRetainEvent.html"><code>clRetainEvent</code></a>, <a href="cl_khr_gl_event.html"><code>cl_khr_gl_event</code></a>, <a href="cl_khr_egl_event.html"><code>cl_khr_egl_event</code></a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification">Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=251" target="_blank">OpenCL 2.1 API Specification, page 251</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright">Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="copyright.html">Copyright &#169; 2007-2017 The Khronos Group Inc.</a></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
