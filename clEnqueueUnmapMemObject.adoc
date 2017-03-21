@@ -1,0 +1,99 @@
+include::_header.adoc[]
+
+
+[[clEnqueueUnmapMemObject]]
+= clEnqueueUnmapMemObject
+
+Enqueues a command to unmap a previously mapped region of a memory object.
+
+[source,c]
+----
+cl_int clEnqueueUnmapMemObject(cl_command_queue command_queue,
+                               cl_mem memobj,
+                               void *mapped_ptr,
+                               cl_uint num_events_in_wait_list,
+                               const cl_event *event_wait_list,
+                               cl_event *event)
+----
+
+
+[[parameters]]
+== Parameters
+
+`command_queue`::
+
+Must be a valid host command-queue.
+
+`memobj`::
+
+A valid memory (buffer or image) object.
+The OpenCL context associated with `command_queue` and `memobj` must be the same.
+
+`mapped_ptr`::
+
+The host address returned by a previous call to <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> or <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> for `memobj`.
+
+`event_wait_list ,` `num_events_in_wait_list`::
+
+Specify events that need to complete before `clEnqueueUnmapMemObject` can be executed.
+If `event_wait_list` is NULL, then `clEnqueueUnmapMemObject` does not wait on any event to complete.
+If `event_wait_list` is NULL, `num_events_in_wait_list` must be 0.
+If `event_wait_list` is not NULL, the list of events pointed to by `event_wait_list` must be valid and `num_events_in_wait_list` must be greater than 0.
+The events specified in `event_wait_list` act as synchronization points.
+The context associated with events in `event_wait_list` and `command_queue` must be the same.
+The memory associated with `event_wait_list` can be reused or freed after the function returns.
+
+`event`::
+
+Returns an event object that identifies this particular copy command and can be used to query or queue a wait for this particular command to complete.
+`event` can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+<<clEnqueueBarrierWithWaitList.adoc#, `clEnqueueBarrierWithWaitList`>> can be used instead.
+If the `event_wait_list` and the `event` arguments are not NULL, the `event` argument should not refer to an element of the `event_wait_list` array.
+
+
+[[notes]]
+== Notes
+
+Reads or writes from the host using the pointer returned by <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> or <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> are considered to be complete.
+
+<<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> and <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> increment the mapped count of the memory object.
+The initial mapped count value of a memory object is zero.
+Multiple calls to <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> or <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> on the same memory object will increment this mapped count by appropriate number of calls.
+`clEnqueueUnmapMemObject` decrements the mapped count of the memory object.
+
+<<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> and <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> act as synchronization points for a region of the buffer object being mapped.
+
+include::accessMappedInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clEnqueueUnmapMemObject` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:.
+
+* `CL_INVALID_COMMAND_QUEUE` if `command_queue` is not a valid host command-queue.
+
+* `CL_INVALID_MEM_OBJECT` if `memobj` is not a valid memory object or is a pipe object.
+
+* `CL_INVALID_VALUE` if `mapped_ptr` is not a valid pointer returned by <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> or <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> for `memobj`.
+
+* `CL_INVALID_EVENT_WAIT_LIST` if `event_wait_list` is NULL and `num_events_in_wait_list` > 0, or `event_wait_list` is not NULL and `num_events_in_wait_list` is 0, or if event objects in `event_wait_list` are not valid events.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+* `CL_INVALID_CONTEXT` if the context associated with `command_queue` and `memobj` are not the same or if the context associated with `command_queue` and events in `event_wait_list` are not the same.
+
+
+:spec-name: Core
+:spec-page: 165
+
+
+[[seealso]]
+== Also see
+
+<<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>>, <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,62 @@
+include::_header.adoc[]
+
+
+[[clGetPlatformIDs]]
+= clGetPlatformIDs
+
+Obtain the list of platforms available.
+
+[source,c]
+----
+cl_int clGetPlatformIDs(cl_uint num_entries,
+                        cl_platform_id *platforms,
+                        cl_uint *num_platforms)
+----
+
+
+[[parameters]]
+== Parameters
+
+`num_entries`::
+
+The number of <<abstractDataTypes.adoc#, `cl_platform_id`>> entries that can be added to `platforms`.
+If `platforms` is not NULL, the `num_entries` must be greater than zero.
+
+`platforms`::
+
+Returns a list of OpenCL platforms found.
+The <<abstractDataTypes.adoc#, `cl_platform_id`>> values returned in `platforms` can be used to identify a specific OpenCL platform.
+If `platforms` argument is NULL, this argument is ignored.
+The number of OpenCL platforms returned is the mininum of the value specified by `num_entries` or the number of OpenCL platforms available.
+
+`num_platforms`::
+
+Returns the number of OpenCL platforms available.
+If `num_platforms` is NULL, this argument is ignored.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+If the <<cl_khr_icd.adoc#, `cl_khr_icd`>> extension is enabled, `clGetPlatformIDs` returns `CL_SUCCESS` if the function is executed successfully and there are a non zero number of platforms available.
+
+Otherwise it returns one of the following errors:
+
+* `CL_INVALID_VALUE` if `num_entries` is equal to zero and `platforms` is not NULL or if both `num_platforms` and `platforms` are NULL.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+* `CL_PLATFORM_NOT_FOUND_KHR` if the <<cl_khr_icd.adoc#, `cl_khr_icd`>> extension is enabled and no platforms are found.
+
+
+:spec-name: Core
+:spec-page: 62
+
+
+[[seealso]]
+== Also see
+
+<<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>, <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>, <<classDiagram.adoc#, Cardinality Diagram>>
+
+include::_footer.adoc[]

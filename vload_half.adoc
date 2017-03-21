@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[vload_half]]
+= vload_half
+
+Read a half float from a pointer to memory.
+
+[source,c]
+----
+float vload_half(size_t offset,
+                 const half *p)
+
+float vload_half(size_t offset,
+                 const constant half *p)
+----
+
+
+[[description]]
+== Description
+
+Read sizeof(`half`) bytes of data from address (`p` + `offset`).
+The data read is interpreted as a half value.
+
+The half value is converted to a float value and the float value is returned.
+The read address computed as (`p` + `offset`) must be 16-bit aligned.
+
+
+[[notes]]
+== Notes
+
+include::vectorFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

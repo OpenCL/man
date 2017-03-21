@@ -1,0 +1,113 @@
+include::_header.adoc[]
+
+
+[[clGetSamplerInfo]]
+= clGetSamplerInfo
+
+Returns information about the sampler object.
+
+[source,c]
+----
+cl_int clGetSamplerInfo(cl_sampler sampler,
+                        cl_sampler_info param_name,
+                        size_t param_value_size,
+                        void *param_value,
+                        size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`sampler`::
+
+Specifies the sampler being queried.
+
+`param_name`::
+
++
+--
+
+Specifies the information to query.
+The list of supported `param_name` types and the information returned in `param_value` by `clGetSamplerInfo` is described in the table below.
+
+[cols="1a,1a", options="header"]
+|===
+
+|cl_sampler_info
+|Return Type and Info.
+returned in `param_value`
+
+|`CL_SAMPLER_REFERENCE_COUNT`
+|Return type: cl_uint
+
+Return the `sampler` reference count.
+The reference count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.
+
+|`CL_SAMPLER_CONTEXT`
+|Return type: cl_context
+
+Return the context specified when the sampler is created.
+
+|`CL_SAMPLER_NORMALIZED_COORDS`
+|Return type: cl_bool
+
+Return the normalized coords value associated with `sampler`.
+
+|`CL_SAMPLER_ADDRESSING_MODE`
+|Return type: cl_addressing_mode
+
+Return the addressing mode value associated with `sampler`.
+
+|`CL_SAMPLER_FILTER_MODE`
+|Return type: cl_filter_mode
+
+Return the filter mode value associated with `sampler`.
+
+|===
+
+--
+
+`param_value`::
+
+A pointer to memory where the appropriate result being queried is returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
+Specifies the size in bytes of memory pointed to by `param_value`.
+This size must be ≥ size of return type as described in the table above.
+
+`param_value_size_ret`::
+
+Returns the actual size in bytes of data copied to `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_VALUE` if `param_name` is not valid, or if size in bytes specified by `param_value_size` is < size of return type as described in the table above and `param_value` is not NULL
+
+* `CL_INVALID_SAMPLER` if `sampler` is a not a valid sampler object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 192
+
+
+[[seealso]]
+== Also see
+
+<<clCreateSamplerWithProperties.adoc#, `clCreateSamplerWithProperties`>>, <<clRetainSampler.adoc#, `clRetainSampler`>>, <<clReleaseSampler.adoc#, `clReleaseSampler`>>
+
+include::_footer.adoc[]

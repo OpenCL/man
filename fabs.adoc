@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[fabs]]
+= fabs
+
+Compute absolute value of a floating-point number.
+
+[source,c]
+----
+gentype fabs(gentype)
+----
+
+
+[[description]]
+== Description
+
+`fabs` computes the absolute value of a floating-point number.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

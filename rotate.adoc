@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[rotate]]
+= rotate
+
+Rotate bits left.
+
+[source,c]
+----
+gentype rotate(gentype v,
+               gentype i)
+----
+
+
+[[description]]
+== Description
+
+For each element in `v`, the bits are shifted left by the number of bits given by the corresponding element in `i` (subject to usual shift modulo rules).
+Bits shifted off the left side of the element are shifted back in from the right.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

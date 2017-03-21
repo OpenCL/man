@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[atomic_init]]
+= atomic_init
+
+Non-atomically initializes an atomic object pointed to by `obj` to a specified value.
+
+[source,c]
+----
+void atomic_init(volatile A *obj,
+                 C value)
+----
+
+
+[[description]]
+== Description
+
+The `atomic_init` function non-atomically initializes the atomic object pointed to by `obj` to the value `value`.
+
+include::atomicFunctionsInc.adoc[]
+
+
+[[example1]]
+== Example
+
+----
+    local atomic_int local_guide;
+    if (get_local_id(0) == 0)
+       atomic_init(&guide, 42);
+    work_group_barrier(CLK_LOCAL_MEM_FENCE);
+----
+
+
+:spec-name: CLan
+:spec-page: 104
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

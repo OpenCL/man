@@ -1,0 +1,15 @@
+.Mipmap read image functions:
+
+For the forms that take an `image1d_t` object, use the coordinate _coord_ to do an element lookup in the mip-level specified by `lod` in the 1D image object specified by `image`.
+
+For the forms that use gradients, use the gradients to compute the lod and coordinate _coord_ to do an element lookup in the mip-level specified by the computed lod in the 1D image object specified by `image`.
+
+For the forms that take an `image1d_array_t` object, use the coordinate _coord.x_ to do an element lookup in the 1D image identified by _coord.x_ and mip-level specified by `lod` in the 1D image object specified by `image`.
+
+When a multisample image is accessed in a kernel, the access takes one vector of integers describing which pixel to fetch and an integer corresponding to the sample numbers describing which sample within the pixel to fetch.
+sample identifies the sample position in the multi-sample image.
+
+For best performance, we recommend that `sample` be a literal value so it is known at compile time and the OpenCL compiler can perform appropriate optimizationsfor multisample reads on the device.
+
+NOTE: `CL_SAMPLER_NORMALIZED_COORDS` must be `CL_TRUE` for built-in functions described in the table above that read from a mip-mapped image; otherwise the behavior is undefined.
+The value specified in the `lod` argument is clamped to the minimum of (actual number of mip-levels - 1) in the image or value specified for `CL_SAMPLER_LOD_MAX`.

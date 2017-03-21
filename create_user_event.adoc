@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[create_user_event]]
+= create_user_event
+
+Creates and returns a user event.
+
+[source,c]
+----
+clk_event_t create_user_event()
+----
+
+
+[[description]]
+== Description
+
+Create a user event.
+Returns the user event.
+The execution status of the user event created is set to `CL_SUBMITTED`.
+
+
+[[notes]]
+== Notes
+
+include::eventFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 171
+
+
+[[seealso]]
+== Also see
+
+<<eventFunctions.adoc#, Event Functions>>
+
+include::_footer.adoc[]

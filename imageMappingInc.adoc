@@ -1,0 +1,43 @@
+.Mapping image channels to color values
+
+The following table describes the mapping of the number of channels of an image element to the appropriate components in the `float4`, `int4` or `uint4` vector data type for the color values returned by `read_image{f|i|ui}` or supplied to `write_image{f|i|ui}`.
+The unmapped components will be set to `0.0` for red, green and blue channels and will be set to `1.0` for the alpha channel.
+
+[cols="1a,1a", options="header"]
+|===
+
+|Channel Order
+|`float4`, `int4` or `uint4` components of channel data
+
+|`CL_R`, `CL_Rx`
+|`(r, 0.0, 0.0, 1.0)`
+
+|`CL_A`
+|`(0.0, 0.0, 0.0, a)`
+
+|`CL_RG`, `CL_RGx`
+|`(r, g, 0.0, 1.0)`
+
+|`CL_RA`
+|`(r, 0.0, 0.0, a)`
+
+|`CL_RGB`, `CL_RGBx`, `CL_sRGB`, `CL_sRGBx`
+|`(r, g, b, 1.0)`
+
+|`CL_RGBA, CL_BGRA, CL_ARGB, CL_ABGR, CL_sRGBA, CL_sBGRA`
+|`(r, g, b, a)`
+
+|`CL_INTENSITY`
+|`(I, I, I, I)`
+
+|`CL_LUMINANCE`
+|`(L, L, L, 1.0)`
+
+|===
+
+For `CL_DEPTH` images, a scalar value is returned by `read_imagef` or supplied to `write_imagef`.
+
+A kernel that uses a sampler with the `CL_ADDRESS_CLAMP` addressing mode with multiple images may result in additional samplers being used internally by an implementation.
+If the same sampler is used with multiple images called via `read_image{f|i|ui}`, then it is possible that an implementation may need to allocate an additional sampler to handle the different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values supported by the device and given by `CL_DEVICE_MAX_SAMPLERS`.
+Enqueuing a kernel that requires more samplers than the implementation can support will result in a `CL_OUT_OF_RESOURCES` error being returned.

@@ -1,0 +1,53 @@
+include::_header.adoc[]
+
+
+[[atomic_load]]
+= atomic_load, atomic_load_explicit
+
+atomic_load, atomic_load_explicit functions.
+
+[source,c]
+----
+C atomic_load(volatile A *object)
+
+C atomic_load_explicit(volatile A *object,
+                       memory_order order)
+
+C atomic_load_explicit(volatile A *object,
+                       memory_order order,
+                       memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`order`::
+
+The `order` argument shall not be `memory_order_release`, nor `memory_order_acq_rel`.
+
+`scope`::
+
+
+[[description]]
+== Description
+
+Memory is affected according to the value of `order`.
+Atomically returns the value pointed to by `object`.
+Atomically returns the value pointed to by `object`.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 107
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

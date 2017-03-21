@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[memory_scope]]
+= memory_scope
+
+Identify if memory_scope applies to work-items in a work-group or work-items of a kernel(s).
+
+----
+memory_scope
+----
+
+
+[[description]]
+== Description
+
+The OpenCL C programming language implements a subset of the C11 atomics (refer to section 7.17 of the C11 specification) and synchronization operations.
+These operations play a special role in making assignments in one work-item visible to another.
+A synchronization operation on one or more memory locations is either an acquire operation, a release operation, or both an acquire and release operation. (The C11 consume operation is not supported.) A synchronization operation without an associated memory location is a fence and can be either an acquire fence, a release fence or both an acquire and release fence.
+In addition, there are relaxed atomic operations, which are not synchronization operations, and atomic read-modify-write operations which have special characteristics
+
+The enumerated type `memory_scope` specifies whether the memory ordering constraints given by <<memory_order.adoc#, `memory_order`>> apply to work-items in a work-group or work-items of a kernel(s) executing on the device or across devices (in the case of shared virtual memory).
+Its enumeration constants are as follows:
+
+----
+     memory_scope_work_item
+     memory_scope_work_group
+     memory_scope_device
+     memory_scope_all_svm_devices
+----
+
+The `memory_scope_work_item` value for `memory_scope` can only be used with <<atomic_work_item_fence.adoc#, `atomic_work_item_fence`>> with `flags` set to `CLK_IMAGE_MEM_FENCE`.
+
+The memory scope should only be used when performing atomic operations to global memory.
+Atomic operations to local memory only guarantee memory ordering in the work-group not across work-groups and therefore ignore the `memory_scope` value.
+
+
+[[notes]]
+== Notes
+
+
+:spec-name: CLan
+:spec-page: 105
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>, <<memory_order.adoc#, `memory_order`>>
+
+include::_footer.adoc[]

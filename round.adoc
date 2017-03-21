@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[round]]
+= round
+
+Rounding function.
+
+[source,c]
+----
+gentype round(gentype x)
+----
+
+
+[[description]]
+== Description
+
+Return the integral value nearest to `x` rounding halfway cases away from zero, regardless of the current rounding direction.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

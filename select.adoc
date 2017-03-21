@@ -1,0 +1,65 @@
+include::_header.adoc[]
+
+
+[[select]]
+= select
+
+For each component of a vector type, result[`i`] = if MSB of `c`[`i`] is set ? `b`[`i`] : `a`[`i`].
+For scalar type, _result_ = `c` ? `b` : `a`.
+
+[source,c]
+----
+gentype select(gentype a,
+               gentype b,
+               igentype c)
+
+gentype select(gentype a,
+               gentype b,
+               ugentype c)
+----
+
+----
+halfn select (halfn a, halfn b,
+            shortn c)      // if half extension enabled
+
+halfn select (halfn a, halfn b,
+            ushortn c)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+For each component of a vector type, result[`i`] = if MSB of `c`[`i`] is set ? `b`[`i`] : `a`[`i`].
+
+For scalar type, _result_ = `c` ? `b` : `a`.
+
+`igentype` and `ugentype` must have the same number of elements and bits as `gentype`.
+
+NOTE: The above definition means that the behavior of select and the ternary operator for vector and scalar types is dependent on different interpretations of the bit pattern of `c`.
+
+
+[[notes]]
+== Notes
+
+General information about relational functions:
+
+include::relationalFunctionsGEN.adoc[]
+
+include::relationalFunctionsIGEN.adoc[]
+
+include::relationalFunctionsUGEN.adoc[]
+
+include::relationalFunctionsInc1.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

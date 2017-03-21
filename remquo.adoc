@@ -1,0 +1,88 @@
+include::_header.adoc[]
+
+
+[[remquo]]
+= remquo
+
+Floating point remainder and quotient function.
+
+[source,c]
+----
+float n remquo(float n x,
+               float n y,
+               int n *quo)
+
+float remquo(float x,
+             float y,
+             int *quo)
+
+double n remquo(double n x,
+                double n y,
+                int n *quo)
+
+double remquo(double x,
+              double y,
+              int *quo)
+
+half n remquo(half n x,
+              half n y,
+              __global int n *quo)
+
+half n remquo(half n x,
+              half n y,
+              __local int n *quo)
+
+half n remquo(half n x,
+              half n y,
+              __private int n *quo)
+
+half n remquo(half n x,
+              half n y,
+              int n *quo)
+
+half remquo(half x,
+            half y,
+            __global int *quo)
+
+half remquo(half x,
+            half y,
+            __local int *quo)
+
+half remquo(half x,
+            half y,
+            __private int *quo)
+
+half remquo(half x,
+            half y,
+            int *quo)
+----
+
+
+[[description]]
+== Description
+
+The `remquo` function computes the value `r` such that `r` = `x` - `k`*`y`, where `k` is the integer nearest the exact value of `x`/`y`.
+If there are two integers closest to `x`/`y`, `k` shall be the even one.
+If `r` is zero, it is given the same sign as `x`.
+This is the same value that is returned by the <<remainder.adoc#, `remainder`>> function.
+
+`remquo` also calculates the lower seven bits of the integral quotient `x`/`y`, and gives that value the same sign as `x`/`y`.
+It stores this signed value in the object pointed to by `quo`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

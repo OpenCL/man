@@ -1,0 +1,78 @@
+include::_header.adoc[]
+
+
+[[Qualifiers]]
+= Qualifiers
+
+OpenCL qualifiers.
+
+
+[[description]]
+== Description
+
+These are the qualifiers available in the OpenCL C programming language.
+Click on a category name in the table below to see information about specific qualifiers.
+
+[cols="1a,1a"]
+|===
+
+|<<accessQualifiers.adoc#, Access Qualifiers>>
+|
+
+----
+__read_only, read_only
+__write_only, write_only
+__read_write, read_write
+----
+
+|`Address Space Qualifiers`
+|
+
+----
+__local, local
+__global, global
+__constant, constant
+__private, private
+__generic, generic
+----
+
+|<<functionQualifiers.adoc#, Function Qualifiers>>
+|
+
+----
+__kernel, kernel
+__attribute__ with work_group_size_hint, reqd_work_group_size, vec_type_hint
+----
+
+|<<attributes-types.adoc#, Attribute Qualifiers for Type>>
+|__attribute__ with aligned, packed
+
+|<<attributes-variables.adoc#, Attribute Qualifiers for Variables>>
+|__attribute__ with aligned, packed, endian
+
+|<<attributes-blocksAndControlFlow.adoc#, Attribute Qualifiers for Blocks and Control Flow Statements>>
+|__attribute__
+
+|<<storageSpecifiers.adoc#, Storage-class Specifiers>>
+|typedef, extern, static
+
+|`C99 Type Qualifiers`
+|const, restrict, volatile
+
+The type qualifiers const, restrict and volatile as defined by the C99 specification are supported.
+These qualifiers cannot be used with <<otherDataTypes.adoc#, `image2d_t`>>, <<otherDataTypes.adoc#, `image3d_t`>>, <<otherDataTypes.adoc#, `image2d_array_t`>>, <<otherDataTypes.adoc#, `image1d_t`>>, <<otherDataTypes.adoc#, `image1d_buffer_t`>> and <<otherDataTypes.adoc#, `image1d_array_t`>> types.
+Types other than pointer types shall not use the restrict qualifier.
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 34
+
+
+[[seealso]]
+== Also see
+
+<<addressSpaceQualifierFuncs.adoc#, Address Space Qualifier Functions>>
+
+include::_footer.adoc[]

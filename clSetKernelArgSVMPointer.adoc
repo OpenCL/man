@@ -1,0 +1,71 @@
+include::_header.adoc[]
+
+
+[[clSetKernelArgSVMPointer]]
+= clSetKernelArgSVMPointer
+
+Set a SVM pointer as the argument value for a specific argument of a kernel.
+
+[source,c]
+----
+cl_int clSetKernelArgSVMPointer(cl_kernel kernel,
+                                cl_uint arg_index,
+                                const void *arg_value)
+----
+
+
+[[parameters]]
+== Parameters
+
+`kernel`::
+
+A valid kernel object.
+
+`arg_index`::
+
+The argument index.
+Arguments to the kernel are referred by indices that go from 0 for the leftmost argument to `n` - 1, where `n` is the total number of arguments declared by a kernel.
+
+`arg_value`::
+
+The SVM pointer that should be used as the argument value for argument specified by `arg_index`.
+The SVM pointer specified is the value used by all API calls that enqueue `kernel` (<<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>) until the argument value is changed by a call to `clSetKernelArgSVMPointer` for `kernel`.
+The SVM pointer can only be used for arguments that are declared to be a pointer to `global` or `constant` memory.
+The SVM pointer value must be aligned according to the argument type.
+For example, if the argument is declared to be `global float4 *p`, the SVM pointer value passed for `p` must be at a minimum aligned to a `float4`.
+The SVM pointer value specified as the argument value can be the pointer returned by <<clSVMAlloc.adoc#, `clSVMAlloc`>> or can be a pointer + offset into the SVM region.
+
+
+[[notes]]
+== Notes
+
+include::multipleHostThreadsInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clSetKernelArgSVMPointer` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_KERNEL` if `kernel` is not a valid kernel object.
+
+* `CL_INVALID_ARG_INDEX` if `arg_index` is not a valid argument index.
+
+* `CL_INVALID_ARG_VALUE` if `arg_value` specified is not a valid value.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 226
+
+
+[[seealso]]
+== Also see
+
+<<clSetKernelArg.adoc#, `clSetKernelArg`>>, <<clCreateKernel.adoc#, `clCreateKernel`>>, <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>>, <<clReleaseKernel.adoc#, `clReleaseKernel`>>, <<clRetainKernel.adoc#, `clRetainKernel`>>, <<clGetKernelInfo.adoc#, `clGetKernelInfo`>>, <<clGetKernelWorkGroupInfo.adoc#, `clGetKernelWorkGroupInfo`>>
+
+include::_footer.adoc[]

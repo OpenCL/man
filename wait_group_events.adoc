@@ -1,0 +1,41 @@
+include::_header.adoc[]
+
+
+[[wait_group_events]]
+= wait_group_events
+
+Wait for events that identify the `async_work_group_copy` operations to complete.
+
+[source,c]
+----
+void wait_group_events(int num_events,
+                       event_t *event_list)
+----
+
+
+[[description]]
+== Description
+
+`wait_group_events` waits for events that identify the <<async_work_group_copy.adoc#, `async_work_group_copy`>> operations to complete.
+The event objects specified in `event_list` will be released after the wait is performed.
+
+This function must be encountered by all work-items in a work-group executing the kernel with the same `num_events` and event objects specified in `event_list`; otherwise the results are undefined.
+This rule applies to ND-ranges implemented with uniform and non-uniform work-groups.
+
+
+[[notes]]
+== Notes
+
+The kernel must wait for the completion of all async copies using the `wait_group_events` built-in function before exiting; otherwise the behavior is undefined.
+
+
+:spec-name: CLan
+:spec-page: 100
+
+
+[[seealso]]
+== Also see
+
+<<asyncCopyFunctions.adoc#, Async Copy and Prefetch Functions>>
+
+include::_footer.adoc[]

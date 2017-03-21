@@ -1,0 +1,34 @@
+include::_header.adoc[]
+
+= Async Copy and Prefetch Functions
+
+Asynchronous copies between global and local memory and a prefetch from global memory.
+
+[cols="2a,8a"]
+|===
+
+|<<async_work_group_copy.adoc#, `async_work_group_copy`>>
+|Perform an async copy
+
+|<<async_work_group_strided_copy.adoc#, `async_work_group_strided_copy`>>
+|Performs an async gather of `num_elements` `gentype` elements from source to destination.
+
+|<<wait_group_events.adoc#, `wait_group_events`>>
+|Wait for events that identify the `async_work_group_copy` operations to complete.
+
+|<<prefetch.adoc#, `prefetch`>>
+|Prefetch bytes into the global cache.
+
+|===
+
+
+[[description]]
+== Description
+
+The OpenCL C programming language implements these functions that provide asynchronous copies between global and local memory and a prefetch from global memory.
+
+
+:spec-name: CLan
+:spec-page: 100
+
+include::_footer.adoc[]

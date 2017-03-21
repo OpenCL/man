@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[nextafter]]
+= nextafter
+
+Next representable floating-point value following `x` in the direction of `y`.
+
+[source,c]
+----
+gentype nextafter(gentype x,
+                  gentype y)
+----
+
+
+[[description]]
+== Description
+
+Computes the next representable single-precision floating-point value following `x` in the direction of `y`.
+Thus, if `y` is less than `x`, `nextafter`() returns the largest representable floating-point number less than `x`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

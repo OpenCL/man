@@ -1,0 +1,1100 @@
+* <<oclRefPages-Title.adoc#, Introduction>>
+* Alphabetic Contents
+** A
+*** <<abs.adoc#, abs>>
+*** <<abs.adoc#, abs_diff>>
+*** <<abstractDataTypes.adoc#, Abstract Data Types>>
+*** <<accessQualifiers.adoc#, Access Qualifiers>>
+*** <<acos.adoc#, acos>>
+*** <<acos.adoc#, acosh>>
+*** <<acos.adoc#, acospi>>
+*** <<sampler_t.adoc#, Addressing Mode and Filtering>>
+*** <<qualifiers.adoc#, Address Space Qualifiers>>
+*** <<addressSpaceQualifierFuncs.adoc#, Address Space Qualifier Funcs>>
+*** <<add_sat.adoc#, add_sat>>
+*** <<any.adoc#, all>>
+*** <<any.adoc#, any>>
+*** <<asin.adoc#, asin>>
+*** <<asin.adoc#, asinh>>
+*** <<asin.adoc#, asinpi>>
+*** <<as_typen.adoc#, as_typen()>>
+*** <<asyncCopyFunctions.adoc#, Async Copies/Prefetch Built-In Functions>>
+*** <<async_work_group_copy.adoc#, async_work_group_copy>>
+*** <<async_work_group_strided_copy.adoc#, async_work_group_strided_copy>>
+*** <<atan.adoc#, atan>>
+*** <<atan.adoc#, atan2>>
+*** <<atan.adoc#, atan2pi>>
+*** <<atan.adoc#, atanh>>
+*** <<atan.adoc#, atanpi>>
+*** <<atomicFunctions.adoc#, Atomic Functions>>
+*** <<atomic_compare_exchange.adoc#, atomic_compare_exchange*>>
+*** <<atomic_exchange.adoc#, atomic_exchange, atomic_exchange_explicit>>
+*** <<atomic_fetch_key.adoc#, atomic_fetch_key>>
+*** <<atomic_flag.adoc#, atomic_flag>>
+*** <<atomic_flag_clear.adoc#, atomic_flag_clear functions>>
+*** <<atomic_flag_test_and_set.adoc#, atomic_flag_test_and_set functions>>
+*** <<atomic_init.adoc#, atomic_init>>
+*** <<atomic_load.adoc#, atomic_load, atomic_load_explicit>>
+*** <<atomic_store.adoc#, atomic_store, atomic_store_explicit>>
+*** <<ATOMIC_VAR_INIT.adoc#, ATOMIC_VAR_INIT>>
+*** <<atomic_work_item_fence.adoc#, atomic_work_item_fence>>
+*** <<attribute.adoc#, __attribute__>>
+*** <<attributes-blocksAndControlFlow.adoc#, attributes of blocks>>
+*** <<attributes-blocksAndControlFlow.adoc#, attributes of control flow stmts>>
+*** <<attributes-loopUnroll.adoc#, attributes for loop unrolling>>
+*** <<attributes-types.adoc#, attributes of types>>
+*** <<attributes-variables.adoc#, attributes of variables>>
+** B
+*** <<barrier.adoc#, barrier>>
+*** <<bitselect.adoc#, bitselect>>
+*** <<blocks.adoc#, blocks>>
+*** <<attributes-blocksAndControlFlow.adoc#, block attributes>>
+*** <<scalarDataTypes.adoc#, bool>>
+*** <<reservedDataTypes.adoc#, booln>>
+*** <<clBuildProgram.adoc#, Build Options>>
+*** <<scalarDataTypes.adoc#, Built-In Scalar Data Types>>
+*** <<vectorDataTypes.adoc#, Built-In Vector Data Types>>
+** C
+*** <<capture_event_profiling_info.adoc#, capture_event_profiling_info>>
+*** <<classDiagram.adoc#, Cardinality diagram>>
+*** <<cbrt.adoc#, cbrt>>
+*** <<ceil.adoc#, ceil>>
+*** <<scalarDataTypes.adoc#, char>>
+*** <<macroLimits.adoc#, CHAR_BIT>>
+*** <<macroLimits.adoc#, CHAR_MA>>
+*** <<macroLimits.adoc#, CHAR_MIN>>
+*** <<vectorDataTypes.adoc#, charn>>
+*** <<clamp_common.adoc#, clamp (Common Function)>>
+*** <<clamp_integer.adoc#, clamp (Integer Function)>>
+*** <<classDiagram.adoc#, Class diagram>>
+*** <<clBuildProgram.adoc#, clBuildProgram>>
+*** <<scalarDataTypes.adoc#, cl_char>>
+*** <<vectorDataTypes.adoc#, cl_charn>>
+*** <<clCloneKernel.adoc#, clCloneKernel>>
+*** <<clCompileProgram.adoc#, clCompileProgram>>
+*** <<clCreateBuffer.adoc#, clCreateBuffer>>
+*** <<clCreateCommandQueueWithProperties.adoc#, clCreateCommandQueueWithProperties>>
+*** <<clCreateContext.adoc#, clCreateContext>>
+*** <<clCreateContextFromType.adoc#, clCreateContextFromType>>
+*** <<clCreateEventFromEGLSyncKHR.adoc#, clCreateEventFromEGLSyncKHR>>
+*** <<clCreateEventFromGLsyncKHR.adoc#, clCreateEventFromGLsyncKHR>>
+*** <<clCreateFromD3D10BufferKHR.adoc#, clCreateFromD3D10BufferKHR>>
+*** <<clCreateFromD3D10Texture2DKHR.adoc#, clCreateFromD3D10Texture2DKHR>>
+*** <<clCreateFromD3D10Texture3DKHR.adoc#, clCreateFromD3D10Texture3DKHR>>
+*** <<clCreateFromD3D11BufferKHR.adoc#, clCreateFromD3D11BufferKHR>>
+*** <<clCreateFromD3D11Texture2DKHR.adoc#, clCreateFromD3D11Texture2DKHR>>
+*** <<clCreateFromD3D11Texture3DKHR.adoc#, clCreateFromD3D11Texture3DKHR>>
+*** <<clCreateFromDX9MediaSurfaceKHR.adoc#, clCreateFromDX9MediaSurfaceKHR>>
+*** <<clCreateFromEGLImageKHR.adoc#, clCreateFromEGLImageKHR>>
+*** <<clCreateFromGLBuffer.adoc#, clCreateFromGLBuffer>>
+*** <<clCreateFromGLRenderbuffer.adoc#, clCreateFromGLRenderbuffer>>
+*** <<clCreateFromGLTexture.adoc#, clCreateFromGLTexture>>
+*** <<deprecated.adoc#, clCreateFromGLTexture2D>>
+*** <<clCreateImage.adoc#, clCreateImage>>
+*** <<deprecated.adoc#, clCreateImage2D>>
+*** <<deprecated.adoc#, clCreateImage3D>>
+*** <<clCreateKernel.adoc#, clCreateKernel>>
+*** <<clCreateKernelsInProgram.adoc#, clCreateKernelsInProgram>>
+*** <<clCreatePipe.adoc#, clCreatePipe>>
+*** <<clCreateProgramWithBinary.adoc#, clCreateProgramWithBinary>>
+*** <<clCreateProgramWithBuiltInKernels.adoc#, clCreateProgramWithBuiltInKernels>>
+*** <<clCreateProgramWithIL.adoc#, clCreateProgramWithIL>>
+*** <<clCreateProgramWithSource.adoc#, clCreateProgramWithSource>>
+*** <<clCreateSamplerWithProperties.adoc#, clCreateSamplerWithProperties>>
+*** <<clCreateSubBuffer.adoc#, clCreateSubBuffer>>
+*** <<clCreateSubDevices.adoc#, clCreateSubDevices>>
+*** <<clCreateUserEvent.adoc#, clCreateUserEvent>>
+*** <<vectorDataTypes.adoc#, cl_double>>
+*** <<clEnqueueAcquireD3D10ObjectsKHR.adoc#, clEnqueueAcquireD3D10ObjectsKHR>>
+*** <<clEnqueueAcquireD3D11ObjectsKHR.adoc#, clEnqueueAcquireD3D11ObjectsKHR>>
+*** <<clEnqueueAcquireDX9MediaSurfacesKHR.adoc#, clEnqueueAcquireDX9MediaSurfacesKHR>>
+*** <<clEnqueueAcquireEGLObjectsKHR.adoc#, clEnqueueAcquireEGLObjectsKHR>>
+*** <<clEnqueueAcquireGLObjects.adoc#, clEnqueueAcquireGLObjects>>
+*** <<deprecated.adoc#, clEnqueueBarrier>>
+*** <<clEnqueueBarrierWithWaitList.adoc#, clEnqueueBarrierWithWaitList>>
+*** <<clEnqueueCopyBuffer.adoc#, clEnqueueCopyBuffer>>
+*** <<clEnqueueCopyBufferRect.adoc#, clEnqueueCopyBufferRect>>
+*** <<clEnqueueCopyBufferToImage.adoc#, clEnqueueCopyBufferToImage>>
+*** <<clEnqueueCopyImage.adoc#, clEnqueueCopyImage>>
+*** <<clEnqueueCopyImageToBuffer.adoc#, clEnqueueCopyImageToBuffer>>
+*** <<clEnqueueFillBuffer.adoc#, clEnqueueFillBuffer>>
+*** <<clEnqueueFillImage.adoc#, clEnqueueFillImage>>
+*** <<clEnqueueMapBuffer.adoc#, clEnqueueMapBuffer>>
+*** <<clEnqueueMapImage.adoc#, clEnqueueMapImage>>
+*** <<deprecated.adoc#, clEnqueueMarker>>
+*** <<clEnqueueMarkerWithWaitList.adoc#, clEnqueueMarkerWithWaitList>>
+*** <<clEnqueueMigrateMemObjects.adoc#, clEnqueueMigrateMemObjects>>
+*** <<clEnqueueNativeKernel.adoc#, clEnqueueNativeKernel>>
+*** <<clEnqueueNDRangeKernel.adoc#, clEnqueueNDRangeKernel>>
+*** <<clEnqueueReadBuffer.adoc#, clEnqueueReadBuffer>>
+*** <<clEnqueueReadBufferRect.adoc#, clEnqueueReadBufferRect>>
+*** <<clEnqueueReadImage.adoc#, clEnqueueReadImage>>
+*** <<clEnqueueReleaseD3D10ObjectsKHR.adoc#, clEnqueueReleaseD3D10ObjectsKHR>>
+*** <<clEnqueueReleaseD3D11ObjectsKHR.adoc#, clEnqueueReleaseD3D11ObjectsKHR>>
+*** <<clEnqueueReleaseDX9MediaSurfacesKHR.adoc#, clEnqueueReleaseDX9MediaSurfacesKHR>>
+*** <<clEnqueueReleaseEGLObjectsKHR.adoc#, clEnqueueReleaseEGLObjectsKHR>>
+*** <<clEnqueueReleaseGLObjects.adoc#, clEnqueueReleaseGLObjects>>
+*** <<clEnqueueSVMFree.adoc#, clEnqueueSVMFree>>
+*** <<clEnqueueSVMMap.adoc#, clEnqueueSVMMap>>
+*** <<clEnqueueSVMMemcpy.adoc#, clEnqueueSVMMemcpy>>
+*** <<clEnqueueSVMMemFill.adoc#, clEnqueueSVMMemFill>>
+*** <<clEnqueueSVMMigrateMem.adoc#, clEnqueueSVMMigrateMem>>
+*** <<clEnqueueSVMUnmap.adoc#, clEnqueueSVMUnmap>>
+*** <<clEnqueueUnmapMemObject.adoc#, clEnqueueUnmapMemObject>>
+*** <<deprecated.adoc#, clEnqueueWaitForEvents>>
+*** <<clEnqueueWriteBuffer.adoc#, clEnqueueWriteBuffer>>
+*** <<clEnqueueWriteBufferRect.adoc#, clEnqueueWriteBufferRect>>
+*** <<clEnqueueWriteImage.adoc#, clEnqueueWriteImage>>
+*** <<clFinish.adoc#, clFinish>>
+*** <<scalarDataTypes.adoc#, cl_float>>
+*** <<vectorDataTypes.adoc#, cl_floatn>>
+*** <<clFlush.adoc#, clFlush>>
+*** <<clGetCommandQueueInfo.adoc#, clGetCommandQueueInfo>>
+*** <<clGetContextInfo.adoc#, clGetContextInfo>>
+*** <<clGetDeviceAndHostTimer.adoc#, clGetDeviceAndHostTimer>>
+*** <<clGetDeviceIDs.adoc#, clGetDeviceIDs>>
+*** <<clGetDeviceIDsFromD3D10KHR.adoc#, clGetDeviceIDsFromD3D10KHR>>
+*** <<clGetDeviceIDsFromD3D11KHR.adoc#, clGetDeviceIDsFromD3D11KHR>>
+*** <<clGetDeviceIDsFromDX9MediaAdapterKHR.adoc#, clGetDeviceIDsFromDX9MediaAdapterKHR>>
+*** <<clGetDeviceInfo.adoc#, clGetDeviceInfo>>
+*** <<clGetEventInfo.adoc#, clGetEventInfo>>
+*** <<clGetEventProfilingInfo.adoc#, clGetEventProfilingInfo>>
+*** <<clGetExtensionFunctionAddressForPlatform.adoc#, clGetExtensionFunctionAddressForPlatform>>
+*** <<deprecated.adoc#, clGetExtensionFunctionAddress>>
+*** <<clGetGLContextInfoKHR.adoc#, clGetGLContextInfoKHR>>
+*** <<clGetGLObjectInfo.adoc#, clGetGLObjectInfo>>
+*** <<clGetGLTextureInfo.adoc#, clGetGLTextureInfo>>
+*** <<clGetHostTimer.adoc#, clGetHostTimer>>
+*** <<clGetImageInfo.adoc#, clGetImageInfo>>
+*** <<clGetKernelArgInfo.adoc#, clGetKernelArgInfo>>
+*** <<clGetKernelInfo.adoc#, clGetKernelInfo>>
+*** <<clGetKernelSubGroupInfo.adoc#, clGetKernelSubGroupInfo>>
+*** <<clGetKernelWorkGroupInfo.adoc#, clGetKernelWorkGroupInfo>>
+*** <<clGetMemObjectInfo.adoc#, clGetMemObjectInfo>>
+*** <<clGetPipeInfo.adoc#, clGetPipeInfo>>
+*** <<clGetPlatformIDs.adoc#, clGetPlatformIDs>>
+*** <<clGetPlatformInfo.adoc#, clGetPlatformInfo>>
+*** <<clGetProgramBuildInfo.adoc#, clGetProgramBuildInfo>>
+*** <<clGetProgramInfo.adoc#, clGetProgramInfo>>
+*** <<clGetSamplerInfo.adoc#, clGetSamplerInfo>>
+*** <<clGetSupportedImageFormats.adoc#, clGetSupportedImageFormats>>
+*** <<vectorDataTypes.adoc#, cl_half>>
+*** <<clIcdGetPlatformIDsKHR.adoc#, clIcdGetPlatformIDsKHR>>
+*** <<cl_image_desc.adoc#, cl_image_desc (Image Descriptor)>>
+*** <<cl_image_format.adoc#, cl_image_format>>
+*** <<scalarDataTypes.adoc#, cl_int>>
+*** <<vectorDataTypes.adoc#, cl_intn>>
+*** <<otherDataTypes.adoc#, clk_event_t>>
+*** <<EXTENSION.adoc#, cl_khr>>
+*** <<cl_khr_3d_image_writes.adoc#, cl_khr_3d_image_writes>>
+*** <<cl_khr_d3d10_sharing.adoc#, cl_khr_d3d10_sharing>>
+*** <<cl_khr_d3d11_sharing.adoc#, cl_khr_d3d11_sharing>>
+*** <<cl_khr_dx9_media_sharing.adoc#, cl_khr_dx9_media_sharing>>
+*** <<cl_khr_egl_event.adoc#, cl_khr_egl_event>>
+*** <<cl_khr_egl_image.adoc#, cl_khr_egl_image>>
+*** <<cl_khr_fp16.adoc#, cl_khr_fp16>>
+*** <<cl_khr_fp64.adoc#, cl_khr_fp64>>
+*** <<cl_khr_gl_depth_images.adoc#, cl_khr_gl_depth_images>>
+*** <<cl_khr_gl_event.adoc#, cl_khr_gl_event>>
+*** <<cl_khr_gl_msaa_sharing.adoc#, cl_khr_gl_msaa_sharing>>
+*** <<cl_khr_gl_sharing.adoc#, cl_khr_gl_sharing>>
+*** <<cl_khr_icd.adoc#, cl_khr_icd>>
+*** <<cl_khr_initialize_memory.adoc#, cl_khr_initialize_memory>>
+*** <<cl_khr_int64_base_atomics.adoc#, cl_khr_int64_base_atomics>>
+*** <<cl_khr_int64_extended_atomics.adoc#, cl_khr_int64_extended_atomics>>
+*** <<cl_khr_mipmap_image.adoc#, cl_khr_mipmap_image>>
+*** <<cl_khr_mipmap_image.adoc#, cl_khr_mipmap_image_writes>>
+*** <<cl_khr_spir.adoc#, cl_khr_spir>>
+*** <<cl_khr_srgb_image_writes.adoc#, cl_khr_srgb_image_writes>>
+*** <<cl_khr_subgroups.adoc#, cl_khr_subgroups>>
+*** <<cl_khr_terminate_context.adoc#, cl_khr_terminate_context>>
+*** <<clLinkProgram.adoc#, clLinkProgram>>
+*** <<scalarDataTypes.adoc#, cl_long>>
+*** <<vectorDataTypes.adoc#, cl_longn>>
+*** <<otherDataTypes.adoc#, cl_mem_fence_flags>>
+*** <<clReleaseCommandQueue.adoc#, clReleaseCommandQueue>>
+*** <<clReleaseContext.adoc#, clReleaseContext>>
+*** <<clReleaseDevice.adoc#, clReleaseDevice>>
+*** <<clReleaseEvent.adoc#, clReleaseEvent>>
+*** <<clReleaseKernel.adoc#, clReleaseKernel>>
+*** <<clReleaseMemObject.adoc#, clReleaseMemObject>>
+*** <<clReleaseProgram.adoc#, clReleaseProgram>>
+*** <<clReleaseSampler.adoc#, clReleaseSampler>>
+*** <<clRetainCommandQueue.adoc#, clRetainCommandQueue>>
+*** <<clRetainContext.adoc#, clRetainContext>>
+*** <<clRetainDevice.adoc#, clRetainDevice>>
+*** <<clRetainEvent.adoc#, clRetainEvent>>
+*** <<clRetainKernel.adoc#, clRetainKernel>>
+*** <<clRetainMemObject.adoc#, clRetainMemObject>>
+*** <<clRetainProgram.adoc#, clRetainProgram>>
+*** <<clRetainSampler.adoc#, clRetainSampler>>
+*** <<deprecated.adoc#, clSetCommandQueueProperty>>
+*** <<clSetDefaultDeviceCommandQueue.adoc#, clSetDefaultDeviceCommandQueue>>
+*** <<clSetEventCallback.adoc#, clSetEventCallback>>
+*** <<clSetKernelArg.adoc#, clSetKernelArg>>
+*** <<clSetKernelArgSVMPointer.adoc#, clSetKernelArgSVMPointer>>
+*** <<clSetKernelExecInfo.adoc#, clSetKernelExecInfo>>
+*** <<clSetMemObjectDestructorCallback.adoc#, clSetMemObjectDestructorCallback>>
+*** <<clSetUserEventStatus.adoc#, clSetUserEventStatus>>
+*** <<scalarDataTypes.adoc#, cl_short>>
+*** <<vectorDataTypes.adoc#, cl_shortn>>
+*** <<clSVMAlloc.adoc#, clSVMAlloc>>
+*** <<clSVMFree.adoc#, clSVMFree>>
+*** <<clTerminateContextKHR.adoc#, clTerminateContextKHR>>
+*** <<scalarDataTypes.adoc#, cl_uchar>>
+*** <<vectorDataTypes.adoc#, cl_ucharn>>
+*** <<scalarDataTypes.adoc#, cl_uint>>
+*** <<vectorDataTypes.adoc#, cl_uintn>>
+*** <<scalarDataTypes.adoc#, cl_ulong>>
+*** <<vectorDataTypes.adoc#, cl_ulongn>>
+*** <<deprecated.adoc#, clUnloadCompiler>>
+*** <<clUnloadPlatformCompiler.adoc#, clUnloadPlatformCompiler>>
+*** <<scalarDataTypes.adoc#, cl_ushort>>
+*** <<vectorDataTypes.adoc#, cl_ushortn>>
+*** <<clWaitForEvents.adoc#, clWaitForEvents>>
+*** <<clz.adoc#, clz>>
+*** <<commit_read_pipe.adoc#, commit_read_pipe>>
+*** <<commit_write_pipe.adoc#, commit_write_pipe>>
+*** <<commonFunctions.adoc#, Common Built-In Functions>>
+*** <<clBuildProgram.adoc#, Compiler Options>>
+*** <<reservedDataTypes.adoc#, complex double>>
+*** <<reservedDataTypes.adoc#, complex doublen>>
+*** <<reservedDataTypes.adoc#, complex float>>
+*** <<reservedDataTypes.adoc#, complex floatn>>
+*** <<reservedDataTypes.adoc#, complex half>>
+*** <<reservedDataTypes.adoc#, complex halfn>>
+*** <<reservedDataTypes.adoc#, complex quad>>
+*** <<reservedDataTypes.adoc#, complex quadn>>
+*** <<constant.adoc#, __constant, constant>>
+*** <<attributes-blocksAndControlFlow.adoc#, Control flow stmnt attributes>>
+*** <<convert_T.adoc#, Conversions>>
+*** <<convert_T.adoc#, convert_T>>
+*** <<copysign.adoc#, copysign>>
+*** <<cos.adoc#, cos>>
+*** <<cos.adoc#, cosh>>
+*** <<cos.adoc#, cospi>>
+*** <<cross.adoc#, cross>>
+*** <<create_user_event.adoc#, create_user_event>>
+*** <<ctz.adoc#, ctz>>
+** D
+*** <<clBuildProgram.adoc#, -D name>>
+*** <<clBuildProgram.adoc#, -D name=definition>>
+*** <<dataTypes.adoc#, Data Types>>
+*** <<degrees.adoc#, degrees>>
+*** <<deprecated.adoc#, Deprecated features>>
+*** <<classDiagram.adoc#, Diagram>>
+*** <<distance.adoc#, distance>>
+*** <<dot.adoc#, dot>>
+*** <<cl_khr_fp64.adoc#, Double Precision Floating-Point>>
+*** <<scalarDataTypes.adoc#, double>>
+*** <<vectorDataTypes.adoc#, doublen>>
+*** <<reservedDataTypes.adoc#, doublenxm>>
+** E
+*** <<cl_khr_egl_event.adoc#, EGL event extension>>
+*** <<cl_khr_egl_image.adoc#, EGL image extension>>
+*** <<preprocessorDirectives.adoc#, __ENDIAN_LITTLE__>>
+*** <<enqueue_kernel.adoc#, enqueue_kernel>>
+*** <<enqueue_marker.adoc#, enqueue_marker>>
+*** <<enums.adoc#, enumerated types>>
+*** <<enums.adoc#, enums>>
+*** <<erf.adoc#, erf>>
+*** <<erf.adoc#, erfc>>
+*** <<eventFunctions.adoc#, Event Built-in Functions>>
+*** <<otherDataTypes.adoc#, event_t>>
+*** <<exp.adoc#, exp>>
+*** <<exp.adoc#, exp10>>
+*** <<exp.adoc#, exp2>>
+*** <<exp.adoc#, expm1>>
+*** <<EXTENSION.adoc#, Extensions>>
+*** <<storageSpecifiers.adoc#, extern>>
+** F
+*** <<fabs.adoc#, fabs>>
+*** <<fast_distance.adoc#, fast_distance>>
+*** <<fast_length.adoc#, fast_length>>
+*** <<fast_normalize.adoc#, fast_normalize>>
+*** <<preprocessorDirectives.adoc#, __FAST_RELAXED_MATH__>>
+*** <<fdim.adoc#, fdim>>
+*** <<preprocessorDirectives.adoc#, __FILE__>>
+*** <<sampler_t.adoc#, filter mode>>
+*** <<scalarDataTypes.adoc#, float>>
+*** <<vectorDataTypes.adoc#, floatn>>
+*** <<reservedDataTypes.adoc#, floatnxm>>
+*** <<floor.adoc#, floor>>
+*** <<fma.adoc#, fma>>
+*** <<fmax.adoc#, fmax>>
+*** <<fmin.adoc#, fmin>>
+*** <<fmod.adoc#, fmod>>
+*** <<FP_CONTRACT.adoc#, FP_CONTRACT>>
+*** <<FP_CONTRACT.adoc#, FP_FAST_FMA>>
+*** <<FP_CONTRACT.adoc#, FP_FAST_FMAF>>
+*** <<FP_CONTRACT.adoc#, FP_FAST_FMA_HALF>>
+*** <<fract.adoc#, fract>>
+*** <<frexp.adoc#, frexp>>
+*** <<preprocessorDirectives.adoc#, __func__>>
+*** <<functionQualifiers.adoc#, Function Qualifiers>>
+** G
+*** <<geometricFunctions.adoc#, Geometric Built-in Functions>>
+*** <<genericAddressSpace.adoc#, Generic Address Space>>
+*** <<get_default_queue.adoc#, get_default_queue>>
+*** <<get_enqueued_local_size.adoc#, get_enqueued_local_size>>
+*** <<addressSpaceQualifierFuncs.adoc#, get_fence>>
+*** <<get_global_id.adoc#, get_global_id>>
+*** <<get_global_linear_id.adoc#, get_global_linear_id>>
+*** <<get_global_offset.adoc#, get_global_offset>>
+*** <<get_global_size.adoc#, get_global_size>>
+*** <<get_group_id.adoc#, get_group_id>>
+*** <<get_image_array_size.adoc#, get_image_array_size>>
+*** <<get_image_channel_data_type.adoc#, get_image_channel_data_type>>
+*** <<get_image_channel_order.adoc#, get_image_channel_order>>
+*** <<get_image_depth.adoc#, get_image_depth>>
+*** <<get_image_dim.adoc#, get_image_dim>>
+*** <<get_image_height.adoc#, get_image_height>>
+*** <<get_image_num_mip_levels.adoc#, get_image_num_mip_levels>>
+*** <<get_image_num_samples.adoc#, get_image_num_samples>>
+*** <<get_image_width.adoc#, get_image_width>>
+*** <<get_kernel_preferred_work_group_size_multiple.adoc#, get_kernel_preferred_work_group_size_multiple>>
+*** <<get_kernel_work_group_size.adoc#, get_kernel_work_group_size>>
+*** <<get_local_id.adoc#, get_local_id>>
+*** <<get_local_linear_id.adoc#, get_local_linear_id>>
+*** <<get_local_size.adoc#, get_local_size>>
+*** <<get_num_groups.adoc#, get_num_groups>>
+*** <<get_pipe_num_packets.adoc#, get_pipe_num_packets>>
+*** <<get_pipe_max_packets.adoc#, get_pipe_max_packets>>
+*** <<get_work_dim.adoc#, get_work_dim>>
+*** <<global.adoc#, __global, global>>
+** H
+*** <<hadd.adoc#, hadd>>
+*** <<cl_khr_fp16.adoc#, Half Data Type>>
+*** <<cl_khr_fp16.adoc#, Half Floating-Point>>
+*** <<scalarDataTypes.adoc#, half>>
+*** <<vectorDataTypes.adoc#, halfn>>
+*** <<reservedDataTypes.adoc#, halfnxm>>
+*** <<cos.adoc#, half_cos>>
+*** <<divide.adoc#, half_divide>>
+*** <<exp.adoc#, half_exp>>
+*** <<exp.adoc#, half_exp2>>
+*** <<exp.adoc#, half_exp10>>
+*** <<log.adoc#, half_log>>
+*** <<log.adoc#, half_log10>>
+*** <<log.adoc#, half_log2>>
+*** <<pow.adoc#, half_powr>>
+*** <<recip.adoc#, half_recip>>
+*** <<sqrt.adoc#, half_rsqrt>>
+*** <<sin.adoc#, half_sin>>
+*** <<sqrt.adoc#, half_sqrt>>
+*** <<tan.adoc#, half_tan>>
+*** <<helperFunctions.adoc#, Helper Functions>>
+*** <<mathConstants.adoc#, HUGE_VAL>>
+*** <<mathConstants.adoc#, HUGE_VALF>>
+*** <<hypot.adoc#, hypot>>
+** I
+*** <<clBuildProgram.adoc#, -I dir>>
+*** <<cl_khr_icd.adoc#, ICD (cl_khr_icd)>>
+*** <<ilogb.adoc#, ilogb>>
+*** <<imageFunctions.adoc#, Image Built-In Functions>>
+*** <<cl_image_desc.adoc#, Image Descriptor (cl_image_desc)>>
+*** <<clGetSupportedImageFormats.adoc#, Image formats>>
+*** <<cl_image_format.adoc#, Image Format (cl_image_format)>>
+*** <<preprocessorDirectives.adoc#, __IMAGE_SUPPORT__>>
+*** <<otherDataTypes.adoc#, image2d_t>>
+*** <<otherDataTypes.adoc#, image3d_t>>
+*** <<reservedDataTypes.adoc#, imaginary double>>
+*** <<reservedDataTypes.adoc#, imaginary doublen>>
+*** <<reservedDataTypes.adoc#, imaginary float>>
+*** <<reservedDataTypes.adoc#, imaginary floatn>>
+*** <<reservedDataTypes.adoc#, imaginary half>>
+*** <<reservedDataTypes.adoc#, imaginary halfn>>
+*** <<reservedDataTypes.adoc#, imaginary quad>>
+*** <<reservedDataTypes.adoc#, imaginary quadn>>
+*** <<mathConstants.adoc#, INFINITY>>
+*** <<cl_khr_icd.adoc#, Installable Client Driver (ICD)>>
+*** <<scalarDataTypes.adoc#, int>>
+*** <<integerFunctions.adoc#, Integer Built-In Functions>>
+*** <<vectorDataTypes.adoc#, intn>>
+*** <<scalarDataTypes.adoc#, intptr_t>>
+*** <<oclRefPages-Title.adoc#, Introduction>>
+*** <<isequal.adoc#, isequal>>
+*** <<isfinite.adoc#, isfinite>>
+*** <<isgreater.adoc#, isgreater>>
+*** <<isgreaterequal.adoc#, isgreaterequal>>
+*** <<isinf.adoc#, isinf>>
+*** <<isless.adoc#, isless>>
+*** <<islessequal.adoc#, islessequal>>
+*** <<islessgreater.adoc#, islessgreater>>
+*** <<isnan.adoc#, isnan>>
+*** <<isnormal.adoc#, isnormal>>
+*** <<isnotequal.adoc#, isnotequal>>
+*** <<isordered.adoc#, isordered>>
+*** <<isunordered.adoc#, isunordered>>
+*** <<is_valid_event.adoc#, is_valid_event>>
+*** <<is_valid_reserve_id.adoc#, is_valid_reserve_id>>
+** K L
+*** <<functionQualifiers.adoc#, __kernel, kernel>>
+*** <<preprocessorDirectives.adoc#, __kernel_exec>>
+*** <<clCreateKernel.adoc#, Kernel object>>
+*** <<ldexp.adoc#, ldexp>>
+*** <<length.adoc#, length>>
+*** <<lgamma.adoc#, lgamma>>
+*** <<lgamma.adoc#, lgamma_r>>
+*** <<macroLimits.adoc#, Limits>>
+*** <<preprocessorDirectives.adoc#, __LINE__>>
+*** <<local.adoc#, __local, local>>
+*** <<log.adoc#, log>>
+*** <<log.adoc#, log10>>
+*** <<log.adoc#, log1p>>
+*** <<log.adoc#, log2>>
+*** <<log.adoc#, logb>>
+*** <<attributes-loopUnroll.adoc#, Loop unrolling attributes>>
+*** <<scalarDataTypes.adoc#, long>>
+*** <<reservedDataTypes.adoc#, long double>>
+*** <<reservedDataTypes.adoc#, long doublen>>
+*** <<reservedDataTypes.adoc#, long long>>
+*** <<reservedDataTypes.adoc#, long longn>>
+*** <<vectorDataTypes.adoc#, longn>>
+** M
+*** <<preprocessorDirectives.adoc#, Macros>>
+*** <<macroLimits.adoc#, Macros and Limits>>
+*** <<mad.adoc#, mad>>
+*** <<mad_hi.adoc#, mad_hi>>
+*** <<mad_sat.adoc#, mad_sat>>
+*** <<mad24.adoc#, mad24>>
+*** <<mathFunctions.adoc#, Math Built-In Functions>>
+*** <<mathConstants.adoc#, math constants>>
+*** <<clBuildProgram.adoc#, math intrinsics options>>
+*** <<commonMax.adoc#, max (Common function)>>
+*** <<integerMax.adoc#, max (Integer function)>>
+*** <<mathConstants.adoc#, MAXFLOAT>>
+*** <<mag.adoc#, maxmag>>
+*** <<memory_order.adoc#, memory_order>>
+*** <<memory_scope.adoc#, memory_scope>>
+*** <<commonMin.adoc#, min (Common function)>>
+*** <<integerMax.adoc#, min (Integer function)>>
+*** <<mag.adoc#, minmag>>
+*** <<cl_khr_mipmap_image.adoc#, mipmaps (cl_khr_mipmap_image)>>
+*** <<mix.adoc#, mix>>
+*** <<miscVectorFunctions.adoc#, Misc. Vector Functions>>
+*** <<modf.adoc#, modf>>
+*** <<mul_hi.adoc#, mul_hi>>
+*** <<mul24.adoc#, mul24>>
+** N
+*** <<nan.adoc#, nan>>
+*** <<mathConstants.adoc#, NAN>>
+*** <<cos.adoc#, native_cos>>
+*** <<divide.adoc#, native_divide>>
+*** <<exp.adoc#, native_exp>>
+*** <<exp.adoc#, native_exp2>>
+*** <<exp.adoc#, native_exp10>>
+*** <<log.adoc#, native_log>>
+*** <<log.adoc#, native_log2>>
+*** <<log.adoc#, native_log10>>
+*** <<pow.adoc#, native_powr>>
+*** <<recip.adoc#, native_recip>>
+*** <<sqrt.adoc#, native_rsqrt>>
+*** <<sin.adoc#, native_sin>>
+*** <<sqrt.adoc#, native_sqrt>>
+*** <<tan.adoc#, native_tan>>
+*** <<ndrange.adoc#, ndrange>>
+*** <<otherDataTypes.adoc#, ndrange_t>>
+*** <<nextafter.adoc#, nextafter>>
+*** <<normalize.adoc#, normalize>>
+*** <<sampler_t.adoc#, normalized coords>>
+** O P Q
+*** <<cl_khr_gl_sharing.adoc#, OpenCL/OpenGL Sharing Functions>>
+*** <<preprocessorDirectives.adoc#, __OPENCL_C_VERSION__>>
+*** <<preprocessorDirectives.adoc#, __OPENCL_VERSION__>>
+*** <<operators.adoc#, Operators>>
+*** <<clBuildProgram.adoc#, optimization options>>
+*** <<EXTENSION.adoc#, Optional Extensions>>
+*** <<otherDataTypes.adoc#, Other Data Types>>
+*** <<pipeFunctions.adoc#, Pipe Functions>>
+*** <<popcount.adoc#, popcount>>
+*** <<pow.adoc#, pow>>
+*** <<pow.adoc#, pown>>
+*** <<pow.adoc#, powr>>
+*** <<preprocessorDirectives.adoc#, #pragma>>
+*** <<prefetch.adoc#, prefetch>>
+*** <<preprocessorDirectives.adoc#, Preprocessor macros>>
+*** <<printfFunction.adoc#, printf>>
+*** <<private.adoc#, __private, private>>
+*** <<scalarDataTypes.adoc#, ptrdiff_t>>
+*** <<reservedDataTypes.adoc#, quad>>
+*** <<reservedDataTypes.adoc#, quadn>>
+*** <<qualifiers.adoc#, Qualifiers>>
+*** <<otherDataTypes.adoc#, queue_t>>
+** R
+*** <<radians.adoc#, radians>>
+*** <<imageFunctions.adoc#, read_image{f,h,i,ui}>>
+*** <<accessQualifiers.adoc#, __read_only>>
+*** <<read_pipe.adoc#, read_pipe>>
+*** <<accessQualifiers.adoc#, __read_write>>
+*** <<relationalFunctions.adoc#, Relational Built-In Functions>>
+*** <<release_event.adoc#, release_event>>
+*** <<remainder.adoc#, remainder>>
+*** <<remquo.adoc#, remquo>>
+*** <<functionQualifiers.adoc#, reqd_work_group_size>>
+*** <<otherDataTypes.adoc#, reserve_id_t>>
+*** <<reserve_read_pipe.adoc#, reserve_read_pipe>>
+*** <<reserve_write_pipe.adoc#, reserve_write_pipe>>
+*** <<reservedDataTypes.adoc#, Reserved Data Types>>
+*** <<restrictions.adoc#, Restrictions>>
+*** <<retain_event.adoc#, retain_event>>
+*** <<hadd.adoc#, rhadd>>
+*** <<rint.adoc#, rint>>
+*** <<rootn.adoc#, rootn>>
+*** <<rotate.adoc#, rotate>>
+*** <<round.adoc#, round>>
+*** <<sqrt.adoc#, rsqrt>>
+*** <<convert_T.adoc#, _rte>>
+*** <<convert_T.adoc#, _rtn>>
+*** <<convert_T.adoc#, _rtp>>
+*** <<convert_T.adoc#, _rtz>>
+** S
+*** <<clCreateSamplerWithProperties.adoc#, Sampler Object>>
+*** <<sampler_t.adoc#, sampler_t>>
+*** <<scalarDataTypes.adoc#, Scalar Data Types>>
+*** <<select.adoc#, select>>
+*** <<set_user_event_status.adoc#, set_user_event_status>>
+*** <<sharedVirtualMemory.adoc#, Shared Virtual Memory (SVM) Functions>>
+*** <<scalarDataTypes.adoc#, short>>
+*** <<vectorDataTypes.adoc#, shortn>>
+*** <<shuffle.adoc#, shuffle>>
+*** <<shuffle.adoc#, shuffle2>>
+*** <<sign.adoc#, sign>>
+*** <<signbit.adoc#, signbit>>
+*** <<sin.adoc#, sin>>
+*** <<sin.adoc#, sincos>>
+*** <<sin.adoc#, sinh>>
+*** <<sin.adoc#, sinpi>>
+*** <<scalarDataTypes.adoc#, size_t>>
+*** <<smoothstep.adoc#, smoothstep>>
+*** <<cl_khr_spir.adoc#, SPIR (cl_khr_spir)>>
+*** <<sqrt.adoc#, sqrt>>
+*** <<storageSpecifiers.adoc#, static>>
+*** <<step.adoc#, step>>
+*** <<storageSpecifiers.adoc#, Storage-class Qualifiers>>
+*** <<cl_khr_subgroups.adoc#, Sub-groups>>
+*** <<sub_sat.adoc#, sub_sat>>
+*** <<supportedImageFormats.adoc#, Supported image formats>>
+*** <<sharedVirtualMemory.adoc#, SVM (Shared Virtual Memory) Functions>>
+*** <<syncFunctions.adoc#, Synchronization functions>>
+*** <<mathConstants.adoc#, Symbolic Math Constants>>
+** T U
+*** <<tan.adoc#, tan>>
+*** <<tan.adoc#, tanh>>
+*** <<tan.adoc#, tanpi>>
+*** <<tgamma.adoc#, tgamma>>
+*** <<addressSpaceQualifierFuncs.adoc#, to_global, to_local, to_private>>
+*** <<trunc.adoc#, trunc>>
+*** <<dataTypes.adoc#, Types>>
+*** <<attributes-types.adoc#, type attributes>>
+*** <<storageSpecifiers.adoc#, typedef>>
+*** <<scalarDataTypes.adoc#, uchar>>
+*** <<vectorDataTypes.adoc#, ucharn>>
+*** <<scalarDataTypes.adoc#, uint>>
+*** <<vectorDataTypes.adoc#, uintn>>
+*** <<scalarDataTypes.adoc#, uintptr_t>>
+*** <<scalarDataTypes.adoc#, ulong>>
+*** <<reservedDataTypes.adoc#, ulong long>>
+*** <<reservedDataTypes.adoc#, ulong longn>>
+*** <<vectorDataTypes.adoc#, ulongn>>
+*** <<scalarDataTypes.adoc#, unsigned char>>
+*** <<scalarDataTypes.adoc#, unsigned int>>
+*** <<scalarDataTypes.adoc#, unsigned long>>
+*** <<reservedDataTypes.adoc#, unsigned long long>>
+*** <<scalarDataTypes.adoc#, unsigned short>>
+*** <<upsample.adoc#, upsample>>
+*** <<scalarDataTypes.adoc#, ushort>>
+*** <<vectorDataTypes.adoc#, ushortn>>
+** V W
+*** <<attributes-variables.adoc#, Variable attributes>>
+*** <<vec_step.adoc#, vec_step>>
+*** <<functionQualifiers.adoc#, vec_type_hint>>
+*** <<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+*** <<vectorDataTypes.adoc#, Vector Data Types>>
+*** <<miscVectorFunctions.adoc#, Vector Functions (Misc.)>>
+*** <<sharedVirtualMemory.adoc#, Virtual Memory (SVM) Functions>>
+*** <<vloada_halfn.adoc#, vloada_halfn>>
+*** <<vload_half.adoc#, vload_half>>
+*** <<vload_halfn.adoc#, vload_halfn>>
+*** <<vloadn.adoc#, vloadn>>
+*** <<scalarDataTypes.adoc#, void>>
+*** <<vstorea_halfn.adoc#, vstorea_halfn>>
+*** <<vstore_half.adoc#, vstore_half>>
+*** <<vstore_halfn.adoc#, vstore_halfn>>
+*** <<vstoren.adoc#, vstoren>>
+*** <<wait_group_events.adoc#, wait_group_events>>
+*** <<clBuildProgram.adoc#, Warnings options>>
+*** <<work_group_all.adoc#, work_group_all>>
+*** <<work_group_any.adoc#, work_group_any>>
+*** <<work_group_barrier.adoc#, work_group_barrier>>
+*** <<work_group_broadcast.adoc#, work_group_broadcast>>
+*** <<work_group_commit_read_pipe.adoc#, work_group_commit_read_pipe>>
+*** <<work_group_commit_write_pipe.adoc#, work_group_commit_write_pipe>>
+*** <<work_group_reduce.adoc#, work_group_reduce>>
+*** <<work_group_reserve_read_pipe.adoc#, work_group_reserve_read_pipe>>
+*** <<work_group_reserve_write_pipe.adoc#, work_group_reserve_write_pipe>>
+*** <<work_group_scan_exclusive.adoc#, work_group_scan_exclusive>>
+*** <<work_group_scan_inclusive.adoc#, work_group_scan_inclusive>>
+*** <<functionQualifiers.adoc#, work_group_size_hint>>
+*** <<workItemFunctions.adoc#, Work-Item Built-in Functions>>
+*** <<imageFunctions.adoc#, write_image[f,h,i,ui]>>
+*** <<accessQualifiers.adoc#, __write_only>>
+*** <<write_pipe.adoc#, write_pipe>>
+*** <<cl_khr_3d_image_writes.adoc#, Writing to 3D Image Memory Objects>>
+* OpenCL Runtime
+** <<enums.adoc#, Enumerated Types>>
+** Query Platform Info
+*** <<clGetPlatformIDs.adoc#, clGetPlatformIDs>>
+*** <<clGetPlatformInfo.adoc#, clGetPlatformInfo>>
+** Query Devices
+*** <<clGetDeviceIDs.adoc#, clGetDeviceIDs>>
+*** <<clGetDeviceInfo.adoc#, clGetDeviceInfo>>
+** Partition a Device
+*** <<clCreateSubDevices.adoc#, clCreateSubDevices>>
+*** <<clReleaseDevice.adoc#, clReleaseDevice>>
+*** <<clRetainDevice.adoc#, clRetainDevice>>
+** Contexts
+*** <<clCreateContext.adoc#, clCreateContext>>
+*** <<clCreateContextFromType.adoc#, clCreateContextFromType>>
+*** <<clGetContextInfo.adoc#, clGetContextInfo>>
+*** <<clReleaseContext.adoc#, clReleaseContext>>
+*** <<clRetainContext.adoc#, clRetainContext>>
+** Runtime APIs
+*** Command Queues
+**** <<clCreateCommandQueueWithProperties.adoc#, clCreateCommandQueueWithProperties>>
+**** <<clGetCommandQueueInfo.adoc#, clGetCommandQueueInfo>>
+**** <<clReleaseCommandQueue.adoc#, clReleaseCommandQueue>>
+**** <<clRetainCommandQueue.adoc#, clRetainCommandQueue>>
+**** <<clSetDefaultDeviceCommandQueue.adoc#, clSetDefaultDeviceCommandQueue>>
+*** Buffer Objects
+**** <<clCreateBuffer.adoc#, clCreateBuffer>>
+**** <<clCreateSubBuffer.adoc#, clCreateSubBuffer>>
+**** <<clEnqueueReadBuffer.adoc#, clEnqueueReadBuffer>>
+**** <<clEnqueueWriteBuffer.adoc#, clEnqueueWriteBuffer>>
+**** <<clEnqueueReadBufferRect.adoc#, clEnqueueReadBufferRect>>
+**** <<clEnqueueWriteBufferRect.adoc#, clEnqueueWriteBufferRect>>
+**** <<clEnqueueCopyBuffer.adoc#, clEnqueueCopyBuffer>>
+**** <<clEnqueueCopyBufferRect.adoc#, clEnqueueCopyBufferRect>>
+**** <<clEnqueueFillBuffer.adoc#, clEnqueueFillBuffer>>
+**** <<clEnqueueMapBuffer.adoc#, clEnqueueMapBuffer>>
+*** Image Objects
+**** <<clCreateImage.adoc#, clCreateImage>>
+**** <<clEnqueueReadImage.adoc#, clEnqueueReadImage>>
+**** <<clEnqueueWriteImage.adoc#, clEnqueueWriteImage>>
+**** <<clEnqueueCopyImage.adoc#, clEnqueueCopyImage>>
+**** <<clEnqueueCopyImageToBuffer.adoc#, clEnqueueCopyImageToBuffer>>
+**** <<clEnqueueCopyBufferToImage.adoc#, clEnqueueCopyBufferToImage>>
+**** <<clEnqueueFillImage.adoc#, clEnqueueFillImage>>
+**** <<clEnqueueMapImage.adoc#, clEnqueueMapImage>>
+**** <<clGetImageInfo.adoc#, clGetImageInfo>>
+**** <<clGetSupportedImageFormats.adoc#, clGetSupportedImageFormats>>
+**** <<cl_image_desc.adoc#, cl_image_desc>>
+**** <<cl_image_format.adoc#, cl_image_format>>
+*** Memory Objects
+**** <<clEnqueueUnmapMemObject.adoc#, clEnqueueUnmapMemObject>>
+**** <<clEnqueueMigrateMemObjects.adoc#, clEnqueueMigrateMemObjects>>
+**** <<clGetMemObjectInfo.adoc#, clGetMemObjectInfo>>
+**** <<clRetainMemObject.adoc#, clRetainMemObject>>
+**** <<clReleaseMemObject.adoc#, clReleaseMemObject>>
+**** <<clSetMemObjectDestructorCallback.adoc#, clSetMemObjectDestructorCallback>>
+*** Sampler Objects
+**** <<clCreateSamplerWithProperties.adoc#, clCreateSamplerWithProperties>>
+**** <<clReleaseSampler.adoc#, clReleaseSampler>>
+**** <<clRetainSampler.adoc#, clRetainSampler>>
+**** <<clGetSamplerInfo.adoc#, clGetSamplerInfo>>
+*** Program Objects
+**** <<clBuildProgram.adoc#, clBuildProgram>>
+**** <<clCompileProgram.adoc#, clCompileProgram>>
+**** <<clCreateProgramWithSource.adoc#, clCreateProgramWithSource>>
+**** <<clCreateProgramWithBinary.adoc#, clCreateProgramWithBinary>>
+**** <<clCreateProgramWithBuiltInKernels.adoc#, clCreateProgramWithBuiltInKernels>>
+**** <<clCreateProgramWithIL.adoc#, clCreateProgramWithIL>>
+**** <<clGetProgramBuildInfo.adoc#, clGetProgramBuildInfo>>
+**** <<clGetProgramInfo.adoc#, clGetProgramInfo>>
+**** <<clLinkProgram.adoc#, clLinkProgram>>
+**** <<clReleaseProgram.adoc#, clReleaseProgram>>
+**** <<clRetainProgram.adoc#, clRetainProgram>>
+**** <<clUnloadPlatformCompiler.adoc#, clUnloadPlatformCompiler>>
+*** Kernel Objects
+**** <<clCloneKernel.adoc#, clCloneKernel>>
+**** <<clCreateKernel.adoc#, clCreateKernel>>
+**** <<clCreateKernelsInProgram.adoc#, clCreateKernelsInProgram>>
+**** <<clGetKernelInfo.adoc#, clGetKernelInfo>>
+**** <<clGetKernelArgInfo.adoc#, clGetKernelArgInfo>>
+**** <<clGetKernelSubGroupInfo.adoc#, clGetKernelSubGroupInfo>>
+**** <<clGetKernelWorkGroupInfo.adoc#, clGetKernelWorkGroupInfo>>
+**** <<clReleaseKernel.adoc#, clReleaseKernel>>
+**** <<clRetainKernel.adoc#, clRetainKernel>>
+**** <<clSetKernelArg.adoc#, clSetKernelArg>>
+**** <<clSetKernelArgSVMPointer.adoc#, clSetKernelArgSVMPointer>>
+**** <<clSetKernelExecInfo.adoc#, clSetKernelExecInfo>>
+*** Executing Kernels
+**** <<clEnqueueNDRangeKernel.adoc#, clEnqueueNDRangeKernel>>
+**** <<clEnqueueNativeKernel.adoc#, clEnqueueNativeKernel>>
+*** Event Objects
+**** <<clCreateUserEvent.adoc#, clCreateUserEvent>>
+**** <<clGetEventInfo.adoc#, clGetEventInfo>>
+**** <<clReleaseEvent.adoc#, clReleaseEvent>>
+**** <<clRetainEvent.adoc#, clRetainEvent>>
+**** <<clSetEventCallback.adoc#, clSetEventCallback>>
+**** <<clSetUserEventStatus.adoc#, clSetUserEventStatus>>
+**** <<clWaitForEvents.adoc#, clWaitForEvents>>
+*** Markers, Barriers, and Waiting
+**** <<clEnqueueBarrierWithWaitList.adoc#, clEnqueueBarrierWithWaitList>>
+**** <<clEnqueueMarkerWithWaitList.adoc#, clEnqueueMarkerWithWaitList>>
+*** Profiling Operations on Memory Objects and Kernels
+**** <<clGetDeviceAndHostTimer.adoc#, clGetDeviceAndHostTimer>>
+**** <<clGetEventProfilingInfo.adoc#, clGetEventProfilingInfo>>
+**** <<clGetHostTimer.adoc#, clGetHostTimer>>
+*** Flush and Finish
+**** <<clFlush.adoc#, clFlush>>
+**** <<clFinish.adoc#, clFinish>>
+*** Pipes
+**** <<clCreatePipe.adoc#, clCreatePipe>>
+**** <<clGetPipeInfo.adoc#, clGetPipeInfo>>
+*** Shared Virtual Memory (SVM)
+**** <<clSVMAlloc.adoc#, clSVMAlloc>>
+**** <<clSVMFree.adoc#, clSVMFree>>
+**** <<clEnqueueSVMFree.adoc#, clEnqueueSVMFree>>
+**** <<clEnqueueSVMMap.adoc#, clEnqueueSVMMap>>
+**** <<clEnqueueSVMMemcpy.adoc#, clEnqueueSVMMemcpy>>
+**** <<clEnqueueSVMMemFill.adoc#, clEnqueueSVMMemFill>>
+**** <<clEnqueueSVMMigrateMem.adoc#, clEnqueueSVMMigrateMem>>
+**** <<clEnqueueSVMUnmap.adoc#, clEnqueueSVMUnmap>>
+* OpenCL Compiler
+** <<restrictions.adoc#, Restrictions>>
+** Built-in Data Types
+*** <<scalarDataTypes.adoc#, Scalar Data Types>>
+*** <<vectorDataTypes.adoc#, Vector Data Types>>
+*** <<otherDataTypes.adoc#, Other Data Types>>
+*** <<reservedDataTypes.adoc#, Reserved Data Types>>
+*** <<abstractDataTypes.adoc#, Abstract Data Types>>
+*** <<cl_image_format.adoc#, cl_image_format>>
+*** <<sampler_t.adoc#, sampler_t>>
+** Address Space Qualifiers
+*** <<constant.adoc#, __constant>>
+*** <<local.adoc#, __local>>
+*** <<global.adoc#, __global>>
+*** <<private.adoc#, __private>>
+*** <<addressSpaceQualifierFuncs.adoc#, Address Space Qualifier Functions>>
+** <<accessQualifiers.adoc#, Access Qualifiers>>
+** <<functionQualifiers.adoc#, Function Qualifiers>>
+** <<storageSpecifiers.adoc#, Storage Class Qualifiers>>
+** <<attribute.adoc#, Attribute Qualifiers>>
+*** <<attributes-types.adoc#, Types Attributes>>
+*** <<attributes-variables.adoc#, Variables Attributes>>
+*** <<attributes-blocksAndControlFlow.adoc#, Blocks and Control-Flow Statement Attributes>>
+** <<restrictions.adoc#, Restrictions>>
+** Built-in Functions
+*** <<asyncCopyFunctions.adoc#, Async Copy and Prefetch Functions>>
+**** <<async_work_group_copy.adoc#, async_work_group_copy>>
+**** <<async_work_group_strided_copy.adoc#, async_work_group_strided_copy>>
+**** <<wait_group_events.adoc#, wait_group_events>>
+**** <<prefetch.adoc#, prefetch>>
+*** <<atomicFunctions.adoc#, Atomic Functions>>
+**** <<atomic_compare_exchange.adoc#, atomic_compare_exchange_strong>>
+**** <<atomic_compare_exchange.adoc#, atomic_compare_exchange_strong_explicit>>
+**** <<atomic_compare_exchange.adoc#, atomic_compare_exchange_weak>>
+**** <<atomic_compare_exchange.adoc#, atomic_compare_exchange_weak_explicit>>
+**** <<atomic_exchange.adoc#, atomic_exchange>>
+**** <<atomic_exchange.adoc#, atomic_exchange_explicit>>
+**** <<atomic_fetch_key.adoc#, atomic_fetch_key>>
+**** <<atomic_fetch_key.adoc#, atomic_fetch_key_explicit>>
+**** <<atomic_flag.adoc#, atomic_flag>>
+**** <<atomic_flag_clear.adoc#, atomic_flag_clear>>
+**** <<atomic_flag_clear.adoc#, atomic_flag_clear_explicit>>
+**** <<atomic_flag_test_and_set.adoc#, atomic_flag_test_and_set>>
+**** <<atomic_flag_test_and_set.adoc#, atomic_flag_test_and_set_explicit>>
+**** <<atomic_init.adoc#, atomic_init>>
+**** <<atomic_load.adoc#, atomic_load>>
+**** <<atomic_load.adoc#, atomic_load_explicit>>
+**** <<atomic_store.adoc#, atomic_store>>
+**** <<atomic_store.adoc#, atomic_store_explicit>>
+**** <<ATOMIC_VAR_INIT.adoc#, ATOMIC_VAR_INIT>>
+**** <<atomic_work_item_fence.adoc#, atomic_work_item_fence>>
+**** <<memory_order.adoc#, memory_order>>
+**** <<memory_scope.adoc#, memory_scope>>
+*** <<commonFunctions.adoc#, Common Functions>>
+**** <<clamp_common.adoc#, clamp>>
+**** <<degrees.adoc#, degrees>>
+**** <<commonMax.adoc#, ma>>
+**** <<commonMin.adoc#, min>>
+**** <<mix.adoc#, mi>>
+**** <<radians.adoc#, radians>>
+**** <<sign.adoc#, sign>>
+**** <<smoothstep.adoc#, smoothstep>>
+**** <<step.adoc#, step>>
+*** <<eventFunctions.adoc#, Event Functions>>
+**** <<retain_event.adoc#, retain_event>>
+**** <<release_event.adoc#, release_event>>
+**** <<create_user_event.adoc#, create_user_event>>
+**** <<is_valid_event.adoc#, is_valid_event>>
+**** <<set_user_event_status.adoc#, set_user_event_status>>
+**** <<capture_event_profiling_info.adoc#, normalize>>
+*** <<geometricFunctions.adoc#, Geometric Functions>>
+**** <<cross.adoc#, cross>>
+**** <<dot.adoc#, dot>>
+**** <<distance.adoc#, distance>>
+**** <<length.adoc#, length>>
+**** <<normalize.adoc#, normalize>>
+**** <<fast_distance.adoc#, fast_distance>>
+**** <<fast_length.adoc#, fast_length>>
+**** <<fast_normalize.adoc#, fast_normalize>>
+*** <<imageFunctions.adoc#, Image Functions>>
+**** <<read_imagef1d.adoc#, read_image{f,i,ui} (1D)>>
+**** <<read_imageh1d.adoc#, read_imageh (1D)>>
+**** <<read_imagef2d.adoc#, read_image{f,i,ui} (2D)>>
+**** <<read_imageh2d.adoc#, read_imageh (2D)>>
+**** <<read_imagef3d.adoc#, read_image{f,i,ui} (3D)>>
+**** <<read_imageh3d.adoc#, read_imageh (3D)>>
+**** <<write_image1d.adoc#, write_image (1D)>>
+**** <<write_image2d.adoc#, write_image (2D)>>
+**** <<write_image3d.adoc#, write_image (3D)>>
+**** <<get_image_width.adoc#, get_image_width>>
+**** <<get_image_height.adoc#, get_image_height>>
+**** <<get_image_depth.adoc#, get_image_depth>>
+**** <<get_image_channel_data_type.adoc#, get_image_channel_data_type>>
+**** <<get_image_channel_order.adoc#, get_image_channel_order>>
+**** <<get_image_dim.adoc#, get_image_dim>>
+**** <<get_image_array_size.adoc#, get_image_array_size>>
+**** <<get_image_num_samples.adoc#, get_image_num_samples>>
+*** <<integerFunctions.adoc#, Integer Functions>>
+**** <<abs.adoc#, abs>>
+**** <<abs.adoc#, abs_diff>>
+**** <<add_sat.adoc#, add_sat>>
+**** <<clamp_integer.adoc#, clamp>>
+**** <<clz.adoc#, clz>>
+**** <<ctz.adoc#, ctz>>
+**** <<hadd.adoc#, hadd>>
+**** <<mad24.adoc#, mad24>>
+**** <<mad_hi.adoc#, mad_hi>>
+**** <<mad_sat.adoc#, mad_sat>>
+**** <<integerMax.adoc#, ma>>
+**** <<integerMax.adoc#, min>>
+**** <<mul24.adoc#, mul24>>
+**** <<mul_hi.adoc#, mul_hi>>
+**** <<popcount.adoc#, popcount>>
+**** <<hadd.adoc#, rhadd>>
+**** <<rotate.adoc#, rotate>>
+**** <<sub_sat.adoc#, sub_sat>>
+**** <<upsample.adoc#, upsample>>
+*** <<mathFunctions.adoc#, Math Functions>>
+**** <<mathConstants.adoc#, Symbolic Math Constants>>
+**** <<FP_CONTRACT.adoc#, Floating-point Macros and Pragma>>
+**** <<macroLimits.adoc#, Macros and Limits>>
+**** <<acos.adoc#, acos>>
+**** <<acos.adoc#, acosh>>
+**** <<acos.adoc#, acospi>>
+**** <<asin.adoc#, asin>>
+**** <<asin.adoc#, asinh>>
+**** <<asin.adoc#, asinpi>>
+**** <<atan.adoc#, atan>>
+**** <<atan.adoc#, atan2>>
+**** <<atan.adoc#, atanh>>
+**** <<atan.adoc#, atanpi>>
+**** <<atan.adoc#, atan2pi>>
+**** <<cbrt.adoc#, cbrt>>
+**** <<ceil.adoc#, ceil>>
+**** <<copysign.adoc#, copysign>>
+**** <<cos.adoc#, cos>>
+**** <<cos.adoc#, half_cos, native_cos>>
+**** <<cos.adoc#, cosh>>
+**** <<cos.adoc#, cospi>>
+**** <<divide.adoc#, half_divide, native_divide>>
+**** <<erf.adoc#, erf>>
+**** <<erf.adoc#, erfc>>
+**** <<exp.adoc#, exp>>
+**** <<exp.adoc#, half_exp, native_exp>>
+**** <<exp.adoc#, exp2>>
+**** <<exp.adoc#, half_exp2, native_exp2>>
+**** <<exp.adoc#, exp10>>
+**** <<exp.adoc#, half_exp10, native_exp10>>
+**** <<exp.adoc#, expm1>>
+**** <<fabs.adoc#, fabs>>
+**** <<fdim.adoc#, fdim>>
+**** <<floor.adoc#, floor>>
+**** <<fma.adoc#, fma>>
+**** <<fmax.adoc#, fma>>
+**** <<fmin.adoc#, fmin>>
+**** <<fmod.adoc#, fmod>>
+**** <<fract.adoc#, fract>>
+**** <<frexp.adoc#, frexp>>
+**** <<hypot.adoc#, hypot>>
+**** <<ilogb.adoc#, ilogb>>
+**** <<ldexp.adoc#, ldexp>>
+**** <<lgamma.adoc#, lgamma>>
+**** <<lgamma.adoc#, lgamma_r>>
+**** <<log.adoc#, log>>
+**** <<log.adoc#, half_log, native_log>>
+**** <<log.adoc#, log2>>
+**** <<log.adoc#, half_log2, native_log2>>
+**** <<log.adoc#, log10>>
+**** <<log.adoc#, half_log10, native_log10>>
+**** <<log.adoc#, log1p>>
+**** <<log.adoc#, logb>>
+**** <<mad.adoc#, mad>>
+**** <<mag.adoc#, magma>>
+**** <<mag.adoc#, magmin>>
+**** <<modf.adoc#, modf>>
+**** <<nan.adoc#, nan>>
+**** <<nextafter.adoc#, nextafter>>
+**** <<pow.adoc#, pow>>
+**** <<pow.adoc#, pown>>
+**** <<pow.adoc#, powr>>
+**** <<pow.adoc#, half_powr, native_powr>>
+**** <<recip.adoc#, half_recip, native_recip>>
+**** <<remainder.adoc#, remainder>>
+**** <<remquo.adoc#, remquo>>
+**** <<rint.adoc#, rint>>
+**** <<round.adoc#, round>>
+**** <<rootn.adoc#, rootn>>
+**** <<sqrt.adoc#, rsqrt>>
+**** <<sqrt.adoc#, half_rsqrt, native_rsqrt>>
+**** <<sin.adoc#, sin>>
+**** <<sin.adoc#, half_sin, native_sin>>
+**** <<sin.adoc#, sincos>>
+**** <<sin.adoc#, sinh>>
+**** <<sin.adoc#, sinpi>>
+**** <<sqrt.adoc#, sqrt>>
+**** <<sqrt.adoc#, half_sqrt, native_sqrt>>
+**** <<tan.adoc#, tan>>
+**** <<tan.adoc#, half_tan, native_tan>>
+**** <<tan.adoc#, tanh>>
+**** <<tan.adoc#, tanpi>>
+**** <<tgamma.adoc#, tgamma>>
+**** <<trunc.adoc#, trunc>>
+*** <<miscVectorFunctions.adoc#, Misc. Vector Functions>>
+**** <<shuffle.adoc#, shuffle>>
+**** <<shuffle.adoc#, shuffle2>>
+**** <<vec_step.adoc#, vec_step>>
+*** <<relationalFunctions.adoc#, Relational Functions>>
+**** <<isequal.adoc#, isequal>>
+**** <<isnotequal.adoc#, isnotequal>>
+**** <<isgreater.adoc#, isgreater>>
+**** <<isgreaterequal.adoc#, isgreaterequal>>
+**** <<isless.adoc#, isless>>
+**** <<islessequal.adoc#, islessequal>>
+**** <<islessgreater.adoc#, islessgreater>>
+**** <<isfinite.adoc#, isfinite>>
+**** <<isinf.adoc#, isinf>>
+**** <<isnan.adoc#, isnan>>
+**** <<isnormal.adoc#, isnormal>>
+**** <<isordered.adoc#, isordered>>
+**** <<isunordered.adoc#, isunordered>>
+**** <<signbit.adoc#, signbit>>
+**** <<any.adoc#, any>>
+**** <<any.adoc#, all>>
+**** <<bitselect.adoc#, bitselect>>
+**** <<select.adoc#, select>>
+*** <<syncFunctions.adoc#, Sync Functions>>
+**** <<barrier.adoc#, barrier>>
+**** <<work_group_barrier.adoc#, work_group_barrier>>
+*** <<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+**** <<vloadn.adoc#, vload>>
+**** <<vload_half.adoc#, vload_half>>
+**** <<vload_halfn.adoc#, vload_half>>
+**** <<vloada_halfn.adoc#, vloada_half>>
+**** <<vstoren.adoc#, vstore>>
+**** <<vstore_half.adoc#, vstore_half>>
+**** <<vstore_halfn.adoc#, vstore_half>>
+**** <<vstorea_halfn.adoc#, vstorea_half>>
+*** <<workItemFunctions.adoc#, Work-Item Functions>>
+**** <<get_global_id.adoc#, get_global_id>>
+**** <<get_global_size.adoc#, get_global_size>>
+**** <<get_global_offset.adoc#, get_global_offset>>
+**** <<get_global_linear_id.adoc#, get_global_linear_id>>
+**** <<get_group_id.adoc#, get_group_id>>
+**** <<get_local_id.adoc#, get_local_id>>
+**** <<get_local_linear_id.adoc#, get_local_linear_id>>
+**** <<get_local_size.adoc#, get_local_size>>
+**** <<get_enqueued_local_size.adoc#, get_enqueued_local_size>>
+**** <<get_num_groups.adoc#, get_num_groups>>
+**** <<get_work_dim.adoc#, get_work_dim>>
+*** <<pipeFunctions.adoc#, Pipe Functions>>
+**** <<read_pipe.adoc#, read_pipe>>
+**** <<write_pipe.adoc#, write_pipe>>
+**** <<reserve_read_pipe.adoc#, reserve_read_pipe>>
+**** <<commit_read_pipe.adoc#, commit_read_pipe>>
+**** <<is_valid_reserve_id.adoc#, is_valid_reserve_id>>
+**** <<work_group_reserve_read_pipe.adoc#, work_group_reserve_read_pipe>>
+**** <<work_group_reserve_write_pipe.adoc#, work_group_reserve_write_pipe>>
+**** <<work_group_commit_read_pipe.adoc#, work_group_commit_read_pipe>>
+**** <<work_group_commit_write_pipe.adoc#, work_group_commit_write_pipe>>
+**** <<get_pipe_num_packets.adoc#, get_pipe_num_packets>>
+**** <<get_pipe_max_packets.adoc#, get_pipe_max_packets>>
+* <<operators.adoc#, Operators>>
+* Conversions and Type Casting
+** <<convert_T.adoc#, Explicit Conversions>>
+** <<as_typen.adoc#, Reinterpreting Types Using as_typen()>>
+* <<preprocessorDirectives.adoc#, Preprocessor Directives and Macros>>
+* Optional Extensions
+** <<EXTENSION.adoc#, EXTENSION>>
+** <<clGetExtensionFunctionAddressForPlatform.adoc#, clGetExtensionFunctionAddressForPlatform>>
+** <<cl_khr_3d_image_writes.adoc#, cl_khr_3d_image_writes>>
+** <<cl_khr_byte_addressable_store.adoc#, cl_khr_byte_addressable_store>>
+** <<cl_khr_context_abort.adoc#, cl_khr_context_abort>>
+** <<cl_khr_d3d10_sharing.adoc#, cl_khr_d3d10_sharing>>
+** <<cl_khr_d3d11_sharing.adoc#, cl_khr_d3d11_sharing>>
+** <<cl_khr_depth_images.adoc#, cl_khr_depth_images>>
+** <<cl_khr_device_enqueue_local_arg_types.adoc#, cl_khr_device_enqueue_local_arg_types>>
+** <<cl_khr_dx9_media_sharing.adoc#, cl_khr_dx9_media_sharing>>
+** <<cl_khr_egl_event.adoc#, cl_khr_egl_event>>
+** <<cl_khr_egl_image.adoc#, cl_khr_egl_image>>
+** <<cl_khr_fp16.adoc#, cl_khr_fp16>>
+** <<cl_khr_fp64.adoc#, cl_khr_fp64>>
+** <<cl_khr_gl_depth_images.adoc#, cl_khr_gl_depth_images>>
+** <<cl_khr_gl_event.adoc#, cl_khr_gl_event>>
+** <<cl_khr_gl_msaa_sharing.adoc#, cl_khr_gl_msaa_sharing>>
+** <<cl_khr_gl_sharing.adoc#, cl_khr_gl_sharing>>
+** <<cl_khr_global_int32_base_atomics.adoc#, cl_khr_global_int32_base_atomics>>
+** <<cl_khr_global_int32_extended_atomics.adoc#, cl_khr_global_int32_extended_atomics>>
+** <<cl_khr_icd.adoc#, cl_khr_icd>>
+** <<cl_khr_il_program.adoc#, cl_khr_il_program>>
+** <<cl_khr_image2d_from_buffer.adoc#, cl_khr_image2d_from_buffer>>
+** <<cl_khr_initialize_memory.adoc#, cl_khr_initialize_memory>>
+** <<cl_khr_int64_base_atomics.adoc#, cl_khr_int64_base_atomics>>
+** <<cl_khr_int64_extended_atomics.adoc#, cl_khr_int64_extended_atomics>>
+** <<cl_khr_local_int32_base_atomics.adoc#, cl_khr_local_int32_base_atomics>>
+** <<cl_khr_local_int32_extended_atomics.adoc#, cl_khr_local_int32_extended_atomics>>
+** <<cl_khr_mipmap_image.adoc#, cl_khr_mipmap_image>>
+** <<cl_khr_mipmap_image.adoc#, cl_khr_mipmap_image_writes>>
+** <<cl_khr_priority_hints.adoc#, cl_khr_priority_hints>>
+** <<cl_khr_spir.adoc#, cl_khr_spir>>
+** <<cl_khr_srgb_image_writes.adoc#, cl_khr_srgb_image_writes>>
+** <<cl_khr_subgroups.adoc#, cl_khr_subgroups>>
+** <<cl_khr_terminate_context.adoc#, cl_khr_terminate_context>>
+** <<cl_khr_throttle_hints.adoc#, cl_khr_throttle_hints>>
+* Sharing
+** Sharing With OpenGL
+*** <<cl_khr_gl_sharing.adoc#, cl_khr_gl_sharing>>
+*** <<cl_khr_gl_event.adoc#, cl_khr_gl_event>>
+*** <<clCreateFromGLBuffer.adoc#, clCreateFromGLBuffer>>
+*** <<clCreateFromGLTexture.adoc#, clCreateFromGLTexture>>
+*** <<clCreateFromGLRenderbuffer.adoc#, clCreateFromGLRenderbuffer>>
+*** <<clGetGLObjectInfo.adoc#, clGetGLObjectInfo>>
+*** <<clGetGLTextureInfo.adoc#, clGetGLTextureInfo>>
+*** <<clEnqueueAcquireGLObjects.adoc#, clEnqueueAcquireGLObjects>>
+*** <<clEnqueueReleaseGLObjects.adoc#, clEnqueueReleaseGLObjects>>
+*** <<clCreateEventFromGLsyncKHR.adoc#, clCreateEventFromGLsyncKHR>>
+** Sharing With Direct3D 10
+*** <<cl_khr_d3d10_sharing.adoc#, cl_khr_d3d10_sharing>>
+*** <<clGetDeviceIDsFromD3D10KHR.adoc#, clGetDeviceIDsFromD3D10KHR>>
+*** <<clCreateFromD3D10BufferKHR.adoc#, clCreateFromD3D10BufferKHR>>
+*** <<clCreateFromD3D10Texture2DKHR.adoc#, clCreateFromD3D10Texture2DKHR>>
+*** <<clCreateFromD3D10Texture3DKHR.adoc#, clCreateFromD3D10Texture3DKHR>>
+*** <<clEnqueueAcquireD3D10ObjectsKHR.adoc#, clEnqueueAcquireD3D10ObjectsKHR>>
+*** <<clEnqueueReleaseD3D10ObjectsKHR.adoc#, clEnqueueReleaseD3D10ObjectsKHR>>
+** Sharing With Direct3D 11
+*** <<cl_khr_d3d11_sharing.adoc#, cl_khr_d3d11_sharing>>
+*** <<clGetDeviceIDsFromD3D11KHR.adoc#, clGetDeviceIDsFromD3D11KHR>>
+*** <<clCreateFromD3D11BufferKHR.adoc#, clCreateFromD3D11BufferKHR>>
+*** <<clCreateFromD3D11Texture2DKHR.adoc#, clCreateFromD3D11Texture2DKHR>>
+*** <<clCreateFromD3D11Texture3DKHR.adoc#, clCreateFromD3D11Texture3DKHR>>
+*** <<clEnqueueAcquireD3D11ObjectsKHR.adoc#, clEnqueueAcquireD3D11ObjectsKHR>>
+*** <<clEnqueueReleaseD3D11ObjectsKHR.adoc#, clEnqueueReleaseD3D11ObjectsKHR>>
+** Sharing With DX9 Media Surface
+*** <<cl_khr_dx9_media_sharing.adoc#, cl_khr_dx9_media_sharing>>
+*** <<clGetDeviceIDsFromDX9MediaAdapterKHR.adoc#, clGetDeviceIDsFromDX9MediaAdapterKHR>>
+*** <<clCreateFromDX9MediaSurfaceKHR.adoc#, clCreateFromDX9MediaSurfaceKHR>>
+*** <<clEnqueueAcquireDX9MediaSurfacesKHR.adoc#, clEnqueueAcquireDX9MediaSurfacesKHR>>
+*** <<clEnqueueReleaseDX9MediaSurfacesKHR.adoc#, clEnqueueReleaseDX9MediaSurfacesKHR>>

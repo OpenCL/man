@@ -1,0 +1,23 @@
+include::_header.adoc[]
+
+
+[[cl_khr_context_abort]]
+= cl_khr_context_abort
+
+----
+#pragma OPENCL EXTENSION cl_khr_context_abort : enable
+----
+
+
+[[description]]
+== Description
+
+
+:spec-name: Core
+:spec-page: 78
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

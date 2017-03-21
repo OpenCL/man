@@ -1,0 +1,32 @@
+include::_header.adoc[]
+
+
+[[get_global_id]]
+= get_global_id
+
+Returns the unique global work-item ID value for dimension identified by `dimindx`.
+
+[source,c]
+----
+size_t get_global_id(uint dimindx)
+----
+
+
+[[description]]
+== Description
+
+The global work-item ID specifies the work-item ID based on the number of global work-items specified to execute the kernel.
+Valid values of `dimindx` are 0 to <<get_work_dim.adoc#, `get_work_dim`>>() - 1.
+For other values of `dimindx`, `get_global_id`() returns 0.
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<workItemFunctions.adoc#, Work-Item Functions>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>
+
+include::_footer.adoc[]

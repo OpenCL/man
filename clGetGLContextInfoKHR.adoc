@@ -1,0 +1,147 @@
+include::_header.adoc[]
+
+
+[[clGetGLContextInfoKHR]]
+= clGetGLContextInfoKHR
+
+Get OpenGL context information.
+
+[source,c]
+----
+cl_int clGetGLContextInfoKHR(const cl_context_properties *properties,
+                             cl_gl_context_info param_name,
+                             size_t param_value_size,
+                             void *param_value,
+                             size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`properties`::
+
+Points to an attribute list whose format and valid contents are identical to the `properties` argument of <<clCreateContext.adoc#, `clCreateContext`>>.
+`properties` must identify a single valid GL context or GL share group object.
+
+`param_name`::
+
+A constant that specifies the GL context information to query, and must be one of the values shown in the table below.
+
+`param_value_size`::
+
+Specifies the size in bytes of memory pointed to by `param_value`.
+This size must be greater than or equal to the size of the return type described in the table below.
+
+`param_value`::
+
+A pointer to memory where the result of the query is returned as described in the table below.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size_ret`::
+
+Returns the actual size in bytes of data being queried by `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|param_name
+|Return Type
+|Information returned in param_value
+
+|`CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR`
+|cl_device_id
+|Return the CL device currently associated with the specified OpenGL context.
+
+|`CL_DEVICES_FOR_GL_CONTEXT_KHR`
+|cl_device_id[]
+|List of all CL devices which may be associated with the specified OpenGL context.
+
+|===
+
+
+[[description]]
+== Description
+
+Get OpenGL context information.
+
+
+[[notes]]
+== Notes
+
+include::gl_sharingInc.adoc[]
+
+include::gl_formatsInc.adoc[]
+
+include::gl_lifetimeInc.adoc[]
+
+include::gl_syncInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+If no device(s) exist corresponding to `param_name`, the call will not fail, but the value of `param_value_size_ret` will be zero.
+Otherwise returns one of the following:
+
+* {blank}
++
+--
+
+`CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR` if a context was specified by any of the following means:
+
+* A context was specified for an EGL-based OpenGL ES or OpenGL implementation by setting the attributes `CL_GL_CONTEXT_KHR` and `CL_EGL_DISPLAY_KHR`
+
+* A context was specified for a GLX-based OpenGL implementation by setting the attributes `CL_GL_CONTEXT_KHR` and `CL_GLX_DISPLAY_KHR`
+
+* A context was specified for a WGL-based OpenGL implementation by setting the attributes `CL_GL_CONTEXT_KHR` and `CL_WGL_HDC_KHR`
+
+and any of the following conditions hold:
+
+* The specified display and context attributes do not identify a valid OpenGL or OpenGL ES context.
+
+* The specified context does not support buffer and renderbuffer objects.
+
+* The specified context is not compatible with the OpenCL context being created (for example, it exists in a physically distinct address space, such as another hardware device; or it does not support sharing data with OpenCL due to implementation restrictions).
+
+--
+
+* `CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR` if a share group was specified for a CGL-based OpenGL implementation by setting the attribute `CL_CGL_SHAREGROUP_KHR`, and the specified share group does not identify a valid CGL share group object.
+
+* {blank}
++
+--
+
+`CL_INVALID_OPERATION` if a context was specified as described above and any of the following conditions hold:
+
+* A context or share group object was specified for one of CGL, EGL, GLX, or WGL and the OpenGL implementation does not support that window-system binding API.
+
+* More than one of the attributes `CL_CGL_SHAREGROUP_KHR`, `CL_EGL_DISPLAY_KHR`, `CL_GLX_DISPLAY_KHR`, and `CL_WGL_HDC_KHR` is set to a non-default value.
+
+* Both of the attributes `CL_CGL_SHAREGROUP_KHR` and `CL_GL_CONTEXT_KHR` are set to non-default values.
+
+* Any of the devices specified in the `devices` argument cannot support OpenCL objects which share the data store of an OpenGL object.
+
+--
+
+* `CL_INVALID_VALUE` if an attribute name other than those specified in the table of supported `properties` for <<clCreateContext.adoc#, `clCreateContext`>> is specified in `properties`.
+
+* `CL_INVALID_VALUE` if `param_name` is not one of the values listed in the table above; or if the size in bytes specified by `param_value_size` is less than the size of the return type shown in the table above, and `param_value` is not a NULL value.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 41
+
+
+[[seealso]]
+== Also see
+
+<<clCreateContext.adoc#, `clCreateContext`>>, <<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>>, <<cl_khr_gl_event.adoc#, `cl_khr_gl_event`>>
+
+include::_footer.adoc[]

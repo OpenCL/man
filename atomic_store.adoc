@@ -1,0 +1,57 @@
+include::_header.adoc[]
+
+
+[[atomic_store]]
+= atomic_store, atomic_store_explicit
+
+atomic_store, atomic_store_explicit functions.
+
+[source,c]
+----
+void atomic_store(volatile A *object,
+                  C desired)
+
+void atomic_store_explicit(volatile A *object,
+                           C desired,
+                           memory_order order)
+
+void atomic_store_explicit(volatile A *object,
+                           C desired,
+                           memory_order order,
+                           memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`desired`::
+
+`order`::
+
+The `order` argument shall not be `memory_order_acquire`, nor `memory_order_acq_rel`.
+
+`scope`::
+
+
+[[description]]
+== Description
+
+Atomically replace the value pointed to by `object` with the value of `desired`.
+Memory is affected according to the value of `order`.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 107
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

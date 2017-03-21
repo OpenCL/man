@@ -1,0 +1,90 @@
+include::_header.adoc[]
+
+
+[[ReinterpretingTypesUsingas_typen]]
+= as_type(), as_type_n_()
+
+----
+as_type()
+
+as_typen()
+----
+
+
+[[description]]
+== Description
+
+All data types described in <<scalarDataTypes.adoc#, Scalar Data Types>> and <<vectorDataTypes.adoc#, Vector Data Types>> (except `bool`, `half` (unless the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension is supported), and `void`) may be also reinterpreted as another data type of the same size using the `as_type()` operator for scalar data types and the `as_typen()` operator for vector data types.
+When the operand and result type contain the same number of elements, the bits in the operand shall be returned directly without modification as the new type.
+The usual type promotion for function arguments shall not be performed.
+
+For example, `as_float(0x3f800000)` returns `1.0f`, which is the value that the bit pattern `0x3f800000` has if viewed as an IEEE-754 single precision value.
+
+When the operand and result type contain a different number of elements, the result shall be implementation-defined except if the operand is a 4-component vector and the result is a 3-component vector.
+In this case, the bits in the operand shall be returned directly without modification as the new type.
+That is, a conforming implementation shall explicitly define a behavior, but two conforming implementations need not have the same behavior when the number of elements in the result and operand types does not match.
+The implementation may define the result to contain all, some or none of the original bits in whatever order it chooses.
+It is an error to use the `as_type()` or `as_typen()` operators to reinterpret data to a type of a different number of bytes.
+
+
+[[notes]]
+== Notes
+
+While the union is intended to reflect the organization of data in memory, the `as_type()` and `as_typen()` constructs are intended to reflect the organization of data in register.
+The `as_type()` and `as_typen()` constructs are intended to compile to no instructions on devices that use a shared register file designed to operate on both the operand and result types.
+
+Note that while differences in memory organization are expected to largely be limited to those arising from endianness, the register based representation may also differ due to size of the element in register. (For example, an architecture may load a char into a 32-bit register, or a char vector into a SIMD vector register with fixed 32-bit element size.)
+
+If the element count does not match, then the implementation should pick a data representation that most closely matches what would happen if an appropriate result type operator was applied to a register containing data of the source type.
+If the number of elements matches, then the `as_typen()` should faithfully reproduce the behavior expected from a similar data type reinterpretation using memory/unions.
+So, for example if an implementation stores all single precision data as double in register, it should implement as_int( float ) by first downconverting the double to single precision and then (if necessary) moving the single precision bits to a register suitable for operating on integer data.
+
+If data stored in different address spaces do not have the same endianness, then the "dominant endianness" of the device should prevail.
+
+
+[[example1]]
+== Example
+
+----
+float f = 1.0f;
+uint u = as_uint(f);  // Legal. Contains:  0x3f800000
+
+float4 f = (float4)(1.0f, 2.0f, 3.0f, 4.0f);
+// Legal. Contains: (int4)
+// (0x3f800000, 0x40000000, 0x40400000, 0x40800000)
+int4 i = as_int4(f);
+
+float4 f, g;
+int4 is_less = f < g;
+
+// Legal. f[i] = f[i] < g[i] ? f[i] : 0.0f
+f = as_float4(as_int4(f) & is_less);
+
+int i;
+// Legal. Result is implementation-defined.
+short2 j = as_short2(i);
+
+int4 i;
+// Legal. Result is implementation-defined.
+short8 j = as_short8(i);
+
+float4 f;
+//Error. result and operand have different size
+double4 g = as_double4(f);   // Only if double is supported.
+
+float4 f;
+// Legal. g.xyz will have same values as f.xyz. g.w is undefined
+float3 g = as_float3(f);
+----
+
+
+:spec-name: CLan
+:spec-page: 24
+
+
+[[seealso]]
+== Also see
+
+<<scalarDataTypes.adoc#, Scalar Data Types>>, <<vectorDataTypes.adoc#, Vector Data Types>>
+
+include::_footer.adoc[]

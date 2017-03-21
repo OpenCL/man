@@ -1,0 +1,26 @@
+include::_header.adoc[]
+
+
+[[barrier]]
+= barrier
+
+See <<work_group_barrier.adoc#, `work_group_barrier`>>.
+
+
+[[description]]
+== Description
+
+The built-in function `barrier` has been renamed <<work_group_barrier.adoc#, `work_group_barrier`>>.
+For backward compatibility, `barrier` is also supported.
+
+
+:spec-name: CLan
+:spec-page: 97
+
+
+[[seealso]]
+== Also see
+
+<<work_group_barrier.adoc#, `work_group_barrier`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,23 @@
+include::_header.adoc[]
+
+
+[[cl_khr_depth_images]]
+= cl_khr_depth_images
+
+----
+#pragma OPENCL EXTENSION cl_khr_depth_images : enable
+----
+
+
+[[description]]
+== Description
+
+
+:spec-name: Core
+:spec-page: 78
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

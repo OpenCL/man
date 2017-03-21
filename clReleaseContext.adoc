@@ -1,0 +1,52 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceIDs]]
+= clReleaseContext
+
+Decrement the context reference count.
+
+[source,c]
+----
+cl_int clReleaseContext(cl_context context)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+The context to release.
+
+
+[[notes]]
+== Notes
+
+After the `context` reference count becomes zero and all the objects attached to `context` (such as memory objects, command-queues) are released, the `context` is deleted.
+Using this function to release a reference that was not obtained by creating the object or by calling <<clRetainContext.adoc#, `clRetainContext`>> causes undefined behavior.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid OpenCL context.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<clCreateContext.adoc#, `clCreateContext`>>, <<clCreateContextFromType.adoc#, `clCreateContextFromType`>>, <<clGetContextInfo.adoc#, `clGetContextInfo`>>, <<clRetainContext.adoc#, `clRetainContext`>>, <<clGetContextInfo.adoc#, `clGetContextInfo`>>
+
+include::_footer.adoc[]

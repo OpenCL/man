@@ -1,0 +1,145 @@
+include::_header.adoc[]
+
+= Math Built-In Functions
+
+The table below describes the list of built-in math functions.
+These functions can take scalar or vector arguments.
+Click an item in the table for details about that function.
+
+[cols="25a,25a,25a,25a"]
+|===
+
+|<<acos.adoc#, `acos`>>
+|<<acos.adoc#, `acosh`>>
+|<<acos.adoc#, `acospi`>>
+|<<asin.adoc#, `asin`>>
+
+|<<asin.adoc#, `asinh`>>
+|<<asin.adoc#, `asinpi`>>
+|<<atan.adoc#, `atan`>>
+|<<atan.adoc#, `atan2`>>
+
+|<<atan.adoc#, `atanh`>>
+|<<atan.adoc#, `atanpi`>>
+|<<atan.adoc#, `atan2pi`>>
+|<<cbrt.adoc#, `cbrt`>>
+
+|<<ceil.adoc#, `ceil`>>
+|<<copysign.adoc#, `copysign`>>
+|<<cos.adoc#, `cos`>>
+|<<cos.adoc#, `cosh`>>
+
+|<<cos.adoc#, `cospi`>>
+|<<erf.adoc#, `erfc`>>
+|<<erf.adoc#, `erf`>>
+|<<exp.adoc#, `exp`>>
+
+|<<exp.adoc#, `exp2`>>
+|<<exp.adoc#, `exp10`>>
+|<<exp.adoc#, `expm1`>>
+|<<fabs.adoc#, `fabs`>>
+
+|<<fdim.adoc#, `fdim`>>
+|<<floor.adoc#, `floor`>>
+|<<fma.adoc#, `fma`>>
+|<<fmax.adoc#, `fmax`>>
+
+|<<fmin.adoc#, `fmin`>>
+|<<fmod.adoc#, `fmod`>>
+|<<fract.adoc#, `fract`>>
+|<<frexp.adoc#, `frexp`>>
+
+|<<hypot.adoc#, `hypot`>>
+|<<ilogb.adoc#, `ilogb`>>
+|<<ldexp.adoc#, `ldexp`>>
+|<<lgamma.adoc#, `lgamma`>>
+
+|<<lgamma.adoc#, `lgamma_r`>>
+|<<log.adoc#, `log`>>
+|<<log.adoc#, `log2`>>
+|<<log.adoc#, `log10`>>
+
+|<<log.adoc#, `log1p`>>
+|<<log.adoc#, `logb`>>
+|<<mad.adoc#, `mad`>>
+|<<mag.adoc#, `maxmag`>>
+
+|<<mag.adoc#, `minmag`>>
+|<<modf.adoc#, `modf`>>
+|<<nan.adoc#, `nan`>>
+|<<nextafter.adoc#, `nextafter`>>
+
+|<<pow.adoc#, `pow`>>
+|<<pow.adoc#, `pown`>>
+|<<pow.adoc#, `powr`>>
+|<<remainder.adoc#, `remainder`>>
+
+|<<remquo.adoc#, `remquo`>>
+|<<rint.adoc#, `rint`>>
+|<<rootn.adoc#, `rootn`>>
+|<<round.adoc#, `round`>>
+
+|<<sqrt.adoc#, `rsqrt`>>
+|<<sin.adoc#, `sin`>>
+|<<sin.adoc#, `sincos`>>
+|<<sin.adoc#, `sinh`>>
+
+|<<sin.adoc#, `sinpi`>>
+|<<sqrt.adoc#, `sqrt`>>
+|<<tan.adoc#, `tan`>>
+|<<tan.adoc#, `tanh`>>
+
+|<<tan.adoc#, `tanpi`>>
+|<<tgamma.adoc#, `tgamma`>>
+|<<trunc.adoc#, `trunc`>>
+
+|===
+
+The table below describes the list of built-in math functions that are defined with the `half_` or `native_` prefix
+
+[cols="25a,25a,25a,25a"]
+|===
+
+|<<cos.adoc#, (half \| native)_ cos>>
+|<<divide.adoc#, (half \| native)_ divide>>
+|<<exp.adoc#, (half \| native)_ exp>>
+|<<exp.adoc#, (half \| native)_ exp2>>
+
+|<<exp.adoc#, (half \| native)_exp10>>
+|<<log.adoc#, (half \| native)_ log>>
+|<<log.adoc#, (half \| native)_ log2>>
+|<<log.adoc#, (half \| native)_ log10>>
+
+|<<pow.adoc#, (half \| native)_ powr>>
+|<<recip.adoc#, (half \| native)_ recip>>
+|<<sqrt.adoc#, (half \| native)_ rsqrt>>
+|<<sin.adoc#, (half \| native)_ sin>>
+
+|<<sqrt.adoc#, (half \| native)_ sqrt>>
+|<<tan.adoc#, (half \| native)_ tan>>
+
+|===
+
+
+[[description]]
+== Description
+
+include::mathFunctionsInc.adoc[]
+
+The math functions that are defined with the `half_` prefix are implemented with a minimum of 10-bits of accuracy i.e.
+an ULP value <= 8192 ulp.
+
+The math functions that are defined with the `native_` prefix may map to one or more native device instructions and will typically have better performance compared to the corresponding functions (without the `native_` prefix) described.
+The accuracy (and in some cases the input range(s)) of these functions is implementation-defined.
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathConstants.adoc#, Symbolic Math Constants>>, <<FP_CONTRACT.adoc#, Floating Point Pragma>>, <<macroLimits.adoc#, Macros and Limits>>
+
+include::_footer.adoc[]

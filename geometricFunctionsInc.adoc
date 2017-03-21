@@ -1,0 +1,6 @@
+General information about built-in geometric functions: Built-in geometric functions operate component-wise.
+The description is per-component.
+`floatn` is `float`, `float2`, `float3`, or `float4` and `doublen` is `double`, `double2`, `double3`, or `double4`.
+The built-in geometric functions are implemented using the round to nearest even rounding mode.
+
+The geometric functions can be implemented using contractions such as <<mad.adoc#, `mad`>> or <<fma.adoc#, `fma`>>.

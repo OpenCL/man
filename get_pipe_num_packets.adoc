@@ -1,0 +1,34 @@
+include::_header.adoc[]
+
+
+[[get_pipe_num_packets]]
+= get_pipe_num_packets
+
+Returns the number of available entries in the pipe.
+
+[source,c]
+----
+uint get_pipe_num_packets(pipe gentype p)
+----
+
+
+[[description]]
+== Description
+
+Returns the number of available entries in the pipe.
+The number of available entries in a pipe is a dynamic value.
+The value returned should be considered immediately stale.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 160
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

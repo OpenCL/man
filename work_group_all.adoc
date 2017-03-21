@@ -1,0 +1,28 @@
+include::_header.adoc[]
+
+
+[[work_group_all]]
+= work_group_all
+
+Evaluates predicate for all work-items in the work-group.
+
+[source,c]
+----
+int work_group_all(int predicate)
+----
+
+
+[[description]]
+== Description
+
+Evaluates `predicate` for all work-items in the work-group and returns a non-zero value if `predicate` evaluates to non-zero for all workitems in the work-group.
+
+
+:spec-name: CLan
+:spec-page: 154
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

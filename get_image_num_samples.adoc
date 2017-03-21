@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[get_image_num_samples]]
+= get_image_num_samples
+
+Return the number of samples in the 2D MSAA image.
+
+[source,c]
+----
+int get_image_num_samples(image2d_msaa_t image)
+
+int get_image_num_samples(image2d_array_msaa_t image)
+
+int get_image_num_samples(image2d_msaa_depth_t image)
+
+int get_image_num_samples(image2d_array_msaa_depth_t image)
+----
+
+
+[[description]]
+== Description
+
+Return the number of samples in the 2D MSAA image.
+This requires the <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>> extension.
+
+
+:spec-name: Ext
+:spec-page: 119
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>
+
+include::_footer.adoc[]

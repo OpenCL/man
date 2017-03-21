@@ -1,0 +1,34 @@
+include::_header.adoc[]
+
+
+[[clUnloadPlatformCompiler]]
+= clUnloadPlatformCompiler
+
+Allows the implementation to release the resources allocated by the OpenCL compiler for `platform`.
+
+[source,c]
+----
+cl_int clUnloadPlatformCompiler(cl_platform_id platform)
+----
+
+
+[[notes]]
+== Notes
+
+This is a hint from the application and does not guarantee that the compiler will not be used in the future or that the compiler will actually be unloaded by the implementation.
+Calls to <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>>, or <<clLinkProgram.adoc#, `clLinkProgram`>> after `clUnloadPlatformCompiler` will reload the compiler, if necessary, to build the appropriate program executable.
+
+
+[[errors]]
+== Errors
+
+`clUnloadPlatformCompiler` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_PLATFORM` if `platform` is not a valid platform.
+
+
+:spec-name: Core
+:spec-page: 213
+
+include::_footer.adoc[]

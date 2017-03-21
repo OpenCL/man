@@ -1,0 +1,28 @@
+include::_header.adoc[]
+
+= Synchronization and Memory Fence Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<work_group_barrier.adoc#, `work_group_barrier`>>
+|Barrier for all work-items in a work-group
+
+|<<barrier.adoc#, `barrier`>>
+|Obsolete name for <<work_group_barrier.adoc#, `work_group_barrier`>>
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 97
+
+
+[[seealso]]
+== Also see
+
+<<syncFunctions.adoc#, `syncFunctions`>>
+
+include::_footer.adoc[]

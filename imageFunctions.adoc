@@ -1,0 +1,100 @@
+include::_header.adoc[]
+
+= Image Read and Write Functions
+
+Built-in functions to read, write, and query image memory objects.
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<read_imagef1d.adoc#, `read_imagef`>> for 1D
+|Do an element lookup in the 1D image object with or without a sampler, returning floating-point values (including optional mipmap support).
+
+|<<read_imagei1d.adoc#, `read_image{i\|ui}`>> for 1D
+|Do an element lookup in the 1D image object with or without a sampler, returning unnormalized signed integer and unsigned integer values (including optional mipmap support).
+
+|<<read_imageh1d.adoc#, `read_imageh`>> for 1D
+|OPTIONAL function to do an element lookup in the 1D image object with or without a sampler, returning floating-point values.
+Enabled with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>.
+
+|<<write_image1d.adoc#, write_image {f\|i\|ui\|h}>> for 1D
+|Write `color` value to location in the 2D image object (including optional mipmap support).
+The `half` type is enabled with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>.
+
+|<<read_imagef2d.adoc#, `read_imagef`>> for 2D
+|Do an element lookup in the 2D image object with or without a sampler, returning floating-point values (including optional mipmap support).
+
+|<<read_imagei2d.adoc#, `read_image{i\|ui}`>> for 2D
+|Do an element lookup in the 2D image object with or without a sampler, returning unnormalized signed integer and unsigned integer values (including optional mipmap support).
+
+|<<read_imageh2d.adoc#, `read_imageh`>> for 2D
+|OPTIONAL function to do an element lookup in the 2D image object with or without a sampler, returning floating-point values.
+Enabled with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>.
+
+|<<write_image2d.adoc#, write_image {f\|i\|ui\|h}>> for 2D
+|Write `color` value to location in the 2D image object (including optional mipmap support).
+The `half` type is enabled with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>.
+
+|<<read_imagef3d.adoc#, `read_imagef`>> for 3D
+|Do an element lookup in the 3D image object with or without a sampler, returning floating-point values (including optional mipmap support).
+
+|<<read_imagei3d.adoc#, `read_image{i\|ui}`>> for 3D
+|Do an element lookup in the 3D image object with or without a sampler, returning unnormalized signed integer and unsigned integer values (including optional mipmap support).
+
+|<<read_imageh3d.adoc#, `read_imageh`>> for 3D
+|OPTIONAL function to do an element lookup in the 3D image object with or without a sampler, returning floating-point values.
+Enabled with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>.
+
+|<<write_image3d.adoc#, write_image {f\|i\|ui\|h}>> for 3D
+|Write `color` value to location in the 2D image object (including optional mipmap support).
+The `half` type is enabled with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>.
+
+|<<get_image_width.adoc#, `get_image_width`>>
+|Return the image width in pixels
+
+|<<get_image_height.adoc#, `get_image_height`>>
+|Return the image height in pixels.
+
+|<<get_image_depth.adoc#, `get_image_depth`>>
+|Return the 3D image depth in pixels
+
+|<<get_image_channel_data_type.adoc#, `get_image_channel_data_type`>>
+|Return the image channel data type
+
+|<<get_image_channel_order.adoc#, `get_image_channel_order`>>
+|Return the image channel order
+
+|<<get_image_dim.adoc#, `get_image_dim`>>
+|Return the image dimensions
+
+|<<get_image_array_size.adoc#, `get_image_array_size`>>
+|Return the number of images in an image array
+
+|<<get_image_num_mip_levels.adoc#, `get_image_num_mip_levels`>>
+|Return the number of mip-levels.
+Enabled with extension <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>
+
+|<<get_image_num_samples.adoc#, `get_image_num_samples`>>
+|Return the number of samples in the 2D MSAA image.
+Enabled with extension <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>
+
+|===
+
+
+[[notes]]
+== Notes
+
+include::imageFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<sampler_t.adoc#, `sampler_t`>>, <<cl_khr_srgb_image_writes.adoc#, `cl_khr_srgb_image_writes`>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>
+
+include::_footer.adoc[]

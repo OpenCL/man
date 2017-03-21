@@ -1,0 +1,60 @@
+include::_header.adoc[]
+
+
+[[sqrt]]
+= sqrt, rsqrt, half_sqrt, native_sqrt, half_rsqrt, native_rsqrt
+
+Square root functions.
+
+[source,c]
+----
+gentype sqrt(gentype)
+
+gentype half_sqrt(gentype x)
+
+gentype native_sqrt(gentype x)
+
+gentype rsqrt(gentype)
+
+gentype half_rsqrt(gentype x)
+
+gentype native_rsqrt(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`sqrt` computes square root.
+
+`half_sqrt` computes square root.
+
+`native_sqrt` computes square root over an implementation-defined range.
+The maximum error is implementation-defined.
+
+`rsqrt` computes inverse square root.
+
+`half_rsqrt` computes inverse square root.
+
+`native_rsqrt` computes inverse square root over an implementation-defined range.
+The maximum error is implementation-defined.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

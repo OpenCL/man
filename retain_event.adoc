@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[retain_evente]]
+= retain_event
+
+Increments the event reference count.
+
+[source,c]
+----
+void retain_event(clk_event_t event)
+----
+
+
+[[description]]
+== Description
+
+Increments the event reference count.
+`event` must be an event returned by <<enqueue_kernel.adoc#, `enqueue_kernel`>> or <<enqueue_marker.adoc#, `enqueue_marker`>> or a user event.
+
+
+[[notes]]
+== Notes
+
+include::eventFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 171
+
+
+[[seealso]]
+== Also see
+
+<<eventFunctions.adoc#, Event Functions>>
+
+include::_footer.adoc[]

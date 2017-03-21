@@ -1,0 +1,1 @@
+`aQual` refers to one of the access qualifiers `read_only`, `write_only`, or `read_write`.

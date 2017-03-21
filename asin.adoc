@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[asin]]
+= asin, asinh, asinpi
+
+Sine functions.
+
+[source,c]
+----
+gentype asin(gentype)
+
+gentype asinh(gentype)
+
+gentype asinpi(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`asin` is the arc sine function.
+
+`asinh` is the inverse hyperbolic sine function.
+
+`asinpi` computes `asin` (`x`) / π.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

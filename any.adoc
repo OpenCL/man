@@ -1,0 +1,42 @@
+include::_header.adoc[]
+
+
+[[any]]
+= any, all
+
+Test for sign bit.
+
+[source,c]
+----
+int any(igentype x)
+
+int all(igentype x)
+----
+
+
+[[description]]
+== Description
+
+`any` returns 1 if the most significant bit in any component of `x` is set; otherwise returns 0.
+
+`all` returns 1 if the most significant bit in all components of `x` is set; otherwise returns 0.
+
+
+[[notes]]
+== Notes
+
+If an implementation extends this specification to support IEEE-754 flags or exceptions, then all built-in relational functions shall proceed without raising the `invalid` floating-point exception when one or more of the operands are NaNs.
+
+include::relationalFunctionsIGEN.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

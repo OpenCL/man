@@ -1,0 +1,60 @@
+include::_header.adoc[]
+
+
+[[isgreaterequal]]
+= isgreaterequal
+
+Compare of `x` >= `y`.
+
+[source,c]
+----
+int isgreaterequal(float x,
+                   float y)
+
+int n isgreaterequal(float n x,
+                     float n y)
+
+int isgreaterequal(double x,
+                   double y)
+
+long n isgreaterequal(double n x,
+                      double n y)
+----
+
+----
+int isgreaterequal
+     (half x,
+       half y)   // if half extension enabled
+
+shortn isgreaterequal
+     (halfn x,
+       halfn y)   // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns the component-wise compare of `x` >= `y`.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+include::relationalFunctionsInc3.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

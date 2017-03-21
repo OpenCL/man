@@ -1,0 +1,49 @@
+include::_header.adoc[]
+
+
+[[enqueue_marker]]
+= enqueue_marker
+
+Enqueue a marker command to `queue`.
+
+[source,c]
+----
+int enqueue_marker(queue_t queue,
+                   uint num_events_in_wait_list,
+                   const clk_event_t * event_wait_list,
+                   clk_event_t * event_ret)
+----
+
+
+[[description]]
+== Description
+
+Enqueue a marker command to `queue`.
+The marker command waits for a list of events to complete, or if the list is empty it waits for all previously enqueued commands in `queue` to complete before the marker completes.
+
+`event_ret` must not be NULL as otherwise this is a no-op.
+
+If an event is returned, `enqueue_marker` performs an implicit retain on the returned event.
+
+
+[[errors]]
+== Errors
+
+`enqueue_marker` returns `CL_SUCCESS` if the marked command is enqueued successfully and returns `CL_ENQUEUE_FAILURE` otherwise.
+If the `–g` compile option is specified in compiler options passed to <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clBuildProgram.adoc#, `clBuildProgram`>>, the following errors may be returned instead of `CL_ENQUEUE_FAILURE` to indicate why <<enqueue_marker.adoc#, `enqueue_marker`>> failed to enqueue the marker command:
+
+* `CLK_INVALID_QUEUE` if `queue` is not a valid device queue.
+
+* `CLK_INVALID_EVENT_WAIT_LIST` if `event_wait_list` is NULL and `num_events_in_wait_list` is greater than zero, or if `event_wait_list` is not NULL and `num_events_in_wait_list` is zero, or if event objects in `event_wait_list` are not valid events.
+
+* `CLK_DEVICE_QUEUE_FULL` if `queue` is full.
+
+* `CLK_EVENT_ALLOCATION_FAILURE` if `event_ret` is not NULL and an event could not be allocated.
+
+* `CLK_OUT_OF_RESOURCES` if there is a failure to queue the block in `queue` because of insufficient resources needed to execute the kernel.
+
+
+:spec-name: CLan
+:spec-page: 170
+
+include::_footer.adoc[]

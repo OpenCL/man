@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[mul_hi]]
+= mul_hi
+
+Returns the high half of the product of `x` and `y`.
+
+[source,c]
+----
+gentype mul_hi(gentype x,
+               gentype y)
+----
+
+
+[[description]]
+== Description
+
+`mul_hi` computes `x` * `y` and returns the high half of the product of `x` and `y`.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

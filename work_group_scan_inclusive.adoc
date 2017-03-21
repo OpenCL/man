@@ -1,0 +1,35 @@
+include::_header.adoc[]
+
+
+[[work_group_scan_inclusive]]
+= work_group_scan_inclusive_<op>
+
+Do an inclusive prefix-sum operation of all values in work-items in the work-group
+
+[source,c]
+----
+gentype work_group_scan_inclusive_<op>(gentype x)
+----
+
+
+[[description]]
+== Description
+
+Do an inclusive scan operation specified by _<op>_ of all values specified by work-items in the work-group.
+The scan results are returned for each work-item.
+
+The scan order is defined by increasing 1D linear global ID within the work-group.
+
+include::workGroupOpInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 155
+
+
+[[seealso]]
+== Also see
+
+<<work_group_scan_exclusive.adoc#, `work_group_scan_exclusive`>>, <<work_group_reduce.adoc#, `work_group_reduce`>>
+
+include::_footer.adoc[]

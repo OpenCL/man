@@ -1,0 +1,55 @@
+include::_header.adoc[]
+
+
+[[capture_event_profiling_info]]
+= capture_event_profiling_info
+
+Captures the profiling information for command associated with `event`.
+
+[source,c]
+----
+void capture_event_profiling_info(clk_event_t event,
+                                  clk_profiling_info name,
+                                  global void * value)
+----
+
+
+[[description]]
+== Description
+
+Captures the profiling information for functions that are enqueued as commands.
+The specific function being referred to is: enqueue_kernel.
+These enqueued commands are identified by unique event objects.
+The profiling information will be available in `value` once the command identified by `event` has completed.
+
+`event` must be an event returned by <<enqueue_kernel.adoc#, `enqueue_kernel`>>.
+
+`name` identifies which profiling information is to be queried and can be `CLK_PROFILING_COMMAND_EXEC_TIME`.
+
+`value` is a pointer to two 64-bit values.
+
+The first 64-bit value describes the elapsed time `CL_PROFILING_COMMAND_END` – `CL_PROFLING_COMMAND_START` for the command identified by `event` in nanoseconds.
+
+The second 64-bit value describes the elapsed time `CL_PROFILING_COMMAND_COMPLETE` – `CL_PROFILING_COMAMND_START` for the command identified by `event` in nanoseconds.
+
+NOTE: The behavior of `capture_event_profling_info` when called multiple times for the same `event` is undefined
+
+
+[[notes]]
+== Notes
+
+include::eventFunctionsInc.adoc[]
+
+The behavior of `capture_event_profling_info` when called multiple times for the same `event` is undefined.
+
+
+:spec-name: CLan
+:spec-page: 171
+
+
+[[seealso]]
+== Also see
+
+<<eventFunctions.adoc#, Event Functions>>
+
+include::_footer.adoc[]

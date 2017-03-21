@@ -1,0 +1,54 @@
+include::_header.adoc[]
+
+
+[[get_image_width]]
+= get_image_width
+
+Return the image width in pixels.
+
+[source,c]
+----
+int get_image_width(aQual image1d_t image)
+
+int get_image_width(aQual image1d_buffer_t image)
+
+int get_image_width(aQual image2d_t image)
+
+int get_image_width(aQual image3d_t image)
+
+int get_image_width(aQual image1d_array_t image)
+
+int get_image_width(aQual image2d_array_t image)
+
+int get_image_width(aQual image2d_depth_t image)
+
+int get_image_width(aQual image2d_array_depth_t image)
+
+int get_image_width(image2d_msaa_t image)
+
+int get_image_width(image2d_array_msaa_t image)
+
+int get_image_width(image2d_msaa_depth_t image)
+
+int get_image_width(image2d_array_msaa_depth_t image)
+----
+
+
+[[description]]
+== Description
+
+include::imageQueryFunctionsInc.adoc[]
+
+Return the image width in pixels.
+
+
+:spec-name: CLan
+:spec-page: 149
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>
+
+include::_footer.adoc[]

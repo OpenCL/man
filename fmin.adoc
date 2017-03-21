@@ -1,0 +1,53 @@
+include::_header.adoc[]
+
+
+[[fmin]]
+= fmin
+
+Returns the lessor of either `x` or `y`.
+
+[source,c]
+----
+gentype fmin(gentype x,
+             gentype y)
+
+gentypef fmin(gentypef x,
+              float y)
+
+gentyped fmin(gentyped x,
+              double y)
+----
+
+----
+gentype fmin (gentype x,
+              half y)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns `y` if `y` less than `x`, otherwise it returns `x`.
+If one argument is a NaN, `fmin()` returns the other argument.
+If both arguments are NaNs, `fmin()` returns a NaN.
+
+
+[[notes]]
+== Notes
+
+`fmin` and <<fmax.adoc#, `fmax`>> behave as defined by C99 and may not match the IEEE 754-2008 definition for `minNum` and `maxNum` with regard to signaling NaNs.
+Specifically, signaling NaNs may behave as quiet NaNs.
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[work_group_reserve_read_pipe]]
+= work_group_reserve_read_pipe
+
+Reserve entries for reading from pipe.
+
+[source,c]
+----
+reserve_id_t work_group_reserve_read_pipe(pipe gentype p,
+                                          uint num_packets)
+----
+
+
+[[description]]
+== Description
+
+Reserve `num_packets` entries for reading from pipe `p`.
+Returns a valid reservation ID if the reservation is successful.
+
+The reserved pipe entries are referred to by indices that go from 0 ... `num_packets` – 1.
+
+This built-in function must be encountered by all work-items in a work-group executing the kernel with the same argument values; otherwise the behavior is undefined.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 159
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

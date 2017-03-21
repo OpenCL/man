@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceIDs]]
+= clSVMFree
+
+Frees a shared virtual memory buffer allocated using clSVMAlloc.
+
+[source,c]
+----
+void clSVMFree(cl_context context,
+               void *svm_pointer)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context used to create the SVM buffer.
+
+`svm_pointer`::
+
+Must be the value returned by a call to <<clSVMAlloc.adoc#, `clSVMAlloc`>>.
+If a NULL pointer is passed in `svm_pointer`, no action occurs.
+
+
+[[notes]]
+== Notes
+
+Note that `clSVMFree` does not wait for previously enqueued commands that may be using `svm_pointer` to finish before freeing `svm_pointer`.
+It is the responsibility of the application to make sure that enqueued commands that use `svm_pointer` have finished before freeing `svm_pointer`.
+This can be done by enqueuing a blocking operation such as <<clFinish.adoc#, `clFinish`>>, <<clWaitForEvents.adoc#, `clWaitForEvents`>>, <<clEnqueueReadBuffer.adoc#, `clEnqueueReadBuffer`>> or by registering a callback with the events associated with enqueued commands and when the last enqueued comamnd has finished freeing `svm_pointer`.
+
+The behavior of using `svm_pointer` after it has been freed is undefined.
+In addition, if a buffer object is created using <<clCreateBuffer.adoc#, `clCreateBuffer`>> with `svm_pointer`, the buffer object must first be released before the `svm_pointer` is freed.
+
+The <<clEnqueueSVMFree.adoc#, `clEnqueueSVMFree`>> API can also be used to enqueue a callback to free the shared virtual memory buffer allocated using <<clSVMAlloc.adoc#, `clSVMAlloc`>> or a shared system memory pointer.
+
+
+:spec-name: Core
+:spec-page: 178
+
+
+[[seealso]]
+== Also see
+
+<<clSVMAlloc.adoc#, `clSVMAlloc`>>, <<sharedVirtualMemory.adoc#, Shared Virtual Memory Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,41 @@
+include::_header.adoc[]
+
+
+[[abs]]
+= abs, abs_diff
+
+Absolute value functions.
+
+[source,c]
+----
+ugentype abs(gentype x)
+
+ugentype abs_diff(gentype x,
+                  gentype y)
+----
+
+
+[[description]]
+== Description
+
+`abs` returns |`x`|.
+
+`abs_diff` returns |`x`-`y`| without modulo overflow.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

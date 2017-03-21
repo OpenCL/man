@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[mad_sat]]
+= mad_sat
+
+Returns `a`*`b`+`c` and saturates the result.
+
+[source,c]
+----
+gentype mad_sat(gentype a,
+                gentype b,
+                gentype c)
+----
+
+
+[[description]]
+== Description
+
+`mad_sat` returns `a`*`b`+`c` and saturates the result.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

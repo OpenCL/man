@@ -1,0 +1,67 @@
+include::_header.adoc[]
+
+
+[[cl_khr_mipmap_image]]
+= cl_khr_mipmap_image
+
+Extension adds support for mipmaps.
+
+----
+#pragma OPENCL EXTENSION cl_khr_mipmap_image : enable
+
+#pragma OPENCL EXTENSION cl_khr_mipmap_image_writes : enable
+----
+
+
+[[description]]
+== Description
+
+This extension adds support for mipmaps.
+This proposal is implemented as two optional extensions.
+The `cl_khr_mipmap_image` extension implements support to create a mipmapped image, enqueue commands to read/write/copy/map a region of a mipmapped image and built-in functions that can be used to read a mip-mapped image in an OpenCL C program.
+The `cl_khr_mipmap_image_writes` extension adds built-in functions that can be used to write a mip-mapped image in an OpenCL C program.
+If the `cl_khr_mipmap_image_writes` extension is supported by the OpenCL device, the `cl_khr_mipmap_image` extension must also be supported.
+
+This extension enables the following functions:
+
+----
+                        get_image_num_mip_levels
+----
+
+This extension enables changes to the following:
+
+----
+                        clCreateImage
+
+                        clEnqueueReadImage
+
+                        clEnqueueWriteImage
+
+                        clEnqueueMapImage
+
+                        clEnqueueCopyImage
+
+                        clEnqueueCopyImageToBuffer
+
+                        clEnqueueCopyBufferToImage
+
+                        clCreateSamplerWithProperties
+
+                        imageFunctions
+
+                        cl_khr_gl_sharing
+
+                        clCreateFromGLTexture
+----
+
+
+:spec-name: Ext
+:spec-page: 156
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<get_image_num_mip_levels.adoc#, `get_image_num_mip_levels`>>
+
+include::_footer.adoc[]

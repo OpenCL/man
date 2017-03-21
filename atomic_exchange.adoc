@@ -1,0 +1,57 @@
+include::_header.adoc[]
+
+
+[[atomic_exchange]]
+= atomic_exchange, atomic_exchange_explicit
+
+Atomically replace the value pointed to by `object` with `desired`.
+
+[source,c]
+----
+C atomic_exchange(volatile A *object,
+                  C desired)
+
+C atomic_exchange_explicit(volatile A *object,
+                           C desired,
+                           memory_order order)
+
+C atomic_exchange_explicit(volatile A *object,
+                           C desired,
+                           memory_order order,
+                           memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`desired`::
+
+`order`::
+
+`scope`::
+
+
+[[description]]
+== Description
+
+Atomically replace the value pointed to by `object` with `desired`.
+Memory is affected according to the value of `order`.
+These operations are read-modify-write operations (as defined by section 5.1.2.4 of the C11 specification).
+Atomically returns the value pointed to by `object` immediately before the effects.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 108
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

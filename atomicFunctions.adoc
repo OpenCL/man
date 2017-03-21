@@ -1,0 +1,94 @@
+include::_header.adoc[]
+
+= Atomic Functions
+
+The atomic functions are shown below.
+Click an item in the table below for details about that function.
+
+[cols="1a,1a"]
+|===
+
+|<<atomic_init.adoc#, `atomic_init`>>
+|<<atomic_work_item_fence.adoc#, `atomic_work_item_fence`>>
+
+|<<atomic_store.adoc#, `atomic_store`>>
+|<<atomic_store.adoc#, `atomic_store_explicit`>>
+
+|<<atomic_exchange.adoc#, `atomic_exchange`>>
+|<<atomic_exchange.adoc#, `atomic_exchange_explicit`>>
+
+|<<atomic_compare_exchange.adoc#, `atomic_compare_exchange_strong`>>
+|<<atomic_compare_exchange.adoc#, `atomic_compare_exchange_strong_explicit`>>
+
+|<<atomic_compare_exchange.adoc#, `atomic_compare_exchange_weak`>>
+|<<atomic_compare_exchange.adoc#, `atomic_compare_exchange_weak_explicit`>>
+
+|<<atomic_fetch_key.adoc#, `atomic_fetch_key`>>
+|<<atomic_fetch_key.adoc#, `atomic_fetch_key_explicit`>>
+
+|<<atomic_flag_test_and_set.adoc#, `atomic_flag_test_and_set`>>
+|<<atomic_flag_test_and_set.adoc#, `atomic_flag_test_and_set_explicit`>>
+
+|<<atomic_flag_clear.adoc#, `atomic_flag_clear`>>
+|<<atomic_flag_clear.adoc#, `atomic_flag_clear_explicit`>>
+
+|===
+
+.64-bit Atomics
+
+The optional extension <<cl_khr_int64_base_atomics.adoc#, `cl_khr_int64_base_atomics`>> implements atomic operations on 64-bit signed and unsigned integers to locations in `__global` and `__local` memory.
+
+The <<cl_khr_int64_extended_atomics.adoc#, `cl_khr_int64_extended_atomics`>> extension enables additional atomic functions using types `long` and `unsigned long`.
+An application that wants to use this extension will need to include the `#pragma OPENCL EXTENSION cl_khr_int64_extended_atomics : enable` in the OpenCL program source.
+
+
+[[description]]
+== Description
+
+As of OpenCL version 1.1, `cl_khr_global_int32_base_atomics`, `cl_khr_global_int32_extended_atomics`, `cl_khr_local_int32_base_atomics` and `cl_khr_local_int32_extended_atomics` extensions are core features.
+The built-in atomic function names are changed to use the `atomic_ prefix` instead of `atom_`.
+
+The list of supported atomic type names are:
+
+* `atomic_int`
+
+* `atomic_uint`
+
+* `atomic_long`
+
+* `atomic_ulong`
+
+* `atomic_float`
+
+* `atomic_double`
+
+* `atomic_intptr_t`
+
+* `atomic_uintptr_t`
+
+* `atomic_size_t`
+
+* `atomic_ptrdiff_t`
+
+The `atomic_long` and `atomic_ulong` types are supported if the <<cl_khr_int64_base_atomics.adoc#, `cl_khr_int64_base_atomics`>> and <<cl_khr_int64_extended_atomics.adoc#, `cl_khr_int64_extended_atomics`>> extensions are supported.
+
+The `atomic_double` type is only supported if double precision is supported and the <<cl_khr_int64_base_atomics.adoc#, `cl_khr_int64_base_atomics`>> and <<cl_khr_int64_extended_atomics.adoc#, `cl_khr_int64_extended_atomics`>> extensions are supported.
+
+If the device address space is 64-bits, the data types `atomic_intptr_t`, `atomic_uintptr_t`, `atomic_size_t` and `atomic_ptrdiff_t` are supported if the <<cl_khr_int64_base_atomics.adoc#, `cl_khr_int64_base_atomics`>> and <<cl_khr_int64_extended_atomics.adoc#, `cl_khr_int64_extended_atomics`>> extensions are supported.
+
+Arguments to a kernel can be declared to be a pointer to the above atomic types or the `atomic_flag` type.
+
+The representation of atomic integer, floating-point and pointer types have the same size as their corresponding regular types.
+The `atomic_flag` type must be implemented as a 32-bit integer.
+
+
+:spec-name: CLan
+:spec-page: 103
+
+
+[[seealso]]
+== Also see
+
+<<memory_order.adoc#, `memory_order`>>, <<memory_scope.adoc#, `memory_scope`>>, <<atomic_flag.adoc#, atomic_flag type>>
+
+include::_footer.adoc[]

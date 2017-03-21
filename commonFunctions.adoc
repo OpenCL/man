@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+= Common Built-In Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<clamp_common.adoc#, `clamp`>>
+|Clamp `x` to range given by `min`, `max`
+
+|<<degrees.adoc#, `degrees`>>
+|`radians` to degrees
+
+|<<commonMax.adoc#, `max`>>
+|Maximum of `x` and `y`
+
+|<<commonMin.adoc#, `min`>>
+|Minimum of `x` and `y`
+
+|<<mix.adoc#, `mix`>>
+|Linear blend of `x` and `y`
+
+|<<radians.adoc#, `radians`>>
+|`degrees` to radians
+
+|<<sign.adoc#, `sign`>>
+|Sign of `x`
+
+|<<smoothstep.adoc#, `smoothstep`>>
+|Step and interpolate
+
+|<<step.adoc#, `step`>>
+|0.0 if `x` < `edge`, else 1.0
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 86
+
+include::_footer.adoc[]

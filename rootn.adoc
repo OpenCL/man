@@ -1,0 +1,52 @@
+include::_header.adoc[]
+
+
+[[rootn]]
+= rootn
+
+Compute `x` to the power 1/`y`.
+
+[source,c]
+----
+float n rootn(float n x,
+              int n y)
+
+float rootn(float x,
+            int y)
+
+double n rootn(double n x,
+               int n y)
+
+double n rootn(double x,
+               int y)
+
+half n rootn(half n x,
+             int n y)
+
+half rootn(half x,
+           int y)
+----
+
+
+[[description]]
+== Description
+
+Compute `x` to the power 1/`y`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

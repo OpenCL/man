@@ -1,0 +1,55 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceIDs]]
+= clRetainContext
+
+Increment the `context` reference count.
+
+[source,c]
+----
+cl_int clRetainContext(cl_context context)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+The context to retain.
+
+
+[[notes]]
+== Notes
+
+<<clCreateContext.adoc#, `clCreateContext`>> and <<clCreateContextFromType.adoc#, `clCreateContextFromType`>> perform an implicit retain.
+This is very helpful for 3rd party libraries, which typically get a context passed to them by the application.
+However, it is possible that the application may delete the context without informing the library.
+Allowing functions to attach to (i.e.
+retain) and release a context solves the problem of a context being used by a library no longer being valid.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following values:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid OpenCL context.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<clCreateContext.adoc#, `clCreateContext`>>, <<clCreateContextFromType.adoc#, `clCreateContextFromType`>>, <<clGetContextInfo.adoc#, `clGetContextInfo`>>, <<clReleaseContext.adoc#, `clReleaseContext`>>, <<clGetContextInfo.adoc#, `clGetContextInfo`>>
+
+include::_footer.adoc[]

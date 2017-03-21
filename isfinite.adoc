@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[isfinite]]
+= isfinite
+
+Test for finite value.
+
+[source,c]
+----
+int isfinite(float)
+
+int n isfinite(float n)
+
+int isfinite(double)
+
+long n isfinite(double n)
+----
+
+----
+int isfinite (half)      // if half extension enabled
+
+shortn isfinite (halfn)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Test for finite value.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

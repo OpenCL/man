@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[get_image_num_mip_levels]]
+= get_image_num_mip_levels
+
+Return the number of mip-levels.
+
+[source,c]
+----
+int get_image_num_mip_levels(image1d_t image)
+
+int get_image_num_mip_levels(image2d_t image)
+
+int get_image_num_mip_levels(image3d_t image)
+
+int get_image_num_mip_levels(image1d_array_t image)
+
+int get_image_num_mip_levels(image2d_array_t image)
+
+int get_image_num_mip_levels(image2d_depth_t image)
+
+int get_image_num_mip_levels(image2d_array_depth_t image)
+----
+
+
+[[description]]
+== Description
+
+Return the number of mip-levels.
+
+This function is enabled by the extension <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>.
+
+
+:spec-name: Ext
+:spec-page: 165
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>
+
+include::_footer.adoc[]

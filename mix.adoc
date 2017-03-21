@@ -1,0 +1,58 @@
+include::_header.adoc[]
+
+
+[[mix]]
+= mix
+
+Linear blend of `x` and `y`.
+
+[source,c]
+----
+gentype mix(gentype x,
+            gentype y,
+            gentype a)
+
+gentypef mix(gentypef x,
+             gentypef y,
+             float a)
+
+gentyped mix(gentyped x,
+             gentyped y,
+             double a)
+----
+
+----
+gentype mix (gentype x,
+              gentype y, half a)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns the linear blend of `x` and `y` implemented as: _x_ + (_y_ - _x_) * _a_
+
+`a` must be a value in the range 0.0 ... 1.0.
+If `a` is not in the range 0.0 ... 1.0, the return values are undefined.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+The mix and smoothstep functions can be implemented using contractions such as <<mad.adoc#, `mad`>> or <<fma.adoc#, `fma`>>.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>
+
+include::_footer.adoc[]

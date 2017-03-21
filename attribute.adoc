@@ -1,0 +1,63 @@
+include::_header.adoc[]
+
+
+[[attribute]]
+= __attribute__
+
+----
+__attribute__ ((attribute-list))
+
+attribute-list:
+     attributeopt
+     attribute-list, attributeopt
+
+attribute:
+     attribute-token attribute-argument-clauseopt
+
+attribute-token:
+     identifier
+
+attribute-argument-clause:
+     ( attribute-argument-list )
+
+attribute-argument-list:
+     attribute-argument
+     attribute-argument-list, attribute-argument
+
+attribute-argument:
+     assignment-expression
+----
+
+
+[[description]]
+== Description
+
+This section describes the syntax with which `__attribute__` may be used, and the constructs to which attribute specifiers bind.
+
+An attribute specifier is of the form `__attribute__ ((attribute-list))`.
+
+This syntax is taken directly from GCC but unlike GCC, which allows attributes to be applied only to functions, types, and variables, OpenCL attributes can be associated with:
+
+* <<attributes-types.adoc#, `types`>>
+
+* <<functionQualifiers.adoc#, `functions`>>
+
+* <<attributes-variables.adoc#, `variables`>>
+
+* <<attributes-blocksAndControlFlow.adoc#, `blocks`>>
+
+* <<attributes-blocksAndControlFlow.adoc#, control-flow statements>>
+
+In general, the rules for how an attribute binds for a given context are non-trivial and the reader is pointed to GCC's documentation and Maurer and Wong's paper (See the "References" section in the OpenCL specification for details.)
+
+
+:spec-name: CLan
+:spec-page: 56
+
+
+[[seealso]]
+== Also see
+
+<<attributes-types.adoc#, Type Attributes>>, <<attributes-variables.adoc#, Variable Attributes>>, <<attributes-blocksAndControlFlow.adoc#, Block and Control-Flow Statement Attributes>>, <<functionQualifiers.adoc#, Function Qualifiers>>
+
+include::_footer.adoc[]

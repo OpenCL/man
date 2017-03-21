@@ -1,0 +1,31 @@
+include::_header.adoc[]
+
+
+[[cl_khr_device_enqueue_local_arg_types]]
+= cl_khr_device_enqueue_local_arg_types
+
+Allows arguments to blocks passed to enqueue_kernel functions to be declared as a pointer to any type in local memory.
+
+----
+#pragma OPENCL EXTENSION cl_khr_device_enqueue_local_arg_types : enable
+----
+
+
+[[description]]
+== Description
+
+This extension allows arguments to blocks passed to enqueue_kernel functions to be declared as a pointer to any type (built-in or user-defined) in local memory instead of just `local void *`.
+
+If this extension is supported by an implementation, the string cl_khr_device_enqueue_local_arg_types will be present in the `CL_DEVICE_EXTENSIONS` string described in table 4.3 (see <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>).
+
+
+:spec-name: Ext
+:spec-page: 178
+
+
+[[seealso]]
+== Also see
+
+<<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>, <<enqueue_kernel.adoc#, `enqueue_kernel`>>, <<get_kernel_work_group_size.adoc#, `get_kernel_work_group_size`>>
+
+include::_footer.adoc[]

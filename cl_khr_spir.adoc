@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[cl_khr_spir]]
+= cl_khr_spir
+
+Extension adds support to create an OpenCL program object from a Standard Portable Intermediate Representation (SPIR) instance.
+
+----
+#pragma OPENCL EXTENSION cl_khr_spir : enable
+----
+
+
+[[description]]
+== Description
+
+This extension adds support to create an OpenCL program object from a Standard Portable Intermediate Representation (SPIR) instance.
+SPIR is a vendor neutral non-source representation for OpenCL C programs that has since been superceded by the SPIR-V standard.
+
+<<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>> can be used to load a SPIR binary.
+Once a program object has been created from a SPIR binary, <<clBuildProgram.adoc#, `clBuildProgram`>> can be called to build a program executable or <<clCompileProgram.adoc#, `clCompileProgram`>> can be called to compile the SPIR binary.
+
+This extension adds changes to the following:
+
+----
+                        clGetDeviceInfo
+
+                        clGetProgramBuildInfo
+
+                        clGetKernelArgInfo
+----
+
+
+:spec-name: Ext
+:spec-page: 125
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>, <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>>, <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>, <<clGetProgramBuildInfo.adoc#, `clGetProgramBuildInfo`>>, <<clGetKernelArgInfo.adoc#, `clGetKernelArgInfo`>>
+
+include::_footer.adoc[]

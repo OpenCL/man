@@ -1,0 +1,32 @@
+include::_header.adoc[]
+
+
+[[get_pipe_max_packets]]
+= get_pipe_max_packets
+
+Returns the maximum number of packets specified when pipe was created.
+
+[source,c]
+----
+uint get_pipe_max_packets(pipe gentype p)
+----
+
+
+[[description]]
+== Description
+
+Returns the maximum number of packets specified when pipe `p` was created.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 160
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

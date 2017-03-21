@@ -1,0 +1,30 @@
+include::_header.adoc[]
+
+
+[[is_valid_reserve_id]]
+= is_valid_reserve_id
+
+Test for a valid reservation ID.
+
+[source,c]
+----
+bool is_valid_reserve_id(reserve_id_t reserve_id)
+----
+
+
+[[description]]
+== Description
+
+Return true if `reserve_id` is a valid reservation ID and false otherwise.
+
+
+:spec-name: CLan
+:spec-page: 159
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

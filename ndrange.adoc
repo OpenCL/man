@@ -1,0 +1,55 @@
+include::_header.adoc[]
+
+
+[[ndrange]]
+= ndrange
+
+Builds a 1D, 2D or 3D ND-range descriptor.
+
+[source,c]
+----
+ndrange_t ndrange_1D(size_t global_work_size)
+
+ndrange_t ndrange_1D(size_t global_work_size,
+                     size_t local_work_size)
+
+ndrange_t ndrange_1D(size_t global_work_offset,
+                     size_t global_work_size,
+                     size_t local_work_size)
+
+ndrange_t ndrange_2D(const size_t global_work_size[2])
+
+ndrange_t ndrange_2D(const size_t global_work_size[2],
+                     const size_t local_work_size[2])
+
+ndrange_t ndrange_2D(const size_t global_work_offset[2],
+                     const size_t global_work_size[2],
+                     const size_t local_work_size[2])
+
+ndrange_t ndrange_3D(const size_t global_work_size[3])
+
+ndrange_t ndrange_3D(const size_t global_work_size[3],
+                     const size_t local_work_size[3])
+
+ndrange_t ndrange_3D(const size_t global_work_offset[3],
+                     const size_t global_work_size[3],
+                     const size_t local_work_size[3])
+----
+
+
+[[description]]
+== Description
+
+This helper function builds a 1D, 2D, or 3D ND-range descriptor.
+
+
+:spec-name: CLan
+:spec-page: 174
+
+
+[[seealso]]
+== Also see
+
+<<helperFunctions.adoc#, Helper Functions>>
+
+include::_footer.adoc[]

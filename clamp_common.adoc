@@ -1,0 +1,55 @@
+include::_header.adoc[]
+
+
+[[clamp]]
+= clamp
+
+Clamp `x` to range given by `min`, `max`
+
+[source,c]
+----
+gentype clamp(gentype x,
+              gentype minval,
+              gentype maxval)
+
+gentypef clamp(gentypef x,
+               float minval,
+               float maxval)
+
+gentyped clamp(gentyped x,
+               double minval,
+               double maxval)
+
+gentype clamp(gentype x,
+              half minval,
+              half maxval)
+----
+
+
+[[description]]
+== Description
+
+Returns `fmin`(`fmax`(`x`, `minval`), `maxval`).
+For the half version when the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension is enabled, returns `min`(`max`(`x`, `minval`), `maxval`)
+
+Results are undefined if `minval` > `maxval`.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>
+
+include::_footer.adoc[]

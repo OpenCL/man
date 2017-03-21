@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[cos]]
+= cos, cosh, cospi, half_cos, native_cos
+
+Cosine functions.
+
+[source,c]
+----
+gentype cos(gentype)
+
+gentype cosh(gentype)
+
+gentype cospi(gentype x)
+
+gentype half_cos(gentype x)
+
+gentype native_cos(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`cos` is the cosine function.
+
+`cosh` is the hyperbolic cosine function.
+
+`cospi` computes `cos` (`x` * pi).
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

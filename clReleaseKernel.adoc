@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[clReleaseKernel]]
+= clReleaseKernel
+
+Decrements the kernel reference count.
+
+[source,c]
+----
+cl_int clReleaseKernel(cl_kernel kernel)
+----
+
+
+[[notes]]
+== Notes
+
+The kernel object is deleted once the number of instances that are retained to `kernel` become zero and the kernel object is no longer needed by any enqueued commands that use `kernel`.
+Using this function to release a reference that was not obtained by creating the object or by calling <<clRetainKernel.adoc#, `clRetainKernel`>> causes undefined behavior.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the kernel objects are successfully alloctaed.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_KERNEL` if `kernel` is not a valid kernel object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 223
+
+
+[[seealso]]
+== Also see
+
+<<clCreateKernel.adoc#, `clCreateKernel`>>, <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>>, <<clRetainKernel.adoc#, `clRetainKernel`>>, <<clSetKernelArg.adoc#, `clSetKernelArg`>>, <<clGetKernelInfo.adoc#, `clGetKernelInfo`>>, <<clGetKernelWorkGroupInfo.adoc#, `clGetKernelWorkGroupInfo`>>
+
+include::_footer.adoc[]

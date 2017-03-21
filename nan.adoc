@@ -1,0 +1,49 @@
+include::_header.adoc[]
+
+
+[[nan]]
+= nan
+
+Quiet NaN
+
+[source,c]
+----
+float n nan(uint n nancode)
+
+float nan(uint nancode)
+
+double n nan(ulong n nancode)
+
+double nan(ulong nancode)
+----
+
+----
+halfn nan (ushortn nancode)      // if half extension enabled
+
+half nan (ushort nancode)
+----
+
+
+[[description]]
+== Description
+
+`nan` returns a quiet NaN.
+The `nancode` may be placed in the significand of the resulting NaN.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

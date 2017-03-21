@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[acos]]
+= acos, acosh, acospi
+
+Arc cosine functions.
+
+[source,c]
+----
+gentype acos(gentype)
+
+gentype acosh(gentype)
+
+gentype acospi(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`acos` is the arc cosine function.
+
+`acosh` is the inverse hyperbolic cosine function.
+
+`acospi` computes `acos` (`x`) / π.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

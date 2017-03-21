@@ -1,0 +1,34 @@
+include::_header.adoc[]
+
+
+[[get_global_size]]
+= get_global_size
+
+Returns the number of global work-items specified for dimension identified by `dimindx`.
+
+[source,c]
+----
+size_t get_global_size(uint dimindx)
+----
+
+
+[[description]]
+== Description
+
+This value is given by the `global_work_size` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>.
+Valid values of `dimindx` are 0 to <<get_work_dim.adoc#, `get_work_dim`>>() - 1.
+For other values of `dimindx`, `get_global_size`() returns 1.
+
+For `clEnqueueTask`, this always returns 1.
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<workItemFunctions.adoc#, Work-Item Functions>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>,
+
+include::_footer.adoc[]

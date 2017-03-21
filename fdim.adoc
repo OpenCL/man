@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[fdim]]
+= fdim
+
+Positive difference between `x` and `y`.
+
+[source,c]
+----
+gentype fdim(gentype x,
+             gentype y)
+----
+
+
+[[description]]
+== Description
+
+`fdim` computes `x` - `y` if `x` is greater than `y`, +0 if `x` is less than or equal to `y`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

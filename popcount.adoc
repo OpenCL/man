@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[sub_sat]]
+= popcount
+
+Returns the number of non-zero bits in `x`.
+
+[source,c]
+----
+gentype popcount(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`popcount` returns the number of non-zero bits in `x`.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

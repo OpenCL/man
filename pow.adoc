@@ -1,0 +1,76 @@
+include::_header.adoc[]
+
+
+[[pow]]
+= pow, pown, powr, half_powr, native_powr
+
+Compute `x` to the power of `y`.
+
+[source,c]
+----
+gentype pow(gentype x,
+            gentype y)
+
+float n pown(float n x,
+             int n y)
+
+float pown(float x,
+           int y)
+
+double n pown(double n x,
+              int n y)
+
+double pown(double x,
+            int y)
+
+gentype powr(gentype x,
+             gentype y)
+
+gentype half_powr(gentype x,
+                  gentype y)
+
+gentype native_powr(gentype x,
+                    gentype y)
+
+half n pown(half n x,
+            int n y)
+
+half pown(half x,
+          int y)
+----
+
+
+[[description]]
+== Description
+
+`pow` Computes `x` to the power of `y`.
+
+`pown` Computes `x` to the power of `y`, where `y` is an integer.
+
+`powr` Computes `x` to the power of `y`, where `x` is ≥ 0.
+
+`half_powr` Computes `x` to the power of `y`, where `x` is ≥ 0.
+
+`native_powr` Computes `x` to the power of `y`, where `x` is ≥ 0.
+The range of `x` and `y` are implementation-defined.
+The maximum error is implementation-defined.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

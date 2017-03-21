@@ -1,0 +1,74 @@
+include::_header.adoc[]
+
+
+[[clCreateFromD3D11BufferKHR]]
+= clCreateFromD3D11BufferKHR
+
+Creates an OpenCL buffer object from a Direct3D 11 buffer.
+
+[source,c]
+----
+cl_mem clCreateFromD3D11BufferKHR(cl_context context,
+                                  cl_mem_flags flags,
+                                  ID3D11Buffer *resource,
+                                  cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context created from a Direct3D 11 device.
+
+`flags`::
+
+A bit-field that is used to specify usage information.
+May be `CL_MEM_READ_ONLY`, `CL_MEM_WRITE_ONLY`, or `CL_MEM_READ_WRITE`. (See the table for <<clCreateBuffer.adoc#, `clCreateBuffer`>> for more information.)
+
+`resource`::
+
+A pointer to the Direct3D 11 buffer to share.
+
+`errcode_ret`::
+
+An appropriate error code.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[notes]]
+== Notes
+
+The size of the returned OpenCL buffer object is the same as the size of `resource`.
+This call will increment the internal Direct3D reference count on `resource`.
+The internal Direct3D reference count on `resource` will be decremented when the OpenCL reference count on the returned OpenCL memory object drops to zero.
+
+include::sharingD3D11Inc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns a valid non-zero OpenCL buffer object and `errcode_ret` is set to `CL_SUCCESS` if the buffer object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context.
+
+* `CL_INVALID_VALUE` if values specified in `flags` are not valid.
+
+* `CL_INVALID_D3D11_RESOURCE_KHR` if `resource` is not a Direct3D 11 buffer resource, if `resource` was created with the `D3D11_USAGE` flag `D3D11_USAGE_IMMUTABLE`, if a `cl_mem` from `resource` has already been created using `clCreateFromD3D11BufferKHR`, or if `context` was not created against the same Direct3D 11 device from which `resource` was created.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 102
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>>
+
+include::_footer.adoc[]

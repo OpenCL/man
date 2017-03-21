@@ -1,0 +1,48 @@
+include::_header.adoc[]
+
+
+[[distance]]
+= distance
+
+Vector distance.
+
+[source,c]
+----
+float distance(float n p0,
+               float n p1)
+
+double distance(double n p0,
+                double n p1)
+----
+
+----
+half distance (gentype p0,
+             gentype p1)     // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns the distance between `p0` and `p1`.
+This is calculated as <<length.adoc#, `length`>>(`p0` - `p1`).
+
+
+[[notes]]
+== Notes
+
+include::geometricFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4}` as arguments.
+
+
+:spec-name: CLan
+:spec-page: 88
+
+
+[[seealso]]
+== Also see
+
+<<geometricFunctions.adoc#, Geometric Functions>>
+
+include::_footer.adoc[]

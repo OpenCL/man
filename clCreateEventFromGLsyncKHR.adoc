@@ -1,0 +1,75 @@
+include::_header.adoc[]
+
+
+[[clCreateFromGLBuffer]]
+= clCreateEventFromGLsyncKHR
+
+Creates an event object linked to an OpenGL sync object.
+
+[source,c]
+----
+cl_event clCreateEventFromGLsyncKHR(cl_context context,
+                                    GLsync sync,
+                                    cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context created from an OpenGL context or share group, using the <<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>> extension.
+
+`sync`::
+
+The name of a sync object in the GL share group associated with `context`.
+
+
+[[description]]
+== Description
+
+An event object may be created by linking to an OpenGL sync object.
+Completion of such an event object is equivalent to waiting for completion of the fence command associated with the linked GL sync object.
+
+
+[[notes]]
+== Notes
+
+The parameters of an event object linked to a GL sync object will return the following values when queried with <<clGetEventInfo.adoc#, `clGetEventInfo`>>:
+
+* The `CL_EVENT_COMMAND_QUEUE` of a linked event is NULL, because the event is not associated with any OpenCL command queue.
+
+* The `CL_EVENT_COMMAND_TYPE` of a linked event is `CL_COMMAND_GL_FENCE_SYNC_OBJECT_KHR`, indicating that the event is associated with a GL sync object, rather than an OpenCL command.
+
+* The `CL_EVENT_COMMAND_EXECUTION_STATUS` of a linked event is either `CL_SUBMITTED`, indicating that the fence command associated with the sync object has not yet completed, or `CL_COMPLETE`, indicating that the fence command has completed.
+
+`clCreateEventFromGLsyncKHR` performs an implicit <<clRetainEvent.adoc#, `clRetainEvent`>> on the returned event object.
+Creating a linked event object also places a reference on the linked GL sync object.
+When the event object is deleted, the reference will be removed from the GL sync object.
+
+Events returned from `clCreateEventFromGLsyncKHR` can be used in the `event_wait_list` argument to <<clEnqueueAcquireGLObjects.adoc#, `clEnqueueAcquireGLObjects`>> and CL APIs that take a `cl_event` as an argument but do not enqueue commands.
+Passing such events to any other CL API that enqueues commands will generate a `CL_INVALID_EVENT` error.
+
+
+[[errors]]
+== Errors
+
+Returns a valid OpenCL event object and `errcode_ret` is set to `CL_SUCCESS` if the event object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context or was not created from a GL context.
+
+* `CL_INVALID_GL_OBJECT` if `sync` is not the name of a sync object in the GL share group associated with `context`.
+
+
+:spec-name: Ext
+:spec-page: 60
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>>, <<cl_khr_gl_event.adoc#, `cl_khr_gl_event`>>, <<clGetEventInfo.adoc#, `clGetEventInfo`>>, <<clEnqueueAcquireGLObjects.adoc#, `clEnqueueAcquireGLObjects`>>, <<clRetainEvent.adoc#, `clRetainEvent`>>
+
+include::_footer.adoc[]

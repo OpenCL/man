@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+= Event Built-In Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<retain_event.adoc#, `retain_event`>>
+|
+
+Increments the event reference count.
+
+|<<release_event.adoc#, `release_event`>>
+|
+
+Decrements the event reference count.
+
+|<<create_user_event.adoc#, `create_user_event`>>
+|
+
+Create a user event.
+Returns the user event.
+
+|<<is_valid_event.adoc#, `is_valid_event`>>
+|
+
+Returns true if `event` is a valid event.
+
+|<<set_user_event_status.adoc#, `set_user_event_status`>>
+|
+
+Sets the execution status of a user event.
+
+|<<capture_event_profiling_info.adoc#, `capture_event_profiling_info`>>
+|
+
+Captures the profiling information for command associated with `event` in `value`.
+
+|===
+
+
+[[description]]
+== Description
+
+
+:spec-name: CLan
+:spec-page: 171
+
+include::_footer.adoc[]

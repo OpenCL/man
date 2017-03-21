@@ -1,0 +1,40 @@
+include::_header.adoc[]
+
+
+[[erf]]
+= erf, erfc
+
+Error functions.
+
+[source,c]
+----
+gentype erf(gentype)
+
+gentype erfc(gentype)
+----
+
+
+[[description]]
+== Description
+
+`erf` is the error function encountered in integrating the normal distribution.
+
+`erfc` is the complementary error function.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

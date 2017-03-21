@@ -1,0 +1,41 @@
+include::_header.adoc[]
+
+
+[[get_kernel_preferred_work_group_size_multiple]]
+= get_kernel_preferred_work_group_size_multiple
+
+Returns the preferred multiple of work-group size for launch.
+
+[source,c]
+----
+uint get_kernel_preferred_work_group_size_multiple(void (^block)(void))
+
+uint get_kernel_preferred_work_group_size_multiple(void (^block)(local void*, ...))
+----
+
+
+[[description]]
+== Description
+
+This kernel query function returns the preferred multiple of work-group size for launch.
+This is a performance hint.
+Specifying a work-group size that is not a multiple of the value returned by this query as the value of the local work size argument to `enqueue_kernel` will not fail to enqueue the block for execution unless the work-group size specified is larger than the device maximum.
+
+
+[[notes]]
+== Notes
+
+If the <<cl_khr_device_enqueue_local_arg_types.adoc#, `cl_khr_device_enqueue_local_arg_types`>> extension is enabled, then replace all occurrences of `local void *` in the table above with `local gentype *`.
+We use the generic type name `gentype` to indicate the built-in OpenCL C scalar or vector integer or floating-point data types, or any user defined type built from these scalar and vector data types which can be used as the type of the pointee of the arguments of the kernel enqueue functions listed above.
+
+
+:spec-name: CLan
+:spec-page: 169
+
+
+[[seealso]]
+== Also see
+
+<<get_kernel_work_group_size.adoc#, `get_kernel_work_group_size`>>
+
+include::_footer.adoc[]

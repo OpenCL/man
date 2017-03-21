@@ -1,0 +1,100 @@
+include::_header.adoc[]
+
+
+[[clCreatePipe]]
+= clCreatePipe
+
+Creates a pipe object.
+
+[source,c]
+----
+cl_mem clCreatePipe(cl_context context,
+                    cl_mem_flags flags,
+                    cl_uint pipe_packet_size,
+                    cl_uint pipe_max_packets,
+                    const cl_pipe_properties * properties,
+                    cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context used to create the pipe object.
+
+`flags`::
+
++
+--
+
+A bit-field that is used to specify allocation and usage information such as the memory arena that should be used to allocate the pipe object and how it will be used.
+The table below describes the possible values for `flags`.
+Only `CL_MEM_READ_ONLY`, `CL_MEM_WRITE_ONLY`, `CL_MEM_READ_WRITE`, and `CL_MEM_HOST_NO_ACCESS` can be specified when creating a pipe object.
+If value specified for `flags` is 0, the default is used which is `CL_MEM_READ_WRITE` | `CL_MEM_HOST_NO_ACCESS`.
+
+include::clCreate_memflagsInc.adoc[]
+
+--
+
+`pipe_packet_size`::
+
+Size in bytes of a pipe packet.
+
+`pipe_max_packets`::
+
+Specifies the pipe capacity by specifying the maximum number of packets the pipe can hold.
+
+`properties`::
+
+A list of properties for the pipe and their corresponding values.
+Each property name is immediately followed by the corresponding desired value.
+The list is terminated with 0.
+In OpenCL 2.0, `properties` must be NULL.
+
+`errcode_ret`::
+
+Will return an appropriate error code.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[description]]
+== Notes
+
+Pipes follow the same memory consistency model as defined for buffer and image objects.
+The pipe state i.e.
+contents of the pipe across kernel executions (on the same or different devices) is enforced at a synchronization point.
+
+
+[[errors]]
+== Errors
+
+`clCreatePipe` returns a valid non-zero pipe object and `errcode_ret` is set to `CL_SUCCESS` if the pipe object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context.
+
+* `CL_INVALID_VALUE` if values specified in `flags` are not as defined above.
+
+* `CL_INVALID_VALUE` if `properties` is not NULL.
+
+* `CL_INVALID_PIPE_SIZE` if `pipe_packet_size` is 0 or the `pipe_packet_size` exceeds `CL_DEVICE_PIPE_MAX_PACKET_SIZE` value specified in table 4.3 (see <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>) for all devices in `context` or if `pipe_max_packets` is 0.
+
+* `CL_MEM_OBJECT_ALLOCATION_FAILURE` if there is a failure to allocate memory for the pipe object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 160
+
+
+[[seealso]]
+== Also see
+
+<<clCreateBuffer.adoc#, `clCreateBuffer`>>, <<clCreateImage.adoc#, `clCreateImage`>>
+
+include::_footer.adoc[]

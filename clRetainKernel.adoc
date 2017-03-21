@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[clReleaseKernel]]
+= clRetainKernel
+
+Increments the kernel object reference count.
+
+[source,c]
+----
+cl_int clRetainKernel(cl_kernel kernel)
+----
+
+
+[[notes]]
+== Notes
+
+<<clCreateKernel.adoc#, `clCreateKernel`>> or <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>> do an implicit retain.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_KERNEL` if `kernel` is not a valid kernel object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 223
+
+
+[[seealso]]
+== Also see
+
+<<clCreateKernel.adoc#, `clCreateKernel`>>, <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>>, <<clReleaseKernel.adoc#, `clReleaseKernel`>>, <<clSetKernelArg.adoc#, `clSetKernelArg`>>, <<clGetKernelInfo.adoc#, `clGetKernelInfo`>>, <<clGetKernelWorkGroupInfo.adoc#, `clGetKernelWorkGroupInfo`>>
+
+include::_footer.adoc[]

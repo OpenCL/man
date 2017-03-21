@@ -1,0 +1,53 @@
+include::_header.adoc[]
+
+
+[[clReleaseSampler]]
+= clReleaseSampler
+
+Decrements the sampler reference count.
+
+[source,c]
+----
+cl_int clReleaseSampler(cl_sampler sampler)
+----
+
+
+[[parameters]]
+== Parameters
+
+`sampler`::
+
+Specifies the `sampler` being retained.
+
+
+[[notes]]
+== Notes
+
+The sampler object is deleted after the reference count becomes zero and commands queued for execution on a command-queue(s) that use `sampler` have finished.
+
+Using this function to release a reference that was not obtained by creating the object or by calling <<clRetainSampler.adoc#, `clRetainSampler`>> causes undefined behavior.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_SAMPLER` if `sampler` is not a valid sampler object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 192
+
+
+[[seealso]]
+== Also see
+
+<<clCreateSamplerWithProperties.adoc#, `clCreateSamplerWithProperties`>>, <<clRetainSampler.adoc#, `clRetainSampler`>>, <<clGetSamplerInfo.adoc#, `clGetSamplerInfo`>>
+
+include::_footer.adoc[]

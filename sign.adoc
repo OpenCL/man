@@ -1,0 +1,39 @@
+include::_header.adoc[]
+
+
+[[sign]]
+= sign
+
+Sign of a value.
+
+[source,c]
+----
+gentype sign(gentype x)
+----
+
+
+[[description]]
+== Description
+
+Returns 1.0 if _x_ > 0, -0.0 if _x_ = -0.0, +0.0 if _x_ = +0.0, or -1.0 if _x_ < 0.
+Returns 0.0 if _x_ is a NaN.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>
+
+include::_footer.adoc[]

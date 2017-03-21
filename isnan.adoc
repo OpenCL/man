@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[isnan]]
+= isnan
+
+Test for a NaN.
+
+[source,c]
+----
+int isnan(float)
+
+int n isnan(float n)
+
+int isnan(double)
+
+long n isnan(double n)
+----
+
+----
+int isnan (half)      // if half extension enabled
+
+shortn isnan (halfn)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Test for NaN.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

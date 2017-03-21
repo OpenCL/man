@@ -1,0 +1,105 @@
+include::_header.adoc[]
+
+
+[[atomic_fetch_key]]
+= atomic_fetch_key
+
+Atomically replace the value pointed to by `object` with the result of the computation.
+
+[source,c]
+----
+C atomic_fetch_key(volatile A *object,
+                   M operand)
+
+C atomic_fetch_key_explicit(volatile A *object,
+                            M operand,
+                            memory_order order)
+
+C atomic_fetch_key_explicit(volatile A *object,
+                            M operand,
+                            memory_order order,
+                            memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`order`::
+
+`scope`::
+
+`operand`::
+
+See the table below.
+
+
+[[description]]
+== Description
+
+These operations perform arithmetic and bitwise computations.
+All of these operations are applicable to an object of any atomic integer type.
+The key, operator, and computation correspondence is given in the table below:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|key
+|op
+|computation
+
+|`add`
+|+
+|addition
+
+|`sub`
+|-
+|subtraction
+
+|`or`
+|\|
+|bitwise inclusive or
+
+|`xor`
+|^
+|bitwise exclusive or
+
+|`and`
+|&
+|bitwise and
+
+|`min`
+|min
+|compute min
+
+|`max`
+|max
+|compute max
+
+|===
+
+For atomic_fetch and modify functions with key = add or sub on atomic types `atomic_intptr_t` and `atomic_uintptr_t`, `M` is `ptrdiff_t`.
+For atomic_fetch and modify functions with key = or, xor, and, min and max on atomic types `atomic_intptr_t` and `atomic_uintptr_t`, `M` is `intptr_t` and `uintptr_t`.
+
+Atomically replaces the value pointed to by `object` with the result of the computation applied to the value pointed to by `object` and the given operand.
+Memory is affected according to the value of `order`.
+These operations are atomic read-modify-write operations (as defined by section 5.1.2.4 of the C11 specification).
+For signed integer types, arithmetic is defined to use two’s complement representation with silent wrap-around on overflow; there are no undefined results.
+For address types, the result may be an undefined address, but the operations otherwise have no undefined behavior.
+Returns atomically, the value pointed to by `object` immediately before the effects.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 109
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,59 @@
+include::_header.adoc[]
+
+
+[[isunordered]]
+= isunordered
+
+Test if arguments are unordered.
+
+[source,c]
+----
+int isunordered(float x,
+                float y)
+
+int n isunordered(float n x,
+                  float n y)
+
+int isunordered(double x,
+                double y)
+
+long n isunordered(double n x,
+                   double n y)
+----
+
+----
+int isunordered
+     (half x,
+       half y)   // if half extension enabled
+
+shortn isunordered
+     (halfn x,
+       halfn y)   // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Test if arguments are unordered.
+`isunordered`() takes arguments `x` and `y`, returning non-zero if `x` or `y` is NaN, and zero otherwise.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

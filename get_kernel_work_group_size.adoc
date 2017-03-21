@@ -1,0 +1,41 @@
+include::_header.adoc[]
+
+
+[[get_kernel_work_group_size]]
+= get_kernel_work_group_size
+
+Queries the maximum work-group size.
+
+[source,c]
+----
+uint get_kernel_work_group_size(void (^block)(void))
+
+uint get_kernel_work_group_size(void (^block)(local void*, ...))
+----
+
+
+[[description]]
+== Description
+
+This kernel query function provides a mechanism to query the maximum work-group size that can be used to execute a block on a specific device given by `device`.
+
+`block` specifies the block to be enqueued.
+
+
+[[notes]]
+== Notes
+
+If the <<cl_khr_device_enqueue_local_arg_types.adoc#, `cl_khr_device_enqueue_local_arg_types`>> extension is enabled, then replace all occurrences of `local void *` in the table above with `local gentype *`.
+We use the generic type name `gentype` to indicate the built-in OpenCL C scalar or vector integer or floating-point data types, or any user defined type built from these scalar and vector data types which can be used as the type of the pointee of the arguments of the kernel enqueue functions listed above.
+
+
+:spec-name: CLan
+:spec-page: 169
+
+
+[[seealso]]
+== Also see
+
+<<get_kernel_preferred_work_group_size_multiple.adoc#, `get_kernel_preferred_work_group_size_multiple`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,3 @@
+The function returns a 0 if the specified relation is `false` and a 1 if the specified relation is `true` for scalar argument types.
+These functions shall return a 0 if the specified relation is `false` and a - 1 (i.e.
+all bits set) if the specified relation is `true` for vector argument types.

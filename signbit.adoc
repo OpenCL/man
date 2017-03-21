@@ -1,0 +1,57 @@
+include::_header.adoc[]
+
+
+[[signbit]]
+= signbit
+
+Test for sign bit.
+
+[source,c]
+----
+int signbit(float)
+
+int n signbit(float n)
+
+int signbit(double)
+
+long n signbit(double n)
+----
+
+----
+int signbit (half)      // if half extension enabled
+
+shortn signbit (halfn)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+The built-in function `signbit` tests for sign bit.
+For the forms not dependent on the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension, the scalar version of the function returns a 1 if the sign bit in the float is set else returns 0.
+The vector version of the function returns the following for each component in float`n`: -1 (i.e.
+all bits set) if the sign bit in the float is set else returns 0.
+
+For the forms enabled by the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension, the function returns a 1 if the sign bit in the half is set else returns 0.
+The vector version of the function returns the following for each component in half`n`: -1 (i.e.
+all bits set) if the sign bit in the half is set else returns 0.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

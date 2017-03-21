@@ -1,0 +1,48 @@
+include::_header.adoc[]
+
+
+[[clReleaseDevice]]
+= clReleaseDevice
+
+Decrements the `device` reference count.
+
+[source,c]
+----
+cl_int clReleaseDevice(cl_device_id device)
+----
+
+
+[[notes]]
+== Notes
+
+Decrements the `device` reference count if device is a valid sub-device created by a call to <<clCreateSubDevices.adoc#, `clCreateSubDevices`>>.
+If `device` is a root level device i.e.
+a `cl_device_id` returned by <<clGetDeviceIDs.adoc#, `clGetDeviceIDs`>>, the `device` reference count remains unchanged.
+
+After the `device` reference count becomes zero and all the objects attached to `device` (such as command-queues) are released, the `device` object is deleted.
+Using this function to release a reference that was not obtained by creating the object or by calling <<clRetainDevice.adoc#, `clRetainDevice`>> causes undefined behavior.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_DEVICE` if `device` is not a valid sub-device created by a call to <<clCreateSubDevices.adoc#, `clCreateSubDevices`>>.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 88
+
+
+[[seealso]]
+== Also see
+
+<<clCreateSubDevices.adoc#, `clCreateSubDevices`>>, <<clGetDeviceIDs.adoc#, `clGetDeviceIDs`>>, <<clRetainDevice.adoc#, `clRetainDevice`>>
+
+include::_footer.adoc[]

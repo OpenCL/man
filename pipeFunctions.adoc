@@ -1,0 +1,59 @@
+include::_header.adoc[]
+
+= Pipe Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<read_pipe.adoc#, `read_pipe`>>
+|Read packet from pipe
+
+|<<write_pipe.adoc#, `write_pipe`>>
+|Write packet to pipe
+
+|<<reserve_read_pipe.adoc#, `reserve_read_pipe`>>
+|Reserve entries for reading from pipe
+
+|<<reserve_write_pipe.adoc#, `reserve_write_pipe`>>
+|Reserve entries for writing to pipe
+
+|<<commit_read_pipe.adoc#, `commit_read_pipe`>>
+|Indicates that all reads associated with a reservation are completed
+
+|<<commit_write_pipe.adoc#, `commit_write_pipe`>>
+|Indicates that all writes associated with a reservation are completed
+
+|<<is_valid_reserve_id.adoc#, `is_valid_reserve_id`>>
+|Test for a valid reservation ID
+
+|<<work_group_reserve_read_pipe.adoc#, `work_group_reserve_read_pipe`>>
+|Reserve entries for reading from pipe
+
+|<<work_group_reserve_write_pipe.adoc#, `work_group_reserve_write_pipe`>>
+|Reserve entries for writing to pipe
+
+|<<work_group_commit_read_pipe.adoc#, `work_group_commit_read_pipe`>>
+|Indicates that all reads associated with a reservation are completed
+
+|<<work_group_commit_write_pipe.adoc#, `work_group_commit_write_pipe`>>
+|Indicates that all writes associated with a reservation are completed
+
+|<<get_pipe_num_packets.adoc#, `get_pipe_num_packets`>>
+|Returns the number of available entries in the pipe
+
+|<<get_pipe_max_packets.adoc#, `get_pipe_max_packets`>>
+|Returns the maximum number of packets specified when pipe was created
+
+|===
+
+
+[[description]]
+== Description
+
+
+:spec-name: Core
+:spec-page: 160
+
+include::_footer.adoc[]

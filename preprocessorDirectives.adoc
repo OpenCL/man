@@ -1,0 +1,92 @@
+include::_header.adoc[]
+
+
+[[PreprocessorDirectivesandMacros]]
+= Preprocessor Directives and Macros
+
+Preprocessor Directives and Macros.
+
+----
+# pragma pp-tokensopt new-line
+----
+
+
+[[description]]
+== Description
+
+The preprocessing directives defined by the C99 specification are supported.
+
+A `# pragma` directive where the preprocessing token `OPENCL` (used instead of `STDC`) does not immediately follow `pragma` in the directive (prior to any macro replacement) causes the implementation to behave in an implementation-defined manner.
+The behavior might cause translation to fail or cause the translator or the resulting program to behave in a non-conforming manner.
+Any such `pragma` that is not recognized by the implementation is ignored.
+If the preprocessing token `OPENCL` does immediately follow `pragma` in the directive (prior to any macro replacement), then no macro replacement is performed on the directive, and the directive shall have one of the following forms whose meanings are described elsewhere:
+
+----
+          #pragma OPENCL FP_CONTRACT on-off-switch
+               on-off-switch: one of ON OFF DEFAULT
+          #pragma OPENCL EXTENSION extensionname : behavior
+          #pragma OPENCL EXTENSION all : behavior
+----
+
+The following predefined macro names are available.
+
+* `__FILE__` The presumed name of the current source file (a character string literal).
+
+* `__LINE__` The presumed line number (within the current source file) of the current source line (an integer constant).
+
+* `__OPENCL_VERSION__` substitutes an integer reflecting the version number of the OpenCL supported by the OpenCL device.
+The version of OpenCL described in this document will have `__OPENCL_VERSION__` substitute the integer 200.
+
+* `CL_VERSION_1_0` substitutes the integer 100 reflecting the OpenCL 1.0 version.
+
+* `CL_VERSION_1_1` substitutes the integer 110 reflecting the OpenCL 1.1 version.
+
+* `CL_VERSION_1_2` substitutes the integer 120 reflecting the OpenCL 1.2 version.
+
+* `CL_VERSION_2_0` substitutes the integer 200 reflecting the OpenCL 2.0 version.
+
+* `__OPENCL_C_VERSION__` substitutes an integer reflecting the OpenCL C version specified by the `-cl-std` build option to <<clBuildProgram.adoc#, `clBuildProgram`>> or <<clCompileProgram.adoc#, `clCompileProgram`>>.
+If the `-cl-std` build option is not specified, the highest OpenCL C 1.x language version supported by each device is used as the version of OpenCL C when compiling the program for each device.
+The version of OpenCL C described in this document will have `__OPENCL_C_VERSION__` substitute the integer 200 if `–cl-std=CL2.0` is specified.
+
+* `__ENDIAN_LITTLE__` is used to determine if the OpenCL device is a little endian architecture or a big endian architecture (an integer constant of 1 if device is little endian and is undefined otherwise).
+Also refer to `CL_DEVICE_ENDIAN_LITTLE` specified in the table of OpenCL Device Queries for <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>.
+
+* {blank}
++
+--
+
+`__kernel_exec(X, typen)` (and `kernel_exec(X, typen))` is defined as follows:
+
+----
+     __kernel __attribute__((work_group_size_hint(X, 1, 1))) \
+              __attribute__((vec_type_hint(typen)))
+----
+
+--
+
+* `__IMAGE_SUPPORT__` is used to determine if the OpenCL device supports images.
+This is an integer constant of 1 if images are supported and is undefined otherwise.
+Also refer to `CL_DEVICE_IMAGE_SUPPORT` specified in the table of OpenCL Device Queries for <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>.
+
+* `__FAST_RELAXED_MATH__` is used to determine if the cl-fast-relaxed-math optimization option is specified in build options given to <<clBuildProgram.adoc#, `clBuildProgram`>> or <<clCompileProgram.adoc#, `clCompileProgram`>>.
+This is an integer constant of 1 if the cl-fast-relaxed-math build option is specified and is undefined otherwise.
+
+* The `NULL` macro expands to a null pointer constant.
+An integer constant expression with the value 0, or such an expression cast to type `void *` is called a null pointer constant.
+
+* The macro names defined by the C99 specification but not currently supported by OpenCL are reserved for future use.
+
+* The predefined identifier `__func__` is available.
+
+
+:spec-name: CLan
+:spec-page: 54
+
+
+[[seealso]]
+== Also see
+
+<<mathConstants.adoc#, Symbolic Math Constants>>, <<clBuildProgram.adoc#, `clBuildProgram`>>, <<FP_CONTRACT.adoc#, FP_CONTRACT>>, <<EXTENSION.adoc#, EXTENSION>>
+
+include::_footer.adoc[]

@@ -1,0 +1,29 @@
+include::_header.adoc[]
+
+
+[[get_work_dim]]
+= get_work_dim
+
+Returns the number of dimensions in use.
+
+----
+                        uint get_work_dim ()
+----
+
+
+[[description]]
+== Description
+
+This is the value given to the `work_dim` argument specified in <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>.
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<workItemFunctions.adoc#, Work-Item Functions>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>
+
+include::_footer.adoc[]

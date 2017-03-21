@@ -1,0 +1,39 @@
+include::_header.adoc[]
+
+
+[[cl_khr_dx9_media_sharing]]
+= cl_khr_dx9_media_sharing
+
+Provide sharing of data between OpenCL and DX9.
+
+----
+#pragma OPENCL EXTENSION cl_khr_dx9_media_sharing : enable
+----
+
+
+[[description]]
+== Description
+
+If the `cl_khr_dx9_media_sharing` extension is supported, then the following functions are enabled:
+
+* <<clGetDeviceIDsFromDX9MediaAdapterKHR.adoc#, `clGetDeviceIDsFromDX9MediaAdapterKHR`>>
+
+* <<clCreateFromDX9MediaSurfaceKHR.adoc#, `clCreateFromDX9MediaSurfaceKHR`>>
+
+* <<clEnqueueAcquireDX9MediaSurfacesKHR.adoc#, `clEnqueueAcquireDX9MediaSurfacesKHR`>>
+
+* <<clEnqueueReleaseDX9MediaSurfacesKHR.adoc#, `clEnqueueReleaseDX9MediaSurfacesKHR`>>
+
+include::sharingDX9Inc.adoc[]
+
+
+:spec-name: Ext
+:spec-page: 81
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>, <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>
+
+include::_footer.adoc[]

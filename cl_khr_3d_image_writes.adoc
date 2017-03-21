@@ -1,0 +1,23 @@
+include::_header.adoc[]
+
+
+[[cl_khr_3d_image_writes]]
+= cl_khr_3d_image_writes
+
+Extension to enable writes to 3D image memory objects.
+
+----
+#pragma OPENCL EXTENSION cl_khr_3d_image_writes : enable
+----
+
+
+:spec-name: Ext
+:spec-page: 32
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<cl_image_format.adoc#, `cl_image_format`>>, <<imageFunctions.adoc#, Image Functions>>
+
+include::_footer.adoc[]

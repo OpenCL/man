@@ -1,0 +1,134 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceIDsFromD3D10KHR]]
+= clGetDeviceIDsFromD3D11KHR
+
+Querying OpenCL Devices Corresponding to Direct3D 11 Devices.
+
+[source,c]
+----
+cl_int clGetDeviceIDsFromD3D11KHR(cl_platform_id platform,
+                                  cl_d3d11_device_source_khr d3d_device_source,
+                                  void *d3d_object,
+                                  cl_d3d11_device_set_khr d3d_device_set,
+                                  cl_uint num_entries,
+                                  cl_device_id *devices,
+                                  cl_uint *num_devices)
+----
+
+
+[[parameters]]
+== Parameters
+
+`platform`::
+
+Refers to the platform ID returned by <<clGetPlatformIDs.adoc#, `clGetPlatformIDs`>>.
+
+`d3d_device_source`::
+
++
+--
+
+Specifies the type of `d3d_object` and may be one of the following (Table 9.11.1):
+
+[cols="1a,1a", options="header"]
+|===
+
+|cl_d3d_device_source_khr
+|Type of `d3d_object`
+
+|`CL_D3D11_DEVICE_KHR`
+|ID3D11Device *
+
+|`CL_D3D11_DXGI_ADAPTER_KHR`
+|IDXGIAdapter *
+
+|===
+
+--
+
+`d3d_object`::
+
+Specifies the object whose corresponding OpenCL devices are being queried.
+The type of `d3d_object` must be as specified in the table above.
+
+`d3d_device_set`::
+
++
+--
+
+Specifies the set of devices to return, and must be one of the following (Table 9.11.2):
+
+[cols="1a,1a", options="header"]
+|===
+
+|cl_d3d_device_set_khr
+|Devices returned in `devices`
+
+|`CL_PREFERRED_DEVICES_FOR_D3D11_KHR`
+|The OpenCL devices associated with the specified Direct3D object.
+
+|`CL_ALL_DEVICES_FOR_D3D11_KHR`
+|All OpenCL devices which may interoperate with the specified Direct3D object.
+Performance of sharing data on these devices may be considerably less than on the preferred devices.
+
+|===
+
+--
+
+`num_entries`::
+
+The number of `cl_device_id` entries that can be added to `devices`.
+If `devices` is not NULL, the `num_entries` must be greater than zero.
+
+`devices`::
+
+Returns a list of OpenCL devices found.
+The `cl_device_id` values returned in `devices` can be used to identify a specific OpenCL device.
+If `devices` is NULL, this argument is ignored.
+The number of OpenCL devices returned is the mininum of the value specified by `num_entries` and the number of OpenCL devices corresponding to `d3d_object`.
+
+`num_devices`::
+
+Returns the number of OpenCL devices available that correspond to `d3d_object`.
+If `num_devices` is NULL, this argument is ignored.
+
+
+[[description]]
+== Description
+
+The OpenCL devices corresponding to a Direct3D 11 device may be queried.
+The OpenCL devices corresponding to a DXGI adapter may also be queried.
+The OpenCL devices corresponding to a Direct3D 11 device will be a subset of the OpenCL devices corresponding to the DXGI adapter against which the Direct3D 11 device was created.
+
+
+[[notes]]
+== Notes
+
+include::sharingD3D11Inc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise it may return:
+
+* `CL_INVALID_PLATFORM` if `platform` is not a valid platform.
+
+* `CL_INVALID_VALUE` if `d3d_device_source` is not a valid value, `d3d_device_set` is not a valid value, `num_entries` is equal to zero and `devices` is not NULL, or if both `num_devices` and `devices` are NULL.
+
+* `CL_DEVICE_NOT_FOUND` if no OpenCL devices that correspond to `d3d_object` were found.
+
+
+:spec-name: Ext
+:spec-page: 100
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>>
+
+include::_footer.adoc[]

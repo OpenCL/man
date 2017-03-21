@@ -1,0 +1,62 @@
+include::_header.adoc[]
+
+
+[[sin]]
+= sin, sincos, sinh, sinpi, half_sin, native_sin
+
+Sine functions.
+
+[source,c]
+----
+gentype sin(gentype)
+
+gentype sincos(gentype x,
+               gentype *cosval)
+
+gentype sinh(gentype)
+
+gentype sinpi(gentype x)
+
+gentype half_sin(gentype x)
+
+gentype native_sin(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`sin` computes the sine.
+
+`sincos` computes sine and cosine of `x`.
+The computed sine is the return value and computed cosine is returned in `cosval`.
+
+`sinh` computes the hyperbolic sine.
+
+`sinpi` computes `sin` (`pi * x`).
+
+`half_sin` computes sine.
+`x` must be in the range -2^16^... +2^16^.
+
+`native_sin` computes sine over an implementation-defined range.
+The maximum error is implementation-defined.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

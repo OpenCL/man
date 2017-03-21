@@ -1,0 +1,64 @@
+include::_header.adoc[]
+
+
+[[FP_CONTRACT]]
+= FP_CONTRACT, FP_FAST_FMAF, FP_FAST_FMA_HALF
+
+Control expression contraction; fast fma()
+
+----
+#pragma OPENCL FP_CONTRACT on-off-switch
+
+on-off-switch is one of:
+     ON, OFF or DEFAULT.
+     The DEFAULT value is ON.
+
+FP_FAST_FMAF
+FP_FAST_FMA
+FP_FAST_FMA_HALF
+----
+
+
+[[fpcontract]]
+== FP_CONTRACT
+
+The `FP_CONTRACT` pragma takes the form:
+
+----
+#pragma OPENCL FP_CONTRACT on-off-switch
+----
+
+`FP_CONTRACT` can be used to allow (if the state is `on`) or disallow (if the state is `off`) the implementation to contract expressions.
+Each pragma can occur either outside external declarations or preceding all explicit declarations and statements inside a compound statement.
+
+The parameter `on-off-switch` is one of ON, OFF or DEFAULT.
+The DEFAULT value is ON.
+
+When outside external declarations, the pragma takes effect from its occurrence until another `FP_CONTRACT` pragma is encountered, or until the end of the translation unit.
+When inside a compound statement, the pragma takes effect from its occurrence until another `FP_CONTRACT` pragma is encountered (including within a nested compound statement), or until the end of the compound statement; at the end of a compound statement the state for the pragma is restored to its condition just before the compound statement.
+If this pragma is used in any other context, the behavior is undefined.
+
+
+[[fpfastfma]]
+== FP_FAST_FMAF, FP_FAST_FMA, and FP_FAST_FMA_HALF
+
+The `FP_FAST_FMAF` macro indicates whether the <<fma.adoc#, `fma`>> function is fast compared with direct code for single precision floating-point.
+If defined, the `FP_FAST_FMAF` macro shall indicate that the <<fma.adoc#, `fma`>>() function generally executes about as fast as, or faster than, a multiply and an add of float operands.
+
+The `FP_FAST_FMA` macro indicates whether the <<fma.adoc#, `fma`>> family of functions are fast compared with direct code for double precision floating-point.
+If defined, the `FP_FAST_FMA` macro shall indicate that the <<fma.adoc#, `fma`>>() function generally executes about as fast as, or faster than, a multiply and an add of double operands.
+
+The `FP_FAST_FMA_HALF` macro indicates whether the <<fma.adoc#, `fma`>>() family of functions are fast compared with direct code for half precision floating-point.
+If defined, the `FP_FAST_FMA_HALF` macro shall indicate that the <<fma.adoc#, `fma`>>() function generally executes about as fast as, or faster than, a multiply and an add of half operands
+
+
+:spec-name: CLan
+:spec-page: 79
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>, <<mathConstants.adoc#, Symbolic Math Constants>>, <<macroLimits.adoc#, Macros and Limits>>
+
+include::_footer.adoc[]

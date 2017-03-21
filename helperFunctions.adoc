@@ -1,0 +1,22 @@
+include::_header.adoc[]
+
+= Built-In Helper Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<get_default_queue.adoc#, `get_default_queue`>>
+|Returns the default device queue.
+
+|<<ndrange.adoc#, `ndrange`>>
+|Builds a 1D, 2D or 3D ND-range descriptor.
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 174
+
+include::_footer.adoc[]

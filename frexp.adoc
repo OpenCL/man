@@ -1,0 +1,74 @@
+include::_header.adoc[]
+
+
+[[frexp]]
+= frexp
+
+Extract mantissa and exponent.
+
+[source,c]
+----
+float n frexp(float n x,
+              int n *exp)
+
+float frexp(float x,
+            int *exp)
+
+double n frexp(double n x,
+               int n *exp)
+
+double frexp(double x,
+             int *exp)
+
+half n frexp(half n x,
+             __global int n *exp)
+
+half n frexp(half n x,
+             __local int n *exp)
+
+half n frexp(half n x,
+             __private int n *exp)
+
+half n frexp(half n x,
+             int n *exp)
+
+half frexp(half x,
+           __global int *exp)
+
+half frexp(half x,
+           __local int *exp)
+
+half frexp(half x,
+           __private int *exp)
+
+half frexp(half x,
+           int *exp)
+----
+
+
+[[description]]
+== Description
+
+Extract mantissa and exponent from `x`.
+For each component the mantissa returned is a float with magnitude in the interval [1/2, 1) or 0.
+Each component of `x` equals mantissa returned * 2^exp^.
+
+
+[[notes]]
+== Notes
+
+The built-in math functions are not affected by the prevailing rounding mode in the calling environment, and always return the same value as they would if called with the round to nearest even rounding mode.
+
+An application that wants to use `half` and `halfn` types will need to include the `#pragma OPENCL EXTENSION cl_khr_fp16 : enable` directive.
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

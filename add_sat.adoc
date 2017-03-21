@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[add_sat]]
+= add_sat
+
+Add two values and saturate the result.
+
+[source,c]
+----
+gentype add_sat(gentype x,
+                gentype y)
+----
+
+
+[[description]]
+== Description
+
+`add_sat` returns `x`+`y` and saturates result.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

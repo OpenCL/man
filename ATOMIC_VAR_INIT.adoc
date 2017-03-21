@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[ATOMIC_VAR_INIT]]
+= ATOMIC_VAR_INIT
+
+Expands to a token sequence suitable for initializing an atomic object.
+
+
+[[description]]
+== Description
+
+The `ATOMIC_VAR_INIT` macro is defined as:
+
+----
+       #define ATOMIC_VAR_INIT(C value)
+----
+
+The `ATOMIC_VAR_INIT` macro expands to a token sequence suitable for initializing an atomic object of a type that is initialization-compatible with value.
+An atomic object with automatic storage duration that is not explicitly initialized using `ATOMIC_VAR_INIT` is initially in an indeterminate state; however, the default (zero) initialization for objects with static storage duration is guaranteed to produce a valid state.
+
+This macro can only be used to initialize atomic objects that are declared in program scope in the global address space.
+
+Concurrent access to the variable being initialized, even via an atomic operation, constitutes a data-race.
+
+
+[[example1]]
+== Examples
+
+----
+global atomic_int guide = ATOMIC_VAR_INIT(42);
+----
+
+Concurrent access to the variable being initialized, even via an atomic operation, constitutes a data-race.
+
+
+:spec-name: CLan
+:spec-page: 104
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

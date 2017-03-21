@@ -1,0 +1,164 @@
+include::_header.adoc[]
+
+
+[[clGetImageInfo]]
+= clGetImageInfo
+
+Get information specific to an image object created with clCreateImage.
+
+[source,c]
+----
+cl_int clGetImageInfo(cl_mem image,
+                      cl_image_info param_name,
+                      size_t param_value_size,
+                      void *param_value,
+                      size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`image`::
+
+Specifies the image object being queried.
+
+`param_name`::
+
+Specifies the information to query.
+The list of supported `param_name` types and the information returned in `param_value` by `clGetImageInfo` is described in the table below (Table 5.9).
+
+`param_value`::
+
+A pointer to memory where the appropriate result being queried is returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
++
+--
+
+Used to specify the size in bytes of memory pointed to by `param_value`.
+This size must be ≥ size of return type as described in the table below (Table 5.9).
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|cl_image_info
+|Return Type
+|Info.
+returned in `param_value`
+
+|`CL_IMAGE_FORMAT`
+|cl_image_format
+|Return image format descriptor specified when `image` is created with <<clCreateImage.adoc#, `clCreateImage`>>.
+
+|`CL_IMAGE_ELEMENT_SIZE`
+|size_t
+|Return size of each element of the image memory object given by `image` in bytes.
+An element is made up of `n` channels.
+The value of `n` is given in <<cl_image_format.adoc#, `cl_image_format`>> descriptor.
+
+|`CL_IMAGE_ROW_PITCH`
+|size_t
+|Return calculated row pitch in bytes of a row of elements of the image object given by `image`.
+
+|`CL_IMAGE_SLICE_PITCH`
+|size_t
+|Return calculated slice pitch in bytes of a 2D slice for the 3D image object or size of each image in a 1D or 2D image array given by `image`.
+For a 1D image, 1D image buffer and 2D image object return 0.
+
+|`CL_IMAGE_WIDTH`
+|size_t
+|Return width of image in pixels.
+
+|`CL_IMAGE_HEIGHT`
+|size_t
+|Return height of image in pixels.
+For a 1D image, 1D image buffer and 1D image array object, height = 0.
+
+|`CL_IMAGE_DEPTH`
+|size_t
+|Return depth of the image in pixels.
+For a 1D image, 1D image buffer, 2D image or 1D and 2D image array object, depth = 0.
+
+|`CL_IMAGE_ARRAY_SIZE`
+|size_t
+|Return number of images in the image array.
+If `image` is not an image array, 0 is returned.
+
+|`CL_IMAGE_NUM_MIP_LEVELS`
+|cl_uint
+|Return num_mip_levels associated with `image`.
+
+|`CL_IMAGE_NUM_SAMPLES`
+|cl_uint
+|Return num_samples associated with `image`.
+
+|`CL_IMAGE_D3D10_SUBRESOURCE_KHR`
+|ID3D10Resource *
+|(if the <<cl_khr_d3d10_sharing.adoc#, `cl_khr_d3d10_sharing`>> extension is enabled) If `image` was created using <<clCreateFromD3D10Texture2DKHR.adoc#, `clCreateFromD3D10Texture2DKHR`>> or <<clCreateFromD3D10Texture3DKHR.adoc#, `clCreateFromD3D10Texture3DKHR`>>, returns the `subresource` argument specified when `image` was created.
+
+|`CL_IMAGE_DX9_MEDIA_PLANE_KHR`
+|cl_uint
+|Returns the `plane` argument value specified when `memobj` is created using <<clCreateFromDX9MediaSurfaceKHR.adoc#, `clCreateFromDX9MediaSurfaceKHR`>>. (If the <<cl_khr_dx9_media_sharing.adoc#, `cl_khr_dx9_media_sharing`>> extension is supported)
+
+|`CL_IMAGE_D3D11_- SUBRESOURCE_KHR`
+|ID3D11Resource *
+|If the <<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>> extension is suported, If `image` was created using <<clCreateFromD3D11Texture2DKHR.adoc#, `clCreateFromD3D11Texture2DKHR`>>, or <<clCreateFromD3D11Texture3DKHR.adoc#, `clCreateFromD3D11Texture3DKHR`>>, returns the `subresource` argument specified when `image` was created.
+
+|`CL_IMAGE_D3D11_- SUBRESOURCE_KHR`
+|UINT
+|If the <<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>> extension is suported, If `image` was created using <<clCreateFromD3D11Texture2DKHR.adoc#, `clCreateFromD3D11Texture2DKHR`>>, or <<clCreateFromD3D11Texture3DKHR.adoc#, `clCreateFromD3D11Texture3DKHR`>>, returns the `subresource` argument specified when `image` was created.
+
+|`CL_IMAGE_D3D11_- SUBRESOURCE_KHR`
+|UINT
+|If the <<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>> extension is suported, If `image` was created using <<clCreateFromD3D11Texture2DKHR.adoc#, `clCreateFromD3D11Texture2DKHR`>>, or <<clCreateFromD3D11Texture3DKHR.adoc#, `clCreateFromD3D11Texture3DKHR`>>, returns the `subresource` argument specified when `image` was created.
+
+|===
+
+--
+
+`param_value_size_ret`::
+
+Returns the actual size in bytes of data being queried by `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+
+[[notes]]
+== Notes
+
+To get information that is common to all memory objects, use the <<clGetMemObjectInfo.adoc#, `clGetMemObjectInfo`>> function.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_VALUE` if `param_name` is not valid, or if size in bytes specified by `param_value_size` is < size of return type as described in the table above and `param_value` is not NULL.
+
+* `CL_INVALID_MEM_OBJECT` if `image` is a not a valid image object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+* `CL_INVALID_DX9_MEDIA_SURFACE_KHR` if `param_name` is `CL_IMAGE_DX9_MEDIA_PLANE_KHR` and `image` was not created by the function <<clCreateFromDX9MediaSurfaceKHR.adoc#, `clCreateFromDX9MediaSurfaceKHR`>>. (If the <<cl_khr_dx9_media_sharing.adoc#, `cl_khr_dx9_media_sharing`>> extension is supported)
+
+* `CL_INVALID_D3D10_RESOURCE_KHR` if `param_name` is `CL_MEM_D3D10_SUBRESOURCE_KHR` and `image` was not created by the function <<clCreateFromD3D10Texture2DKHR.adoc#, `clCreateFromD3D10Texture2DKHR`>> or <<clCreateFromD3D10Texture3DKHR.adoc#, `clCreateFromD3D10Texture3DKHR`>>. (If the <<cl_khr_d3d10_sharing.adoc#, `cl_khr_d3d10_sharing`>> extension is supported)
+
+* `CL_INVALID_D3D11_RESOURCE_KHR` if `param_name` is `CL_MEM_D3D11_SUBRESOURCE_KHR` and `image` was not created by the function <<clCreateFromD3D11Texture2DKHR.adoc#, `clCreateFromD3D11Texture2DKHR`>> or <<clCreateFromD3D11Texture3DKHR.adoc#, `clCreateFromD3D11Texture3DKHR`>>. (If the <<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>> extension is supported)
+
+
+:spec-name: Core
+:spec-page: 157
+
+
+[[seealso]]
+== Also see
+
+<<clGetMemObjectInfo.adoc#, `clGetMemObjectInfo`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,146 @@
+include::_header.adoc[]
+
+
+[[clSetKernelArg]]
+= clSetKernelArg
+
+Set the argument value for a specific argument of a kernel.
+
+[source,c]
+----
+cl_int clSetKernelArg(cl_kernel kernel,
+                      cl_uint arg_index,
+                      size_t arg_size,
+                      const void *arg_value)
+----
+
+
+[[parameters]]
+== Parameters
+
+`kernel`::
+
+A valid kernel object.
+
+`arg_index`::
+
+The argument index.
+Arguments to the kernel are referred by indices that go from 0 for the leftmost argument to `n` - 1, where `n` is the total number of arguments declared by a kernel.
+
+`arg_value`::
+
++
+--
+
+A pointer to data that should be used as the argument value for argument specified by `arg_index`.
+The argument data pointed to by `arg_value` is copied and the `arg_value` pointer can therefore be reused by the application after `clSetKernelArg` returns.
+The argument value specified is the value used by all API calls that enqueue `kernel` (<<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>) until the argument value is changed by a call to `clSetKernelArg` for `kernel`.
+
+If the argument is a memory object (buffer, pipe, image or image array), the `arg_value` entry will be a pointer to the appropriate buffer, pipe, image or image array object.
+The memory object must be created with the context associated with the kernel object.
+If the argument is a buffer object, the `arg_value` pointer can be NULL or point to a NULL value in which case a NULL value will be used as the value for the argument declared as a pointer to <<global.adoc#, `global`>> or <<constant.adoc#, `constant`>> memory in the kernel.
+If the argument is declared with the <<local.adoc#, `local`>> qualifier, the `arg_value` entry must be NULL.
+If the argument is of type `sampler_t`, the `arg_value` entry must be a pointer to the sampler object.
+If the argument is of type `queue_t`, the `arg_value` entry must be a pointer to the device queue object.
+
+If the argument is declared to be a pointer of a built-in scalar or vector type, or a user defined structure type in the global or constant address space, the memory object specified as argument value must be a buffer object (or NULL).
+If the argument is declared with the <<constant.adoc#, `constant`>> qualifier, the size in bytes of the memory object cannot exceed `CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE` and the number of arguments declared as pointers to <<constant.adoc#, `constant`>> memory cannot exceed `CL_DEVICE_MAX_CONSTANT_ARGS`.
+
+The memory object specified as argument value must be a pipe object if the argument is declared with the `pipe` qualifier.
+
+The memory object specified as argument value must be a 2D image object if the argument is declared to be of type <<abstractDataTypes.adoc#, `image2d_t`>>.
+The memory object specified as argument value must be a 2D image object with image channel order = `CL_DEPTH` if the argument is declared to be of type <<abstractDataTypes.adoc#, `image2d_depth_t`>>.
+The memory object specified as argument value must be a 3D image object if argument is declared to be of type <<abstractDataTypes.adoc#, `image3d_t`>>.
+The memory object specified as argument value must be a 1D image object if the argument is declared to be of type <<abstractDataTypes.adoc#, `image1d_t`>>.
+The memory object specified as argument value must be a 1D image buffer object if the argument is declared to be of type <<abstractDataTypes.adoc#, `image1d_buffer_t`>>.
+The memory object specified as argument value must be a 1D image array object if argument is declared to be of type <<abstractDataTypes.adoc#, `image1d_array_t`>>.
+The memory object specified as argument value must be a 2D image array object if argument is declared to be of type <<abstractDataTypes.adoc#, `image2d_array_t`>>.
+The memory object specified as argument value must be a 2D image array object with image channel order = `CL_DEPTH` if argument is declared to be of type <<abstractDataTypes.adoc#, `image2d_array_depth_t`>>.
+
+For all other kernel arguments, the `arg_value` entry must be a pointer to the actual data to be used as argument value.
+
+If the <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>> extension is supported, if the argument is a multi-sample 2D image, the `arg_value` entry must be a pointer to a multisample image object.
+If the argument is a multi-sample 2D depth image, the `arg_value` entry must be a pointer to a multisample depth image object.
+If the argument is a multi-sample 2D image array, the `arg_value` entry must be a pointer to a multi-sample image array object.
+If the argument is a multi-sample 2D depth image array, the `arg_value` entry must be a pointer to a multi-sample depth image array object.
+
+--
+
+`arg_size`::
+
+Specifies the size of the argument value.
+If the argument is a memory object, the size is the size of the memory object.
+For arguments declared with the <<local.adoc#, `local`>> qualifier, the size specified will be the size in bytes of the buffer that must be allocated for the <<local.adoc#, `local`>> argument.
+If the argument is of type `sampler_t`, the `arg_size` value must be equal to `sizeof(cl_sampler)`.
+If the argument is of type `queue_t`, the `arg_size` value must be equal to `sizeof(cl_command_queue)`.
+For all other arguments, the size will be the size of argument type.
+
+
+[[notes]]
+== Notes
+
+A kernel object does not update the reference count for objects such as memory, sampler objects specified as argument values by `clSetKernelArg`.
+Users may not rely on a kernel object to retain objects specified as argument values to the kernel.
+
+Implementations shall not allow `cl_kernel` objects to hold reference counts to `cl_kernel` arguments, because no mechanism is provided for the user to tell the kernel to release that ownership right.
+If the kernel holds ownership rights on kernel args, that would make it impossible for the user to tell with certainty when he may safely release user allocated resources associated with OpenCL objects such as the `cl_mem` backing store used with `CL_MEM_USE_HOST_PTR`.
+
+include::multipleHostThreadsInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clSetKernelArg` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_KERNEL` if `kernel` is not a valid kernel object.
+
+* `CL_INVALID_ARG_INDEX` if `arg_index` is not a valid argument index.
+
+* `CL_INVALID_ARG_VALUE` if `arg_value` specified is not a valid value.
+
+* `CL_INVALID_MEM_OBJECT` for an argument declared to be a memory object when the specified `arg_value` is not a valid memory object.
+
+* `CL_INVALID_MEM_OBJECT` for an argument declared to be a multi-sample image, multisample image array, multi-sample depth image or a multi-sample depth image array and the argument value specified in `arg_value` does not follow the rules described above for a depth memory object or memory array object argument. (Applies if the <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>> extension is supported.)
+
+* `CL_INVALID_SAMPLER` for an argument declared to be of type `sampler_t` when the specified `arg_value` is not a valid sampler object.
+
+* `CL_INVALID_DEVICE_QUEUE` for an argument declared to be of type `queue_t` when the specified `arg_value` is not a valid device queue object.
+
+* `CL_INVALID_ARG_SIZE` if `arg_size` does not match the size of the data type for an argument that is not a memory object or if the argument is a memory object and `arg_size` != `sizeof(cl_mem)` or if `arg_size` is zero and the argument is declared with the <<local.adoc#, `local`>> qualifier or if the argument is a sampler and `arg_size` != `sizeof(cl_sampler)`.
+
+* `CL_INVALID_ARG_VALUE` if the argument is an image declared with the `read_only` qualifier and `arg_value` refers to an image object created with `cl_mem_flags` of `CL_MEM_WRITE` or if the image argument is declared with the `write_only` qualifier and `arg_value` refers to an image object created with `cl_mem_flags` of `CL_MEM_READ`.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+[[example1]]
+== Example
+
+----
+kernel void
+image_filter (int n, int m,
+          constant float *filter_weights,
+          read_only image2d_t src_image,
+          write_only image2d_t dst_image)
+{
+     ...
+}
+----
+
+Argument index values for `image_filter` will be 0 for `n`, 1 for `m`, 2 for `filter_weights`, 3 for `src_image` and 4 for `dst_image`.
+
+
+:spec-name: Core
+:spec-page: 224
+
+
+[[seealso]]
+== Also see
+
+<<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>, <<clCreateKernel.adoc#, `clCreateKernel`>>, <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>>, <<clReleaseKernel.adoc#, `clReleaseKernel`>>, <<clRetainKernel.adoc#, `clRetainKernel`>>, <<clGetKernelInfo.adoc#, `clGetKernelInfo`>>, <<clGetKernelWorkGroupInfo.adoc#, `clGetKernelWorkGroupInfo`>>, <<clSetKernelArgSVMPointer.adoc#, `clSetKernelArgSVMPointer`>>
+
+include::_footer.adoc[]

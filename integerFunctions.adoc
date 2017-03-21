@@ -1,0 +1,81 @@
+include::_header.adoc[]
+
+= Integer Built-In Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<abs.adoc#, `abs`>>
+|\|`x`\|
+
+|<<abs.adoc#, `abs_diff`>>
+|\|`x`-`y`\| without modulo overflow
+
+|<<add_sat.adoc#, `add_sat`>>
+|`x`+`y` and saturate result
+
+|<<hadd.adoc#, `hadd`>>
+|(`x`+`y`) >> 1.
+The intermediate sum does not modulo overflow
+
+|<<hadd.adoc#, `rhadd`>>
+|(`x`+`y`+1) >> 1.
+The intermediate sum does not modulo overflow.
+
+|<<clamp_integer.adoc#, `clamp`>>
+|`min`(`max`( `x`, `minval`), `maxval`)
+
+|<<clz.adoc#, `clz`>>
+|Number of leading 0-bits in `x`
+
+|<<ctz.adoc#, `ctz`>>
+|Number of trailing 0-bits in `x`
+
+|<<mad_hi.adoc#, `mad_hi`>>
+|`mul_hi`(`a`,`b`)+`c`
+
+|<<mad24.adoc#, `mad24`>>
+|(Fast integer function.) Multiply 24-bit integer then add the 32-bit result to 32-bit integer
+
+|<<mad_sat.adoc#, `mad_sat`>>
+|`a`*`b`+`c` and saturate the result
+
+|<<integerMax.adoc#, `max`>>
+|The greater of `x` or `y`
+
+|<<integerMax.adoc#, `min`>>
+|The lesser of `x` or `y`
+
+|<<mul_hi.adoc#, `mul_hi`>>
+|High half of the product of `x` and `y`
+
+|<<mul24.adoc#, `mul24`>>
+|(Fast integer function.) Multiply 24-bit integer values `a` and `b`
+
+|<<rotate.adoc#, `rotate`>>
+|result[`indx`]=`v`[`indx`]<< `i`[`indx`]
+
+|<<sub_sat.adoc#, `sub_sat`>>
+|`x` - `y` and saturate the result
+
+|<<upsample.adoc#, `upsample`>>
+|`result`[i] = ((gentype)`hi`[i] << 8\|16\|32) \| `lo`[i]
+
+|<<popcount.adoc#, `popcount`>>
+|Returns the number of non-zero bits in `x`.
+
+|===
+
+
+[[description]]
+== Description
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+include::_footer.adoc[]

@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[recip]]
+= half_recip, native_recip
+
+Floating point reciprocal.
+
+[source,c]
+----
+gentype half_recip(gentype x)
+
+gentype native_recip(gentype x)
+----
+
+
+[[description]]
+== Description
+
+The `half_recip` computes reciprocal.
+
+`native_recip` computes reciprocal over an implementation-defined range.
+The maximum error is implementation-defined.
+
+The vector versions of the math functions operate component-wise.
+The description is per-component.
+
+The built-in math functions are not affected by the prevailing rounding mode in the calling environment, and always return the same value as they would if called with the round to nearest even rounding mode.
+
+For any specific use of a function, the actual type has to be the same for all arguments and the return type, unless otherwise specified.
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

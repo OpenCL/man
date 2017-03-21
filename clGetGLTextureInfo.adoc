@@ -1,0 +1,98 @@
+include::_header.adoc[]
+
+
+[[clGetGLTextureInfo]]
+= clGetGLTextureInfo
+
+Returns additional information about the GL texture object associated with a memory object.
+
+[source,c]
+----
+cl_int clGetGLTextureInfo(cl_mem memobj,
+                          cl_gl_texture_info param_name,
+                          size_t param_value_size,
+                          void *param_value,
+                          size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`param_name`::
+
+Specifies what additional information about the GL texture object associated with `memobj` to query.
+The list of supported `param_name` types and the information returned in `param_value` by `clGetGLTextureInfo` is described in the table below (Table 9.5).
+
+`param_value`::
+
+A pointer to memory where the result being queried is returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
+Specifies the size in bytes of memory pointed to by `param_value`.
+This size must be ≥ size of return type as described in the table below.
+
+`param_value_size_ret`::
+
++
+--
+
+Returns the actual size in bytes of data copied to `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+Table 9.5:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|cl_gl_texture_info
+|Return Type
+|Information returned in `param_value`
+
+|`CL_GL_TEXTURE_TARGET`
+|GLenum
+|The `texture_target` argument specified in <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>.
+
+|`CL_GL_MIPMAP_LEVEL`
+|GLint
+|The `miplevel` argument specified in <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>.
+
+|`CL_GL_NUM_SAMPLES`
+|GLsizei
+|If the <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>> extension is supported, the `samples` argument passed to `glTexImage2DMultisample` or `glTexImage3DMultisample`.
+If `image` is not a MSAA texture, 1 is returned.
+
+|===
+
+--
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_MEM_OBJECT` if `memobj` is not a valid OpenCL memory object
+
+* `CL_INVALID_GL_OBJECT` if there is no GL texture object associated with `memobj`.
+
+* `CL_INVALID_VALUE` if `param_name` is not valid, or if size in bytes specified by `param_value_size` is < size of return type as described in the table above and `param_value` is not NULL, or if `param_value` and `param_value_size_ret` are NULL.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 54
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>>, <<clGetGLObjectInfo.adoc#, `clGetGLObjectInfo`>>, <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>, <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>
+
+include::_footer.adoc[]

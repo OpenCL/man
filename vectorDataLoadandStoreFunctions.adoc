@@ -1,0 +1,56 @@
+include::_header.adoc[]
+
+= Vector Data Load and Store Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<vloadn.adoc#, `vloadn`>>
+|
+
+Read vectors from a pointer to memory.
+
+|<<vstoren.adoc#, `vstoren`>>
+|
+
+Write a vector to a pointer to memory.
+
+|<<vload_half.adoc#, `vload_half`>>
+|
+
+Read a `half` float from a pointer to memory.
+
+|<<vload_halfn.adoc#, `vload_halfn`>>
+|
+
+Read a `half` float vector from a pointer to memory.
+
+|<<vstore_half.adoc#, `vstore_half`>>
+|
+
+Convert `float` to `half` and write to a pointer to memory.
+
+|<<vstore_halfn.adoc#, `vstore_halfn`>>
+|
+
+Convert `float` vector to `half` vector and write to a pointer to memory.
+
+|<<vloada_halfn.adoc#, `vloada_halfn`>>
+|
+
+Read half `float` vector from a pointer to memory.
+
+|<<vstorea_halfn.adoc#, `vstorea_halfn`>>
+|
+
+Convert `float` vector to `half` vector and write to a pointer to memory.
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 93
+
+include::_footer.adoc[]

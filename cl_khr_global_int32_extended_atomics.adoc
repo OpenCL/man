@@ -1,0 +1,26 @@
+include::_header.adoc[]
+
+
+[[cl_khr_global_int32_extended_atomics]]
+= cl_khr_global_int32_extended_atomics
+
+----
+#pragma OPENCL EXTENSION cl_khr_global_int32_extended_atomics : enable
+----
+
+
+[[description]]
+== Description
+
+This extension is a core feature.
+The built-in atomic function names are changed to use the `atomic_` prefix instead of `atom_`.
+
+
+:spec-name: Core
+:spec-page: 292
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

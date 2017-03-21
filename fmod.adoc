@@ -1,0 +1,39 @@
+include::_header.adoc[]
+
+
+[[fmod]]
+= fmod
+
+Modulus.
+Returns `x` - `y` * <<trunc.adoc#, `trunc`>> (`x`/`y`).
+
+[source,c]
+----
+gentype fmod(gentype x,
+             gentype y)
+----
+
+
+[[description]]
+== Description
+
+Modulus.
+Returns `x` - `y` * <<trunc.adoc#, `trunc`>> (`x`/`y`).
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

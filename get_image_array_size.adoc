@@ -1,0 +1,40 @@
+include::_header.adoc[]
+
+
+[[get_image_dim]]
+= get_image_array_size
+
+Return the number of images in an image array.
+
+[source,c]
+----
+size_t get_image_array_size(aQual image2d_array_t image)
+
+size_t get_image_array_size(aQual image1d_array_t image)
+
+size_t get_image_array_size(aQual image2d_array_depth_t image)
+
+size_t get_image_array_size(image2d_array_msaa_depth_t image)
+----
+
+
+[[description]]
+== Description
+
+include::imageQueryFunctionsInc.adoc[]
+
+`get_image_array_size` with <<otherDataTypes.adoc#, `image2d_array_t`>>, <<otherDataTypes.adoc#, `image2d_array_depth_t`>>, and <<otherDataTypes.adoc#, `image2d_array_msaa_depth_t`>> returns the number of images in a 2D image array.
+
+`get_image_array_size` with <<otherDataTypes.adoc#, `image1d_array_t`>> returns the number of images in a 1D image array.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>
+
+include::_footer.adoc[]

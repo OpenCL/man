@@ -1,0 +1,813 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceInfo]]
+= clGetDeviceInfo
+
+Get information about an OpenCL device.
+
+[source,c]
+----
+cl_int clGetDeviceInfo(cl_device_id device,
+                       cl_device_info param_name,
+                       size_t param_value_size,
+                       void *param_value,
+                       size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`device`::
+
++
+--
+
+A device returned by <<clGetDeviceIDs.adoc#, `clGetDeviceIDs`>>.
+
+May be a device returned by <<clGetDeviceIDs.adoc#, `clGetDeviceIDs`>> or a sub-device created by <<clCreateSubDevices.adoc#, `clCreateSubDevices`>>.
+If `device` is a sub-device, the specific information for the sub-device will be returned.
+The information that can be queried using `clGetDeviceInfo` is specified in the table below (Table 4.3).
+
+--
+
+`param_value`::
+
+A pointer to memory location where appropriate values for a given `param_name` as specified in the table below will be returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
+Specifies the size in bytes of memory pointed to by `param_value`.
+This size in bytes must be ≥ size of return type specified in the table below.
+
+`param_value_size_ret`::
+
+Returns the actual size in bytes of data being queried by `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+`param_name`::
+
+An enumeration constant that identifies the device information being queried.
+It can be one of the values as specified in the table below.
+
+::
+
++
+--
+
+Table 4.3:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|cl_device_info
+|Return Type
+|Description
+
+|`CL_DEVICE_ADDRESS_BITS`
+|cl_uint
+|The default compute device address space size of the global address space specified as an unsigned integer value in bits.
+Currently supported values are 32 or 64 bits.
+
+|`CL_DEVICE_AVAILABLE`
+|cl_bool
+|Is `CL_TRUE` if the device is available and `CL_FALSE` otherwise.
+A device is considered to be available if the device can be expected to successfully execute commands enqueued to the device
+
+|`CL_DEVICE_BUILT_IN_KERNELS`
+|char[]
+|A semi-colon separated list of built-in kernels supported by the device.
+An empty string is returned if no built-in kernels are supported by the device.
+
+|`CL_DEVICE_COMPILER_AVAILABLE`
+|cl_bool
+|Is `CL_FALSE` if the implementation does not have a compiler available to compile the program source.
+Is `CL_TRUE` if the compiler is available.
+This can be `CL_FALSE` for the embedded platform profile only.
+
+|`CL_DEVICE_DOUBLE_FP_CONFIG`
+|
+
+cl_device_-
+
+fp_config
+
+|Describes double precision floating-point capability of the OpenCL device.
+This is a bit-field that describes one or more of the following values:
+
+* `CL_FP_DENORM` - denorms are supported.
+
+* `CL_FP_INF_NAN` - INF and NaNs are supported.
+
+* `CL_FP_ROUND_TO_NEAREST` - round to nearest even rounding mode supported.
+
+* `CL_FP_ROUND_TO_ZERO` - round to zero rounding mode supported.
+
+* `CL_FP_ROUND_TO_INF` - round to positive and negative infinity rounding modes supported.
+
+* `CL_FP_FMA` - IEEE754-2008 fused multiply-add is supported.
+
+* `CL_FP_SOFT_FLOAT` - Basic floating-point operations (such as addition, subtraction, multiplication) are implemented in software.
+
+Double precision is an optional feature so the mandated minimum double precision floating-point capability is 0.
+
+If double precision is supported by the device, then the minimum double precision floating-point capability must be: `CL_FP_FMA` \| `CL_FP_ROUND_TO_NEAREST` \| `CL_FP_INF_NAN` \| `CL_FP_DENORM`.
+
+|`CL_DEVICE_ENDIAN_LITTLE`
+|cl_bool
+|Is `CL_TRUE` if the OpenCL device is a little endian device and `CL_FALSE` otherwise.
+
+|`CL_DEVICE_ERROR_ CORRECTION_SUPPORT`
+|cl_bool
+|Is `CL_TRUE` if the device implements error correction for all accesses to compute device memory (global and constant).
+Is `CL_FALSE` if the device does not implement such error correction.
+
+|`CL_DEVICE_EXECUTION_CAPABILITIES`
+|
+
+cl_device_-
+
+exec_capabilities
+
+|Describes the execution capabilities of the device.
+This is a bit-field that describes one or more of the following values:
+
+`CL_EXEC_KERNEL` - The OpenCL device can execute OpenCL kernels.
+
+`CL_EXEC_NATIVE_KERNEL` - The OpenCL device can execute native kernels.
+
+The mandated minimum capability is `CL_EXEC_KERNEL`.
+
+|`CL_DEVICE_EXTENSIONS`
+|char[]
+|Returns a space separated list of extension names (the extension names themselves do not contain any spaces) supported by the device.
+The list of extension names returned can be vendor supported extension names and one or more of the following Khronos approved extension names:
+
+----
+cl_khr_int64_base_atomics
+cl_khr_int64_extended_atomics
+cl_khr_fp16
+cl_khr_gl_sharing
+cl_khr_gl_event
+cl_khr_d3d10_sharing
+cl_khr_dx9_media_sharing
+cl_khr_d3d11_sharing
+cl_khr_gl_depth_images
+cl_khr_gl_msaa_sharing
+cl_khr_initialize_memory
+cl_khr_context_abort
+cl_khr_spir
+cl_khr_srgb_image_writes
+----
+
+The following approved Khronos extension names must be returned by all device that support OpenCL C 2.0:
+
+----
+cl_khr_byte_addressable_store
+cl_khr_fp64 (for backward compatibility if double precision is supported)
+cl_khr_3d_image_writes
+cl_khr_image2d_from_buffer
+cl_khr_depth_images
+----
+
+Please refer to the OpenCL 2.0 Extension Specification for a detailed description of these extensions.
+
+|`CL_DEVICE_GLOBAL_MEM_CACHE_SIZE`
+|cl_ulong
+|Size of global memory cache in bytes.
+
+|`CL_DEVICE_GLOBAL_MEM_CACHE_TYPE`
+|
+
+cl_device_mem-
+
+_cache_type
+
+|Type of global memory cache supported.
+Valid values are: `CL_NONE`, `CL_READ_ONLY_CACHE`, and `CL_READ_WRITE_CACHE`.
+
+|`CL_DEVICE_GLOBAL_ MEM_CACHELINE_SIZE`
+|cl_uint
+|Size of global memory cache line in bytes.
+
+|`CL_DEVICE_GLOBAL_MEM_SIZE`
+|cl_ulong
+|Size of global device memory in bytes.
+
+|`CL_DEVICE_GLOBAL_VARIABLE_ PREFERRED_TOTAL_SIZE`
+|size_t
+|Maximum preferred total size, in bytes, of all program variables in the global address space.
+This is a performance hint.
+An implementation may place such variables in storage with optimized device access.
+This query returns the capacity of such storage.
+The minimum value is 0.
+
+|`CL_DEVICE_IL_VERSION`
+|char []
+|The intermediate languages that can be supported by <<clCreateProgramWithIL.adoc#, `clCreateProgramWithIL`>> for this device.
+Returns a space-separated list of IL version strings of the form <IL_Prefix>_<Major_Version>.<Minor_Version>.
+For OpenCL 2.1, "SPIR-V" is a required IL prefix.
+
+|`CL_DEVICE_IMAGE2D_MAX_HEIGHT`
+|size_t
+|Max height of 2D image in pixels.
+The minimum value is 16384 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_IMAGE2D_MAX_WIDTH`
+|size_t
+|Max width of 2D image or 1D image not created from a buffer object in pixels.
+The minimum value is 16384 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_IMAGE3D_MAX_DEPTH`
+|size_t
+|Max depth of 3D image in pixels.
+The minimum value is 2048 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_IMAGE3D_MAX_HEIGHT`
+|size_t
+|Max height of 3D image in pixels.
+The minimum value is 2048 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_IMAGE3D_MAX_WIDTH`
+|size_t
+|Max width of 3D image in pixels.
+The minimum value is 2048 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_IMAGE_BASE_ ADDRESS_ALIGNMENT`
+|cl_uint
+|This query should be used when a 2D image is created from a buffer which was created using `CL_MEM_USE_HOST_PTR`.
+The value returned must be a power of 2.
+This query specifies the minimum alignment in pixels of the `host_ptr` specified to <<clCreateBuffer.adoc#, `clCreateBuffer`>>.
+If the device does not support images, this value must be 0.
+
+|`CL_DEVICE_IMAGE_MAX_ARRAY_SIZE`
+|size_t
+|Max number of images in a 1D or 2D image array.
+The minimum value is 2048 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`
+
+|`CL_DEVICE_IMAGE_MAX_BUFFER_SIZE`
+|size_t
+|Max number of pixels for a 1D image created from a buffer object.
+The minimum value is 65536 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_IMAGE_PITCH_ALIGNMENT`
+|cl_uint
+|The row pitch alignment size in pixels for 2D images created from a buffer.
+The value returned must be a power of 2.
+If the device does not support images, this value must be 0.
+
+|`CL_DEVICE_IMAGE_SUPPORT`
+|cl_bool
+|Is `CL_TRUE` if images are supported by the OpenCL device and `CL_FALSE` otherwise.
+
+|`CL_DEVICE_LINKER_AVAILABLE`
+|cl_bool
+|Is `CL_FALSE` if the implementation does not have a linker available.
+Is `CL_TRUE` if the linker is available.
+This can be `CL_FALSE` for the embedded platform profile only.
+This must be `CL_TRUE` if `CL_DEVICE_COMPILER_AVAILABLE` is `CL_TRUE`
+
+|`CL_DEVICE_LOCAL_MEM_SIZE`
+|cl_ulong
+|Size of local memory region in bytes.
+The minimum value is 32 KB for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_LOCAL_MEM_TYPE`
+|
+
+cl_device_-
+
+local_mem_type
+
+|Type of local memory supported.
+This can be set to `CL_LOCAL` implying dedicated local memory storage such as SRAM, or `CL_GLOBAL`.
+For custom devices, `CL_NONE` can also be returned indicating no local memory support.
+
+|`CL_DEVICE_MAX_CLOCK_FREQUENCY`
+|cl_uint
+|Maximum configured clock frequency of the device in MHz.
+
+|`CL_DEVICE_MAX_COMPUTE_UNITS`
+|cl_uint
+|The number of parallel compute units on the OpenCL device.
+A work-group executes on a single compute unit.
+The minimum value is 1.
+
+|`CL_DEVICE_MAX_CONSTANT_ARGS`
+|cl_uint
+|Max number of arguments declared with the <<constant.adoc#, `__constant`>> qualifier in a kernel.
+The minimum value is 8 for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_MAX_CONSTANT_ BUFFER_SIZE`
+|cl_ulong
+|Max size in bytes of a constant buffer allocation.
+The minimum value is 64 KB for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_MAX_GLOBAL_ VARIABLE_SIZE`
+|size_t
+|The maximum number of bytes of storage that may be allocated for any single variable in program scope or inside a function in OpenCL C declared in the global address space.
+The minimum value is 64 KB.
+
+|`CL_DEVICE_MAX_MEM_ALLOC_SIZE`
+|cl_ulong
+|Max size of memory object allocation in bytes.
+The minimum value is max(min(1024*1024*1024, 1/4th of `CL_DEVICE_GLOBAL_MEM_SIZE`), 32*1024*1024) for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_MAX_NUM_SUB_GROUPS`
+|cl_uint
+|Maximum number of sub-groups in a work-group that a device is capable of executing on a single compute unit, for any given kernel-instance running on the device.
+The minimum value is 1. (Refer also to <<clGetKernelSubGroupInfo.adoc#, `clGetKernelSubGroupInfo`>>.)
+
+|`CL_DEVICE_MAX_ON_DEVICE_EVENTS`
+|cl_uint
+|The maximum number of events in use by a device queue.
+These refer to events returned by the `enqueue_` built-in functions to a device queue or user events returned by the <<create_user_event.adoc#, `create_user_event`>> built-in function that have not been released.
+The minimum value is 1024.
+
+|`CL_DEVICE_MAX_ON_DEVICE_QUEUES`
+|cl_uint
+|The maximum number of device queues that can be created per context.
+The minimum value is 1.
+
+|`CL_DEVICE_MAX_PARAMETER_SIZE`
+|size_t
+|Max size in bytes of all arguments that can be passed to a kernel.
+The minimum value is 1024 for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
+
+|`CL_DEVICE_MAX_PIPE_ARGS`
+|cl_uint
+|The maximum number of pipe objects that can be passed as arguments to a kernel.
+The minimum value is 16.
+
+|`CL_DEVICE_MAX_READ_IMAGE_ARGS`
+|cl_uint
+|Max number of image objects arguments of a kernel declared with the `read_only` qualifier.
+The minimum value is 128 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+
+|`CL_DEVICE_MAX_READ_ WRITE_IMAGE_ARGS`
+|cl_uint
+|Max number of image objects arguments of a kernel declared with the `write_only` or `read_write` qualifier.
+The minimum value is 64 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+NOTE: `CL_DEVICE_MAX_WRITE_IMAGE_ARGS` is only there for backward compatibility.
+`CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS` should be used instead.
+
+|`CL_DEVICE_MAX_SAMPLERS`
+|cl_uint
+|Maximum number of samplers that can be used in a kernel.
+The minimum value is 16 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`. (Also see <<sampler_t.adoc#, `sampler_t`>>.)
+
+|`CL_DEVICE_MAX_WORK_GROUP_SIZE`
+|size_t
+|Maximum number of work-items in a work-group that a device is capable of executing on a single compute unit, for any given kernel-instance running on the device. (Refer also to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>) and `CL_KERNEL_WORK_GROUP_SIZE`).
+The minimum value is 1.
+
+|`CL_DEVICE_MAX_WORK_ITEM_ DIMENSIONS`
+|cl_uint
+|Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model. (Refer to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>).
+The minimum value is 3 for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_MAX_WORK_ITEM_SIZES`
+|size_t[]
+|
+
+Maximum number of work-items that can be specified in each dimension of the work-group to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>.
+
+Returns `n` `size_t` entries, where `n` is the value returned by the query for `CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS`.
+
+The minimum value is (1, 1, 1) for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_MAX_WRITE_IMAGE_ARGS`
+|cl_uint
+|Max number of image objects arguments of a kernel declared with the `write_only` qualifier.
+The minimum value is 64 if `CL_DEVICE_IMAGE_SUPPORT` is `CL_TRUE`.
+NOTE: `CL_DEVICE_MAX_WRITE_IMAGE_ARGS` is only there for backward compatibility.
+`CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS` should be used instead.
+
+|`CL_DEVICE_MEM_BASE_ADDR_ALIGN`
+|cl_uint
+|Alignment requirement (in bits) for sub-buffer offsets.
+The minimum value is the size (in bits) of the largest OpenCL built-in data type supported by the device (`long16` in FULL profile, `long16` or `int16` in EMBEDDED profile) for devices that are not of type `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_NAME`
+|char[]
+|Device name string.
+
+|`CL_DEVICE_NATIVE_ VECTOR_WIDTH_CHAR`
+
+`CL_DEVICE_NATIVE_ VECTOR_WIDTH_SHORT`
+
+`CL_DEVICE_NATIVE_ VECTOR_WIDTH_INT`
+
+`CL_DEVICE_NATIVE_ VECTOR_WIDTH_LONG`
+
+`CL_DEVICE_NATIVE_ VECTOR_WIDTH_FLOAT`
+
+`CL_DEVICE_NATIVE_ VECTOR_WIDTH_DOUBLE`
+
+`CL_DEVICE_NATIVE_ VECTOR_WIDTH_HALF`
+
+|cl_uint
+|
+
+Returns the native ISA vector width.
+The vector width is defined as the number of scalar elements that can be stored in the vector.
+
+If double precision is not supported, `CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE` must return 0.
+
+If the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension is not supported, `CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF` must return 0.
+
+|`CL_DEVICE_OPENCL_C_VERSION`
+|char[]
+|
+
+OpenCL C version string.
+Returns the highest OpenCL C version supported by the compiler for this device that is not of type `CL_DEVICE_TYPE_CUSTOM`.
+This version string has the following format:
+
+`OpenCL<space>C<space><major_version.minor_version><space><vendor-specific information>`
+
+The `major_version.minor_version` value returned must be 2.0 if `CL_DEVICE_VERSION` is OpenCL 2.0.
+
+The `major_version.minor_version` value returned must be 1.2 if `CL_DEVICE_VERSION` is OpenCL 1.2.
+
+The `major_version.minor_version` value returned must be 1.1 if `CL_DEVICE_VERSION` is OpenCL 1.1.
+
+The `major_version.minor_version` value returned can be 1.0 or 1.1 if `CL_DEVICE_VERSION` is OpenCL 1.0.
+
+|`CL_DEVICE_PARENT_DEVICE`
+|cl_device_id
+|Returns the `cl_device_id` of the parent device to which this sub-device belongs.
+If `device` is a root-level device, a NULL value is returned.
+
+|`CL_DEVICE_PARTITION_ AFFINITY_DOMAIN`
+|
+
+cl_device_aff-
+
+inity_domain
+
+|Returns the list of supported affinity domains for partitioning the `device` using `CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN`.
+This is a bit-field that describes one or more of the following values:
+
+* `CL_DEVICE_AFFINITY_DOMAIN_NUMA`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE`
+
+If the device does not support any affinity domains, a value of 0 will be returned.
+
+|`CL_DEVICE_PARTITION_MAX_ SUB_DEVICES`
+|cl_uint
+|Returns the maximum number of sub-devices that can be created when a device is partitioned.
+The value returned cannot exceed `CL_DEVICE_MAX_COMPUTE_UNITS`.
+
+|`CL_DEVICE_PARTITION_PROPERTIES`
+|
+
+cl_device_partit-
+
+ion_property[]
+
+|Returns the list of partition types supported by `device`.
+This is an array of `cl_device_partition_property` values drawn from the following list:
+
+* `CL_DEVICE_PARTITION_EQUALLY`
+
+* `CL_DEVICE_PARTITION_BY_COUNTS`
+
+* `CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN`
+
+If the device cannot be partitioned (i.e.
+there is no partitioning scheme supported by the device that will return at least two subdevices), a value of 0 will be returned.
+
+|`CL_DEVICE_PARTITION_TYPE`
+|
+
+cl_device_part-
+
+ition_property[]
+
+|Returns the `properties` argument specified in <<clCreateSubDevices.adoc#, `clCreateSubDevices`>> if `device` is a subdevice.
+In the case where the `properties` argument to <<clCreateSubDevices.adoc#, `clCreateSubDevices`>> is `CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN`, `CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE`, the affinity domain used to perform the partition will be returned.
+This can be one of the following values:
+
+* `CL_DEVICE_AFFINITY_DOMAIN_NUMA`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE`
+
+* `CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE`
+
+Otherwise the implementation may either return a `param_value_size_ret` of 0 i.e.
+there is no partition type associated with `device` or can return a property value of 0 (where 0 is used to terminate the partition property list) in the memory that `param_value` points to.
+
+|`CL_DEVICE_PIPE_MAX_ ACTIVE_RESERVATIONS`
+|cl_uint
+|The maximum number of reservations that can be active for a pipe per work-item in a kernel.
+A work-group reservation is counted as one reservation per work-item.
+The minimum value is 1.
+
+|`CL_DEVICE_PIPE_MAX_PACKET_SIZE`
+|cl_uint
+|The maximum size of pipe packet in bytes.
+The minimum value is 1024 bytes.
+
+|`CL_DEVICE_PLATFORM`
+|<<abstractDataTypes.adoc#, `cl_platform_id`>>
+|The platform associated with this device.
+
+|`CL_DEVICE_PREFERRED_ GLOBAL_ATOMIC_ALIGNMENT`
+|cl_uint
+|Returns the value representing the preferred alignment in bytes for OpenCL 2.0 atomic types to global memory.
+This query can return 0 which indicates that the preferred alignment is aligned to the natural size of the type.
+
+|`CL_DEVICE_PREFERRED_ INTEROP_USER_SYNC`
+|cl_bool
+|Is `CL_TRUE` if the device's preference is for the user to be responsible for synchronization, when sharing memory objects between OpenCL and other APIs such as DirectX, `CL_FALSE` if the device / implementation has a performant path for performing synchronization of memory object shared between OpenCL and other APIs such as DirectX
+
+|`CL_DEVICE_PREFERRED_ LOCAL_ATOMIC_ALIGNMENT`
+|cl_uint
+|Returns the value representing the preferred alignment in bytes for OpenCL 2.0 atomic types to local memory.
+This query can return 0 which indicates that the preferred alignment is aligned to the natural size of the type.
+
+|`CL_DEVICE_PREFERRED_ PLATFORM_ATOMIC_ALIGNMENT`
+|cl_uint
+|Returns the value representing the preferred alignment in bytes for OpenCL 2.0 fine-grained SVM atomic types.
+This query can return 0 which indicates that the preferred alignment is aligned to the natural size of the type.
+
+|`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_CHAR`
+
+`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_SHORT`
+
+`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_INT`
+
+`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_LONG`
+
+`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_FLOAT`
+
+`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_DOUBLE`
+
+`CL_DEVICE_PREFERRED_ VECTOR_WIDTH_HALF`
+
+|cl_uint
+|
+
+Preferred native vector width size for built-in scalar types that can be put into vectors.
+The vector width is defined as the number of scalar elements that can be stored in the vector.
+
+If double precision is not supported, `CL_DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE` must return 0.
+
+If the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension is not supported, `CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF` must return 0.
+
+|`CL_DEVICE_PRINTF_BUFFER_SIZE`
+|size_t
+|Maximum size in bytes of the internal buffer that holds the output of <<printfFunction.adoc#, `printf`>> calls from a kernel.
+The minimum value for the FULL profile is 1 MB.
+
+|`CL_DEVICE_PROFILE`
+|char[]
+|
+
+OpenCL profile string.
+Returns the profile name supported by the device (see note).
+The profile name returned can be one of the following strings:
+
+FULL_PROFILE - if the device supports the OpenCL specification (functionality defined as part of the core specification and does not require any extensions to be supported).
+
+EMBEDDED_PROFILE - if the device supports the OpenCL embedded profile.
+
+The platform profile returns the profile that is implemented by the OpenCL framework.
+If the platform profile returned is `FULL_PROFILE`, the OpenCL framework will support devices that are `FULL_PROFILE` and may also support devices that are `EMBEDDED_PROFILE`.
+The compiler must be available for all devices i.e.
+`CL_DEVICE_COMPILER_AVAILABLE` is `CL_TRUE`.
+If the platform profile returned is `EMBEDDED_PROFILE`, then devices that are only `EMBEDDED_PROFILE` are supported.
+
+|`CL_DEVICE_PROFILING_ TIMER_RESOLUTION`
+|size_t
+|Describes the resolution of device timer.
+This is measured in nanoseconds.
+
+|`CL_DEVICE_QUEUE_ON_ DEVICE_MAX_SIZE`
+|cl_uint
+|The max.
+size of the device queue in bytes.
+The minimum value is 256 KB for the full profile and 64 KB for the embedded profile
+
+|`CL_DEVICE_QUEUE_ON_ DEVICE_PREFERRED_SIZE`
+|cl_uint
+|The size of the device queue in bytes preferred by the implementation.
+Applications should use this size for the device queue to ensure good performance.
+The minimum value is 16 KB.
+
+|`CL_DEVICE_QUEUE_ ON_DEVICE_PROPERTIES`
+|
+
+cl_command_-
+
+queue_properties
+
+|
+
+Describes the on device command-queue properties supported by the device.
+This is a bit-field that describes one or more of the following values:
+
+`CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE`
+
+`CL_QUEUE_PROFILING_ENABLE`
+
+These properties are described in the table for <<clCreateCommandQueueWithProperties.adoc#, `clCreateCommandQueueWithProperties`>>.
+The mandated minimum capability is `CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE` \| `CL_QUEUE_PROFILING_ENABLE`.
+
+|`CL_DEVICE_QUEUE_ON_ HOST_PROPERTIES`
+|
+
+cl_command_-
+
+queue_properties
+
+|
+
+Describes the on host command-queue properties supported by the device.
+This is a bit-field that describes one or more of the following values:
+
+`CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE`
+
+`CL_QUEUE_PROFILING_ENABLE`
+
+These properties are described in the table for <<clCreateCommandQueueWithProperties.adoc#, `clCreateCommandQueueWithProperties`>>.
+The mandated minimum capability is `CL_QUEUE_PROFILING_ENABLE`.
+
+|`CL_DEVICE_REFERENCE_COUNT`
+|cl_uint
+|Returns the `device` reference count.
+If the device is a root-level device, a reference count of one is returned.
+
+|`CL_DEVICE_SINGLE_FP_CONFIG`
+|
+
+cl_device_-
+
+fp_config
+
+|
+
+Describes single precision floating-point capability of the device.
+This is a bit-field that describes one or more of the following values:
+
+`CL_FP_DENORM` - denorms are supported
+
+`CL_FP_INF_NAN` - INF and quiet NaNs are supported
+
+`CL_FP_ROUND_TO_NEAREST` - round to nearest even rounding mode supported
+
+`CL_FP_ROUND_TO_ZERO` - round to zero rounding mode supported
+
+`CL_FP_ROUND_TO_INF` - round to +ve and -ve infinity rounding modes supported
+
+`CL_FP_FMA` - IEEE754-2008 fused multiply-add is supported
+
+`CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT` - divide and sqrt are correctly rounded as defined by the IEEE754 specification.
+
+`CL_FP_SOFT_FLOAT` - Basic floating-point operations (such as addition, subtraction, multiplication) are implemented in software.
+
+For the full profile, the mandated minimum floating-point capability for devices that are not of type `CL_DEVICE_TYPE_CUSTOM` is `CL_FP_ROUND_TO_NEAREST` \| `CL_FP_INF_NAN`.
+For the embedded profile, see section 10.
+
+|`CL_DEVICE_SPIR_VERSIONS`
+|char []
+|If the <<cl_khr_spir.adoc#, `cl_khr_spir`>> extension is enabled, a space separated list of SPIR versions supported by the device.
+For example returning “1.2 2.0” in this query implies that SPIR version 1.2 and 2.0 are supported by the implementation.
+
+|`CL_DEVICE_SUBGROUP_ INDEPENDENT_ FORWARD_PROGRESS`
+|cl_bool
+|Is `CL_TRUE` if this device supports independent forward progress of sub-groups, `CL_FALSE` otherwise.
+If <<cl_khr_subgroups.adoc#, `cl_khr_subgroups`>> is supported by the device this must return `CL_TRUE`.
+
+|`CL_DEVICE_SVM_CAPABILITIES`
+|
+
+cl_device_svm_-
+
+capabilities
+
+|
+
+Describes the various shared virtual memory (a.k.a.
+SVM) memory allocation types the device supports.
+Coarse-grain SVM allocations are required to be supported by all OpenCL 2.0 devices.
+This is a bit-field that describes a combination of the following values:
+
+`CL_DEVICE_SVM_COARSE_GRAIN_BUFFER` – Support for coarse-grain buffer sharing using <<clSVMAlloc.adoc#, `clSVMAlloc`>>.
+Memory consistency is guaranteed at synchronization points and the host must use calls to <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> and <<clEnqueueUnmapMemObject.adoc#, `clEnqueueUnmapMemObject`>>.
+
+`CL_DEVICE_SVM_FINE_GRAIN_BUFFER` – Support for fine-grain buffer sharing using <<clSVMAlloc.adoc#, `clSVMAlloc`>>.
+Memory consistency is guaranteed atsynchronization points without need for <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>> and <<clEnqueueUnmapMemObject.adoc#, `clEnqueueUnmapMemObject`>>.
+
+`CL_DEVICE_SVM_FINE_GRAIN_SYSTEM` – Support for sharing the host’s entire virtual memory including memory allocated using malloc.
+Memory consistency is guaranteed at synchronization points.
+
+`CL_DEVICE_SVM_ATOMICS` – Support for the OpenCL 2.0 atomic operations that provide memory consistency across the host and all OpenCL devices supporting fine-grain SVM allocations.
+
+The mandated minimum capability is `CL_DEVICE_SVM_COARSE_GRAIN_BUFFER`.
+
+|`CL_DEVICE_TERMINATE- _CAPABILITY_KHR`
+|cl_device_terminate- _capability_khr
+|If the <<cl_khr_terminate_context.adoc#, `cl_khr_terminate_context`>> extension is enabled, describes the termination capability of the OpenCL device.
+This is a bitfield where a value of `CL_DEVICE_TERMINATE_CAPABILITY_CONTEXT_KHR` indicates that context termination is supported.
+
+|`CL_DEVICE_TYPE`
+|cl_device_type
+|The OpenCL device type.
+Currently supported values are: `CL_DEVICE_TYPE_CPU`, `CL_DEVICE_TYPE_GPU`, `CL_DEVICE_TYPE_ACCELERATOR`, `CL_DEVICE_TYPE_DEFAULT`, a combination of the above types, or `CL_DEVICE_TYPE_CUSTOM`.
+
+|`CL_DEVICE_VENDOR`
+|char[]
+|Vendor name string.
+
+|`CL_DEVICE_VENDOR_ID`
+|cl_uint
+|A unique device vendor identifier.
+An example of a unique device identifier could be the PCIe ID.
+
+|`CL_DEVICE_VERSION`
+|char[]
+|
+
+OpenCL version string.
+Returns the OpenCL version supported by the device.
+This version string has the following format:
+
+`OpenCL<space><major_version.minor_version><space><vendor-specific information>`
+
+The `major_version.minor_version` value returned will be 2.1.
+
+|`CL_DRIVER_VERSION`
+|char[]
+|OpenCL software driver version string in the form `major_number.minor_number`.
+
+|===
+
+--
+
+
+[[notes]]
+== Notes
+
+`CL_DEVICE_PROFILE`: The platform profile returns the profile that is implemented by the OpenCL framework.
+If the platform profile returned is `FULL_PROFILE`, the OpenCL framework will support devices that are `FULL_PROFILE` and may also support devices that are `EMBEDDED_PROFILE`.
+The compiler must be available for all devices i.e.
+`CL_DEVICE_COMPILER_AVAILABLE` is `CL_TRUE`.
+If the platform profile returned is `EMBEDDED_PROFILE`, then devices that are only `EMBEDDED_PROFILE` are supported.
+
+The device queries described in the table above should return the same information for a root-level device i.e.
+a device returned by <<clGetDeviceIDs.adoc#, `clGetDeviceIDs`>> and any sub-devices created from this device except for the following queries:
+
+* `CL_DEVICE_GLOBAL_MEM_CACHE_SIZE`
+
+* `CL_DEVICE_BUILT_IN_KERNELS`
+
+* `CL_DEVICE_PARENT_DEVICE`
+
+* `CL_DEVICE_PARTITION_TYPE`
+
+* `CL_DEVICE_REFERENCE_COUNT`
+
+
+[[errors]]
+== Errors
+
+`clGetDeviceInfo` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns the following:
+
+* `CL_INVALID_DEVICE` if `device` is not valid.
+
+* `CL_INVALID_VALUE` if `param_name` is not one of the supported values or if size in bytes specified by `param_value_size` is less than size of return type as shown in the table above and `param_value` is not a `NULL` value or if `param_name` is a value that is available as an extension and the corresponding extension is not supported by the device.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 66
+
+
+[[seealso]]
+== Also see
+
+<<clGetDeviceIDs.adoc#, `clGetDeviceIDs`>>, <<cl_khr_fp64.adoc#, `cl_khr_fp64`>>, <<constant.adoc#, `__constant`>>, <<clCreateCommandQueueWithProperties.adoc#, `clCreateCommandQueueWithProperties`>>, <<clRetainCommandQueue.adoc#, `clRetainCommandQueue`>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>
+
+include::_footer.adoc[]

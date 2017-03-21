@@ -1,0 +1,40 @@
+include::_header.adoc[]
+
+
+[[cl_khr_gl_sharing]]
+= cl_khr_gl_sharing
+
+Allow applications to use OpenGL buffer, texture and renderbuffer objects as OpenCL memory objects.
+
+----
+cl_khr_gl_sharing
+----
+
+
+[[description]]
+== Description
+
+include::gl_sharingInc.adoc[]
+
+
+[[notes]]
+== Notes
+
+If the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>, extension is supported by the OpenCL device, the `cl_khr_gl_sharing` extension adds support for creating a mip-mapped CL image from a mip-mapped GL texture.
+
+To create a mip-mapped CL image from a mip-mapped GL texture, the `miplevel` argument to <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>, should be a negative value.
+If `miplevel` is a negative value then a CL mipmapped image object is created from a mipmapped GL texture object instead of a CL image object for a specific miplevel of a GL texture.
+
+NOTE: For a detailed description of how the level of detail is computed, please refer to section 3.9.7 of the OpenGL 3.0 specification.
+
+
+:spec-name: Ext
+:spec-page: 37
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<clGetGLContextInfoKHR.adoc#, `clGetGLContextInfoKHR`>>, <<clCreateFromGLBuffer.adoc#, `clCreateFromGLBuffer`>>, <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>, <<clCreateFromGLRenderbuffer.adoc#, `clCreateFromGLRenderbuffer`>>, <<clGetGLObjectInfo.adoc#, `clGetGLObjectInfo`>>, <<clGetGLTextureInfo.adoc#, `clGetGLTextureInfo`>>, <<clEnqueueAcquireGLObjects.adoc#, `clEnqueueAcquireGLObjects`>>, <<clEnqueueReleaseGLObjects.adoc#, `clEnqueueReleaseGLObjects`>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>
+
+include::_footer.adoc[]

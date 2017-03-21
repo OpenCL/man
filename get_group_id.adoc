@@ -1,0 +1,32 @@
+include::_header.adoc[]
+
+
+[[get_group_id]]
+= get_group_id
+
+Returns the work-group ID.
+
+[source,c]
+----
+size_t get_group_id(uint dimindx)
+----
+
+
+[[description]]
+== Description
+
+Returns the work-group ID which is a number from 0 .. <<get_num_groups.adoc#, `get_num_groups`>>(`dimindx`) - 1.
+Valid values of `dimindx` are 0 to <<get_work_dim.adoc#, `get_work_dim`>>() - 1.
+For other values, `get_group_id`() returns 0.
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<workItemFunctions.adoc#, Work-Item Functions>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>
+
+include::_footer.adoc[]

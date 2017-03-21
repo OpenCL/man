@@ -1,0 +1,29 @@
+include::_header.adoc[]
+
+
+[[classDiagram]]
+= Class diagram
+
+OpenCL UML Class Diagram
+
+image::classDiagram.jpg[]
+
+
+[[description]]
+== Description
+
+The diagram above represents the OpenCL specification as a class diagram using the Unified Modeling Language* (UML) notation.
+The diagram shows both nodes and edges which are classes and their relationships.
+As a simplification it shows only classes, and no attributes or operations.
+As for relationships it shows aggregations (annotated with a solid diamond), associations (no annotation), and inheritance (annotated with an open arrowhead).
+The cardinality of a relationship is shown on each end of it.
+A cardinality of "*" represents "many", a cardinality of "1" represents "one and only one" and a cardinality of "0:1" represents "optionally one".
+The navigability of a relationship is shown using a regular arrowhead.
+
+*Unified Modeling Language (http://www.uml.org/) is a trademark of Object Management Group (OMG).
+
+
+:spec-name: Core
+:spec-page: 1
+
+include::_footer.adoc[]

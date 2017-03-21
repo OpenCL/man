@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[sub_sat]]
+= sub_sat
+
+Returns `x` - `y` and saturates the result.
+
+[source,c]
+----
+gentype sub_sat(gentype x,
+                gentype y)
+----
+
+
+[[description]]
+== Description
+
+`sub_sat` returns `x` - `y` and saturates the result.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

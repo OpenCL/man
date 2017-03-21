@@ -1,0 +1,49 @@
+include::_header.adoc[]
+
+
+[[vloada_halfn]]
+= vloada_halfn
+
+Read half float vector from a pointer to memory.
+
+[source,c]
+----
+float n vloada_half n(size_t offset,
+                      const half *p)
+
+float n vloada_half n(size_t offset,
+                      const constant half *p)
+----
+
+
+[[description]]
+== Description
+
+For n = 1, 2, 4, 8 and 16 read sizeof(`halfn`) bytes of data from address (`p` + (`offset` * `n`)).
+The data read is interpreted as a `halfn` value.
+The `halfn` value read is converted to a `floatn` value and the `floatn` value is returned.
+
+The address computed as (`p` + (`offset` * `n`)) must be aligned to sizeof(`halfn`) bytes.
+
+For n = 3, `vloada_half3` reads a `half3` from address (`p` + (`offset` * 4)) and returns a `float3`.
+The address computed as (`p` + (`offset` * 4)) must be aligned to sizeof (`half`) * 4 bytes.
+
+
+[[notes]]
+== Notes
+
+include::vectorFunctionsInc.adoc[]
+
+In addition `vloada_half3` reads `x`, `y`, `z` components from address (`p` + (`offset` * 4)) into a 3- component vector.
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

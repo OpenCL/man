@@ -1,0 +1,86 @@
+include::_header.adoc[]
+
+
+[[write_image3d]]
+= write_image
+
+Write `color` value to location in a 3D image object.
+
+[source,c]
+----
+void write_imagef(aQual image3d_t image,
+                  int4 coord,
+                  float4 color)
+
+void write_imagei(aQual image3d_t image,
+                  int4 coord,
+                  int4 color)
+
+void write_imageui(aQual image3d_t image,
+                   int4 coord,
+                   uint4 color)
+
+void write_imageh(image3d_t image,
+                  int4 coord,
+                  half4 color)
+
+void write_imagef(image3d_t image,
+                  int4 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagei(image3d_t image,
+                  int4 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image3d_t image,
+                   int4 coord,
+                   int lod,
+                   uint4 color)
+----
+
+
+[[description]]
+== Description
+
+`aQual` refers to one of the access qualifiers.
+For write functions this may be `write_only` or `read_write`.
+
+Writes to a 3D image memory object are only supported when the <<cl_khr_3d_image_writes.adoc#, `cl_khr_3d_image_writes`>> extension is implemented.
+Reads and writes to the same 3D image memory object are not allowed in a kernel.
+
+An application that wants to use this extension to write to 3D image memory objects will need to include the `#pragma OPENCL EXTENSION cl_khr_3d_image_writes : enable` directive in the OpenCL program source.
+
+These functions write `color` value to location specified by `coord.xyz` in the 3D image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value. _coord.x_, _coord.y_ and _coord.z_ are considered to be unnormalized coordinates and must be in the range 0 ... image width - 1, 0 ... image height - 1 and 0 ... image depth - 1.
+
+For the forms enabled by the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>> extension, write `color` value to location specified by `coord.xyz` in the 3D image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value. _coord.x_, _coord.y_ and _coord.z_ are considered to be unnormalized coordinates and must be in the range 0 ... image width - 1, 0 ... image height - 1 and 0 ... image depth - 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, `CL_HALF_FLOAT` or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.
+
+`write_imagei` can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_SIGNED_INT8`, `CL_SIGNED_INT16`, or `CL_SIGNED_INT32`.
+
+`write_imageui` can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_UNSIGNED_INT8`, `CL_UNSIGNED_INT16`, or `CL_UNSIGNED_INT32`.
+
+The behavior of `write_imagef`, `write_imagei` and `write_imageui` for image objects with `image_channel_data_type` values not specified in the description above or with _(x, y, z)_ coordinate values that are not in the range (0 ... image width - 1, 0 ... image height - 1, 0 ... image depth - 1), respectively, is undefined.
+
+`write_imageh` can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16` or `CL_HALF_FLOAT`.
+
+The behavior of `write_imageh` for image objects created with `image_channel_data_type` values not specified in the description above or with _(x, y, z)_ coordinate values that are not in the range (0 ... image width - 1, 0 ... image height - 1, 0 ... image depth - 1), respectively, is undefined.
+
+An application that wants to use `half` and `halfn` types will need to include the `#pragma OPENCL EXTENSION cl_khr_fp16 : enable` directive.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_3d_image_writes.adoc#, `cl_khr_3d_image_writes`>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image_writes`>>
+
+include::_footer.adoc[]

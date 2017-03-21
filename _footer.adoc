@@ -1,0 +1,27 @@
+ifdef::spec-name+spec-page[]
+:base-spec-url: https://www.khronos.org/registry/cl/specs/
+ifeval::["{spec-name}" == "Core"]
+:spec-file: opencl-2.1.pdf
+:spec-caption: OpenCL 2.1 API Specification
+endif::[]
+ifeval::["{spec-name}" == "Ext"]
+:spec-file: opencl-2.1-extensions.pdf
+:spec-caption: OpenCL 2.1 Extensions Specification
+endif::[]
+ifeval::["{spec-name}" == "CLan"]
+:spec-file: opencl-2.0-openclc.pdf
+:spec-caption: OpenCL 2.0 C Language Specification
+endif::[]
+
+[[specification]]
+== Specification
+
+link:{base-spec-url}{spec-file}#page={spec-page}[{spec-caption}, page {spec-page}^]
+
+endif::[]
+
+
+[[copyright]]
+== Copyright
+
+<<copyright.adoc#, Copyright (C) 2007-2017 The Khronos Group Inc.>>

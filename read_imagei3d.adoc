@@ -1,0 +1,109 @@
+include::_header.adoc[]
+
+
+[[read_image2d]]
+= read_imagei (3D)
+
+Do an element lookup in the 3D image object, returning unnormalized signed integer and unsigned integer values
+
+[source,c]
+----
+int4 read_imagei(read_only image3d_t image,
+                 sampler_t sampler,
+                 int4 coord)
+
+int4 read_imagei(read_only image3d_t image,
+                 sampler_t sampler,
+                 float4 coord)
+
+uint4 read_imageui(read_only image3d_t image,
+                   sampler_t sampler,
+                   int4 coord)
+
+uint4 read_imageui(read_only image3d_t image,
+                   sampler_t sampler,
+                   float4 coord)
+
+int4 read_imagei(aQual image3d_t image,
+                 int4 coord)
+
+uint4 read_imageui(aQual image3d_t image,
+                   int4 coord)
+
+int4 read_imagei(image3d_t image,
+                 sampler_t sampler,
+                 float4 coord,
+                 float lod)
+
+uint4 read_imageui(image3d_t image,
+                   sampler_t sampler,
+                   float4 coord,
+                   float lod)
+
+int4 read_imagei(image3d_t image,
+                 sampler_t sampler,
+                 float4 coord,
+                 float4 gradient_x,
+                 float4 gradient_y)
+
+uint4 read_imageui(image3d_t image,
+                   sampler_t sampler,
+                   float4 coord,
+                   float4 gradient_x,
+                   float4 gradient_y)
+----
+
+
+[[description]]
+== Description
+
+`aQual` refers to one of the access qualifiers `read_only`, `write_only`, or `read_write`.
+For samplerless read functions this may be `read_only` or `read_write`.
+
+The forms that take a `sampler_t` use the coordinate _(coord.x, coord.y, coord.z)_ to do an element lookup in the 3D image object specified by `image`.
+`coord.w` is ignored.
+
+For the forms that take a `sampler_t` and which are enabled by the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>> extension, use the coordinate _coord.xyz_ to do an element lookup in the mip-level specified by `lod` in the 3D image object specified by `image`.
+
+The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to `CLK_FILTER_NEAREST`, normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode to `CLK_ADDRESS_NONE`.
+
+`read_imagei` and `read_imageui` return unnormalized signed integer and unsigned integer values respectively.
+Each channel will be stored in a 32-bit integer.
+
+`read_imagei` can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_SIGNED_INT8`, `CL_SIGNED_INT16`, or `CL_SIGNED_INT32`.
+If the `image_channel_data_type` is not one of the above values, the values returned by `read_imagei` are undefined.
+
+`read_imageui` can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_UNSIGNED_INT8`, `CL_UNSIGNED_INT16`, and `CL_UNSIGNED_INT32`.
+If the `image_channel_data_type` is not one of the above values, the values returned by `read_imageui` are undefined.
+
+The `read_image{i|ui}` calls support a nearest filter only.
+The filter_mode specified in `sampler` must be set to `CLK_FILTER_NEAREST`; otherwise the values returned are undefined.
+
+Furthermore, the `read_image{i|ui}` calls that take integer coordinates must use a sampler with normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode set to `CLK_ADDRESS_CLAMP_TO_EDGE`, `CLK_ADDRESS_CLAMP` or `CLK_ADDRESS_NONE`; otherwise the values returned are undefined.
+
+include::imageMipmapFunctions3DInc.adoc[]
+
+
+[[notes]]
+== Notes
+
+include::imageFunctionsInc.adoc[]
+
+include::imageMappingInc.adoc[]
+
+.Mipmap read image functions:
+
+`CL_SAMPLER_NORMALIZED_COORDS` must be `CL_TRUE` for built-in functions described in the table above that read from a mip-mapped image; otherwise the behavior is undefined.
+The value specified in the `lod` argument is clamped to the minimum of (actual number of mip-levels – 1) in the image or value specified for `CL_SAMPLER_LOD_MAX`.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>, <<sampler_t.adoc#, `sampler_t`>>
+
+include::_footer.adoc[]

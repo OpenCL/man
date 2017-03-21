@@ -1,0 +1,31 @@
+include::_header.adoc[]
+
+
+[[get_default_queue]]
+= get_default_queue
+
+Returns the default device queue.
+
+[source,c]
+----
+queue_t get_default_queue(void)
+----
+
+
+[[description]]
+== Description
+
+This helper function returns the default device queue.
+If a default device queue has not been created, `CLK_NULL_QUEUE` is returned.
+
+
+:spec-name: CLan
+:spec-page: 174
+
+
+[[seealso]]
+== Also see
+
+<<helperFunctions.adoc#, Helper Functions>>
+
+include::_footer.adoc[]

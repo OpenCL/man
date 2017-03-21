@@ -1,0 +1,126 @@
+include::_header.adoc[]
+
+
+[[clEnqueueReleaseGLObjects]]
+= clEnqueueReleaseGLObjects
+
+Release OpenCL memory objects that have been created from OpenGL objects.
+
+[source,c]
+----
+cl_int clEnqueueReleaseGLObjects(cl_command_queue command_queue,
+                                 cl_uint num_objects,
+                                 const cl_mem *mem_objects,
+                                 cl_uint num_events_in_wait_list,
+                                 const cl_event *event_wait_list,
+                                 cl_event *event)
+----
+
+
+[[parameters]]
+== Parameters
+
+`command_queue`::
+
+A valid command-queue.
+
+`num_objects`::
+
+The number of memory objects to be released in `mem_objects`.
+
+`mem_objects`::
+
+A pointer to a list of CL memory objects that correspond to GL objects.
+
+`event_wait_list` `num_events_in_wait_list`::
+
+These parameters specify events that need to complete before this command can be executed.
+If `event_wait_list` is NULL, then this particular command does not wait on any event to complete.
+If `event_wait_list` is NULL, `num_events_in_wait_list` must be 0.
+If `event_wait_list` is not NULL, the list of events pointed to by `event_wait_list` must be valid and `num_events_in_wait_list` must be greater than 0.
+The events specified in `event_wait_list` act as synchronization points.
+
+`event`::
+
++
+--
+
+Returns an event object that identifies this particular read/write command and can be used to query or queue a wait for the command to complete.
+`event` can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the `event_wait_list` and the `event` arguments are not NULL, the `event` argument should not refer to an element of the `event_wait_list` array.
+
+If the <<cl_khr_gl_event.adoc#, `cl_khr_gl_event`>> extension is supported, if an OpenGL context is bound to the current thread, then then any OpenGL commands which
+
+* affect or access the contents of the memory objects listed in the `mem_objects` list, and
+
+* are issued on that context after the call to `clEnqueueReleaseGLObjects`
+
+will not execute until after execution of any OpenCL commands preceding the `clEnqueueReleaseGLObjects` which affect or access any of those memory objects.
+If a non-NULL event object is returned, it will report completion before execution of such OpenGL commands.
+
+--
+
+
+[[description]]
+== Description
+
+Release OpenCL memory objects that have been created from OpenGL objects.
+These objects need to be released before they can be used by OpenGL.
+The OpenGL objects are released by the OpenCL context associated with `command_queue`.
+
+
+[[notes]]
+== Notes
+
+If the <<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>> extension is supported and if an OpenGL context is bound to the current thread, then any OpenGL commands which does:
+
+* affect or access the contents of a memory object listed in the `mem_objects` list, and
+
+* are issued on that context after the call to `clEnqueueReleaseGLObjects`
+
+will not execute until after execution of any OpenCL commands preceding the `clEnqueueReleaseGLObjects` which affect or access any of those memory objects.
+If a non-NULL `event` object is returned, it will report completion before execution of such OpenGL commands.
+
+include::gl_sharingInc.adoc[]
+
+include::gl_formatsInc.adoc[]
+
+include::gl_lifetimeInc.adoc[]
+
+include::gl_syncInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clEnqueueReleaseGLObjects` returns `CL_SUCCESS` if the function is executed successfully.
+If `num_objects` is 0 and `mem_objects` is NULL the function does nothing and returns `CL_SUCCESS`.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_VALUE` if `num_objects` is zero and `mem_objects` is not a NULL value or if `num_objects` > 0 and `mem_objects` is NULL.
+
+* `CL_INVALID_MEM_OBJECT` if memory objects in `mem_objects` are not valid OpenCL memory objects.
+
+* `CL_INVALID_COMMAND_QUEUE` if `command_queue` is not a valid command-queue.
+
+* `CL_INVALID_CONTEXT` if context associated with `command_queue` was not created from an OpenGL context.
+
+* `CL_INVALID_GL_OBJECT` if memory objects in `mem_objects` have not been created from a GL object(s).
+
+* `CL_INVALID_EVENT_WAIT_LIST` if `event_wait_list` is NULL and `num_events_in_wait_list` > 0, or `event_wait_list` is not NULL and `num_events_in_wait_list` is 0, or if event objects in `event_wait_list` are not valid events.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 56
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>>, <<clEnqueueAcquireGLObjects.adoc#, `clEnqueueAcquireGLObjects`>>, <<cl_khr_gl_event.adoc#, `cl_khr_gl_event`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,108 @@
+include::_header.adoc[]
+
+
+[[ReservedDataTypes]]
+= Reserved Data Types
+
+Built-in reserved Data Types.
+
+
+[[description]]
+== Description
+
+The data type names described in the table below are reserved and cannot be used by applications as type names.
+The vector data type names defined in <<vectorDataTypes.adoc#, Vector Data Types>>, but where `n` is any value other than 2, 3, 4, 8 and 16, are also reserved.
+
+[cols="1a,1a", options="header"]
+|===
+
+|Type
+|Description
+
+|`booln`
+|A boolean vector.
+
+|`halfn`
+|A 16-bit float vector.
+
+|`quad`, `quadn`
+|A 128-bit floating-point number and vectors.
+
+|
+
+----
+complex half,
+complex halfn,
+imaginary half,
+imaginary halfn
+----
+
+|Complex and imaginary 16-bit floating-point scalar and vector.
+
+|
+
+----
+complex float,
+complex floatn,
+imaginary float,
+imaginary floatn
+----
+
+|Complex and imaginary 32-bit floating-point scalar and vector.
+
+|
+
+----
+complex double,
+complex doublen,
+imaginary double,
+imaginary doublen
+----
+
+|Complex and imaginary 64-bit floating-point scalar and vector.
+
+|
+
+----
+complex quad,
+complex quadn,
+imaginary quad,
+imaginary quadn
+----
+
+|Complex and imaginary 128-bit floating-point scalar and vector.
+
+|`floatn`x_m_
+|An _n_ x _m_ matrix of single precision floating-point values stored in column-major order.
+
+|`doublen`x_m_
+|An _n_ x _m_ matrix of double precision floating-point values stored in column-major order.
+
+|
+
+----
+long double,
+long doublen
+----
+
+|A floating-point scalar and vector type with at long doublen least as much precision and range as a double and no more precision and range than a quad.
+
+|`long long`, `long longn`
+|A 128-bit signed integer scalar and vector.
+
+|`unsigned long long`, `ulong long`, `ulong longn`
+|A 128-bit unsigned integer scalar and vector.
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 11
+
+
+[[seealso]]
+== Also see
+
+<<macroLimits.adoc#, Macros and Limits>>, <<scalarDataTypes.adoc#, Scalar Data Types>>, <<vectorDataTypes.adoc#, Vector Data Types>>, <<otherDataTypes.adoc#, Other Data Types>>, <<abstractDataTypes.adoc#, Abstract Data Types>>, <<enums.adoc#, Enumerated Data Types>>
+
+include::_footer.adoc[]

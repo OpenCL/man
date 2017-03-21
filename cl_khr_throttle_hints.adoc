@@ -1,0 +1,35 @@
+include::_header.adoc[]
+
+
+[[cl_khr_throttle_hints]]
+= cl_khr_throttle_hints
+
+Adds throttle hints for OpenCL, but does not specify the throttling behaviour or minimum guarantees.
+
+----
+#pragma OPENCL EXTENSION cl_khr_throttle_hints : enable
+----
+
+
+[[description]]
+== Description
+
+This extension adds throttle hints for OpenCL, but does not specify the throttling behaviour or minimum guarantees.
+It is expected that the user guide associated with each implementation which supports this extension describe the throttling behaviour guaranteed.
+
+If this extension is supported by an implementation, the string cl_khr_throttle_hints will be present in the `CL_PLATFORM_EXTENSIONS` string described in table 4.1 (see <<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>).
+
+Note that the throttle hint is orthogonal to functionality defined in <<cl_khr_priority_hints.adoc#, `cl_khr_priority_hints`>>) extension.
+For example, a task may have high priority (`CL_QUEUE_PRIORITY_HIGH_KHR`) but should at the same time be executed at an optimized throttle setting (`CL_QUEUE_THROTTLE_LOW`).
+
+
+:spec-name: Ext
+:spec-page: 179
+
+
+[[seealso]]
+== Also see
+
+<<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>
+
+include::_footer.adoc[]

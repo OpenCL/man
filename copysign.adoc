@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[copysign]]
+= copysign
+
+`x` with sign changed to sign of `y`.
+
+[source,c]
+----
+gentype copysign(gentype x,
+                 gentype y)
+----
+
+
+[[description]]
+== Description
+
+Returns `x` with its sign changed to match the sign of `y`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

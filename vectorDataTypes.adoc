@@ -1,0 +1,131 @@
+include::_header.adoc[]
+
+
+[[VectorDataTypes]]
+= Vector Data Types
+
+Built-in vector data types.
+
+
+[[description]]
+== Description
+
+The `char`, `unsigned char`, `short`, `unsigned short`, `integer`, `unsigned integer`, `long`, `unsigned long`, and `float` vector data types are supported.
+The vector data type is defined with the type name i.e.
+`char`, `uchar`, `short`, `ushort`, `int`, `uint`, `float`, `long`, or `ulong` followed by a literal value _n_ that defines the number of elements in the vector.
+Supported values of _n_ are 2, 3, 4, 8, and 16 for all vector data types.
+
+The built-in vector data types are also declared as appropriate types in the OpenCL API (and header files) that can be used by an application.
+The following table describes the built-in vector data type in the OpenCL C programming language and the corresponding data type available to the application:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|Type in OpenCL Language
+|Description
+|API type for application
+
+|`charn`
+|A vector of n 8-bit signed two's complement integer values.
+|`cl_charn`
+
+|`ucharn`
+|A vector of n 8-bit unsigned integer values.
+|`cl_ucharn`
+
+|`shortn`
+|A vector of n 16-bit signed two's complement integer values.
+|`cl_shortn`
+
+|`ushortn`
+|A vector of n 16-bit unsigned integer values.
+|`cl_ushortn`
+
+|`intn`
+|A vector of n 32-bit signed two's complement integer values.
+|`cl_intn`
+
+|`uintn`
+|A vector of n 32-bit unsigned integer values.
+|`cl_uintn`
+
+|`longn`
+|A vector of n 64-bit signed two's complement integer values.
+|`cl_longn`
+
+|`ulongn`
+|A vector of n 64-bit unsigned integer values.
+|`cl_ulongn`
+
+|`floatn`
+|A vector of n 32-bit floating-point values.
+|`cl_floatn`
+
+|`doublen`
+|A vector of n 64-bit floating-point values.
+|`cl_doublen`
+
+|===
+
+
+[[notes]]
+== Notes
+
+Built-in vector data types are supported by the OpenCL implementation even if the underlying compute device does not support any or all of the vector data types.
+These are to be converted by the device compiler to appropriate instructions that use underlying built-in types supported natively by the compute device.
+
+The `double` vector type is an optional type that is supported if `CL_DEVICE_DOUBLE_FP_CONFIG` for a device is not zero.
+See <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>.
+
+
+[[optional]]
+== Optional Half Floating Point
+
+The `half` floating-point is supported as an optional extension.
+An application that wants to use `half` and `halfn` will need to include the <<cl_khr_fp16.adoc#, #pragma OPENCL EXTENSION cl_khr_fp16 : enable>> directive.
+This will extended the list of built-in vector and scalar data types to include the following:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|Type in OpenCL Language
+|Description
+|API type for application
+
+|`half2`
+|A 2-component half-precision floating-point vector.
+|`cl_half2`
+
+|`half3`
+|A 3-component half-precision floating-point vector.
+|`cl_half3`
+
+|`half4`
+|A 4-component half-precision floating-point vector.
+|`cl_half4`
+
+|`half8`
+|An 8-component half-precision floating-point vector.
+|`cl_half8`
+
+|`half16`
+|A 16-component half-precision floating-point vector.
+|`cl_half16`
+
+|===
+
+The relational, equality, logical and logical unary operators can be used with `half` scalar and `halfn` vector types and shall produce a scalar `int` and vector `shortn` result respectively.
+
+The OpenCL compiler accepts an h and H suffix on floating point literals, indicating the literal is typed as a `half`.
+
+
+:spec-name: CLan
+:spec-page: 9
+
+
+[[seealso]]
+== Also see
+
+<<scalarDataTypes.adoc#, Scalar Data Types>>, <<reservedDataTypes.adoc#, Reserved Data Types>>, <<otherDataTypes.adoc#, Other Data Types>>, <<abstractDataTypes.adoc#, Abstract Data Types>>, <<enums.adoc#, Enumerated Data Types>>, <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, <<cl_khr_fp64.adoc#, `cl_khr_fp64`>>
+
+include::_footer.adoc[]

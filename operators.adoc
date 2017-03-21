@@ -1,0 +1,118 @@
+include::_header.adoc[]
+
+= Operators
+
+Operators used in OpenCL.
+
+The following operators are used in OpenCL.
+For information about the usage of these operators, please refer to the OpenCL specification.
+
+[cols="70a,30a"]
+|===
+
+|add
+|+
+
+|subtract
+|-
+
+|multiply
+|*
+
+|divide
+|/
+
+|remainder
+|%
+
+|unary plus
+|+
+
+|unary minus
+|-
+
+|post- and pre-increment
+|++
+
+|post- and pre-decrement
+|--
+
+|relational greater-than
+|>
+
+|relational less-than
+|<
+
+|relational greater-than or equal-to
+|>=
+
+|relational less-than or equal-to
+|<=
+
+|equal
+|==
+
+|not equal
+|!=
+
+|bitwise and
+|&
+
+|bitwise or
+|\|
+
+|bitwise not
+|^
+
+|bitwise not
+|~
+
+|logical and
+|&&
+
+|logical or
+|\|\|
+
+|logical exclusive or
+|^^
+
+|logical unary not
+|!
+
+|ternary selection
+|?:
+
+|right shift
+|>>
+
+|left shift
+|<<
+
+|size of
+|`sizeof`
+
+|comma
+|,
+
+|dereference
+|*
+
+|address-of
+|&
+
+|assignment
+|=
+
+|===
+
+
+[[note]]
+== Note
+
+Except for the `sizeof` operator, `the` half data type cannot be used with any of the operators described in this section.
+
+
+:spec-name: CLan
+:spec-page: 27
+
+include::_footer.adoc[]

@@ -1,0 +1,185 @@
+include::_header.adoc[]
+
+
+[[Built-inScalarDataTypes]]
+= Scalar Data Types
+
+Built-in scalar data types.
+
+
+[[description]]
+== Description
+
+These are the data types available in the OpenCL C programming language used to create kernels that are executed on OpenCL device(s).
+The OpenCL C programming language (also referred to as OpenCL C) is based on the ISO/IEC 9899:1999 C language specification (a.k.a.
+C99 specification) with specific extensions and restrictions.
+Please refer to the ISO/IEC 9899:1999 specification for a detailed description of the language grammar.
+This section describes modifications and restrictions to ISO/IEC 9899:1999 supported in OpenCL C.
+
+Most built-in scalar data types are also declared as appropriate types in the OpenCL API (and header files) that can be used by an application.
+The following table describes the built-in scalar data type in the OpenCL C programming language and the corresponding data type available to the application:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|Type in OpenCL C Language
+|Description
+|API type for application
+
+|`bool`
+|A conditional data type which is either `true` or `false`.
+The value `true` expands to the integer constant 1 and the value `false` expands to the integer constant 0.
+When any scalar value is converted to bool, the result is 0 if the value compares equal to 0; otherwise, the result is 1.
+|n/a
+
+|`char`
+|A signed two's complement 8-bit integer.
+|`cl_char`
+
+|
+
+----
+unsigned char,
+uchar
+----
+
+|An unsigned 8-bit integer.
+|`cl_uchar`
+
+|`short`
+|A signed two's complement 16-bit integer.
+|`cl_short`
+
+|
+
+----
+unsigned short,
+ushort
+----
+
+|An unsigned 16-bit integer.
+|`cl_ushort`
+
+|`int`
+|A signed two's complement 32-bit integer.
+|`cl_int`
+
+|
+
+----
+unsigned int,
+uint
+----
+
+|An unsigned 32-bit integer.
+|`cl_uint`
+
+|`long`
+|A signed two's complement 64-bit integer.
+|`cl_long`
+
+|
+
+----
+unsigned long,
+ulong
+----
+
+|An unsigned 64-bit integer.
+|`cl_ulong`
+
+|`float`
+|A 32-bit floating point.
+The float data type must conform to the IEEE 754 single precision storage format.
+|`cl_float`
+
+|`double`
+|A 64-bit floating point.
+The `double` data type must conform to the IEEE 754 double precision storage format.
+The `double` scalar type is an optional type that is supported if `CL_DEVICE_DOUBLE_FP_CONFIG` for a device is not zero.
+See the table for `param_name` for <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>> for details.
+|`cl_double`
+
+|`half`
+|A 16-bit float.
+The `half` data type must conform to the IEEE 754-2008 half precision storage format.
+|`cl_half`
+
+|`size_t`
+|The unsigned integer type of the result of the sizeof operator.
+This is a 32-bit unsigned integer if `CL_DEVICE_ADDRESS_BITS` defined in <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>> is 32-bits and is a 64-bit unsigned integer if `CL_DEVICE_ADDRESS_BITS` is 64-bits.
+|n/a
+
+|`ptrdiff_t`
+|A signed integer type that is the result of subtracting two pointers.
+This is a 32-bit signed integer if `CL_DEVICE_ADDRESS_BITS` defined in <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>> is 32-bits and is a 64-bit signed integer if `CL_DEVICE_ADDRESS_BITS` is 64-bits.
+|n/a
+
+|`intptr_t`
+|A signed integer type with the property that any valid pointer to `void` can be converted to this type, then converted back to pointer to `void`, and the result will compare equal to the original pointer.
+This is a 32-bit signed integer if `CL_DEVICE_ADDRESS_BITS` defined in table 4.3 is 32-bits and is a 64-bit signed integer if `CL_DEVICE_ADDRESS_BITS` is 64-bits.
+|n/a
+
+|`uintptr_t`
+|An unsigned integer type with the property that any valid pointer to `void` can be converted to this type, then converted back to pointer to `void`, and the result will compare equal to the original pointer.
+This is a 32-bit signed integer if `CL_DEVICE_ADDRESS_BITS` defined in table 4.3 is 32-bits and is a 64-bit signed integer if `CL_DEVICE_ADDRESS_BITS` is 64-bits.
+|n/a
+
+|`void`
+|The `void` type comprises an empty set of values; it is an incomplete type that cannot be completed.
+|`void`
+
+|===
+
+
+[[optional]]
+== Optional Half Floating Point
+
+The `half` floating-point is supported as an optional extension.
+An application that wants to use `half` and `halfn` will need to include the <<cl_khr_fp16.adoc#, #pragma OPENCL EXTENSION cl_khr_fp16 : enable>> directive.
+This will extended the list of built-in vector and scalar data types to include the following:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|Type in OpenCL Language
+|Description
+|API type for application
+
+|`half2`
+|A 2-component half-precision floating-point vector.
+|`cl_half2`
+
+|`half3`
+|A 3-component half-precision floating-point vector.
+|`cl_half3`
+
+|`half4`
+|A 4-component half-precision floating-point vector.
+|`cl_half4`
+
+|`half8`
+|An 8-component half-precision floating-point vector.
+|`cl_half8`
+
+|`half16`
+|A 16-component half-precision floating-point vector.
+|`cl_half16`
+
+|===
+
+The relational, equality, logical and logical unary operators can be used with `half` scalar and `halfn` vector types and shall produce a scalar `int` and vector `shortn` result respectively.
+
+The OpenCL compiler accepts an h and H suffix on floating point literals, indicating the literal is typed as a `half`.
+
+
+:spec-name: CLan
+:spec-page: 6
+
+
+[[seealso]]
+== Also see
+
+<<macroLimits.adoc#, Macros and Limits>>, <<vectorDataTypes.adoc#, Vector Data Types>>, <<reservedDataTypes.adoc#, Reserved Data Types>>, <<otherDataTypes.adoc#, Other Data Types>>, <<abstractDataTypes.adoc#, Abstract Data Types>>, <<enums.adoc#, Enumerated Data Types>>, <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, <<cl_khr_fp64.adoc#, `cl_khr_fp64`>>
+
+include::_footer.adoc[]

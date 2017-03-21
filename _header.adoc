@@ -1,0 +1,7 @@
+// GitHub
+// :outfilesuffix: .adoc
+
+// GitLab, Gollum
+// :outfilesuffix:
+
+:source-indent: 0

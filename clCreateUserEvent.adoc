@@ -1,0 +1,59 @@
+include::_header.adoc[]
+
+
+[[clCreateBuffer]]
+= clCreateUserEvent
+
+Creates a user event object.
+
+[source,c]
+----
+cl_event clCreateUserEvent(cl_context context,
+                           cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context.
+
+`errcode_ret`::
+
+Returns an appropriate error code.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[notes]]
+== Notes
+
+User events allow applications to enqueue commands that wait on a user event to finish before the command is executed by the device.
+
+The execution status of the user event object created is set to `CL_SUBMITTED`.
+
+
+[[errors]]
+== Errors
+
+Returns a valid non-zero event object and `errcode_ret` is set to `CL_SUCCESS` if the user event object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 250
+
+
+[[seealso]]
+== Also see
+
+<<classDiagram.adoc#, Cardinality Diagram>>
+
+include::_footer.adoc[]

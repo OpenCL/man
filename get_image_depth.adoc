@@ -1,0 +1,30 @@
+include::_header.adoc[]
+
+
+[[get_image_depth]]
+= get_image_depth
+
+Return the 3D image depth in pixels.
+
+[source,c]
+----
+int get_image_depth(image3d_t image)
+----
+
+
+[[description]]
+== Description
+
+Return the image depth in pixels.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>
+
+include::_footer.adoc[]

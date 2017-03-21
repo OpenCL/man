@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[rint]]
+= rint
+
+Round to nearest even integer.
+
+[source,c]
+----
+gentype rint(gentype)
+----
+
+
+[[description]]
+== Description
+
+Round to integral value (using round to nearest even rounding mode) in floating-point format.
+
+
+[[notes]]
+== Notes
+
+`rint` always rounds according to round to nearest even rounding mode even if the caller is in some other rounding mode.
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>,
+
+include::_footer.adoc[]

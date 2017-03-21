@@ -1,0 +1,48 @@
+include::_header.adoc[]
+
+
+[[max]]
+= max, min
+
+Returns the greater or lesser of `x` or `y`.
+
+[source,c]
+----
+gentype max(gentype x,
+            gentype y)
+
+gentype max(gentype x,
+            sgentype y)
+
+gentype min(gentype x,
+            gentype y)
+
+gentype min(gentype x,
+            sgentype y)
+----
+
+
+[[description]]
+== Description
+
+`max` returns the greater of `x` or `y`.
+
+`min` returns the lesser of `x` or `y`.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

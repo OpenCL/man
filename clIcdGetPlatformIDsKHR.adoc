@@ -1,0 +1,63 @@
+include::_header.adoc[]
+
+
+[[clIcdGetPlatformIDsKHR]]
+= clIcdGetPlatformIDsKHR
+
+Obtain the list of platforms accessible through the Khronos ICD Loader.
+
+[source,c]
+----
+cl_int clIcdGetPlatformIDsKHR(cl_uint num_entries,
+                              cl_platform_id *platforms,
+                              cl_uint *num_platforms)
+----
+
+
+[[parameters]]
+== Parameters
+
+`num_entries`::
+
+The number of `cl_platform_id` entries that can be added to `platforms`.
+If `platforms` is not NULL, then `num_entries` must be greater than zero.
+
+`platforms`::
+
+Returns a list of OpenCL platforms available for access through the Khronos ICD Loader.
+The `cl_platform_id` values returned in `platforms` are ICD compatible and can be used to identify a specific OpenCL platform.
+If the `platforms` argument is NULL, then this argument is ignored.
+The number of OpenCL platforms returned is the minimum of the value specified by `num_entries` or the number of OpenCL platforms available.
+
+`num_platforms`::
+
+Returns the number of OpenCL platforms available.
+If `num_platforms` is NULL, then this argument is ignored.
+
+
+[[notes]]
+== Notes
+
+This function is enabled by the <<cl_khr_icd.adoc#, `cl_khr_icd`>> extension.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully and there are a non zero number of platforms available, else it returns on the errors below:
+
+* `CL_PLATFORM_NOT_FOUND_KHR` if zero platforms are available.
+
+* `CL_INVALID_VALUE` if `num_entries` is equal to zero and `platforms` is not NULL or if both `num_platforms` and `platforms` are NULL.
+
+
+:spec-name: Ext
+:spec-page: 130
+
+
+[[seealso]]
+== Also see
+
+<<clGetPlatformIDs.adoc#, `clGetPlatformIDs`>>, <<cl_khr_icd.adoc#, `cl_khr_icd`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,87 @@
+include::_header.adoc[]
+
+
+[[vstore_halfn]]
+= vstore_halfn
+
+Convert float vector to half vector and write to a pointer to memory.
+
+[source,c]
+----
+void vstore_half n(float n data,
+                   size_t offset,
+                   half *p)
+
+void vstore_half n _rte(float n data,
+                        size_t offset,
+                        half *p)
+
+void vstore_half n _rtz(float n data,
+                        size_t offset,
+                        half *p)
+
+void vstore_half n _rtp(float n data,
+                        size_t offset,
+                        half *p)
+
+void vstore_half n _rtn(float n data,
+                        size_t offset,
+                        half *p)
+----
+
+[source,c]
+----
+void vstore_half n(double n data,
+                   size_t offset,
+                   half *p)
+
+void vstore_half n _rte(double n data,
+                        size_t offset,
+                        half *p)
+
+void vstore_half n _rtz(double n data,
+                        size_t offset,
+                        half *p)
+
+void vstore_half n _rtp(double n data,
+                        size_t offset,
+                        half *p)
+
+void vstore_half n _rtn(double n data,
+                        size_t offset,
+                        half *p)
+----
+
+
+[[description]]
+== Description
+
+The `floatn` (or `doublen`) value given by `data` is converted to a `halfn` value using the appropriate rounding mode.
+The `halfn` value is then written to address computed as (`p` + (`offset` * `n`)).
+The address computed as (`p` + (`offset` * `n`)) must be 16-bit aligned.
+
+`vstore_halfn` uses the default rounding mode.
+The default rounding mode is round to nearest even.
+
+
+[[notes]]
+== Notes
+
+include::vectorFunctionsInc.adoc[]
+
+`vload3` and `vload_half3` read `x`, `y`, `z` components from address (`p` + (`offset` * 3)) into a 3-component vector.
+`vstore3`, and `vstore_half3` write `x`, `y`, `z` components from a 3-component vector to address (`p` + (`offset` * 3)).
+
+In addition `vloada_half3` reads `x`, `y`, `z` components from address (`p` + (`offset` * 4)) into a 3- component vector and `vstorea_half3` writes `x`, `y`, `z` components from a 3-component vector to address (`p` + (`offset` * 4)).
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

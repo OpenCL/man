@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[degrees]]
+= degrees
+
+Converts radians to degrees.
+
+[source,c]
+----
+gentype degrees(gentype radians)
+----
+
+
+[[description]]
+== Description
+
+Converts `radians` to degrees, i.e. (180 / pi) * `radians`.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>, <<radians.adoc#, `radians`>>
+
+include::_footer.adoc[]

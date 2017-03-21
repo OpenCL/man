@@ -1,0 +1,53 @@
+include::_header.adoc[]
+
+
+[[fmax]]
+= fmax
+
+Returns the greater of either `x` or `y`.
+
+[source,c]
+----
+gentype fmax(gentype x,
+             gentype y)
+
+gentypef fmax(gentypef x,
+              float y)
+
+gentyped fmax(gentyped x,
+              double y)
+----
+
+----
+gentype fmax (gentype x,
+              half y)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns `y` if `x` is less than `y`, otherwise it returns `x`.
+If one argument is a NaN, `fmax()` returns the other argument.
+If both arguments are NaNs, `fmax()` returns a NaN.
+
+
+[[notes]]
+== Notes
+
+<<fmin.adoc#, `fmin`>> and `fmax` behave as defined by C99 and may not match the IEEE 754-2008 definition for `minNum` and `maxNum` with regard to signaling NaNs.
+Specifically, signaling NaNs may behave as quiet NaNs.
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

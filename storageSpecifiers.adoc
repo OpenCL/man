@@ -1,0 +1,65 @@
+include::_header.adoc[]
+
+
+[[Storage-classSpecifiers]]
+= Storage-class Specifiers
+
+The typedef, extern and static storage-class specifiers.
+
+----
+typedef
+extern
+static
+----
+
+
+[[notes]]
+== Notes
+
+The `typedef`, `extern`, and `static` storage-class specifiers are supported.
+The `auto` and `register` storage-class specifiers are not supported.
+
+The `extern` storage-class specifier can only be used for functions (kernel and non-kernel functions) and global variables declared in program scope or variables declared inside a function (kernel and non-kernel functions) The `static` storage-class specifier can only be used for non-kernel functions and global variables declared in program scope and variables inside a function declared in the `global` or `constant` address space.
+
+
+[[example1]]
+== Example
+
+----
+        extern constant float4 noise_table[256];
+        static constant float4 color_table[256];
+
+        extern kernel void my_foo(image2d_t img);
+        extern void my_bar(global float *a);
+
+        kernel void my_func(image2d_t img, global float *a)
+        {
+            extern constant float4 a;
+            static constant float4 b = (float4)(1.0f); // OK.
+            static float c; // Error: No implicit address space
+            global int hurl; // Error: Must be static
+            ...
+            my_foo(img);
+            ...
+            my_bar(a);
+            ...
+            while (1)
+            {
+                static global int inside; // OK.
+                ...
+            }
+            ...
+        }
+----
+
+
+:spec-name: CLan
+:spec-page: 50
+
+
+[[seealso]]
+== Also see
+
+<<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]

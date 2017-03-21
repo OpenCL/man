@@ -1,0 +1,68 @@
+include::_header.adoc[]
+
+
+[[step]]
+= smoothstep
+
+Step and interpolate.
+
+[source,c]
+----
+gentype smoothstep(gentype edge0,
+                   gentype edge1,
+                   gentype x)
+
+gentypef smoothstep(float edge0,
+                    float edge1,
+                    gentypef x)
+
+gentyped smoothstep(double edge0,
+                    double edge1,
+                    gentyped x)
+----
+
+----
+gentype smoothstep (half edge0,
+              half edge1,
+              gentype x)   // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns 0.0 if `x` ≤ `edge0` and 1.0 if `x` ≥ `edge1` and performs smooth Hermite interpolation between 0 and 1 when `edge0` < `x` < `edge1`.
+This is useful in cases where you would want a threshold function with a smooth transition.
+
+This is equivalent to:
+
+----
+          gentype t;
+          t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+          return t * t * (3 - 2 * t);
+----
+
+For the forms that take an `edge0` of type other than `half` or `halfn`, results are undefined if `edge0` ≥ `edge1` or if `x`, `edge0` or `edge1` is a NaN.
+For the forms that are enabled with the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension, results are undefined if `edge0` ≥ `edge1`.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+The mix and smoothstep functions can be implemented using contractions such as <<mad.adoc#, `mad`>> or <<fma.adoc#, `fma`>>.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>
+
+include::_footer.adoc[]

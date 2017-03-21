@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[get_enqueued_local_size]]
+= get_enqueued_local_size
+
+Same as get_local_size(dimindx) if the kernel is executed with a uniform work-group size.
+
+[source,c]
+----
+size_t get_enqueued_local_size(uint dimindx)
+----
+
+
+[[description]]
+== Description
+
+Returns the same value as that returned by <<get_local_size.adoc#, `get_local_size`>>(`dimindx`) if the kernel is executed with a uniform work-group size.
+
+If the kernel is executed with a non-uniform work-group size, returns the number of local work-items in each of the work-groups that make up the uniform region of the global range in the dimension identified by `dimindx`.
+If the `local_work_size` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>> is not NULL, this value will match the value specified in `local_work_size`[`dimindx`].
+If `local_work_size` is NULL, this value will match the local size that the implementation determined would be most efficient at implementing the uniform region of the global range.
+
+Valid values of `dimindx` are 0 to <<get_work_dim.adoc#, `get_work_dim`>>() - 1.
+For other values of `dimindx`, `get_enqueued_local_size`() returns 1.
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<get_local_size.adoc#, `get_local_size`>>, <<workItemFunctions.adoc#, Work-Item Functions>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>
+
+include::_footer.adoc[]

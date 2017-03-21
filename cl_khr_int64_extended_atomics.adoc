@@ -1,0 +1,29 @@
+include::_header.adoc[]
+
+
+[[cl_khr_int64_extended_atomics]]
+= cl_khr_int64_extended_atomics
+
+Optional extensions that implement atomic operations on 64-bit signed and unsigned integers to locations in __global and __local memory.
+
+----
+#pragma OPENCL EXTENSION cl_khr_int64_extended_atomics : enable
+----
+
+
+[[description]]
+== Description
+
+The behavior of these extensions is defined in the SPIR-V environment and appropriate kernel language specifications.
+
+
+:spec-name: Ext
+:spec-page: 12
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<cl_khr_int64_base_atomics.adoc#, `cl_khr_int64_base_atomics`>>, <<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

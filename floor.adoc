@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[floor]]
+= floor
+
+Round to integer toward negative infinity.
+
+[source,c]
+----
+gentype floor(gentype)
+----
+
+
+[[description]]
+== Description
+
+`floor` rounds to integral value using the round to negative infinity rounding mode.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

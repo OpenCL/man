@@ -1,0 +1,29 @@
+include::_header.adoc[]
+
+
+[[cl_khr_fp64]]
+= cl_khr_fp64
+
+Provided for backward compatibility if `double` floating-point precision is supported.
+
+----
+#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+----
+
+
+[[description]]
+== Description
+
+This symbol exists for backward compatibility if double precision is supported.
+
+
+:spec-name: Core
+:spec-page: 78
+
+
+[[seealso]]
+== Also see
+
+<<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>
+
+include::_footer.adoc[]

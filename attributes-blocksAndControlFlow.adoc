@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[AttributesofBlocksandControl-Flow-Statements]]
+= Attributes of Blocks and Control-Flow-Statements
+
+Attributes of Blocks and Control-Flow Statements.
+
+----
+__attribute__((attr1)) {...}
+----
+
+
+[[description]]
+== Description
+
+For basic blocks and control-flow-statements the attribute is placed before the structure in question, for example:
+
+----
+    __attribute__((attr1)) {...}
+    for __attribute__((attr2)) (...) __attribute__((attr3)) {...}
+----
+
+Here `attr1` applies to the block in braces and `attr2` and `attr3` apply to the loop's control construct and body, respectively.
+
+No attribute qualifiers for blocks and control-flow-statements are currently defined.
+
+
+:spec-name: CLan
+:spec-page: 61
+
+
+[[seealso]]
+== Also see
+
+<<attribute.adoc#, `__attribute__`>>, <<attributes-types.adoc#, Type Attributes>>, <<attributes-variables.adoc#, Variable Attributes>>, <<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]

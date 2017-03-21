@@ -1,0 +1,40 @@
+include::_header.adoc[]
+
+= Geometric Built-In Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<cross.adoc#, `cross`>>
+|Cross product
+
+|<<dot.adoc#, `dot`>>
+|Dot product
+
+|<<distance.adoc#, `distance`>>
+|Vector distance
+
+|<<length.adoc#, `length`>>
+|Vector length
+
+|<<normalize.adoc#, `normalize`>>
+|Normal vector length 1
+
+|<<fast_distance.adoc#, `fast_distance`>>
+|Vector distance
+
+|<<fast_length.adoc#, `fast_length`>>
+|Vector length
+
+|<<fast_normalize.adoc#, `fast_normalize`>>
+|Normal vector length 1
+
+|===
+
+
+:spec-name: CLan
+:spec-page: 88
+
+include::_footer.adoc[]

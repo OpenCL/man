@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[hypot]]
+= hypot
+
+Square root of `x`^2^ + `y`^2^.
+
+[source,c]
+----
+gentype hypot(gentype x,
+              gentype y)
+----
+
+
+[[description]]
+== Description
+
+Computes the value of the square root of `x`^2^ + `y`^2^ without undue overflow or underflow.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

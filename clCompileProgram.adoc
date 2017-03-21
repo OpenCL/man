@@ -1,0 +1,177 @@
+include::_header.adoc[]
+
+
+[[clCompileProgram]]
+= clCompileProgram
+
+Compiles a program’s source for all the devices or a specific device(s) in the OpenCL context associated with `program`.
+
+[source,c]
+----
+cl_int clCompileProgram(cl_program program,
+                        cl_uint num_devices,
+                        const cl_device_id *device_list,
+                        const char *options,
+                        cl_uint num_input_headers,
+                        const cl_program *input_headers,
+                        const char **header_include_names,
+                        void (CL_CALLBACK *pfn_notify)( cl_program program, void *user_data),
+                        void *user_data)
+----
+
+
+[[parameters]]
+== Parameters
+
+`program`::
+
+The program object that is the compilation target.
+
+`device_list`::
+
+A pointer to a list of devices associated with `program`.
+If `device_list` is a NULL value, the compile is performed for all devices associated with program.
+If `device_list` is a non-NULL value, the compile is performed for devices specified in this list.
+
+`num_devices`::
+
+The number of devices listed in `device_list`.
+
+`options`::
+
+A pointer to a null-terminated string of characters that describes the compilation options to be used for building the program executable.
+Certain options are ignored when program is created with IL.
+The list of supported options is as described below.
+
+`num_input_headers`::
+
+Specifies the number of programs that describe headers in the array referenced by `input_headers`.
+
+`input_headers`::
+
+An array of program embedded headers created with <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>>.
+
+`header_include_names`::
+
+An array that has a one to one correspondence with `input_headers`.
+Each entry in `header_include_names` specifies the include name used by source in `program` that comes from an embedded header.
+The corresponding entry in `input_headers` identifies the program object which contains the header source to be used.
+The embedded headers are first searched before the headers in the list of directories specified by the –I compile option (as described in section 5.8.4.1).
+If multiple entries in `header_include_names` refer to the same header name, the first one encountered will be used.
+
+`pfn_notify`::
+
+A function pointer to a notification routine.
+The notification routine is a callback function that an application can register and which will be called when the program executable has been built (successfully or unsuccessfully).
+If `pfn_notify` is not NULL, `clCompileProgram` does not need to wait for the compiler to complete and can return immediately once the compilation can begin.
+The compilation can begin if the context, program whose sources are being compiled, list of devices, input headers, programs that describe input headers and compiler options specified are all valid and appropriate host and device resources needed to perform the compile are available.
+If `pfn_notify` is NULL, `clCompileProgram` does not return until the compiler has completed.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application’s responsibility to ensure that the callback function is thread-safe.
+
+`user_data`::
+
+Passed as an argument when `pfn_notify` is called.
+`user_data` can be NULL.
+
+
+[[notes]]
+== Notes
+
+Compiles a program’s source for all the devices or a specific device(s) in the OpenCL context associated with `program`.
+The pre-processor runs before the program sources are compiled.
+The compiled binary is built for all devices associated with `program` or the list of devices specified.
+The compiled binary can be queried using <<clGetProgramInfo.adoc#, `clGetProgramInfo`>>(`program`, `CL_PROGRAM_BINARIES`, ...) and can be specified to <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>> to create a new program object.
+
+include::buildOptionsInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clCompileProgram` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_PROGRAM` if `program` is not a valid program object.
+
+* `CL_INVALID_VALUE` if `device_list` is NULL and `num_devices` is greater than zero, or if `device_list` is not NULL and `num_devices` is zero.
+
+* `CL_INVALID_VALUE` if `num_input_headers` is zero and `header_include_names` or `input_headers` are not NULL or if `num_input_headers` is not zero and `header_include_names` or `input_headers` are NULL.
+
+* `CL_INVALID_VALUE` if `pfn_notify` is NULL but `user_data` is not NULL.
+
+* `CL_INVALID_DEVICE` if OpenCL devices listed in `device_list` are not in the list of devices associated with `program`.
+
+* `CL_INVALID_COMPILER_OPTIONS` if the compiler options specified by `options` are invalid.
+
+* `CL_INVALID_OPERATION` if the compilation or build of a program executable for any of the devices listed in `device_list` by a previous call to `clCompileProgram` or `clBuildProgram` for `program` has not completed.
+
+* `CL_COMPILER_NOT_AVAILABLE` if a compiler is not available i.e.
+`CL_DEVICE_COMPILER_AVAILABLE` specified in in the table of allowed values for `param_name` for <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>> is set to `CL_FALSE`.
+
+* `CL_COMPILE_PROGRAM_FAILURE` if there is a failure to compile the program source.
+This error will be returned if `clCompileProgram` does not return until the compile has completed.
+
+* `CL_INVALID_OPERATION` if there are kernel objects attached to `program`.
+
+* `CL_INVALID_OPERATION` if `program` has no source or IL available, i.e.
+it has not been created with <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>> or <<clCreateProgramWithIL.adoc#, `clCreateProgramWithIL`>>.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+[[example1]]
+== Example
+
+For example, consider the following program source:
+
+----
+#include <foo.h>
+#include <mydir/myinc.h>
+
+__kernel void
+image_filter (int n, int m,
+            __constant float *filter_weights,
+            __read_only image2d_t src_image,
+            __write_only image2d_t dst_image)
+{
+...
+}
+----
+
+This kernel includes two headers foo.h and mydir/myinc.h.
+The following describes how these headers can be passed as embedded headers in program objects:
+
+----
+cl_program foo_pg = clCreateProgramWithSource(context,
+                           1, &foo_header_src, NULL, &err);
+cl_program myinc_pg = clCreateProgramWithSource(context,
+                           1, &myinc_header_src, NULL, &err);
+
+// let’s assume the program source described above is given
+// by program_A and is loaded via clCreateProgramWithSource
+
+cl_program input_headers[2] = { foo_pg, myinc_pg };
+char * input_header_names[2] = { “foo.h”, “mydir/myinc.h” };
+clCompileProgram(program_A,
+                 0, NULL, // num_devices & device_list
+                 NULL,    // compile_options
+                 2,       // num_input_headers
+                 input_headers,
+                 input_header_names,
+                 NULL, NULL); // pfn_notify & user_data
+----
+
+
+:spec-name: Core
+:spec-page: 202
+
+
+[[seealso]]
+== Also see
+
+<<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>, <<clLinkProgram.adoc#, `clLinkProgram`>>, <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>, <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>>, <<clCreateProgramWithIL.adoc#, `clCreateProgramWithIL`>>
+
+include::_footer.adoc[]

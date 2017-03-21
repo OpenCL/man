@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[cbrt]]
+= cbrt
+
+Computes cube-root.
+
+[source,c]
+----
+gentype cbrt(gentype)
+----
+
+
+[[description]]
+== Description
+
+`cbrt` computes the cube-root.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

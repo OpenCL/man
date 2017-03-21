@@ -1,0 +1,42 @@
+include::_header.adoc[]
+
+
+[[mag]]
+= maxmag, minmag
+
+Returns the argument with the greatest (or least) magnitude.
+
+[source,c]
+----
+gentype maxmag(gentype x,
+               gentype y)
+
+gentype minmag(gentype x,
+               gentype y)
+----
+
+
+[[description]]
+== Description
+
+`maxmag` Returns `x` if |`x`| > |`y`|, or `y` if |`y`| > |`x`|, otherwise <<fmax.adoc#, `fmax`>>(`x`, `y`).
+
+`minmag` Returns `x` if |`x`| < |`y`|, or `y` if |`y`| < |`x`|, otherwise <<fmin.adoc#, `fmin`>>(`x`, `y`).
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

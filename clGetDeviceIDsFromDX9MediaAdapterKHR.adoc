@@ -1,0 +1,155 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceIDsFromDX9MediaAdapterKHR]]
+= clGetDeviceIDsFromDX9MediaAdapterKHR
+
+Query a media adapter for any associated OpenCL devices.
+
+[source,c]
+----
+cl_int clGetDeviceIDsFromDX9MediaAdapterKHR(cl_platform_id platform,
+                                            cl_uint num_media_adapters,
+                                            cl_dx9_media_adapter_type_khr *media_adapters_type,
+                                            void *media_adapters,
+                                            cl_dx9_media_adapter_set_khr media_adapter_set,
+                                            cl_uint num_entries,
+                                            cl_device_id *devices,
+                                            cl_int *num_devices)
+----
+
+
+[[parameters]]
+== Parameters
+
+`platform`::
+
+Refers to the platform ID returned by <<clGetPlatformIDs.adoc#, `clGetPlatformIDs`>>.
+
+`num_media_adapters`::
+
+Specifies the number of media adapters.
+
+`media_adapters_type`::
+
++
+--
+
+An array of `num_media_adapters` entries.
+Each entry specifies the type of media adapter and must be one of the values described in the table (Table 9.10.1) below.
+
+[cols="1a,1a", options="header"]
+|===
+
+|cl_dx9_media_adapter_type_khr
+|Type of media adapters
+
+|`CL_ADAPTER_D3D9_KHR`
+|IDirect3DDevice9 *
+
+|`CL_ADAPTER_D3D9EX_KHR`
+|IDirect3DDevice9Ex *
+
+|`CL_ADAPTER_DXVA_KHR`
+|IDXVAHD_Device *
+
+|===
+
+--
+
+`media_adapters`::
+
+An array of `num_media_adapters` entries.
+Each entry specifies the actual adapter whose type is specified by `media_adapter_type`.
+The `media_adapters` must be one of the types describes in the table above.
+
+`media_adapter_set`::
+
++
+--
+
+Specifies the set of adapters to return and must be one of the values described in the table (Table 9.10.2) below.
+
+[cols="1a,1a", options="header"]
+|===
+
+|cl_dx9_media_adapter_set_khr
+|Description
+
+|`CL_PREFERRED_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR`
+|The preferred OpenCL devices associated with the media adapter.
+
+|`CL_ALL_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR`
+|
+
+|`CL_ALL_DEVICES_FOR_MEDIA_DX9_ADAPTER_KHR`
+|All OpenCL devices that may interoperate with the media adapter.
+
+|===
+
+--
+
+`num_entries`::
+
+The number of cl_device_id entries that can be added to `devices`.
+If `devices` is not NULL, the `num_entries` must be greater than zero.
+
+`devices`::
+
+Returns a list of OpenCL devices found that support the list of media adapters specified.
+The `cl_device_id` values returned in `devices` can be used to identify a specific OpenCL device.
+If `devices` argument is NULL, this argument is ignored.
+The number of OpenCL devices returned is the minimum of the value specified by `num_entries` or the number of OpenCL devices whose type matches `device_type`.
+
+`num_devices`::
+
+Returns the number of OpenCL devices.
+If `num_devices` is NULL, this argument is ignored.
+
+
+[[description]]
+== Description
+
+Queries a media adapter for any associated OpenCL devices.
+Adapters with associated OpenCL devices can enable media surface sharing between the two.
+
+
+[[notes]]
+== Notes
+
+include::sharingDX9Inc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_PLATFORM` if `platform` is not a valid platform.
+
+* `CL_INVALID_VALUE` if `num_media_adapters` is zero or if `media_adapters_type` is NULL or if `media_adapters` is NULL.
+
+* `CL_INVALID_VALUE` if any of the entries in `media_adapters_type` or `media_adapters` is not a valid value.
+
+* `CL_INVALID_VALUE` if `media_adapter_set` is not a valid value.
+
+* `CL_INVALID_VALUE` if `num_entries` is equal to zero and `devices` is not NULL or if both `num_devices` and `devices` are NULL.
+
+* `CL_DEVICE_NOT_FOUND` if no OpenCL devices that correspond to adapters specified in `media_adapters` and `media_adapters_type` were found.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 85
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_dx9_media_sharing.adoc#, `cl_khr_dx9_media_sharing`>>
+
+include::_footer.adoc[]

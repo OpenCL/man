@@ -1,0 +1,79 @@
+include::_header.adoc[]
+
+
+[[read_image1d]]
+= read_imageh (1D, Half)
+
+Do an element lookup in the 1D image object, returning half floating-point values.
+
+[source,c]
+----
+half4 read_imageh(image1d_t image,
+                  sampler_t sampler,
+                  int coord)
+
+half4 read_imageh(image1d_t image,
+                  sampler_t sampler,
+                  float coord)
+
+half4 read_imageh(image1d_t image,
+                  int coord)
+
+half4 read_imageh(image1d_buffer_t image,
+                  int coord)
+
+half4 read_imageh(image1d_array_t image,
+                  int2 coord)
+
+half4 read_imageh(image1d_array_t image,
+                  sampler_t sampler,
+                  int2 coord)
+
+half4 read_imageh(image1d_array_t image,
+                  sampler_t sampler,
+                  float2 coord)
+----
+
+
+[[description]]
+== Description
+
+An application that wants to use `half` and `halfn` types will need to include the `#pragma OPENCL EXTENSION cl_khr_fp16 : enable` directive.
+
+For forms that take `an` image1d_t, use `coord` to do an element lookup in the 1D image object specified by `image`.
+
+For forms that take an `image1d_array_t`, Use _coord.x_ to do an element lookup in the 1D image identified by _coord.y_ in the 1D image array specified by `image`.
+
+The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to `CLK_FILTER_NEAREST`, normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode to `CLK_ADDRESS_NONE`.
+
+`read_imageh` returns half precision floating-point values in the range [0.0... 1.0] for image objects created with `image_channel_data_type` set to one of the predefined packed formats or `CL_UNORM_INT8` or `CL_UNORM_INT16`.
+
+`read_imageh` returns half precision floating-point values in the range [-1.0... 1.0] for image objects created with `image_channel_data_type` set to `CL_SNORM_INT8`, or `CL_SNORM_INT16`.
+
+`read_imageh` returns half precision floating-point values for image objects created with `image_channel_data_type` set to `CL_HALF_FLOAT`.
+
+The `read_imageh` calls that take integer coordinates must use a sampler with filter mode set to `CLK_FILTER_NEAREST`, normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode set to `CLK_ADDRESS_CLAMP_TO_EDGE`, `CLK_ADDRESS_CLAMP` or `CLK_ADDRESS_NONE`; otherwise the values returned are undefined.
+
+Values returned by `read_imageh` for image objects with `image_channel_data_type` values not specified in the description above are undefined.
+
+
+[[notes]]
+== Notes
+
+General information about the `read_image`* functions follows.
+
+include::imageFunctionsInc.adoc[]
+
+include::imageMappingInc.adoc[]
+
+
+:spec-name: Ext
+:spec-page: 24
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>, <<sampler_t.adoc#, `sampler_t`>>
+
+include::_footer.adoc[]

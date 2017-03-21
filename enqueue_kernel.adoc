@@ -1,0 +1,217 @@
+include::_header.adoc[]
+
+
+[[enqueue_kernel]]
+= enqueue_kernel
+
+Enqueue the block for execution to `queue`.
+
+[source,c]
+----
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   void ( ^block)(void))
+
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   uint num_events_in_wait_list,
+                   const clk_event_t * event_wait_list,
+                   clk_event_t * event_ret,
+                   void ( ^block)(void))
+
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   void ( ^block)(local void *, ...),
+                   uint size0, ...)
+
+int enqueue_kernel(queue_t queue,
+                   kernel_enqueue_flags_t flags,
+                   const ndrange_t ndrange,
+                   uint num_events_in_wait_list,
+                   const clk_event_t * event_wait_list,
+                   clk_event_t * event_ret,
+                   void ( ^block)(local void *, ...),
+                   uint size0, ...)
+----
+
+
+[[description]]
+== Description
+
+Enqueue the block for execution to `queue`.
+If an event is returned, `enqueue_kernel` performs an implicit retain on the returned event.
+
+OpenCL 2.0 allows a kernel to independently enqueue to the same device, without host interaction.
+A kernel may enqueue code represented by Block syntax, and control execution order with event dependencies including user events and markers.
+There are several advantages to using the Block syntax: it is more compact; it does not require a `cl_kernel` object; and enqueuing can be done as a single semantic step.
+
+The `enqueue_kernel` built-in function allows a work-item to enqueue a block.
+Work-items can enqueue multiple blocks to a device queue(s).
+
+The `kernel_enqueue_flags_t` argument to `enqueue_kernel` built-in functions can be used to specify when the child kernel begins execution.
+Supported values are described in the table below. (Implementations are not required to honor this flag.
+Implementations may not schedule kernel launch earlier than the point specified by this flag, however):
+
+[cols="1a,1a", options="header"]
+|===
+
+|kernel_enqueue_flags_t enum
+|Description
+
+|`CLK_ENQUEUE_FLAGS_NO_WAIT`
+|Indicates that the enqueued kernels do not need to wait for the parent kernel to finish execution before they begin execution.
+
+|`CLK_ENQUEUE_FLAGS_WAIT_KERNEL`
+|Indicates that all work-items of the parent kernel must finish executing and all immediate side effects committed before the enqueued child kernel may begin execution. (Immediate meaning not side effects resulting from child kernels.
+The side effects would include stores to global memory and pipe reads and writes.)
+
+|`CLK_ENQUEUE_FLAGS_WAIT_WORK_GROUP`
+|Indicates that the enqueued kernels wait only for the workgroup that enqueued the kernels to finish before they begin execution.
+This acts as a memory synchronization point between work-items in a work-group and child kernels enqueued by work-items in the work-group.
+
+|===
+
+NOTE: The `kernel_enqueue_flags_t` flags are useful when a kernel enqueued from the host and executing on a device enqueues kernels on the device.
+The kernel enqueued from the host may not have an event associated with it.
+The `kernel_enqueue_flags_t` flags allow the developer to indicate when the child kernels can begin execution.
+
+
+[[notes]]
+== Notes
+
+A block passed to `enqueue_kernel` can have arguments declared to be a pointer to local memory.
+The `enqueue_kernel` built-in function variants allow blocks to be enqueued with a variable number of arguments.
+Each argument must be declared to be a pointer of a data type to local memory.
+These `enqueue_kernel` built-in function variants also have a corresponding number of arguments each of type uint that follow the block argument.
+These arguments specify the size of each local memory pointer argument of the enqueued block.
+
+If the <<cl_khr_device_enqueue_local_arg_types.adoc#, `cl_khr_device_enqueue_local_arg_types`>> extension is enabled, then replace all occurrences of `local void *` in the table above with `local gentype *`.
+We use the generic type name `gentype` to indicate the built-in OpenCL C scalar or vector integer or floating-point data types, or any user defined type built from these scalar and vector data types which can be used as the type of the pointee of the arguments of the kernel enqueue functions listed above.
+
+
+[[example1]]
+== Example
+
+Below are some examples of how to enqueue a block.
+
+----
+kernel void
+my_func_A(global int *a, global int *b, global int *c)
+{
+    ...
+}
+
+kernel void
+my_func_B(global int *a, global int *b, global int *c)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // example – enqueue a kernel as a block
+    enqueue_kernel(get_default_queue(), ndrange,
+                           ^{my_func_A(a, b, c);});
+    ...
+}
+
+kernel void
+my_func_C(global int *a, global int *b, global int *c)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // note that a, b and c are variables in scope of
+    // the block
+    void (^my_block_A)(void) = ^{my_func_A(a, b, c);};
+
+    // enqueue the block variable
+    enqueue_kernel(get_default_queue(),
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange,
+                   my_block_A);
+    ...
+}
+----
+
+The example below shows how to declare a block literal and enqueue it.
+
+----
+kernel void
+my_func(global int *a, global int *b)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // note that a, b and c are variables in scope of
+    // the block
+    void (^my_block_A)(void) =
+          ^{ size_t id = get_global_id(0);
+             b[id] += a[id];
+        };
+
+    // enqueue the block variable
+    enqueue_kernel(get_default_queue(),
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange,
+                   my_block_A);
+
+    // or we could have done the following
+    enqueue_kernel(get_default_queue(),
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange,
+                   ^{
+                     size_t id = get_global_id(0);
+                     b[id] += a[id];
+                    };
+}
+----
+
+NOTE: Blocks passed to `enqueue_kernel` cannot use global variables or stack variables local to the enclosing lexical scope that are a pointer type in the local or private address space.
+
+----
+kernel void
+foo(global int *a, local int *lptr, …)
+{
+    enqueue_kernel(get_default_queue(),
+           CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+           ndrange,
+           ^{
+              size_t id = get_global_id(0);
+              local int *p = lptr; // undefined behavior
+            };
+}
+----
+
+See section 6.13.17 of the specification for more information and examples.
+
+
+[[errors]]
+== Errors
+
+`enqueue_kernel` returns `CL_SUCCESS` if the block is enqueued successfully and returns `CL_ENQUEUE_FAILURE` otherwise.
+If the –g compile option is specified in compiler options passed to <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clBuildProgram.adoc#, `clBuildProgram`>> when compiling or building the parent program, the following errors may be returned instead of `CL_ENQUEUE_FAILURE` to indicate why `enqueue_kernel` failed to enqueue the block:
+
+* `CLK_INVALID_QUEUE` if `queue` is not a valid device queue.
+
+* `CLK_INVALID_NDRANGE` if `ndrange` is not a valid ND-range descriptor or if the program was compiled with `–cl-uniform-work-group-size` and the local_work_size is specified in `ndrange` but the global_work_size specified in `ndrange` is not a multiple of the local_work_size.
+
+* `CLK_INVALID_EVENT_WAIT_LIST` if `event_wait_list` is NULL and `num_events_in_wait_list` > 0, or if `event_wait_list` is not NULL and `num_events_in_wait_list` is 0, or if event objects in `event_wait_list` are not valid events.
+
+* `CLK_DEVICE_QUEUE_FULL` if `queue` is full.
+
+* `CLK_INVALID_ARG_SIZE` if size of local memory arguments is 0.
+
+* `CLK_EVENT_ALLOCATION_FAILURE` if `event_ret` is not NULL and an event could not be allocated.
+
+* `CLK_OUT_OF_RESOURCES` if there is a failure to queue the block in `queue` because of insufficient resources needed to execute the kernel.
+
+
+:spec-name: CLan
+:spec-page: 162
+
+include::_footer.adoc[]

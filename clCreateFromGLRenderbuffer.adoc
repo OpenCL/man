@@ -1,0 +1,91 @@
+include::_header.adoc[]
+
+
+[[clCreateFromGLRenderbuffer]]
+= clCreateFromGLRenderbuffer
+
+Creates an OpenCL 2D image object from an OpenGL renderbuffer object.
+
+[source,c]
+----
+cl_mem clCreateFromGLRenderbuffer(cl_context context,
+                                  cl_mem_flags flags,
+                                  GLuint renderbuffer,
+                                  cl_int * errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context created from an OpenGL context.
+
+`flags`::
+
+A bit-field that is used to specify usage information.
+Refer to the table at <<clCreateBuffer.adoc#, `clCreateBuffer`>> for a description of `flags`.
+Only `CL_MEM_READ_ONLY`, `CL_MEM_WRITE_ONLY`, and `CL_MEM_READ_WRITE` values specified in the table at <<clCreateBuffer.adoc#, `clCreateBuffer`>> can be used.
+
+`renderbuffer`::
+
+The name of a GL renderbuffer object.
+The renderbuffer storage must be specified before the image object can be created.
+The `renderbuffer` format and dimensions defined by OpenGL will be used to create the 2D image object.
+Only GL renderbuffers with internal formats that map to appropriate image channel order and data type specified in tables 5.5 and 5.6 (see <<cl_image_format.adoc#, `cl_image_format`>>) can be used to create the 2D image object.
+
+`errcode_ret`::
+
+Returns an appropriate error code as described below.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[description]]
+== Description
+
+If the state of a GL renderbuffer object is modified through the GL API (i.e.
+changes to the dimensions or format used to represent pixels of the GL renderbuffer using appropriate GL API calls such as `glRenderbufferStorage`) while there exists a corresponding CL image object, subsequent use of the CL image object will result in undefined behavior.
+
+The <<clRetainMemObject.adoc#, `clRetainMemObject`>> and <<clReleaseMemObject.adoc#, `clReleaseMemObject`>> functions can be used to retain and release the image objects.
+
+include::gl_sharingInc.adoc[]
+
+include::gl_formatsInc.adoc[]
+
+include::gl_lifetimeInc.adoc[]
+
+include::gl_syncInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns a valid non-zero OpenCL image object and `errcode_ret` is set to `CL_SUCCESS` if the image object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context or was not created from a GL context.
+
+* `CL_INVALID_VALUE` if values specified in `flags` are not valid.
+
+* `CL_INVALID_GL_OBJECT` if `renderbuffer` is not a GL renderbuffer object or if the width or height of `renderbuffer` is zero.
+
+* `CL_INVALID_IMAGE_FORMAT_DESCRIPTOR` if the OpenGL renderbuffer internal format does not map to a supported OpenCL image format.
+
+* `CL_INVALID_OPERATION` if `renderbuffer` is a multi-sample GL renderbuffer object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 51
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>>, <<clCreateBuffer.adoc#, `clCreateBuffer`>>, <<cl_image_format.adoc#, `cl_image_format`>>, <<clRetainMemObject.adoc#, `clRetainMemObject`>>, <<clReleaseMemObject.adoc#, `clReleaseMemObject`>>
+
+include::_footer.adoc[]

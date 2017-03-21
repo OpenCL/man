@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[clRetainEvent]]
+= clRetainEvent
+
+Increments the `event` reference count.
+
+[source,c]
+----
+cl_int clRetainEvent(cl_event event)
+----
+
+
+[[parameters]]
+== Parameters
+
+`event`::
+
+Event object being retained.
+
+
+[[notes]]
+== Notes
+
+The OpenCL commands that return an event perform an implicit retain.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_EVENT` if `event` is not a valid event object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 257
+
+
+[[seealso]]
+== Also see
+
+<<clGetEventInfo.adoc#, `clGetEventInfo`>>, <<clReleaseEvent.adoc#, `clReleaseEvent`>>, <<clWaitForEvents.adoc#, `clWaitForEvents`>>
+
+include::_footer.adoc[]

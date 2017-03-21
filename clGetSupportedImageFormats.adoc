@@ -1,0 +1,489 @@
+include::_header.adoc[]
+
+
+[[clGetSupportedImageFormats]]
+= clGetSupportedImageFormats
+
+Get the list of image formats supported by an OpenCL implementation.
+
+[source,c]
+----
+cl_int clGetSupportedImageFormats(cl_context context,
+                                  cl_mem_flags flags,
+                                  cl_mem_object_type image_type,
+                                  cl_uint num_entries,
+                                  cl_image_format *image_formats,
+                                  cl_uint *num_image_formats)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context on which the image object(s) will be created.
+
+`flags`::
+
++
+--
+
+A bit-field that is used to specify allocation and usage information about the image memory object being queried and is described in the table below.
+To get a list of supported image formats that can be read from or written to by a kernel, `flags` must be set to `CL_MEM_READ_WRITE` (get a list of images that can be read from and written to by different kernel instances when correctly ordered by event dependencies), `CL_MEM_READ_ONLY` (list of images that can be read from by a kernel) or `CL_MEM_WRITE_ONLY` (list of images that can be written to by a kernel).
+To get a list of supported image formats that can be both read from and written to by a kernel, `flags` must be set to `CL_MEM_KERNEL_READ_AND_WRITE`.
+Please see section 5.3.2.2 for clarification.
+
+include::clCreate_memflagsInc.adoc[]
+
+--
+
+`image_type`::
+
+Describes the image type and must be either `CL_MEM_OBJECT_IMAGE1D`, `CL_MEM_OBJECT_IMAGE1D_BUFFER`, `CL_MEM_OBJECT_IMAGE2D`, `CL_MEM_OBJECT_IMAGE3D`, `CL_MEM_OBJECT_IMAGE1D_ARRAY` or `CL_MEM_OBJECT_IMAGE2D_ARRAY`.
+
+`num_entries`::
+
+Specifies the number of entries that can be returned in the memory location given by `image_formats`.
+
+`image_formats`::
+
+A pointer to a memory location where the list of supported image formats are returned.
+Each entry describes a <<cl_image_format.adoc#, `cl_image_format`>> structure supported by the OpenCL implementation.
+If `image_formats` is NULL, it is ignored.
+
+`num_image_formats`::
+
+The actual number of supported image formats for a specific `context` and values specified by `flags`.
+If `num_image_formats` is NULL, it is ignored.
+
+
+[[notes]]
+== Notes
+
+`clGetSupportedImageFormats` can be used to get the list of image formats supported by an OpenCL implementation when the following information about an image memory object is specified:
+
+* Context
+
+* Image type - 1D, 2D, or 3D image, 1D image buffer, 1D or 2D image array.
+
+* Image object allocation information
+
+`clGetSupportedImageFormats` returns a union of image formats supported by all devices in the context.
+
+If `CL_DEVICE_IMAGE_SUPPORT` specified in table 4.3 (see <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>) is `CL_TRUE`, the values assigned to `CL_DEVICE_MAX_READ_IMAGE_ARGS`, `CL_DEVICE_MAX_WRITE_IMAGE_ARGS`, `CL_DEVICE_IMAGE2D_MAX_WIDTH`, `CL_DEVICE_IMAGE2D_MAX_HEIGHT`, `CL_DEVICE_IMAGE3D_MAX_WIDTH`, `CL_DEVICE_IMAGE3D_MAX_HEIGHT`, `CL_DEVICE_IMAGE3D_MAX_DEPTH` and `CL_DEVICE_MAX_SAMPLERS` by the implementation must be greater than or equal to the minimum values specified in table 4.3 (see <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>).
+
+.Minimum List of Supported Image Formats
+
+For 1D, 1D image from buffer, 2D, 3D image objects, 1D and 2D image array objects, the mandated minimum list of image formats that must be supported by all devices (that can be read from or written to by a kernel but not both) that support images is described in the table below (Table 5.8a):
+
+[cols="1a,1a,1a,1a", options="header"]
+|===
+
+|
+
+----
+num_channels
+----
+
+|
+
+----
+channel_order
+----
+
+|
+
+----
+channel_data_type
+----
+
+|
+
+----
+read/write
+----
+
+|
+
+----
+1
+----
+
+|
+
+----
+CL_R
+----
+
+|
+
+----
+CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SNORM_INT8
+CL_SNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT
+----
+
+|
+
+----
+read+write
+----
+
+|
+
+----
+1
+----
+
+|
+
+----
+CL_DEPTH
+----
+
+|
+
+----
+CL_UNORM_INT16
+CL_FLOAT
+----
+
+|
+
+----
+read+write
+----
+
+`CL_DEPTH` channel order is supported only for 2D image and 2D image array objects.
+
+|
+
+----
+2
+----
+
+|
+
+----
+CL_RG
+----
+
+|
+
+----
+CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SNORM_INT8
+CL_SNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT
+----
+
+|
+
+----
+read+write
+----
+
+|
+
+----
+4
+----
+
+|
+
+----
+CL_RGBA
+----
+
+|
+
+----
+CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SNORM_INT8
+CL_SNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT
+----
+
+|
+
+----
+read+write
+----
+
+|
+
+----
+4
+----
+
+|
+
+----
+CL_BGRA
+----
+
+|
+
+----
+CL_UNORM_INT8
+----
+
+|
+
+----
+read+write
+----
+
+|
+
+----
+4
+----
+
+|
+
+----
+CL_sRGBA
+----
+
+|
+
+----
+CL_UNORM_INT8
+----
+
+|read+write if the <<cl_khr_srgb_image_writes.adoc#, `cl_khr_srgb_image_writes`>> extension is supported, else read only.
+sRGB channel order support is not required for 1D image buffers.
+Writes to images with sRGB channel orders requires device support of the <<cl_khr_srgb_image_writes.adoc#, `cl_khr_srgb_image_writes`>> extension.
+
+|
+
+----
+1
+----
+
+|
+
+----
+CL_DEPTH_STENCIL
+----
+
+|
+
+----
+CL_UNORM_INT24
+CL_FLOAT
+----
+
+|
+
+----
+read only (applies if the
+cl_khr_gl_depth_images
+extension is enabled)
+----
+
+|===
+
+For 1D, 1D image from buffer, 2D, 3D image objects, 1D and 2D image array objects, the mandated minimum list of image formats that must be supported by all devices (that can be read from and written to by a kernel) that support images is described in the table below (Table 5.8b):
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|
+
+----
+num_channels
+----
+
+|
+
+----
+channel_order
+----
+
+|
+
+----
+channel_data_type
+----
+
+|
+
+----
+1
+----
+
+|
+
+----
+CL_R
+----
+
+|
+
+----
+CL_UNORM_INT8
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_HALF_FLOAT
+CL_FLOAT
+----
+
+|
+
+----
+4
+----
+
+|
+
+----
+CL_RGBA
+----
+
+|
+
+----
+CL_UNORM_INT8
+CL_UNORM_INT16
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_HALF_FLOAT
+CL_FLOAT
+----
+
+|
+
+----
+1
+----
+
+|
+
+----
+CL_DEPTH_STENCIL (applies if the
+cl_khr_gl_depth_images
+extension is enabled)
+----
+
+|
+
+----
+CL_UNORM_INT24
+CL_FLOAT
+----
+
+|===
+
+.
+Image format mapping to OpenCL C image access qualifiers
+
+Image arguments to kernels may have the `read_only`, `write_only` or `read_write` qualifier.
+Not all image formats supported by the device and platform are valid to be passed to all of these access qualifiers.
+For each access qualifier, only images whose format is in the list of formats returned by clGetSupportedImageFormats with the given flag arguments in the table below are permitted.
+It is not valid to pass an image supporting writing as both a read_only image and a write_only image parameter, or to a read_write image parameter and any other image parameter.
+
+[cols="1a,1a", options="header"]
+|===
+
+|
+
+----
+Access Qualifier
+----
+
+|
+
+----
+cl_mem_flags
+----
+
+|`read_only`
+|`CL_MEM_READ_ONLY`, `CL_MEM_READ_WRITE`, `CL_MEM_KERNEL_READ_AND_WRITE`
+
+|`write_only`
+|`CL_MEM_WRITE_ONLY`, `CL_MEM_READ_WRITE`, `CL_MEM_KERNEL_READ_AND_WRITE`
+
+|`read_write`
+|`CL_MEM_KERNEL_READ_AND_WRITE`
+
+|===
+
+.Additional notes if the <<cl_khr_gl_depth_images.adoc#, `cl_khr_gl_depth_images`>> extension is enabled:
+
+For the image format given by channel order of `CL_DEPTH_STENCIL` and channel data type of `CL_UNORM_INT24`, the depth is stored as an unsigned normalized 24-bit value.
+
+For the image format given by channel order of `CL DEPTH_STENCIL` and channel data type of `CL_FLOAT`, each pixel is two 32-bit values.
+The depth is stored as a single precision floating point value followed by the stencil which is stored as a 8-bit integer value.
+
+The stencil value cannot be read or written using the `read_imagef` and `write_imagef` built-in functions in an OpenCL kernel.
+
+Depth image objects with an image channel order = `CL_DEPTH_STENCIL` cannot be used as arguments to <<clEnqueueReadImage.adoc#, `clEnqueueReadImage`>>, <<clEnqueueWriteImage.adoc#, `clEnqueueWriteImage`>>, <<clEnqueueCopyImage.adoc#, `clEnqueueCopyImage`>>, <<clEnqueueCopyImageToBuffer.adoc#, `clEnqueueCopyImageToBuffer`>>, <<clEnqueueCopyBufferToImage.adoc#, `clEnqueueCopyBufferToImage`>>, <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> and <<clEnqueueFillImage.adoc#, `clEnqueueFillImage`>> and will return a `CL_INVALID_OPERATION` error.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context.
+
+* `CL_INVALID_VALUE` if `flags` or `image_type` are not valid, or if `num_entries` is 0 and `image_formats` is not NULL.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 136
+
+
+[[seealso]]
+== Also see
+
+<<cl_image_format.adoc#, `cl_image_format`>>, <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>
+
+include::_footer.adoc[]

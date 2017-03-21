@@ -1,0 +1,34 @@
+include::_header.adoc[]
+
+
+[[reserve_read_pipe]]
+= reserve_read_pipe
+
+Reserve entries for reading from pipe.
+
+[source,c]
+----
+reserve_id_t reserve_read_pipe(read_only pipe gentype p,
+                               uint num_packets)
+----
+
+
+[[description]]
+== Description
+
+Reserve `num_packets` entries for reading from pipe `p`.
+Returns a valid reservation ID if the reservation is successful.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 158
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

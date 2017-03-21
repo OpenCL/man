@@ -1,0 +1,237 @@
+include::_header.adoc[]
+
+
+[[Blocks]]
+= Blocks
+
+OpenCL C 2.0 adds support for the clang block syntax.
+
+----
+Example:
+int multiplier = 7;
+int (^myBlock)(int) = ^(int num) { return num * multiplier; };
+----
+
+
+[[description]]
+== Description
+
+OpenCL C 2.0 adds support for the clang block syntax.
+Like function types, the Block type is a pair consisting of a result value type and a list of parameter types very similar to a function type.
+Blocks are intended to be used much like functions with the key distinction being that in addition to executable code they also contain various variable bindings to automatic (stack) or global memory.
+
+This syntax is already part of the clang source tree on which most vendors have based their OpenCL implementations.
+Additionally, blocks based closures are supported by the clang open source C compiler as well as Mac OS X’s C and Objective C compilers.
+Specifically, Mac OS X’s Grand Central Dispatch allows applications to queue tasks as a block.
+
+.Declaring and Using a Block
+
+You use the ^ operator to declare a Block variable and to indicate the beginning of a Block literal.
+The body of the Block itself is contained within {}, as shown in the example (as usual with C, ; indicates the end of the statement).
+
+The Block is able to make use of variables from the same scope in which it was defined.
+
+If you declare a Block as a variable, you can then use it just as you would a function:
+
+`int multiplier = 7; int (^myBlock)(int) = ^(int num) { return num * multiplier; }; printf(“%d\n”, myBlock(3)); // prints 21`
+
+.Declaring a Block Reference
+
+Block variables hold references to Blocks.
+You declare them using syntax similar to that you use to declare a pointer to a function, except that you use ^ instead of *.
+The Block type fully interoperates with the rest of the C type system.
+The following are valid Block variable declarations:
+
+----
+    void (^blockReturningVoidWithVoidArgument)(void);
+    int (^blockReturningIntWithIntAndCharArguments)(int, char);
+----
+
+A Block that takes no arguments must specify void in the argument list.
+A Block reference may not be dereferenced via the pointer dereference operation *, and thus a Block’s size may not be computed at compile time.
+
+Blocks are designed to be fully type safe by giving the compiler a full set of metadata to use to validate use of Blocks, parameters passed to blocks, and assignment of the return value.
+
+You can also create types for Blocks—doing so is generally considered to be best practice when you use a block with a given signature in multiple places:
+
+----
+    typedef float (^MyBlockType)(float, float);
+
+    MyBlockType myFirstBlock = // …;
+    MyBlockType mySecondBlock = // …;
+----
+
+.Block Literal Expressions
+
+A Block literal expression produces a reference to a Block.
+It is introduced by the use of the ^ token as a unary operator.
+
+----
+    Block_literal_expression ::= ^ block_decl compound_statement_body
+    block_decl ::=
+    block_decl ::= parameter_list
+    block_decl ::= type_expression
+----
+
+where type expression is extended to allow ^ as a Block reference where * is allowed as a function reference.
+
+The following Block literal:
+
+----
+    ^ void (void) { printf("hello world\n"); }
+----
+
+produces a reference to a Block with no arguments with no return value.
+
+The return type is optional and is inferred from the return statements.
+If the return statements return a value, they all must return a value of the same type.
+If there is no value returned the inferred type of the Block is void; otherwise it is the type of the return statement value.
+If the return type is omitted and the argument list is ( `void` ), the ( `void` ) argument list may also be omitted.
+
+So:
+
+----
+    ^ ( void ) { printf("hello world\n"); }
+----
+
+and:
+
+----
+    ^ { printf("hello world\n"); }
+----
+
+are exactly equivalent constructs for the same expression.
+
+The compound statement body establishes a new lexical scope within that of its parent.
+Variables used within the scope of the compound statement are bound to the Block in the normal manner with the exception of those in automatic (stack) storage.
+Thus one may access functions and global variables as one would expect, as well as static local variables.
+
+Local automatic (stack) variables referenced within the compound statement of a Block are imported and captured by the Block as const copies.
+The capture (binding) is performed at the time of the Block literal expression evaluation.
+
+The compiler is not required to capture a variable if it can prove that no references to the variable will actually be evaluated.
+
+The lifetime of variables declared in a Block is that of a function.
+
+Block literal expressions may occur within Block literal expressions (nested) and all variables captured by any nested blocks are implicitly also captured in the scopes of their enclosing Blocks.
+
+A Block literal expression may be used as the initialization value for Block variables at global or local static scope.
+
+You can also declare a Block as a global literal in program scope.
+
+----
+    int GlobalInt = 0;
+
+    int (^getGlobalInt)(void) = ^{ return GlobalInt; };
+----
+
+.Control Flow
+
+The compound statement of a Block is treated much like a function body with respect to control flow in that continue, break and goto do not escape the Block.
+
+.Restrictions
+
+The following Blocks features are currently not supported in OpenCL C.
+
+* The __block storage type.
+
+* The Block_copy() and Block_release() functions that copy and release Blocks.
+
+* Blocks with variadic arguments.
+
+* Arrays of Blocks.
+
+* Blocks as structures and union members.
+
+Block literals are assumed to allocate memory at the point of definition and to be destroyed at the end of the same scope.
+To support these behaviors, additional restrictions in addition to the above feature restrictions are:
+
+* {blank}
++
+--
+
+Block variables must be defined and used in a way that allows them to be statically determinable at build or "link to executable" time.
+In particular:
+
+* Block variables assigned in one scope must be used only with the same or any nested scope.
+
+* The "extern" storage-class specified cannot be used with program scope block variables.
+
+* Block variable declarations must be qualified with const.
+Therefore all block variables must be initialized at declaration time and may not be reassigned.
+
+* A block cannot be the return value of a function.
+
+--
+
+* The unary operators (* and &) cannot be used with a Block.
+
+* Blocks cannot be used as expressions of the ternary selection operator (?:).
+
+* A Block cannot reference another Block.
+
+OpenCL C does not allow function pointers (see section 6.9) primarily because it is difficult or expensive to implement generic indirections to executable code in many hardware architectures that OpenCL targets.
+OpenCL C’s design of Blocks is intended to respect that same condition, yielding the restrictions listed here.
+As such, Blocks allow a form of dynamically enqueued function scheduling without providing a form of runtime synchronous dynamic dispatch analogous to function pointers.
+
+
+[[example1]]
+== Examples
+
+Example 1:
+
+----
+void foo(int *x, int (^bar)(int, int))
+{
+    *x = bar(*x, *x);
+}
+
+kernel
+void k(global int *x, global int *z)
+{
+    if (some expression)
+        *x = foo(x,
+                ^int(int x, int y){return x+y+*z;}); // legal
+    else
+        *x = foo(x,
+                ^int(int x, int y){return (x*y)-*z;}); // legal
+}
+----
+
+Example 2:
+
+----
+kernel
+void k(global int *x, global int *z)
+{
+    int ^(tmp)(int, int);
+    if (some expression)
+    {
+        tmp = ^int(int x, int y){return x+y+*z;}); // illegal
+    }
+    *x = foo(x, tmp);
+}
+----
+
+Example 3:
+
+----
+int GlobalInt = 0;
+int (^getGlobalInt)(void) = ^{ return GlobalInt; }; // legal
+int (^getAnotherGlobalInt)(void);                   // illegal
+extern int (^getExternGlobalInt)(void);             // illegal
+
+void foo()
+{
+    ...
+    getGlobalInt = ^{ return 0; }; // illegal – cannot assign to
+                                   // a global block variable
+    ...
+}
+----
+
+
+:spec-name: CLan
+:spec-page: 64
+
+include::_footer.adoc[]

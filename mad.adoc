@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[mad]]
+= mad
+
+Approximates `a` * `b` + `c`.
+
+[source,c]
+----
+gentype mad(gentype a,
+            gentype b,
+            gentype c)
+----
+
+
+[[description]]
+== Description
+
+`mad` approximates `a` * `b` + `c`.
+Whether or how the product of `a` * `b` is rounded and how supernormal or subnormal intermediate products are handled is not defined.
+`mad` is intended to be used where speed is preferred over accuracy.
+
+For some usages, e.g.
+`mad`(`a`, `b`, -`a`*`b`), the definition of `mad()` is loose enough that almost any result is allowed from `mad()` for some values of `a` and `b`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,35 @@
+include::_header.adoc[]
+
+
+[[work_group_commit_read_pipe]]
+= work_group_commit_read_pipe
+
+Indicates that all reads to `num_packets` associated with a reservation are completed.
+
+[source,c]
+----
+void work_group_commit_read_pipe(pipe gentype p,
+                                 reserve_id_t reserve_id)
+----
+
+
+[[description]]
+== Description
+
+Indicates that all reads to `num_packets` associated with reservation `reserve_id` are completed.
+
+This built-in function must be encountered by all work-items in a work-group executing the kernel with the same argument values; otherwise the behavior is undefined.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 159
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

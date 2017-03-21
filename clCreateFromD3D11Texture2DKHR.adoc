@@ -1,0 +1,83 @@
+include::_header.adoc[]
+
+
+[[clCreateFromD3D11Texture2DKHR]]
+= clCreateFromD3D11Texture2DKHR
+
+Creates an OpenCL 2D image object from a subresource of a Direct3D 11 2D texture.
+
+[source,c]
+----
+cl_mem clCreateFromD3D11Texture2DKHR(cl_context context,
+                                     cl_mem_flags flags,
+                                     ID3D11Texture2D *resource,
+                                     UINT subresource,
+                                     cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context created from a Direct3D 11 device.
+
+`flags`::
+
+A bit-field that is used to specify usage information.
+May be `CL_MEM_READ_ONLY`, `CL_MEM_WRITE_ONLY`, or `CL_MEM_READ_WRITE`. (See the table for <<clCreateBuffer.adoc#, `clCreateBuffer`>> for more information.)
+
+`resource`::
+
+A pointer to the Direct3D 11 2D texture to share.
+
+`subresource`::
+
+The subresource of `resource` to share.
+
+`errcode_ret`::
+
+An appropriate error code.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[notes]]
+== Notes
+
+The width, height and depth of the returned OpenCL 2D image object are determined by the width, height and depth of subresource `subresource` of `resource`.
+The channel type and order of the returned OpenCL 2D image object is determined by the format of `resource` as shown in Direct3D 11 and corresponding OpenCL image formats of `resource` in <<clCreateFromD3D11Texture3DKHR.adoc#, `clCreateFromD3D11Texture3DKHR`>>.
+
+This call will increment the internal Direct3D reference count on `resource`.
+The internal Direct3D reference count on `resource` will be decremented when the OpenCL reference count on the returned OpenCL memory object drops to zero.
+
+include::sharingD3D11Inc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns a valid non-zero OpenCL image object and `errcode_ret` is set to `CL_SUCCESS` if the image object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context.
+
+* `CL_INVALID_VALUE` if values specified in `flags` are not valid or if `subresource` is not a valid subresource index for `resource`.
+
+* `CL_INVALID_D3D11_RESOURCE_KHR` if `resource` is not a Direct3D 11 texture resource, if `resource` was created with the `D3D11_USAGE` flag `D3D11_USAGE_IMMUTABLE`, if a `resource` is a multisampled texture, if a `cl_mem` from subresource `subresource` of `resource` has already been created using `clCreateFromD3D11Texture2DKHR`, or if `context` was not created against the same Direct3D 11 device from which `resource` was created.
+
+* `CL_INVALID_IMAGE_FORMAT_DESCRIPTOR` if the Direct3D 11 texture format of `resource` is not a value listed in the table of Direct3D 11 and corresponding OpenCL image formats for <<clCreateFromD3D11Texture3DKHR.adoc#, `clCreateFromD3D11Texture3DKHR`>>, or if the Direct3D 11 texture format of `resource` does not map to a supported OpenCL image format.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 103
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_d3d11_sharing.adoc#, `cl_khr_d3d11_sharing`>>
+
+include::_footer.adoc[]

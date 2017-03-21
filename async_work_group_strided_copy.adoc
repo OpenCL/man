@@ -1,0 +1,62 @@
+include::_header.adoc[]
+
+
+[[async_work_group_copy]]
+= async_work_group_strided_copy
+
+Performs an async gather of `num_elements` `gentype` elements from source to destination.
+
+[source,c]
+----
+event_t async_work_group_strided_copy(__local gentype *dst,
+                                      const __global gentype *src,
+                                      size_t num_gentypes,
+                                      size_t src_stride,
+                                      event_t event)
+
+event_t async_work_group_strided_copy(__global gentype *dst,
+                                      const __local gentype *src,
+                                      size_t num_gentypes,
+                                      size_t dst_stride,
+                                      event_t event)
+----
+
+
+[[description]]
+== Description
+
+`async_work_group_strided_copy` performs an async gather of `num_gentypes` `gentype` elements from `src` to `dst`.
+The `src_stride` is the stride in elements for each `gentype` element read from `src`.
+The async gather is performed by all work-items in a work-group and this built-in function must therefore be encountered by all work-items in a work-group executing the kernel with the same argument values; otherwise the results are undefined.
+This rule applies to ND-ranges implemented with uniform and non-uniform work-groups.
+
+Returns an event object that can be used by <<wait_group_events.adoc#, `wait_group_events`>> to wait for the async copy to finish.
+The `event` argument can also be used to associate the `async_work_group_strided_copy` with a previous async copy allowing an event to be shared by multiple async copies; otherwise `event` should be zero.
+
+If `event` argument is non-zero, the event object supplied in `event` argument will be returned.
+
+This function does not perform any implicit synchronization of source data such as using a <<barrier.adoc#, `barrier`>> before performing the copy.
+
+The behavior of `async_work_group_strided_copy` is undefined if `src_stride` or `dst_stride` is 0, or if the `src_stride` or `dst_stride` values cause the `src` or `dst` pointers to exceed the upper bounds of the address space during the copy.
+
+include::asyncCopyInc.adoc[]
+
+include::vectorHalfFunctionsInc.adoc[]
+
+
+[[notes]]
+== Notes
+
+`async_work_group_copy` and `async_work_group_strided_copy` for 3-component vector types behave as `async_work_group_copy` and `async_work_group_strided_copy` respectively for 4-component vector types.
+
+
+:spec-name: CLan
+:spec-page: 100
+
+
+[[seealso]]
+== Also see
+
+<<asyncCopyFunctions.adoc#, Async Copy and Prefetch Functions>>
+
+include::_footer.adoc[]

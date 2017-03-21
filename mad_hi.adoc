@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[mad_hi]]
+= mad_hi
+
+Returns <<mul_hi.adoc#, `mul_hi`>>(`a`, `b`) + `c`.
+
+[source,c]
+----
+gentype mad_hi(gentype a,
+               gentype b,
+               gentype c)
+----
+
+
+[[description]]
+== Description
+
+`mad_hi` returns <<mul_hi.adoc#, `mul_hi`>>(`a`, `b`) + `c`.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

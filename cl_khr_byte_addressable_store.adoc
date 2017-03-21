@@ -1,0 +1,23 @@
+include::_header.adoc[]
+
+
+[[cl_khr_byte_addressable_store]]
+= cl_khr_byte_addressable_store
+
+----
+#pragma OPENCL EXTENSION cl_khr_byte_addressable_store : enable
+----
+
+
+[[description]]
+== Description
+
+
+:spec-name: Core
+:spec-page: 78
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

@@ -1,0 +1,46 @@
+include::_header.adoc[]
+
+
+[[cl_khr_egl_event]]
+= cl_khr_egl_event
+
+Create CL event objects linked to EGL fence sync objects.
+
+----
+#pragma OPENCL EXTENSION cl_khr_egl_event : enable
+----
+
+
+[[description]]
+== Description
+
+This extension allows creating OpenCL event objects linked to EGL fence sync objects, potentially improving efficiency of sharing images and buffers between the two APIs.
+The companion EGL_KHR_cl_event extension provides the complementary functionality of creating an EGL sync object from an OpenCL event object.
+
+If this extension is supported by an implementation, the string `cl_khr_egl_event` will be present in the `CL_PLATFORM_EXTENSIONS` string described in table 4.1 (see <<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>) or `CL_DEVICE_EXTENSIONS` string described in table 4.3 (see <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>).
+
+If the `cl_khr_egl_event` extension is supported, then the following function is enabled:
+
+* <<clCreateEventFromEGLSyncKHR.adoc#, `clCreateEventFromEGLSyncKHR`>>
+
+The `cl_khr_egl_event` extension enables changes to the following:
+
+* <<clGetEventInfo.adoc#, `clGetEventInfo`>>
+
+* <<clWaitForEvents.adoc#, `clWaitForEvents`>>
+
+* <<clGetEventInfo.adoc#, `clGetEventInfo`>>
+
+* <<clEnqueueAcquireGLObjects.adoc#, `clEnqueueAcquireGLObjects`>>
+
+
+:spec-name: Ext
+:spec-page: 174
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<cl_khr_egl_image.adoc#, `cl_khr_egl_image`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,46 @@
+include::_header.adoc[]
+
+
+[[clFinish]]
+= clFinish
+
+Blocks until all previously queued OpenCL commands in a command-queue are issued to the associated device and have completed.
+
+[source,c]
+----
+cl_int clFinish(cl_command_queue command_queue)
+----
+
+
+[[notes]]
+== Notes
+
+Blocks until all previously queued OpenCL commands in `command_queue` are issued to the associated device and have completed.
+
+`clFinish` does not return until all previously queued commands in `command_queue` have been processed and completed.
+`clFinish` is also a synchronization point.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function call was executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_COMMAND_QUEUE` if `command_queue` is not a valid host command-queue.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 266
+
+
+[[seealso]]
+== Also see
+
+<<clFlush.adoc#, `clFlush`>>
+
+include::_footer.adoc[]

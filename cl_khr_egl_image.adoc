@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[cl_khr_egl_image]]
+= cl_khr_egl_image
+
+Create derived resources, such as OpenCL image objects, from EGLImages.
+
+----
+#pragma OPENCL EXTENSION cl_khr_egl_image : enable
+----
+
+
+[[description]]
+== Description
+
+If this extension is supported by an implementation, the string `cl_khr_egl_image` will be present in the `CL_PLATFORM_EXTENSIONS` string described in table 4.1 (see <<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>) or `CL_DEVICE_EXTENSIONS` string described in table 4.3 (see <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>).
+
+If the `cl_khr_egl_image` extension is supported, then the following functions are enabled:
+
+* <<clCreateFromEGLImageKHR.adoc#, `clCreateFromEGLImageKHR`>>
+
+* <<clEnqueueAcquireEGLObjectsKHR.adoc#, `clEnqueueAcquireEGLObjectsKHR`>>
+
+* <<clEnqueueReleaseEGLObjectsKHR.adoc#, `clEnqueueReleaseEGLObjectsKHR`>>
+
+
+:spec-name: Ext
+:spec-page: 166
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<cl_khr_egl_event.adoc#, `cl_khr_egl_event`>>
+
+include::_footer.adoc[]

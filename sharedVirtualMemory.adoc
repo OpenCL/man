@@ -1,0 +1,48 @@
+include::_header.adoc[]
+
+= Shared Virtual Memory (SVM) Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<clSVMAlloc.adoc#, `clSVMAlloc`>>
+|Allocates a shared virtual memory buffer
+
+|<<clSVMFree.adoc#, `clSVMFree`>>
+|Frees a shared virtual memory buffer
+
+|<<clEnqueueSVMFree.adoc#, `clEnqueueSVMFree`>>
+|Enqueues a command to free the shared virtual memory allocated using <<clSVMAlloc.adoc#, `clSVMAlloc`>> or a shared system memory pointer
+
+|<<clEnqueueSVMMemcpy.adoc#, `clEnqueueSVMMemcpy`>>
+|Enqueues a command to do a memcpy operation
+
+|<<clEnqueueSVMMemFill.adoc#, `clEnqueueSVMMemFill`>>
+|Enqueues a command to fill a region in memory with a pattern of a given pattern size
+
+|<<clEnqueueSVMMap.adoc#, `clEnqueueSVMMap`>>
+|Enqueues a command that will allow the host to update a region of a SVM buffer
+
+|<<clEnqueueSVMUnmap.adoc#, `clEnqueueSVMUnmap`>>
+|Enqueues a command to indicate that the host has completed updating a specified region
+
+|===
+
+
+[[description]]
+== Description
+
+Shared Virtual Memory (SVM) (Glossary): An address space exposed to both the host and the devices within a context.
+SVM causes addresses to be meaningful between the host and all of the devices within a context and therefore supports the use of pointer based data structures in OpenCL kernels.
+It logically extends a portion of the global memory into the host address space therefore giving work-items access to the host address space.
+There are three types of SVM in OpenCL Coarse-Grained buffer SVM: Sharing occurs at the granularity of regions of OpenCL buffer memory objects.
+Fine-Grained buffer SVM: Sharing occurs at the granularity of individual loads/stores into bytes within OpenCL buffer memory objects.
+Fine-Grained system SVM: Sharing occurs at the granularity of individual loads/stores into bytes occurring anywhere within the host memory.
+
+
+:spec-name: Core
+:spec-page: 174
+
+include::_footer.adoc[]

@@ -1,0 +1,128 @@
+include::_header.adoc[]
+
+
+[[AttributesofVariables]]
+= Attributes of Variables
+
+Attributes of Variables.
+
+----
+    __attribute__ ((aligned))
+    __attribute__ ((aligned (n)))
+    __attribute__ ((packed))
+    __attribute__ ((endian(host)))
+    __attribute__ ((endian(device)))
+----
+
+
+[[description]]
+== Description
+
+The keyword `__attribute__` allows you to specify special attributes of variables or structure fields.
+This keyword is followed by an attribute specification inside double parentheses.
+The `aligned`, `packed`, and `endian` attribute qualifiers are defined below.
+
+
+[[aligned]]
+== aligned (`alignment`)
+
+This attribute specifies a minimum alignment for the variable or structure field, measured in bytes.
+For example, the declaration:
+
+----
+                            int x __attribute__ ((aligned (16))) = 0;
+----
+
+causes the compiler to allocate the global variable `x` on a 16-byte boundary.
+The alignment value specified must be a power of two.
+
+You can also specify the alignment of structure fields.
+For example, to create double-word aligned `int` pair, you could write:
+
+----
+                            struct foo { int x[2] __attribute__ ((aligned (8))); };
+----
+
+This is an alternative to creating a union with a `double` member that forces the union to be double-word aligned.
+
+As in the preceding examples, you can explicitly specify the alignment (in bytes) that you wish the compiler to use for a given variable or structure field.
+Alternatively, you can leave out the alignment factor and just ask the compiler to align a variable or field to the maximum useful alignment for the target machine you are compiling for.
+For example, you could write:
+
+----
+                            short array[3] __attribute__ ((aligned));
+----
+
+Whenever you leave out the alignment factor in an `aligned` attribute specification, the OpenCL compiler automatically sets the alignment for the declared variable or field to the largest alignment which is ever used for any data type on the target device you are compiling for.
+
+When used on a `struct`, or `struct` member, the aligned `attribute` can only increase the alignment; in order to decrease it, the `packed` attribute must be specified as well.
+When used as part of a `typedef`, the `aligned` attribute can both increase and decrease alignment, and specifying the `packed` attribute will generate a warning.
+
+Note that the effectiveness of aligned attributes may be limited by inherent limitations of the OpenCL device and compiler.
+For some devices, the OpenCL compiler may only be able to arrange for variables to be aligned up to a certain maximum alignment.
+If the OpenCL compiler is only able to align variables up to a maximum of 8 byte alignment, then specifying `aligned(16)` in an `__attribute__` will still only provide you with 8 byte alignment.
+See your platform-specific documentation for further information.
+
+
+[[packed]]
+== packed
+
+The `packed` attribute specifies that a variable or structure field should have the smallest possible alignment -- one byte for a variable, unless you specify a larger value with the `aligned` attribute.
+
+Here is a structure in which the field `x` is packed, so that it immediately follows `a`:
+
+----
+                            struct foo
+    {
+        char a;
+        int x[2] __attribute__ ((packed));
+    };
+----
+
+An attribute list placed at the beginning of a user-defined type applies to the variable of that type and not the type, while attributes following the type body apply to the type.
+
+For example:
+
+----
+                            /* a has alignment of 128 */
+    __attribute__((aligned(128))) struct A {int i;} a;
+
+    /* b has alignment of 16 */
+    __attribute__((aligned(16))) struct B {double d;}
+                      __attribute__((aligned(32))) b ;
+
+    struct A a1; /* a1 has alignment of 4 */
+
+    struct B b1; /* b1 has alignment of 32 */
+----
+
+
+[[endian]]
+== endian (`endiantype`)
+
+The `endian` attribute determines the byte ordering of a variable.
+`endiantype` can be set to `host` indicating the variable uses the endianness of the host processor or can be set to `device` indicating the variable uses the endianness of the device on which the kernel will be executed.
+The default is `device`.
+For example:
+
+----
+                            global float4 *p   __attribute__ ((endian(host)));
+----
+
+specifies that data stored in memory pointed to by `p` will be in the host endian format.
+
+The endian attribute can only be applied to pointer types that are in the `global` or `constant` address space.
+The `endian` attribute cannot be used for variables that are not a pointer type.
+The `endian` attribute value for both pointers must be the same when one pointer is assigned to another.
+
+
+:spec-name: CLan
+:spec-page: 59
+
+
+[[seealso]]
+== Also see
+
+<<attribute.adoc#, `__attribute__`>>, <<attributes-blocksAndControlFlow.adoc#, Blocks and Control-Flow Statement Attributes>>, <<attributes-types.adoc#, Types Attributes>>, <<attributes-loopUnroll.adoc#, Loop Unroll Attributes>>, <<qualifiers.adoc#, Qualifiers>>
+
+include::_footer.adoc[]

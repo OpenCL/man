@@ -1,0 +1,33 @@
+include::_header.adoc[]
+
+
+[[commit_read_pipe]]
+= commit_read_pipe
+
+Indicates that all reads to `num_packets` associated with a reservation are completed.
+
+[source,c]
+----
+void commit_read_pipe(read_only pipe gentype p,
+                      reserve_id_t reserve_id)
+----
+
+
+[[description]]
+== Description
+
+Indicates that all reads to `num_packets` associated with reservation `reserve_id` are completed.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 159
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

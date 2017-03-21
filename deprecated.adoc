@@ -1,0 +1,63 @@
+include::_header.adoc[]
+
+= Deprecated OpenCL Functions
+
+Deprecation (glossary definition): A feature that is deprecated in a given version of the specification will be excluded from the text of that revision of the specification.
+All listed features detailed in earlier versions of the specification that have been deprecated are required to be supported by the current version of the specification as described in the version of the specification in which the feature was last defined.
+These features may be removed entirely in a future version.
+
+
+[[DepIn21]]
+== OpenCL Features Deprecated in OpenCL 2.1
+
+* OpenCL 2.0 KHR extension <<cl_khr_spir.adoc#, `cl_khr_spir`>>
+
+
+[[DepIn20]]
+== OpenCL Features Deprecated in OpenCL 2.0
+
+* clCreateCommandQueue
+
+* clCreateSampler
+
+* clEnqueueTask
+
+* The `CL_DEVICE_HOST_UNIFIED_MEMORY` `param_name` argument to <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>.
+
+* The `CL_DEVICE_QUEUE_PROPERTIES` `param_name` argument to <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>> (replaced by `CL_DEVICE_QUEUE_ON_HOST_PROPERTIES`).
+
+* The `CL_IMAGE_BUFFER` `param_name` argument to <<clGetImageInfo.adoc#, `clGetImageInfo`>>.
+
+* The explicit memory fence functions defined in section 6.12.9 of the OpenCL 1.2 specification.
+
+* The OpenCL 1.2 atomic built-in functions for 32-bit integer and floating-point data types defined in section 6.12.11 of the OpenCL 1.2 specification.
+
+
+[[DepIn12]]
+== OpenCL 1.1 Features Deprecated in OpenCL 1.2
+
+* clEnqueueMarker, clEnqueueBarrier, clEnqueueWaitForEvents
+
+* clCreateImage2D, clCreateImage3D
+
+* clUnloadCompiler, clGetExtensionFunctionAddress
+
+* clCreateFromGLTexture2D, clCreateFromGLTexture3D
+
+* `CL_DEVICE_MIN_DATA_TYPE_ALIGN_SIZE` value for the `param_name` argument to <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>
+
+
+[[DepIn11]]
+== OpenCL 1.0 Features Deprecated in OpenCL 1.1
+
+* clSetCommandQueueProperty
+
+* `__ROUNDING_MODE__` macro
+
+* `-cl-strict-aliasing` option for the `options` argument to <<clBuildProgram.adoc#, `clBuildProgram`>>
+
+
+:spec-name: Core
+:spec-page: 291
+
+include::_footer.adoc[]

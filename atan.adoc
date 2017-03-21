@@ -1,0 +1,54 @@
+include::_header.adoc[]
+
+
+[[atan]]
+= atan, atan2, atanh, atanpi, atan2pi
+
+Tangent functions.
+
+[source,c]
+----
+gentype atan(gentype y_over_x)
+
+gentype atan2(gentype y,
+              gentype x)
+
+gentype atanh(gentype)
+
+gentype atanpi(gentype x)
+
+gentype atan2pi(gentype y,
+                gentype x)
+----
+
+
+[[description]]
+== Description
+
+`atan` is the arc tangent function.
+
+`atan2` is the arc tangent of `y` / `x`.
+
+`atanh` is the hyperbolic arc tangent function.
+
+`atanpi` computes `atan` (`x`) / π.
+
+`atan2pi` computes `atan2` (`y`, `x`) / π.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

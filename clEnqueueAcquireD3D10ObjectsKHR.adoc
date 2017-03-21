@@ -1,0 +1,95 @@
+include::_header.adoc[]
+
+
+[[clEnqueueAcquireD3D10ObjectsKHR]]
+= clEnqueueAcquireD3D10ObjectsKHR
+
+Acquire OpenCL memory objects that have been created from Direct3D 10 resources
+
+[source,c]
+----
+cl_int clEnqueueAcquireD3D10ObjectsKHR(cl_command_queue command_queue,
+                                       cl_uint num_objects,
+                                       const cl_mem *mem_objects,
+                                       cl_uint num_events_in_wait_list,
+                                       const cl_event *event_wait_list,
+                                       cl_event *event)
+----
+
+
+[[parameters]]
+== Parameters
+
+`command_queue`::
+
+A valid command-queue.
+
+`num_objects`::
+
+The number of memory objects to be acquired in `mem_objects`.
+
+`mem_objects`::
+
+A pointer to a list of OpenCL memory objects that were created from Direct3D 10 resources.
+
+`num_events_in_wait_list`, `event_wait_list`::
+
+Specify events that need to complete before this particular command can be executed.
+If `event_wait_list` is NULL, then this particular command does not wait on any event to complete.
+If `event_wait_list` is NULL, `num_events_in_wait_list` must be 0.
+If `event_wait_list` is not NULL, the list of events pointed to by `event_wait_list` must be valid and `num_events_in_wait_list` must be greater than 0.
+The events specified in `event_wait_list` act as synchronization points.
+
+`event`::
+
+Returns n event object that identifies this particular command and can be used to query or queue a wait for this particular command to complete.
+`event` can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the `event_wait_list` and the `event` arguments are not NULL, the `event` argument should not refer to an element of the `event_wait_list` array.
+
+
+[[notes]]
+== Notes
+
+The Direct3D 10 objects are acquired by the OpenCL context associated with `command-queue` and can therefore be used by all command-queues associated with the OpenCL context.
+
+OpenCL memory objects created from Direct3D 10 resources must be acquired before they can be used by any OpenCL commands queued to a command-queue.
+If an OpenCL memory object created from a Direct3D 10 resource is used while it is not currently acquired by OpenCL, the call attempting to use that OpenCL memory object will return `CL_D3D10_RESOURCE_NOT_ACQUIRED_KHR`.
+
+If `CL_CONTEXT_INTEROP_USER_SYNC` is not specified as `CL_TRUE` during context creation, `clEnqueueAcquireD3D10ObjectsKHR` provides the synchronization guarantee that any Direct3D 10 calls involving the interop device(s) used in the OpenCL context made before `clEnqueueAcquireD3D10ObjectsKHR` is called will complete executing before `event` reports completion and before the execution of any subsequent OpenCL work issued in `command_queue` begins.
+If the context was created with properties specifying `CL_CONTEXT_INTEROP_USER_SYNC` as `CL_TRUE`, the user is responsible for guaranteeing that any Direct3D 10 calls involving the interop device(s) used in the OpenCL context made before `clEnqueueAcquireD3D10ObjectsKHR` is called have completed before calling `clEnqueueAcquireD3D10ObjectsKHR`.
+
+include::sharingD3D10Inc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+If `num_objects` is 0 and `mem_objects` is NULL then the function does nothing and returns `CL_SUCCESS`.
+Otherwise it returns one of the following errors:
+
+* `CL_INVALID_VALUE` if `num_objects` is zero and `mem_objects` is not a NULL value or if `num_objects` > 0 and `mem_objects` is NULL.
+
+* `CL_INVALID_MEM_OBJECT` if memory objects in `mem_objects` are not valid OpenCL memory objects or if memory objects in `mem_objects` have not been created from Direct3D 10 resources.
+
+* `CL_INVALID_COMMAND_QUEUE` if `command_queue` is not a valid command-queue.
+
+* `CL_INVALID_CONTEXT` if context associated with `command_queue` was not created from an Direct3D 10 context.
+
+* `CL_D3D10_RESOURCE_ALREADY_ACQUIRED_KHR` when any of `mem_objects` are currently acquired using `clEnqueueAcquireD3D10ObjectsKHR` but have not been released using <<clEnqueueReleaseD3D10ObjectsKHR.adoc#, `clEnqueueReleaseD3D10ObjectsKHR`>>.
+
+* `CL_INVALID_EVENT_WAIT_LIST` if `event_wait_list` is NULL and `num_event_in_wait_list` > 0, or `event_wait_list` is not NULL and `num_event_in_wait_list` is 0, or if event objects in `event_wait_list` are not valid events.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 75
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_d3d10_sharing.adoc#, `cl_khr_d3d10_sharing`>>
+
+include::_footer.adoc[]

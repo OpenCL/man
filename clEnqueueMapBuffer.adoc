@@ -1,0 +1,158 @@
+include::_header.adoc[]
+
+
+[[clEnqueueMapBuffer]]
+= clEnqueueMapBuffer
+
+Enqueues a command to map a region of the buffer object given by `buffer` into the host address space and returns a pointer to this mapped region.
+
+[source,c]
+----
+void * clEnqueueMapBuffer(cl_command_queue command_queue,
+                          cl_mem buffer,
+                          cl_bool blocking_map,
+                          cl_map_flags map_flags,
+                          size_t offset,
+                          size_t size,
+                          cl_uint num_events_in_wait_list,
+                          const cl_event *event_wait_list,
+                          cl_event *event,
+                          cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`command_queue`::
+
+Must be a valid host command-queue.
+
+`blocking_map`::
+
++
+--
+
+Indicates if the map operation is `blocking` or `non-blocking`.
+
+If `blocking_map` is `CL_TRUE`, `clEnqueueMapBuffer` does not return until the specified region in `buffer` is mapped into the host address space and the application can access the contents of the mapped region using the pointer returned by `clEnqueueMapBuffer`.
+
+If `blocking_map` is `CL_FALSE` i.e.
+map operation is non-blocking, the pointer to the mapped region returned by `clEnqueueMapBuffer` cannot be used until the map command has completed.
+The `event` argument returns an event object which can be used to query the execution status of the map command.
+When the map command is completed, the application can access the contents of the mapped region using the pointer returned by `clEnqueueMapBuffer`.
+
+--
+
+`map_flags`::
+
++
+--
+
+A bit-bield with the following supported values.
+
+include::map_flags_Inc.adoc[]
+
+--
+
+`buffer`::
+
+A valid buffer object.
+The OpenCL context associated with `command_queue` and `buffer` must be the same.
+
+`offset,` `size`::
+
+The offset in bytes and the size of the region in the buffer object that is being mapped.
+
+`event_wait_list,` `num_events_in_wait_list`::
+
+Specify events that need to complete before this particular command can be executed.
+If `event_wait_list` is NULL, then this particular command does not wait on any event to complete.
+If `event_wait_list` is NULL, `num_events_in_wait_list` must be 0.
+If `event_wait_list` is not NULL, the list of events pointed to by `event_wait_list` must be valid and `num_events_in_wait_list` must be greater than 0.
+The events specified in `event_wait_list` act as synchronization points.
+The context associated with events in `event_wait_list` and `command_queue` must be the same.
+The memory associated with `event_wait_list` can be reused or freed after the function returns.
+
+`event`::
+
+Returns an event object that identifies this particular copy command and can be used to query or queue a wait for this particular command to complete.
+`event` can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.
+If the `event_wait_list` and the `event` arguments are not NULL, the `event` argument should not refer to an element of the `event_wait_list` array.
+
+`errcode_ret`::
+
+Returns an appropriate error code.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[notes]]
+== Notes
+
+The returned pointer maps a region starting at `offset` and is at least `size` bytes in size.
+The result of a memory access outside this region is undefined.
+
+If the buffer object is created with `CL_MEM_USE_HOST_PTR` set in `mem_flags`, the following will be true:
+
+* The `host_ptr` specified in <<clCreateBuffer.adoc#, `clCreateBuffer`>> is guaranteed to contain the latest bits in the region being mapped when the `clEnqueueMapBuffer` command has completed.
+
+* The pointer value returned by `clEnqueueMapBuffer` will be derived from the `host_ptr` specified when the buffer object is created.
+
+Mapped buffer objects are unmapped using <<clEnqueueUnmapMemObject.adoc#, `clEnqueueUnmapMemObject`>>.
+
+`clEnqueueMapBuffer` and <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> increment the mapped count of the memory object.
+The initial mapped count value of a memory object is zero.
+Multiple calls to `clEnqueueMapBuffer` or <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> on the same memory object will increment this mapped count by appropriate number of calls.
+<<clEnqueueUnmapMemObject.adoc#, `clEnqueueUnmapMemObject`>> decrements the mapped count of the memory object.
+
+`clEnqueueMapBuffer` and <<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>> act as synchronization points for a region of the buffer object being mapped.
+
+include::accessMappedInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clEnqueueMapBuffer` will return a pointer to the mapped region.
+The `errcode_ret` is set to `CL_SUCCESS`.
+
+A NULL pointer is returned otherwise with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_COMMAND_QUEUE` if `command_queue` is not a valid host command-queue.
+
+* `CL_INVALID_CONTEXT` if the context associated with `command_queue` and `buffer` are not the same or if the context associated with `command_queue` and events in `event_wait_list` are not the same.
+
+* `CL_INVALID_MEM_OBJECT` if `buffer` is not a valid image object.
+
+* `CL_INVALID_VALUE` if region being mapped given by (`offset`, `size`) is out of bounds or if `size` is 0 or values specified in `map_flags` are not valid.
+
+* `CL_INVALID_EVENT_WAIT_LIST` if `event_wait_list` is NULL and `num_events_in_wait_list` > 0, or `event_wait_list` is not NULL and `num_events_in_wait_list` is 0, or if event objects in `event_wait_list` are not valid events.
+
+* `CL_MISALIGNED_SUB_BUFFER_OFFSET` if `buffer` is a sub-buffer object and `offset` specified when the sub-buffer object is created is not aligned to `CL_DEVICE_MEM_BASE_ADDR_ALIGN` value for device associated with `queue`.
+
+* `CL_MAP_FAILURE` if there is a failure to map the requested region into the host address space.
+This error cannot occur for buffer objects created with `CL_MEM_USE_HOST_PTR` or `CL_MEM_ALLOC_HOST_PTR`.
+
+* `CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST` if the map operation is blocking and the execution status of any of the events in `event_wait_list` is a negative integer value.
+
+* `CL_MEM_OBJECT_ALLOCATION_FAILURE` if there is a failure to allocate memory for data store associated with `buffer`.
+
+* `CL_INVALID_OPERATION` if `buffer` has been created with `CL_MEM_HOST_WRITE_ONLY` or `CL_MEM_HOST_NO_ACCESS` and `CL_MAP_READ` is set in `map_flags` or if `buffer` has been created with `CL_MEM_HOST_READ_ONL` or `CL_MEM_HOST_NO_ACCESS` and `CL_MAP_WRITE` or `CL_MAP_WRITE_INVALIDATE_REGION` is set in `map_flags`.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if mapping would lead to overlapping regions being mapped for writing.
+
+* `CL_INVALID_OPERATION` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 124
+
+
+[[seealso]]
+== Also see
+
+<<clEnqueueMapImage.adoc#, `clEnqueueMapImage`>>, <<clEnqueueUnmapMemObject.adoc#, `clEnqueueUnmapMemObject`>>, <<clEnqueueSVMMap.adoc#, `clEnqueueSVMMap`>>
+
+include::_footer.adoc[]

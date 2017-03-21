@@ -1,0 +1,1 @@
+When extended by the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension, the generic type `gentypen` is extended to include `half`, `half2`, `half3`, `half4`, `half8`, and `half16`.

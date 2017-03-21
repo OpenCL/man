@@ -1,0 +1,58 @@
+include::_header.adoc[]
+
+
+[[AbstractDataTypes]]
+= Abstract Data Types
+
+Abstract Built-in Data Types
+
+
+[[description]]
+== Description
+
+The following table describes abstract data types supported by OpenCL:
+
+[cols="1a,1a", options="header"]
+|===
+
+|Description
+|API Type
+
+|The ID for a platform.
+|cl_platform_id
+
+|The ID for a device.
+|cl_device_id
+
+|A context.
+|cl_context
+
+|A command queue.
+|cl_command_queue
+
+|A memory object.
+|cl_mem
+
+|A program.
+|cl_program
+
+|A kernel.
+|cl_kernel
+
+|An event.
+Also see <<otherDataTypes.adoc#, `event_t`>>.
+|cl_event
+
+|A sampler.
+Also see <<sampler_t.adoc#, `sampler_t`>>.
+|cl_sampler
+
+|===
+
+
+[[seealso]]
+== Also see
+
+<<dataTypes.adoc#, Data Types>>, <<macroLimits.adoc#, Macros and Limits>>, <<scalarDataTypes.adoc#, Scalar Data Types>>, <<vectorDataTypes.adoc#, Vector Data Types>>, <<otherDataTypes.adoc#, Other Data Types>>, <<reservedDataTypes.adoc#, Reserved Data Types>>
+
+include::_footer.adoc[]

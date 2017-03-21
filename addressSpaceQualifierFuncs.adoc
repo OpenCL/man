@@ -1,0 +1,55 @@
+include::_header.adoc[]
+
+
+[[addressSpaceQualifierFuncs]]
+= Address Space Qualifier Functions
+
+Address space qualifier functions.
+
+[source,c]
+----
+global gentype * to_global(gentype *ptr)
+
+const global gentype * to_global(const gentype *ptr)
+
+local gentype * to_local(gentype *ptr)
+
+const local gentype * to_local(const gentype *ptr)
+
+private gentype * to_private(gentype *ptr)
+
+const private gentype * to_private(const gentype *ptr)
+
+cl_mem_fence_flags get_fence(gentype *ptr)
+
+cl_mem_fence_flags get_fence(const gentype *ptr)
+----
+
+
+[[description]]
+== Description
+
+`to_global` Returns a pointer that points to a region in the global address space if `to_global` can cast `ptr` to the global address space.
+Otherwise it returns NULL.
+
+`to_local` Returns a pointer that points to a region in the local address space if `to_local` can cast `ptr` to the local address space.
+Otherwise it returns NULL.
+
+`to_private` Returns a pointer that points to a region in the private address space if `to_private` can cast `ptr` to the private address space.
+Otherwise it returns NULL.
+
+`get_fence` returns a valid memory fence value for `ptr`.
+
+The generic type `gentype` is used to indicate any of the built-in data types supported by OpenCL C or a user defined type.
+
+
+:spec-name: CLan
+:spec-page: 99
+
+
+[[seealso]]
+== Also see
+
+<<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]

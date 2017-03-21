@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[isnormal]]
+= isnormal
+
+Test for a normal value.
+
+[source,c]
+----
+int isnormal(float)
+
+int n isnormal(float n)
+
+int isnormal(double)
+
+long n isnormal(double n)
+----
+
+----
+int isnormal (half)      // if half extension enabled
+
+shortn isnormal (halfn)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Test for a normal value.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

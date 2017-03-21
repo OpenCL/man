@@ -1,0 +1,47 @@
+include::_header.adoc[]
+
+
+[[dot]]
+= dot
+
+Dot product.
+
+[source,c]
+----
+float dot(float n p0,
+          float n p1)
+
+double dot(double n p0,
+           double n p1)
+----
+
+----
+half dot (gentype p0,
+        gentype p1)     // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Computes the dot product.
+
+
+[[notes]]
+== Notes
+
+include::geometricFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4}` as arguments.
+
+
+:spec-name: CLan
+:spec-page: 88
+
+
+[[seealso]]
+== Also see
+
+<<geometricFunctions.adoc#, Geometric Functions>>
+
+include::_footer.adoc[]

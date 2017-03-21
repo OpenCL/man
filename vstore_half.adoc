@@ -1,0 +1,82 @@
+include::_header.adoc[]
+
+
+[[vstore_half]]
+= vstore_half
+
+Convert float to half and write to a pointer to memory.
+
+[source,c]
+----
+void vstore_half(float data,
+                 size_t offset,
+                 half *p)
+
+void vstore_half_ rte(float data,
+                      size_t offset,
+                      half *p)
+
+void vstore_half_ rtz(float data,
+                      size_t offset,
+                      half *p)
+
+void vstore_half_ rtp(float data,
+                      size_t offset,
+                      half *p)
+
+void vstore_half_ rtn(float data,
+                      size_t offset,
+                      half *p)
+----
+
+[source,c]
+----
+void vstore_half(double data,
+                 size_t offset,
+                 half *p)
+
+void vstore_half_ rte(double data,
+                      size_t offset,
+                      half *p)
+
+void vstore_half_ rtz(double data,
+                      size_t offset,
+                      half *p)
+
+void vstore_half_ rtp(double data,
+                      size_t offset,
+                      half *p)
+
+void vstore_half_ rtn(double data,
+                      size_t offset,
+                      half *p)
+----
+
+
+[[description]]
+== Description
+
+The `float` (or `double`) value given by `data` is first converted to a half value using the appropriate rounding mode.
+The half value is then written to address computed as (`p` + `offset`).
+The address computed as (`p` + `offset`) must be 16-bit aligned.
+
+`vstore_half` uses the current rounding mode.
+The default current rounding mode is round to nearest even.
+
+
+[[notes]]
+== Notes
+
+include::vectorFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

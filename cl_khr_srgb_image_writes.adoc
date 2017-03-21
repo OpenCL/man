@@ -1,0 +1,35 @@
+include::_header.adoc[]
+
+
+[[cl_khr_srgb_image_writes]]
+= cl_khr_srgb_image_writes
+
+Extension adds support writing to sRGB images from a kernel.
+
+----
+#pragma OPENCL EXTENSION cl_khr_srgb_image_writes : enable
+----
+
+
+[[description]]
+== Description
+
+This extensions adds changes to the following:
+
+----
+                            imageFunctions
+
+                            clGetSupportedImageFormats
+----
+
+
+:spec-name: CLan
+:spec-page: 126
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>, <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>>,
+
+include::_footer.adoc[]

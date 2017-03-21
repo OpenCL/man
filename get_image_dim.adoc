@@ -1,0 +1,52 @@
+include::_header.adoc[]
+
+
+[[get_image_dim]]
+= get_image_dim
+
+Return the image dimensions.
+
+[source,c]
+----
+int2 get_image_dim(aQual image2d_t image)
+
+int2 get_image_dim(aQual image2d_array_t image)
+
+int4 get_image_dim(aQual image3d_t image)
+
+int2 get_image_dim(aQual image2d_depth_t image)
+
+int2 get_image_dim(aQual image2d_array_depth_t image)
+
+int2 get_image_dim(image2d_msaa_t image)
+
+int2 get_image_dim(image2d_array_msaa_t image)
+
+int2 get_image_dim(image2d_msaa_depth_t image)
+
+int2 get_image_dim(image2d_array_msaa_depth_t image)
+----
+
+
+[[description]]
+== Description
+
+include::imageQueryFunctionsInc.adoc[]
+
+`get_image_dim` with <<otherDataTypes.adoc#, `image2d_t`>>, <<otherDataTypes.adoc#, `image2d_array_t`>>, <<otherDataTypes.adoc#, `image2d_depth_t`>>, and <<otherDataTypes.adoc#, `image2d_array_depth_t`>> returns the 2D image width and height as an `int2` type.
+The width is returned in the _x_ component, and the height in the _y_ component.
+
+`get_image_dim` with <<otherDataTypes.adoc#, `image3d_t`>> returns the 3D image width, height, and depth as an `int4` type.
+The width is returned in the _x_ component, height in the _y_ component, depth in the _z_ component and the _w_ component is 0.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>
+
+include::_footer.adoc[]

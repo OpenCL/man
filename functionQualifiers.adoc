@@ -1,0 +1,102 @@
+include::_header.adoc[]
+
+
+[[FunctionQualifiers]]
+= Function Qualifiers
+
+Qualifiers for kernel functions.
+
+----
+__kernel
+kernel
+
+__attribute__((vec_type_hint(<type>)))
+__attribute__((work_group_size_hint(X, Y, Z)))
+__attribute__((reqd_work_group_size(X, Y, Z)))
+__attribute__((nosvm))
+----
+
+
+[[description]]
+== Description
+
+The `__kernel` (or `kernel`) qualifier declares a function to be a kernel that can be executed by an application on an OpenCL device(s).
+The following rules apply to functions that are declared with this qualifier:
+
+* It can be executed on the device only
+
+* It can be called by the host
+
+* It is just a regular function call if a `__kernel` function is called by another kernel function.
+
+Kernel functions with variables declared inside the function with the <<local.adoc#, `__local`>> or <<local.adoc#, `local`>> qualifier can be called by the host using appropriate APIs such as <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>.
+
+The `__kernel` and `kernel` names are reserved for use as functions qualifiers and shall not be used otherwise.
+
+.Optional Attribute Qualifiers
+
+The `__kernel` qualifier can be used with the keyword <<attribute.adoc#, `__attribute__`>> to declare additional information about the kernel function as described below.
+
+The optional `__attribute__((vec_type_hint(<type>)))` is a hint to the compiler and is intended to be a representation of the computational _width_ of the `__kernel`, and should serve as the basis for calculating processor bandwidth utilization when the compiler is looking to autovectorize the code.
+In the `__attribute__((vec_type_hint(<type>)))` qualifier <type> is one of the built-in vector types or the constituent scalar element types.
+If `vec_type_hint (<type>)` is not specified, the kernel is assumed to have the `__attribute__((vec_type_hint(int)))` qualifier.
+
+Implicit in autovectorization is the assumption that any libraries called from the `__kernel` must be recompilable at run time to handle cases where the compiler decides to merge or separate workitems.
+This probably means that such libraries can never be hard coded binaries or that hard coded binaries must be accompanied either by source or some retargetable intermediate representation.
+This may be a code security question for some.
+
+For example, where the developer specified a width of `float4`, the compiler should assume that the computation usually uses up 4 lanes of a float vector, and would decide to merge work-items or possibly even separate one work-item into many threads to better match the hardware capabilities.
+A conforming implementation is not required to autovectorize code, but shall support the hint.
+A compiler may autovectorize, even if no hint is provided.
+If an implementation merges `N` work-items into one thread, it is responsible for correctly handling cases where the number of global or local work-items in any dimension modulo `N` is not zero.
+
+If for example, a `__kernel` function is declared with `__attribute__(( vec_type_hint (float4)))` (meaning that most operations in the `__kernel` are explicitly vectorized using `float4`) and the kernel is running using Intel® Advanced Vector Instructions (Intel® AVX) which implements a 8-float-wide vector unit, the autovectorizer might choose to merge two work-items to one thread, running a second work-item in the high half of the 256-bit AVX register.
+
+As another example, a Power4 machine has two scalar double precision floating-point units with an 6-cycle deep pipe.
+An autovectorizer for the Power4 machine might choose to interleave six kernels declared with the `__attribute__(( vec_type_hint (double2)))` qualifier into one hardware thread, to ensure that there is always 12-way parallelism available to saturate the FPUs.
+It might also choose to merge 4 or 8 work-items (or some other number) if it concludes that these are better choices, due to resource utilization concerns or some preference for divisibility by 2.
+
+The optional `__attribute__((work_group_size_hint(X, Y, Z)))` is a hint to the compiler and is intended to specify the work-group size that may be used i.e.
+value most likely to be specified by the `local_work_size` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>.
+For example the `__attribute__((work_group_size_hint(1, 1, 1)))` is a hint to the compiler that the kernel will most likely be executed with a work-group size of 1.
+
+The optional `__attribute__((reqd_work_group_size(X, Y, Z)))` is the work-group size that must be used as the `local_work_size` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>.
+This allows the compiler to optimize the generated code appropriately for this kernel.
+
+If `Z` is one, the `work_dim` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>> can be 2 or 3.
+If `Y` and `Z` are one, the `work_dim` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>> can be 1, 2 or 3.
+
+The optional `__attribute__((nosvm))` qualifier can be used with a pointer variable to inform the compiler that the pointer does not refer to a shared virtual memory region.
+
+
+[[example1]]
+== Example
+
+----
+// autovectorize assuming float4 as the
+// basic computation width
+__kernel __attribute__((vec_type_hint(float4)))
+void foo( __global float4 *p ) { .... }
+
+// autovectorize assuming double as the
+// basic computation width
+__kernel __attribute__((vec_type_hint(double)))
+void foo( __global float4 *p ){ .... }
+
+// autovectorize assuming int (default)
+// as the basic computation width
+__kernel
+void foo( __global float4 *p ){ .... }
+----
+
+
+:spec-name: CLan
+:spec-page: 47
+
+
+[[seealso]]
+== Also see
+
+<<attribute.adoc#, `__attribute__`>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>, <<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]

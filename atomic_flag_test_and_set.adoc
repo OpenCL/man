@@ -1,0 +1,52 @@
+include::_header.adoc[]
+
+
+[[atomic_flag_test_and_set]]
+= atomic_flag_test_and_set functions
+
+Atomically sets the value pointed to by `object` to true.
+
+[source,c]
+----
+bool atomic_flag_test_and_set(volatile atomic_flag *object)
+
+bool atomic_flag_test_and_set_explicit(volatile atomic_flag *object,
+                                       memory_order order)
+
+bool atomic_flag_test_and_set_explicit(volatile atomic_flag *object,
+                                       memory_order order,
+                                       memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`order`::
+
+`scope`::
+
+
+[[description]]
+== Description
+
+Atomically sets the value pointed to by `object` to true.
+Memory is affected according to the value of `order`.
+These operations are atomic read-modify-write operations (as defined by section 5.1.2.4 of the C11 specification).
+Returns atomically, the value of the object immediately before the effects.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 111
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

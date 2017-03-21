@@ -1,0 +1,60 @@
+include::_header.adoc[]
+
+
+[[isless]]
+= isless
+
+Compare of `x` < `y`.
+
+[source,c]
+----
+int isless(float x,
+           float y)
+
+int n isless(float n x,
+             float n y)
+
+int isless(double x,
+           double y)
+
+long n isless(double n x,
+              double n y)
+----
+
+----
+int isless
+     (half x,
+       half y)   // if half extension enabled
+
+shortn isless
+     (halfn x,
+       halfn y)   // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns the component-wise compare of `x` < `y`.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+include::relationalFunctionsInc3.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

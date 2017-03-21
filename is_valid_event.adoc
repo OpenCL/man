@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[is_valid_event]]
+= is_valid_event
+
+Returns true if event is a valid event.
+
+[source,c]
+----
+bool is_valid_event(clk_event_t event)
+----
+
+
+[[description]]
+== Description
+
+Returns true if `event` is a valid event.
+Otherwise returns false.
+
+
+[[notes]]
+== Notes
+
+include::eventFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 171
+
+
+[[seealso]]
+== Also see
+
+<<eventFunctions.adoc#, Event Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[step]]
+= step
+
+Returns 0.0 if `x` < `edge`, else 1.0.
+
+[source,c]
+----
+gentype step(gentype edge,
+             gentype x)
+
+gentypef step(float edge,
+              gentypef x)
+
+gentyped step(double edge,
+              gentyped x)
+----
+
+----
+gentype step (half edge,
+              gentype x)     // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns 0.0 if `x` < `edge`, else 1.0.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>
+
+include::_footer.adoc[]

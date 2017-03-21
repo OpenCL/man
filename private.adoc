@@ -1,0 +1,42 @@
+include::_header.adoc[]
+
+
+[[__private]]
+= __private
+
+Address Space Qualifier.
+
+----
+__private
+private
+----
+
+
+[[description]]
+== Description
+
+Variables inside a kernel function not declared with an address space qualifier, all variables inside non-kernel functions, and all function arguments are in the `__private` or `private` address space.
+
+
+[[notes]]
+== Notes
+
+include::addressSpaceQualifiersInc.adoc[]
+
+
+[[example1]]
+== Example
+
+include::qualifierExampleInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 34
+
+
+[[seealso]]
+== Also see
+
+<<global.adoc#, `__global`>>, <<local.adoc#, `__local`>>, <<constant.adoc#, `__constant`>>, <<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,26 @@
+include::_header.adoc[]
+
+
+[[cl_khr_subgroups]]
+= cl_khr_subgroups
+
+----
+#pragma OPENCL EXTENSION cl_khr_subgroups : enable
+----
+
+
+[[description]]
+== Description
+
+The OpenCL 2.0 KHR extension `cl_khr_subgroups` has been deprecated.
+The feature is now core.
+
+
+:spec-name: Ext
+:spec-page: 133
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

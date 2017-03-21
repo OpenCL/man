@@ -1,0 +1,37 @@
+include::_header.adoc[]
+
+
+[[fast_distance]]
+= fast_distance
+
+Vector distance.
+
+[source,c]
+----
+float fast_distance(float n p0,
+                    float n p1)
+----
+
+
+[[description]]
+== Description
+
+Returns <<fast_length.adoc#, `fast_length`>>(`p0` - `p1`).
+
+
+[[notes]]
+== Notes
+
+include::geometricFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 88
+
+
+[[seealso]]
+== Also see
+
+<<geometricFunctions.adoc#, Geometric Functions>>
+
+include::_footer.adoc[]

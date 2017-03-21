@@ -1,0 +1,103 @@
+include::_header.adoc[]
+
+
+[[atomic_compare_exchange]]
+= atomic_compare_exchange functions
+
+atomic_compare_exchange functions.
+
+[source,c]
+----
+bool atomic_compare_exchange_strong(volatile A *object,
+                                    C *expected,
+                                    C desired)
+
+bool atomic_compare_exchange_strong_explicit(volatile A *object,
+                                             C *expected,
+                                             C desired,
+                                             memory_order success,
+                                             memory_order failure)
+
+bool atomic_compare_exchange_strong_explicit(volatile A *object,
+                                             C *expected,
+                                             C desired,
+                                             memory_order success,
+                                             memory_order failure,
+                                             memory_scope scope)
+
+bool atomic_compare_exchange_weak(volatile A *object,
+                                  C *expected,
+                                  C desired)
+
+bool atomic_compare_exchange_weak_explicit(volatile A *object,
+                                           C *expected,
+                                           C desired,
+                                           memory_order success,
+                                           memory_order failure)
+
+bool atomic_compare_exchange_weak_explicit(volatile A *object,
+                                           C *expected,
+                                           C desired,
+                                           memory_order success,
+                                           memory_order failure,
+                                           memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`expected`::
+
+`desired`::
+
+`success`::
+
+`failure`::
+
+The `failure` argument shall not be `memory_order_release` nor `memory_order_acq_rel`.
+
+`scope`::
+
+
+[[description]]
+== Description
+
+These functions can only be used with an object of any atomic integer type.
+
+The `failure` argument shall be no stronger than the `success` argument.
+Atomically, compares the value pointed to by `object` for equality with that in `expected`, and if true, replaces the value pointed to by `object` with `desired`, and if false, updates the value in `expected` with the value pointed to by `object`.
+Further, if the comparison is true, memory is affected according to the value of `success`, and if the comparison is false, memory is affected according to the value of `failure`.
+These operations are atomic read-modify-write operations (as defined by section 5.1.2.4 of the C11 specification).
+
+NOTE: The effect of the compare-and-exchange operations is:
+
+----
+if (memcmp(object, expected, sizeof(*object) == 0)
+     memcpy(object, &desired, sizeof(*object));
+else
+     memcpy(expected, object, sizeof(*object));
+----
+
+The weak compare-and-exchange operations may fail spuriously.
+That is, even when the contents of memory referred to by `expected` and `object` are equal, it may return zero and store back to `expected` the same memory contents that were originally there.
+This spurious failure enables implementation of compare-and-exchange on a broader class of machines, e.g.
+load-locked store-conditional machines.
+
+These generic functions return the result of the comparison.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 108
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

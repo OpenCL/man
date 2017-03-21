@@ -1,0 +1,44 @@
+include::_header.adoc[]
+
+
+[[clamp]]
+= clamp
+
+Clamp `x` to range given by `minval`, `maxval`.
+
+[source,c]
+----
+gentype clamp(gentype x,
+              gentype minval,
+              gentype maxval)
+
+gentype clamp(gentype x,
+              sgentype minval,
+              sgentype maxval)
+----
+
+
+[[description]]
+== Description
+
+`clamp` returns <<integerMax.adoc#, `min`>> (<<integerMax.adoc#, `min`>>( `x`, `minval`), `maxval`).
+
+Results are undefined if `minval` > `maxval`.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

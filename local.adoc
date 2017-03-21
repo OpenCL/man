@@ -1,0 +1,78 @@
+include::_header.adoc[]
+
+
+[[__local]]
+= __local
+
+Address Space Qualifier.
+
+----
+__local
+local
+----
+
+
+[[description]]
+== Description
+
+The `__local` or `local` address space name is used to describe variables that need to be allocated in local memory and are shared by all work-items of a work-group.
+Pointers to the `__local` address space are allowed as arguments to functions (including kernel functions).
+Variables allocated in the `__local` address space inside a kernel function must occur at kernel function scope.
+
+
+[[notes]]
+== Notes
+
+include::addressSpaceQualifiersInc.adoc[]
+
+
+[[example1]]
+== Example
+
+----
+// Examples of variables allocated in the __local address space
+// inside a kernel function
+
+kernel void my_func(...)
+{
+      local float      a;       // A single float allocated
+                                // in local address space
+
+      local float      b[10];   // An array of 10 floats
+                                // allocated in local address space.
+      if (...)
+      {
+          // example of variable in __local address space but not
+          // declared at __kernel function scope.
+          local float c;        // not allowed.
+      }
+}
+----
+
+Variables allocated in the `__local` address space inside a kernel function cannot be initialized.
+
+----
+    kernel void my_func(...)
+    {
+       local float a = 1;    // not allowed
+
+       local float b;
+       b = 1;                // allowed
+    }
+----
+
+NOTE: Variables allocated in the `__local` address space inside a kernel function are allocated for each work-group executing the kernel and exist only for the lifetime of the work-group executing the kernel.
+
+include::qualifierExampleInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 34
+
+
+[[seealso]]
+== Also see
+
+<<global.adoc#, `__global`>>, <<constant.adoc#, `__constant`>>, <<private.adoc#, `__private`>>, <<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]

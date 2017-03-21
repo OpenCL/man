@@ -1,0 +1,46 @@
+include::_header.adoc[]
+
+
+[[bitselect]]
+= bitselect
+
+Each bit of result is corresponding bit of `a` if corresponding bit of `c` is 0.
+
+[source,c]
+----
+gentype bitselect(gentype a,
+                  gentype b,
+                  gentype c)
+----
+
+----
+halfn bitselect (halfn a, halfn b,
+              halfn c)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Each bit of result is corresponding bit of `a` if corresponding bit of `c` is 0.
+Otherwise it is the corresponding bit of `b`.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsGEN.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

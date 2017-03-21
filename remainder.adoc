@@ -1,0 +1,39 @@
+include::_header.adoc[]
+
+
+[[remainder]]
+= remainder
+
+Floating point remainder function.
+
+[source,c]
+----
+gentype remainder(gentype x,
+                  gentype y)
+----
+
+
+[[description]]
+== Description
+
+Computes the value `r` such that `r` = `x` - `n`*`y`, where `n` is the integer nearest the exact value of `x`/`y`.
+If there are two integers closest to `x`/`y`, `n` shall be the even one.
+If `r` is zero, it is given the same sign as `x`.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

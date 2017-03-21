@@ -1,0 +1,33 @@
+include::_header.adoc[]
+
+
+[[commit_write_pipe]]
+= commit_write_pipe
+
+Indicates that all writes to `num_packets` associated with a reservation are completed.
+
+[source,c]
+----
+void commit_write_pipe(write_only pipe gentype p,
+                       reserve_id_t reserve_id)
+----
+
+
+[[description]]
+== Description
+
+Indicates that all writes to `num_packets` associated with reservation `reserve_id` are completed.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 159
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

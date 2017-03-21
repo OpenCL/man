@@ -1,0 +1,27 @@
+The built-in functions defined in this section can only be used with image memory objects.
+An image memory object can be accessed by specific function calls that read from and/or write to specific locations in the image.
+
+Note that image writes to sRGB images are only supported if the <<cl_khr_srgb_image_writes.adoc#, `cl_khr_srgb_image_writes`>> extension is supported; otherwise the behavior of writing to a sRGB image is undefined.
+
+Image memory objects that are being read by a kernel should be declared with the <<accessQualifiers.adoc#, `read_only`>> qualifier.
+`write_image` calls to image memory objects declared with the <<accessQualifiers.adoc#, `read_only`>> qualifier will generate a compilation error.
+Image memory objects that are being written to by a kernel should be declared with the <<accessQualifiers.adoc#, `write_only`>> qualifier.
+`read_image` calls to image memory objects declared with the <<accessQualifiers.adoc#, `write_only`>> qualifier will generate a compilation error.
+`read_image` and `write_image` calls to the same image memory object in a kernel are not supported.
+Image memory objects that are being read and written by a kernel should be declared with the <<accessQualifiers.adoc#, `read_write`>> qualifier.
+
+The `read_image` calls returns a four component floating-point, integer or unsigned integer color value.
+The color values returned by `read_image` are identified as `x, y, z, w` where `x` refers to the red component, `y` refers to the green component, `z` refers to the blue component and `w` refers to the alpha component.
+
+The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to `CLK_FILTER_NEAREST`, normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode to `CLK_ADDRESS_NONE`.
+
+.sRGB Images
+
+The built-in image read functions will perform sRGB to linear RGB conversions if the image is an sRGB image.
+Writing to sRGB images from a kernel is an optional extension.
+The <<cl_khr_srgb_image_writes.adoc#, `cl_khr_srgb_image_writes`>> extension will be reported in the `CL_DEVICE_EXTENSIONS` string if a device supports writing to sRGB images using <<imageFunctions.adoc#, `write_imagef`>>.
+<<clGetSupportedImageFormats.adoc#, `clGetSupportedImageFormats`>> will return the supported sRGB images if `CL_MEM_READ_WRITE` or `CL_MEM_WRITE_ONLY` is specified in `flags` argument and the device supports writing to an sRGB image.
+If <<cl_khr_srgb_image_writes.adoc#, `cl_khr_srgb_image_writes`>> is supported, the built-in image write functions will perform the linear to sRGB conversion.
+
+Only the R, G and B components are converted from linear to sRGB and vice-versa.
+The alpha component is returned as is.

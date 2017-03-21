@@ -1,0 +1,40 @@
+include::_header.adoc[]
+
+
+[[mad24]]
+= mad24
+
+Fast integer function to multiply 24-bit integers and add a 32-bit value.
+
+[source,c]
+----
+gentype mad24(gentype x,
+              gentype y,
+              gentype z)
+----
+
+
+[[description]]
+== Description
+
+`mad24` multiplies two 24-bit integer values `x` and `y` and adds the 32-bit integer result to the 32-bit integer `z`.
+See <<mul24.adoc#, `mul24`>> to see how the 24-bit integer multiplication is performed.
+
+
+[[notes]]
+== Notes
+
+Fast integer functions can be used for optimizing performance of kernels.
+We use the generic type name `gentype` to indicate that the function can take `int`, `int2`, `int3`, `int4`, `int8`, `int16`, `uint`, `uint2`, `uint3`, `uint4`, `uint8`, or `uint16` as the type for the arguments.
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>, <<mul24.adoc#, `mul24`>>
+
+include::_footer.adoc[]

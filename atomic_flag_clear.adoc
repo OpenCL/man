@@ -1,0 +1,52 @@
+include::_header.adoc[]
+
+
+[[atomic_flag_clear]]
+= atomic_flag_clear functions
+
+Atomically sets the value pointed to by `object` to true.
+
+[source,c]
+----
+void atomic_flag_clear(volatile atomic_flag *object)
+
+void atomic_flag_clear_explicit(volatile atomic_flag *object,
+                                memory_order order)
+
+void atomic_flag_clear_explicit(volatile atomic_flag *object,
+                                memory_order order,
+                                memory_scope scope)
+----
+
+
+[[parameters]]
+== Parameters
+
+`object`::
+
+`order`::
+
+The order argument shall not be `memory_order_acquire` nor `memory_order_acq_rel`.
+
+`scope`::
+
+
+[[description]]
+== Description
+
+Atomically sets the value pointed to by `object` to false.
+Memory is affected according to the value of `order`.
+
+include::atomicFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 111
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>
+
+include::_footer.adoc[]

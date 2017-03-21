@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[tgamma]]
+= tgamma
+
+Gamma function.
+
+[source,c]
+----
+gentype tgamma(gentype)
+----
+
+
+[[description]]
+== Description
+
+`tgamma` computes the gamma.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

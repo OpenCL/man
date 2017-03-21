@@ -1,0 +1,154 @@
+include::_header.adoc[]
+
+
+[[sampler_t]]
+= sampler_t
+
+A type used to control how elements of an image object are read by read_image{f<<imageFunctions.adoc#, `|`>>i|ui}.
+
+----
+const sampler_t <sampler name> = <value>
+constant sampler_t <sampler name> = <value>
+__constant sampler_t <sampler name> = <value>
+----
+
+
+[[description]]
+== Description
+
+The image read functions take a sampler argument.
+The sampler can be passed as an argument to the kernel using <<clSetKernelArg.adoc#, `clSetKernelArg`>>, or can be declared in the outermost scope of `kernel` functions, or it can be a constant variable of type `sampler_t` declared in the program source.
+
+Sampler variables in a program are declared to be of type `sampler_t`.
+A variable of `sampler_t` type declared in the program source must be initialized with a 32-bit unsigned integer constant, which is interpreted as a bit-field specifiying the following properties:
+
+* Addressing Mode
+
+* Filter Mode
+
+* Normalized Coordinates
+
+These properties control how elements of an image object are read by <<imageFunctions.adoc#, `read_image{f|i|ui}`>>.
+
+Samplers can also be declared as global constants in the program source using the syntax shown at the top of this page.
+
+The sampler fields are described in the table below:
+
+[cols="1a,1a", options="header"]
+|===
+
+|Sampler State
+|Description
+
+|
+
+`<normalized coords>`
+
+|
+
+Specifies whether the `x`, `y` and `z` coordinates are passed in as normalized or unnormalized values.
+This must be a literal value and can be one of the following predefined enums:
+
+----
+CLK_NORMALIZED_COORDS_TRUE or
+CLK_NORMALIZED_COORDS_FALSE.
+----
+
+The samplers used with an image in multiple calls to <<imageFunctions.adoc#, `read_image`>>{f\|i\|ui} declared in a kernel must use the same value for `<normalized coords>`.
+
+|
+
+`<addressing mode>`
+
+|
+
+Specifies the image addressing-mode i.e.
+how out-of-range image coordinates are handled.
+This must be a literal value and can be one of the following predefined enums:
+
+`CLK_ADDRESS_MIRRORED_REPEAT` - Flip the image coordinate at every integer junction.
+This addressing mode can only be used with normalized coordinates.
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.
+
+`CLK_ADDRESS_REPEAT` - out-of-range image coordinates are wrapped to the valid range.
+This `address mode` can only be used with normalized coordinates.
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.
+
+`CLK_ADDRESS_CLAMP_TO_EDGE` - out-of-range image coordinates are clamped to the extent.
+
+`CLK_ADDRESS_CLAMP` - out-of-range image coordinates will return a border color.
+This is similar to the `GL_ADDRESS_CLAMP_TO_BORDER` addressing mode.
+
+`CLK_ADDRESS_NONE` - for this addressing mode the programmer guarantees that the image coordinates used to sample elements of the image refer to a location inside the image; otherwise the results are undefined.
+
+For 1D and 2D image arrays, the addressing mode applies only to the x and _(x, y)_ coordinates.
+The addressing mode for the coordinate which specifies the array index is always `CLK_ADDRESS_CLAMP_TO_EDGE`
+
+|
+
+`<filter mode>`
+
+|
+
+Specifies the filtering mode to use.
+This must be a literal value and can be one of the following predefined enums: `CLK_FILTER_NEAREST` or `CLK_FILTER_LINEAR`.
+Refer to section 8.2 for a description of these filter modes.
+
+|===
+
+
+[[notes]]
+== Notes
+
+The sampler_t type is only defined if the device supports images i.e.
+`CL_DEVICE_IMAGE_SUPPORT` as described in table 4.3 is `CL_TRUE`.
+
+Note that samplers declared using the `constant` qualifier are not counted towards the maximum number of arguments pointing to the constant address space or the maximum size of the constant address space allowed per device (i.e.
+`CL_DEVICE_MAX_CONSTANT_ARGS` and `CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE` as described in table 4.3).
+
+The maximum number of samplers that can be declared in a kernel can be queried using the `CL_DEVICE_MAX_SAMPLERS` token in <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>.
+
+If `<addressing mode>` in sampler is `CLK_ADDRESS_CLAMP`, then out-of-range image coordinates return the border color.
+The border color selected depends on the image channel order and can be one of the following values:
+
+* If the image channel order is `CL_A`, `CL_INTENSITY`, `CL_Rx`, `CL_RA`, `CL_RGx`, `CL_RGBx`, `CL_sRGBx`, `CL_ARGB`, `CL_BGRA`, `CL_ABGR`, `CL_RGBA`, `CL_sRGBA` or `CL_sBGRA`, the border color is (0.0f, 0.0f,0.0f, 0.0f).
+
+* If the image channel order is `CL_R`, `CL_RG`, `CL_RGB`, or `CL_LUMINANCE`, the border color is (0.0f, 0.0f, 0.0f, 1.0f)
+
+* If the image channel order is `CL_DEPTH`, the border value is 0.0f.
+
+A kernel that uses a sampler with the `CL_ADDRESS_CLAMP` addressing mode with multiple images may result in additional samplers being used internally by an implementation.
+If the same sampler is used with multiple images called via <<imageFunctions.adoc#, `read_image{f|i|ui}`>>, then it is possible that an implementation may need to allocate an additional sampler to handle the different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values supported by the device and given by `CL_DEVICE_MAX_SAMPLERS`.
+Enqueuing a kernel that requires more samplers than the implementation can support will result in a `CL_OUT_OF_RESOURCES` error being returned.
+
+The sampler type (sampler_t) can only be used as the type of a function argument or a variable declared in the program scope or the outermost scope of a kernel function.
+The behavior of a sampler variable declared in a non-outermost scope of a kernel function is implementation-defined.
+A sampler argument or variable cannot be modified.
+
+The sampler type cannot be used to declare a structure or union field, an array of samplers, a pointer to a sampler, or the return type of a function.
+The sampler type cannot be used with the `__local` and `__global` address space qualifiers.
+
+
+[[example1]]
+== Example
+
+----
+const sampler_t samplerA = CLK_NORMALIZED_COORDS_TRUE |
+                           CLK_ADDRESS_REPEAT         |
+                           CLK_FILTER_NEAREST;
+----
+
+samplerA specifies a sampler that uses normalized coordinates, the repeat addressing mode and a nearest filter.
+
+
+:spec-name: CLan
+:spec-page: 123
+
+
+[[seealso]]
+== Also see
+
+<<otherDataTypes.adoc#, Other Data Types>>, <<imageFunctions.adoc#, Image Read and Write Functions>>, <<classDiagram.adoc#, Cardinality Diagram>>
+
+include::_footer.adoc[]

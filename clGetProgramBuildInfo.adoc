@@ -1,0 +1,166 @@
+include::_header.adoc[]
+
+
+[[clGetProgramBuildInfo]]
+= clGetProgramBuildInfo
+
+Returns build information for each device in the program object.
+
+[source,c]
+----
+cl_int clGetProgramBuildInfo(cl_program program,
+                             cl_device_id device,
+                             cl_program_build_info param_name,
+                             size_t param_value_size,
+                             void *param_value,
+                             size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`program`::
+
+Specifies the program object being queried.
+
+`device`::
+
+Specifies the device for which build information is being queried.
+`device` must be a valid device associated with `program`.
+
+`param_name`::
+
++
+--
+
+Specifies the information to query.
+The list of supported `param_name` types and the information returned in `param_value` by `clGetProgramBuildInfo` is described in the table below.
+
+[cols="1a,1a", options="header"]
+|===
+
+|cl_program_build_info
+|Return Type and Info.
+returned in `param_value`
+
+|`CL_PROGRAM_BUILD_STATUS`
+|Return type: cl_build_status
+
+Returns the build, compile or link status, whichever was performed last on `program` for `device`.
+
+This can be one of the following:
+
+`CL_BUILD_NONE`.
+The build status returned if no <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clLinkProgram.adoc#, `clLinkProgram`>> has been performed on the specified program object for `device`.
+
+`CL_BUILD_ERROR`.
+The build status returned if <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clLinkProgram.adoc#, `clLinkProgram`>> whichever was performed last on the specified program object for `device` generated an error.
+
+`CL_BUILD_SUCCESS`.
+The build status returned if <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clLinkProgram.adoc#, `clLinkProgram`>> whichever was performed last on the specified program object for `device` was successful.
+
+`CL_BUILD_IN_PROGRESS`.
+The build status returned if <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clLinkProgram.adoc#, `clLinkProgram`>> whichever was performed last on the specified program object for `device` has not finished.
+
+|`CL_PROGRAM_BUILD_OPTIONS`
+|Return type: char[]
+
+Return the build, compile or link options specified by the `options` argument in <<clBuildProgram.adoc#, `clBuildProgram`>>, <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clLinkProgram.adoc#, `clLinkProgram`>>, whichever was performed last on `program` for `device`.
+
+If build status of `program` for `device` is `CL_BUILD_NONE`, an empty string is returned.
+
+|`CL_PROGRAM_BUILD_LOG`
+|Return type: char[]
+
+Return the build, compile or link log for <<clBuildProgram.adoc#, `clBuildProgram`>> or <<clCompileProgram.adoc#, `clCompileProgram`>> whichever was performed last on `program` for `device`.
+
+If build status of `program` for `device` is `CL_BUILD_NONE`, an empty string is returned.
+
+|`CL_PROGRAM_BINARY_TYPE`
+|Return type: cl_program_binary_type
+
+Return the program binary type for `device`.
+This can be one of the following values:
+
+`CL_PROGRAM_BINARY_TYPE_NONE`.
+There is no binary associated with `device`.
+
+`CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT`.
+A compiled binary is associated with `device`.
+This is the case if `program` was created using <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>> and compiled using <<clCompileProgram.adoc#, `clCompileProgram`>> or a compiled binary is loaded using <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>.
+
+`CL_PROGRAM_BINARY_TYPE_LIBRARY`.
+A library binary is associated with `device`.
+This is the case if `program` was created by <<clLinkProgram.adoc#, `clLinkProgram`>> which is called with the `–create-library` link option or if a library binary is loaded using <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>.
+
+`CL_PROGRAM_BINARY_TYPE_EXECUTABLE`.
+An executable binary is associated with `device`.
+This is the case if `program` was created by <<clLinkProgram.adoc#, `clLinkProgram`>> without the `–create-library` link option or program was created by <<clBuildProgram.adoc#, `clBuildProgram`>> or an executable binary is loaded using <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>.
+
+`CL_PROGRAM_BINARY_TYPE_INTERMEDIATE`. (Applies if extension <<cl_khr_spir.adoc#, `cl_khr_spir`>> is enabled.) An intermediate (non-source) representation for the program is loaded as a binary.
+The program must be further processed with <<clCompileProgram.adoc#, `clCompileProgram`>> or <<clBuildProgram.adoc#, `clBuildProgram`>>.
+If processed with <<clCompileProgram.adoc#, `clCompileProgram`>>, the result will be a binary of type `CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT` or `CL_PROGRAM_BINARY_TYPE_LIBRARY`.
+If processed with <<clBuildProgram.adoc#, `clBuildProgram`>>, the result will be a binary of type `CL_PROGRAM_BINARY_TYPE_EXECUTABLE`.
+
+|`CL_PROGRAM_BUILD_GLOBAL_- VARIABLE_TOTAL_SIZE`
+|Return type: size_t
+
+The total amount of storage, in bytes, used by program variables in the global address space.
+
+|===
+
+--
+
+`param_value`::
+
+A pointer to memory where the appropriate result being queried is returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
+Specifies the size in bytes of memory pointed to by `param_value`.
+This size must be ≥ size of return type as described in the table above.
+
+`param_value_size_ret`::
+
+Returns the actual size in bytes of data copied to `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+
+[[notes]]
+== Notes
+
+A program binary (compiled binary, library binary or executable binary) built for a parent device can be used by all its sub-devices.
+If a program binary has not been built for a sub-device, the program binary associated with the parent device will be used.
+
+A program binary for a device specified with <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>> or queried using <<clGetProgramInfo.adoc#, `clGetProgramInfo`>> can be used as the binary for the associated root device, and all sub-devices created from the root-level device or sub-devices thereof.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise it returns the following:
+
+* Returns `CL_INVALID_DEVICE` if `device` is not in the list of devices associated with `program`.
+
+* Returns `CL_INVALID_VALUE` if `param_name` is not valid, or if size in bytes specified by `param_value_size` is < size of return type as described in the table above and `param_value` is not NULL.
+
+* Returns `CL_INVALID_PROGRAM` if `program` is a not a valid program object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 217
+
+
+[[seealso]]
+== Also see
+
+<<clGetProgramInfo.adoc#, `clGetProgramInfo`>>
+
+include::_footer.adoc[]

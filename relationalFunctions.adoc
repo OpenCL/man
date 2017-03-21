@@ -1,0 +1,112 @@
+include::_header.adoc[]
+
+= Relational Built-In Functions
+
+Click an item in the table below for details about that function.
+
+[cols="2a,8a"]
+|===
+
+|<<isequal.adoc#, `isequal`>>
+|
+
+Component-wise compare of `x` == `y`.
+
+|<<isnotequal.adoc#, `isnotequal`>>
+|
+
+Component-wise compare of `x` != `y`.
+
+|<<isgreater.adoc#, `isgreater`>>
+|
+
+Component-wise compare of `x` > `y`.
+
+|<<isgreaterequal.adoc#, `isgreaterequal`>>
+|
+
+Component-wise compare of `x` >= `y`.
+
+|<<isless.adoc#, `isless`>>
+|
+
+Component-wise compare of `x` < `y`.
+
+|<<islessequal.adoc#, `islessequal`>>
+|
+
+Component-wise compare of `x` <= `y`.
+
+|<<islessgreater.adoc#, `islessgreater`>>
+|
+
+Component-wise compare of (`x` < `y`) \|\| (`x` > `y`).
+
+|<<isfinite.adoc#, `isfinite`>>
+|
+
+Test for finite value.
+
+|<<isinf.adoc#, `isinf`>>
+|
+
+Test for positive or negative infinity.
+
+|<<isnan.adoc#, `isnan`>>
+|
+
+Test for a NaN.
+
+|<<isnormal.adoc#, `isnormal`>>
+|
+
+Test for a normal value.
+
+|<<isordered.adoc#, `isordered`>>
+|
+
+Test if arguments are ordered.
+
+|<<isunordered.adoc#, `isunordered`>>
+|
+
+Test if arguments are unordered.
+
+|<<signbit.adoc#, `signbit`>>
+|
+
+Test for sign bit.
+
+|<<any.adoc#, `any`>>
+|
+
+1 if MSB in any component of `x` is set; else 0.
+
+|<<any.adoc#, `all`>>
+|
+
+1 if MSB in all components of `x` is set; else 0.
+
+|<<bitselect.adoc#, `bitselect`>>
+|
+
+Each bit of result is corresponding bit of `a` if corresponding bit of `c` is 0.
+
+|<<select.adoc#, `select`>>
+|
+
+For each component of a vector type, result[`i`] = if MSB of `c`[`i`] is set ? `b`[`i`] : `a`[`i`] For scalar type, result = `c` ? `b` : `a`.
+
+|===
+
+
+[[description]]
+== Description
+
+If an implementation extends this specification to support IEEE-754 flags or exceptions, then all built-in relational functions shall proceed without raising the `invalid` floating-point exception when one or more of the operands are NaNs.
+
+
+:spec-name: CLan
+:spec-page: 90
+
+include::_footer.adoc[]

@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[vload_halfn]]
+= vload_halfn
+
+Read a half float vector from a pointer to memory.
+
+[source,c]
+----
+float n vload_half n(size_t offset,
+                     const half *p)
+
+float n vload_half n(size_t offset,
+                     const constant half *p)
+----
+
+
+[[description]]
+== Description
+
+Read sizeof(`halfn`) bytes of data from address (`p` + (`offset` * `n`)).
+The data read is interpreted as a `halfn` value.
+
+The `halfn` value read is converted to a `floatn` value and the `floatn` value is returned.
+The read address computed as (`p` + (`offset` * `n`)) must be 16-bit aligned.
+
+
+[[notes]]
+== Notes
+
+include::vectorFunctionsInc.adoc[]
+
+We use the type name `halfn` to represent n-element vectors of `half` elements.
+
+When extended by the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension, the generic type `gentypen` is extended to include `half`, `half2`, `half3`, `half4`, `half8`, and `half16`.
+
+`vload3` and `vload_half3` read `x`, `y`, `z` components from address (`p` + (`offset` * 3)) into a 3-component vector.
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

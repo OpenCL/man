@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[work_group_broadcast]]
+= work_group_broadcast
+
+Broadcast a value to all work-items in the work-group.
+
+[source,c]
+----
+gentype work_group_broadcast(gentype a,
+                             size_t local_id)
+
+gentype work_group_broadcast(gentype a,
+                             size_t local_id_x,
+                             size_t local_id_y)
+
+gentype work_group_broadcast(gentype a,
+                             size_t local_id_x,
+                             size_t local_id_y,
+                             size_t local_id_z)
+----
+
+
+[[description]]
+== Description
+
+Broadcast the value of `x` for work-item identified by `local_id` to all work-items in the work-group.
+
+`local_id` must be the same value for all work-items in the work-group.
+
+This built-in function must be encountered by all work-items in a work-group executing the kernel.
+We use the generic type name gentype to indicate the built-in data types half (if the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension is supported), int, uint, long, ulong, float or double (if double precision is supported) as the type for the arguments.
+
+
+:spec-name: CLan
+:spec-page: 154
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

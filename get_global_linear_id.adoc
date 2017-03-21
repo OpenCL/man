@@ -1,0 +1,35 @@
+include::_header.adoc[]
+
+
+[[get_global_linear_id]]
+= get_global_linear_id
+
+Returns the work-items 1-dimensional global ID.
+
+[source,c]
+----
+size_t get_global_linear_id(uint)
+----
+
+
+[[description]]
+== Description
+
+Returns the work-items 1-dimensional global ID.
+For 1D work-groups, it is computed as <<get_global_id.adoc#, `get_global_id`>>(0) – <<get_global_offset.adoc#, `get_global_offset`>>(0).
+
+For 2D work-groups, it is computed as (<<get_global_id.adoc#, `get_global_id`>>(1) - <<get_global_offset.adoc#, `get_global_offset`>>(1)) * <<get_global_size.adoc#, `get_global_size`>>(0) + (<<get_global_id.adoc#, `get_global_id`>>(0) - <<get_global_offset.adoc#, `get_global_offset`>>(0)).
+
+For 3D work-groups, it is computed as ((<<get_global_id.adoc#, `get_global_id`>>(2) – <<get_global_offset.adoc#, `get_global_offset`>>(2)) * <<get_global_size.adoc#, `get_global_size`>>(1) * <<get_global_size.adoc#, `get_global_size`>>(0)) + ((<<get_global_id.adoc#, `get_global_id`>>(1) – <<get_global_offset.adoc#, `get_global_offset`>>(1)) * <<get_global_size.adoc#, `get_global_size`>>(0)) + (<<get_global_id.adoc#, `get_global_id`>>(0) – <<get_global_offset.adoc#, `get_global_offset`>>(0)).
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<workItemFunctions.adoc#, Work-Item Functions>>, <<get_global_id.adoc#, `get_global_id`>>, <<get_global_size.adoc#, `get_global_size`>>
+
+include::_footer.adoc[]

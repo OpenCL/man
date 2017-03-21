@@ -1,0 +1,201 @@
+include::_header.adoc[]
+
+
+[[write_image2d]]
+= write_image
+
+Write `color` or depth value to location in a 2D image or depth image object.
+
+[source,c]
+----
+void write_imagef(aQual image2d_t image,
+                  int2 coord,
+                  float4 color)
+
+void write_imagef(aQual image2d_array_t image,
+                  int4 coord,
+                  float4 color)
+
+void write_imagei(aQual image2d_t image,
+                  int2 coord,
+                  int4 color)
+
+void write_imagei(aQual image2d_array_t image,
+                  int4 coord,
+                  int4 color)
+
+void write_imageui(aQual image2d_t image,
+                   int2 coord,
+                   uint4 color)
+
+void write_imageui(aQual image2d_array_t image,
+                   int4 coord,
+                   uint4 color)
+
+void write_imageh(image2d_t image,
+                  int2 coord,
+                  half4 color)
+
+void write_imageh(image2d_array_t image,
+                  int4 coord,
+                  half4 color)
+
+void write_imagef(aQual image2d_depth_t image,
+                  int2 coord,
+                  float depth)
+
+void write_imagef(aQual image2d_array_depth_t image,
+                  int4 coord,
+                  float depth)
+
+void write_imagef(image2d_t image,
+                  int2 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagef(image2d_depth_t image,
+                  int2 coord,
+                  int lod,
+                  float depth)
+
+void write_imagei(image2d_t image,
+                  int2 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image2d_t image,
+                   int2 coord,
+                   int lod,
+                   uint4 color)
+
+void write_imagef(image2d_array_t image,
+                  int4 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagef(image2d_array_depth_t image,
+                  int4 coord,
+                  int lod,
+                  float depth)
+
+void write_imagei(image2d_array_t image,
+                  int4 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image2d_array_t image,
+                   int4 coord,
+                   int lod,
+                   uint4 color)
+----
+
+
+[[description]]
+== Description
+
+`aQual` refers to one of the access qualifiers.
+For write functions this may be `write_only` or `read_write`.
+
+.For `write_imagef`, `write_imagei`, `write_imageh`, and `write_imageui` forms that take image2d_t:
+
+Write `color` value to location specified by `coord.xy` in the 2D image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x` and `coord.y` are considered to be unnormalized coordinates and must be in the range 0 ... image width – 1, and 0 … image height – 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, `CL_HALF_FLOAT` or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.
+
+`write_imagei` can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_SIGNED_INT8`, `CL_SIGNED_INT16`, and `CL_SIGNED_INT32`.
+
+`write_imageui` functions can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_UNSIGNED_INT8`, `CL_UNSIGNED_INT16`, or `CL_UNSIGNED_INT32`.
+
+`write_imageh` functions can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to: `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, or `CL_HALF_FLOAT`.
+
+The behavior of `write_imagef`, `write_imagei`, `write_imageui`, `write_imageh` and `write_imageh` for image objects created with `image_channel_data_type` values not specified in the description above or with _(x, y)_ coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1), respectively, is undefined.
+
+.For `write_imagef`, `write_imagei`, and `write_imageui` forms that take image2d_t and which are enabled by the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>> extension:
+
+Write color value to location specified by `coord.xy` in the mip-level specified by `lod` in the 2D image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x` and `coord.y` are considered to be unnormalized coordinates and must be in the range 0 ... image width of mip-level specified by `lod` – 1, and 0 ... image height of miplevel specified by `lod` – 1.
+
+.For `write_imagef`, `write_imagei`, `write_imageh`, and `write_imageui` forms that take image2d_array_t:
+
+Write `color` value to location specified by `coord.xy` in the 2D image identified by `coord.z` in the 2D image array specified specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x`, `coord.y` and `coord.z` are considered to be unnormalized coordinates and must be in the range 0 … image width – 1, and 0… image height – 1, and 0 … image number of layers – 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, `CL_HALF_FLOAT` or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.
+
+`write_imagei` can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_SIGNED_INT8`, `CL_SIGNED_INT16`, and `CL_SIGNED_INT32`.
+
+`write_imageui` functions can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_UNSIGNED_INT8`, `CL_UNSIGNED_INT16`, or `CL_UNSIGNED_INT32`.
+
+`write_imageh` functions can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to: `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, or `CL_HALF_FLOAT`.
+
+The behavior of `write_imagef`, `write_imagei`, `write_imageui`, and `write_imageh` for image objects created with `image_channel_data_type` values not specified in the description above or with _(x, y, z)_ coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1, 0 … image number of layers - 1; ), respectively, is undefined.
+
+.For `write_imagef`, `write_imagei`, and `write_imageui` forms that take image2d_array_t and which are enabled by the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>> extension:
+
+Write color value to location specified by `coord.xy` in the 2D image identified by `coord.z` and mip-level `lod` in the 2D image array specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x`, `coord.y` and `coord.z` are considered to be unnormalized coordinates and must be in the range 0 ... image width of the mip-level specified by `lod` – 1, 0 ... image height – 1 specified by `lod` – 1 and 0 ... image number of layers – 1
+
+.For `write_imagef` forms that take image2d_depth_t:
+
+Write `depth` value to location specified by `coord.xy` in the 2D depth image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the depth value.
+`coord.x` and `coord.y` are considered to be unnormalized coordinates and must be in the range 0 … image width – 1, and 0… image height – 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to `CL_UNORM_INT16`, `CL_UNORM_INT24`, or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert depth value from a floating-point value to actual data format in which the channels are stored.
+
+The behavior of `write_imagef` for image objects created with `image_channel_data_type` values not specified in the description above or with _(x, y)_ coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1), respectively, is undefined.
+
+.For `write_imagef` forms that take image2d_depth_t and which are enabled by the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>> extension:
+
+Write color value to location specified by `coord.xy` in the mip-level specified by `lod` in the 2D image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x` and `coord.y` are considered to be unnormalized coordinates and must be in the range 0 ... image width of mip-level specified by `lod` – 1, and 0 ... image height of miplevel specified by `lod` – 1.
+
+.For `write_imagef` forms that take image2d_array_depth_t:
+
+Write `depth` value to location specified by `coord.xy` in the 2D image identified by `coord.z` in the 2D depth image array specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the depth value.
+`coord.x`, `coord.y` and `coord.z` are considered to be unnormalized coordinates and must be in the range 0 … image width – 1, 0… image height – 1 and 0… image number of layers – 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to `CL_UNORM_INT16`, `CL_UNORM_INT24`, or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert depth value from a floating-point value to actual data format associated with the image..
+
+The behavior of `write_imagef` `write_imagei` and `write_imageui` for image objects created with `image_channel_data_type` values not specified in the description above or with _(x, y, z)_ coordinate values that are not in the range (0 … image width - 1, 0 … image height - 1, 0 … image number of layers - 1; ), respectively, is undefined.
+
+.For `write_imagef` forms that take image2d_array_depth_t and which are enabled by the <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>> extension
+
+Write color value to location specified by `coord.xy` in the 2D image identified by `coord.z` and mip-level `lod` in the 2D image array specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x`, `coord.y` and `coord.z` are considered to be unnormalized coordinates and must be in the range 0 ... image width of the mip-level specified by `lod` – 1, 0 ... image height – 1 specified by `lod` – 1 and 0 ... image number of layers – 1.
+
+.For `HALF` forms:
+
+An application that wants to use `half` and `halfn` types will need to include the `#pragma OPENCL EXTENSION cl_khr_fp16 : enable` directive.
+
+include::imageMipmapFunctions2DInc.adoc[]
+
+
+[[notes]]
+== Notes
+
+include::imageFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>, <<sampler_t.adoc#, `sampler_t`>>, <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>
+
+include::_footer.adoc[]

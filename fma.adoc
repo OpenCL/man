@@ -1,0 +1,40 @@
+include::_header.adoc[]
+
+
+[[fma]]
+= fma
+
+Multiply and add, then round.
+
+[source,c]
+----
+gentype fma(gentype a,
+            gentype b,
+            gentype c)
+----
+
+
+[[description]]
+== Description
+
+Returns the correctly rounded floating-point representation of the sum of `c` with the infinitely precise product of `a` and `b`.
+Rounding of intermediate products shall not occur.
+Edge case behavior is per the IEEE 754-2008 standard.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>, <<FP_CONTRACT.adoc#, FP_CONTRACT>>, <<FP_CONTRACT.adoc#, FP_FAST_FMA>>
+
+include::_footer.adoc[]

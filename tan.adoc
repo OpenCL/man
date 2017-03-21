@@ -1,0 +1,56 @@
+include::_header.adoc[]
+
+
+[[tan]]
+= tan, tanh, tanpi, half_tan, native_tan
+
+Tangent functions.
+
+[source,c]
+----
+gentype tan(gentype)
+
+gentype tanh(gentype)
+
+gentype tanpi(gentype x)
+
+gentype half_tan(gentype x)
+
+gentype native_tan(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`tan` computes the tangent.
+
+`tanh` computes the hyperbolic tangent.
+
+`tanpi` computes `tan`(`pi * x`).
+
+`half_tan` computes tangent.
+`x` must be in the range -2^16^... +2^16^.
+
+`native_tan` computes tangent over an implementation-defined range.
+The maximum error is implementation-defined.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

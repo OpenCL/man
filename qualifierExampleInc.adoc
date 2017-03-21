@@ -1,0 +1,22 @@
+General qualifier examples follow:
+
+----
+// declares a pointer p in the private address space that
+// points to an object in address space global
+global int *p;
+
+void foo (...)
+{
+    // declares an array of 4 floats in the private address space
+    float x[4];
+    ...
+}
+----
+
+Example:
+
+----
+private int f() { ... } // should generate an error
+local int *f() { ... } // allowed
+local int * private f() { ... }; // should generate an error.
+----

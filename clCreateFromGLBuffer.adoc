@@ -1,0 +1,93 @@
+include::_header.adoc[]
+
+
+[[clCreateFromGLBuffer]]
+= clCreateFromGLBuffer
+
+Creates an OpenCL buffer object from an OpenGL buffer object.
+
+[source,c]
+----
+cl_mem clCreateFromGLBuffer(cl_context context,
+                            cl_mem_flags flags,
+                            GLuint bufobj,
+                            cl_int * errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context created from an OpenGL context.
+
+`flags`::
+
+A bit-field that is used to specify usage information.
+Refer to the table for <<clCreateBuffer.adoc#, `clCreateBuffer`>> for a description of `flags`.
+Only `CL_MEM_READ_ONLY`, `CL_MEM_WRITE_ONLY` and `CL_MEM_READ_WRITE` values specified in the table at <<clCreateBuffer.adoc#, `clCreateBuffer`>> can be used.
+
+`bufobj`::
+
+The name of a GL buffer object.
+The data store of the GL buffer object must have have been previously created by calling OpenGL function `glBufferData`, although its contents need not be initialized.
+The size of the data store will be used to determine the size of the CL buffer object.
+
+`errcode_ret`::
+
+Returns an appropriate error code as described below.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[description]]
+== Description
+
+The size of the GL buffer object data store at the time `clCreateFromGLBuffer` is called will be used as the size of buffer object returned by `clCreateFromGLBuffer`.
+If the state of a GL buffer object is modified through the GL API (e.g.
+`glBufferData`) while there exists a corresponding CL buffer object, subsequent use of the CL buffer object will result in undefined behavior.
+
+The <<clRetainMemObject.adoc#, `clRetainMemObject`>> and <<clReleaseMemObject.adoc#, `clReleaseMemObject`>> functions can be used to retain and release the buffer object.
+
+The CL buffer object created using `clCreateFromGLBuffer` can also be used to create a CL 1D image buffer object.
+
+
+[[notes]]
+== Notes
+
+include::gl_sharingInc.adoc[]
+
+include::gl_formatsInc.adoc[]
+
+include::gl_lifetimeInc.adoc[]
+
+include::gl_syncInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns a valid non-zero OpenCL buffer object and `errcode_ret` is set to `CL_SUCCESS` if the buffer object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context or was not created from a GL context.
+
+* `CL_INVALID_VALUE` if values specified in `flags` are not valid.
+
+* `CL_INVALID_GL_OBJECT` if `bufobj` is not a GL buffer object or is a GL buffer object but does not have an existing data store or the size of the buffer is 0.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 47
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_gl_sharing.adoc#, `cl_khr_gl_sharing`>>, <<cl_khr_gl_event.adoc#, `cl_khr_gl_event`>>, <<clCreateBuffer.adoc#, `clCreateBuffer`>>, <<clCreateFromGLTexture.adoc#, `clCreateFromGLTexture`>>
+
+include::_footer.adoc[]

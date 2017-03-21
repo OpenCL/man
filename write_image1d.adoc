@@ -1,0 +1,165 @@
+include::_header.adoc[]
+
+
+[[write_image1d]]
+= write_image1d
+
+Write `color` value to location in a 1D image object.
+
+[source,c]
+----
+void write_imagef(aQual image1d_t image,
+                  int coord,
+                  float4 color)
+
+void write_imagef(aQual image1d_buffer_t image,
+                  int coord,
+                  float4 color)
+
+void write_imagef(aQual image1d_array_t image,
+                  int2 coord,
+                  float4 color)
+
+void write_imagei(aQual image1d_t image,
+                  int coord,
+                  int4 color)
+
+void write_imagei(aQual image1d_buffer_t image,
+                  int coord,
+                  int4 color)
+
+void write_imagei(aQual image1d_array_t image,
+                  int2 coord,
+                  int4 color)
+
+void write_imageui(aQual image1d_t image,
+                   int coord,
+                   uint4 color)
+
+void write_imageui(aQual image1d_buffer_t image,
+                   int coord,
+                   uint4 color)
+
+void write_imageui(aQual image1d_array_t image,
+                   int2 coord,
+                   uint4 color)
+
+void write_imageh(image1d_t image,
+                  int coord,
+                  half4 color)
+
+void write_imageh(image1d_buffer_t image,
+                  int coord,
+                  half4 color)
+
+void write_imageh(image1d_array_t image,
+                  int2 coord,
+                  half4 color)
+
+void write_imagef(image1d_t image,
+                  int coord,
+                  int lod,
+                  float4 color)
+
+void write_imagei(image1d_t image,
+                  int coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image1d_t image,
+                   int coord,
+                   int lod,
+                   uint4 color)
+
+void write_imagef(image1d_array_t image,
+                  int2 coord,
+                  int lod,
+                  float4 color)
+
+void write_imagei(image1d_array_t image,
+                  int2 coord,
+                  int lod,
+                  int4 color)
+
+void write_imageui(image1d_array_t image,
+                   int2 coord,
+                   int lod,
+                   uint4 color)
+----
+
+
+[[description]]
+== Description
+
+`aQual` refers to one of the access qualifiers.
+For write functions this may be `write_only` or `read_write`.
+
+.For `write_imagef`, `write_imagei`, and `write_imageui` forms that take `image1d_t` or `image1d_buffer_t`:
+
+Write `color` value to location specified by `coord` in the 1D image or 1D image buffer object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord` is considered to be unnormalized coordinates and must be in the range 0 ... image width – 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, `CL_HALF_FLOAT`, or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.
+
+`write_imagei` functions can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_SIGNED_INT8`, `CL_SIGNED_INT16`, or `CL_SIGNED_INT32`.
+
+`write_imageui` functions can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_UNSIGNED_INT8`, `CL_UNSIGNED_INT16`, or `CL_UNSIGNED_INT32`.
+
+The behavior of `write_imagef`, `write_imagei` and `write_imageui` for image objects created with `image_channel_data_type` values not specified in the description above or with coordinate values that is not in the range (0 … image width - 1), is undefined.
+
+.For `write_imagef`, `write_imagei`, and `write_imageui` forms that take `image1d_array_t`:
+
+Write `color` value to location specified by `coord.x` in the 1D image identified by `coord.y` in the 1D image array specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x` and `coord.y` are considered to be unnormalized coordinates and must be in the range 0 ... image width – 1 and 0 … image number of layers – 1.
+
+`write_imagef` can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16`, `CL_HALF_FLOAT`, or `CL_FLOAT`.
+Appropriate data format conversion will be done to convert channel data from a floating-point value to actual data format in which the channels are stored.
+
+`write_imagei` functions can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_SIGNED_INT8`, `CL_SIGNED_INT16`, or `CL_SIGNED_INT32`.
+
+`write_imageui` functions can only be used with image objects created with `image_channel_data_type` set to one of the following values: `CL_UNSIGNED_INT8`, `CL_UNSIGNED_INT16`, or `CL_UNSIGNED_INT32`.
+
+The behavior of `write_imagef`, `write_imagei` and `write_imageui` for image objects created with `image_channel_data_type` values not specified in the description above or with (x, y) coordinate values that are not in the range (0 … image width - 1, 0 …image number of layers - 1), respectively, is undefined.
+
+.For `write_imageh`:
+
+The `write_imageh` functions are enabled when the half type is supported and can only be used with image objects created with `image_channel_data_type` set to one of the pre-defined packed formats or set to `CL_SNORM_INT8`, `CL_UNORM_INT8`, `CL_SNORM_INT16`, `CL_UNORM_INT16` or `CL_HALF_FLOAT`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`x` & `y` are considered to be unnormalized coordinates and must be in the range 0 ... width – 1, and 0 … height – 1.
+
+.Mipmap write image functions enabled by <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>:
+
+For the image write 1D functions enabled by the mipmap extension that take an `image1d_t` object, write `color` value to location specified by `coord` in the mip-level specified by `lod` in the 1D image object specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord` is considered to be an unnormalized coordinate and must be in the range 0… image width of the mip-level specified by `lod` – 1.
+
+In these functions, the behavior of `write_imagef`, `write_imagei`, and `write_imageui` if the coordinate value is not in the range (0… image width of the mip-level specified by `lod` – 1) or `lod` value exceeds the (number of mip-levels in the image – 1) is undefined.
+
+For the image write 1D functions enabled by the mipmap extension that take an `image1d_array_t` object, write `color` value to location specified by `coord.x` in the 1D image specified by `coord.y` and mip-level `lod` in the 1D image array specified by `image`.
+Appropriate data format conversion to the specified image format is done before writing the color value.
+`coord.x` and `coord.y` are considered to be unnormalized coordinates and must be in the range 0… image width of mip-level specified by `lod` - 1 and 0… image number of layers - 1.
+
+In these functions, the behavior of `write_imagef`, `write_imagei`, and `write_imageui` if (_x, y_) coordinate values are not in the range (0… image width of the mip-level specified by `lod` – 1, 0… image number of layers – 1), respectively or `lod` value exceeds the (number of mip-levels in the image – 1), is undefined.
+
+
+[[notes]]
+== Notes
+
+include::imageFunctionsInc.adoc[]
+
+include::imageMappingInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>, <<sampler_t.adoc#, `sampler_t`>>
+
+include::_footer.adoc[]

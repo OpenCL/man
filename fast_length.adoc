@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[fast_length]]
+= fast_length
+
+Vector length.
+
+[source,c]
+----
+float fast_length(float n p)
+----
+
+
+[[description]]
+== Description
+
+Returns the length of vector `p` computed as:
+
+<<sqrt.adoc#, `half_sqrt`>>(`p.x`^2^ + `p.y`^2^ + ...)
+
+
+[[notes]]
+== Notes
+
+include::geometricFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 88
+
+
+[[seealso]]
+== Also see
+
+<<geometricFunctions.adoc#, Geometric Functions>>
+
+include::_footer.adoc[]

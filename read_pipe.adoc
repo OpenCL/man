@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[read_pipe]]
+= read_pipe
+
+Read packet from `pipe` into `ptr`.
+
+[source,c]
+----
+int read_pipe(read_only pipe gentype p,
+              gentype *ptr)
+
+int read_pipe(read_only pipe gentype p,
+              reserve_id_t reserve_id,
+              uint index,
+              gentype *ptr)
+----
+
+
+[[description]]
+== Description
+
+For the form without `reserve_id`, read packet from pipe `p` into `ptr`.
+Returns 0 if `read_pipe` is successful and a negative value if the pipe is empty.
+
+For the form using `reserve_id`, read packet from the reserved area of the pipe referred to by `reserve_id` and `index` into `ptr`.
+The reserved pipe entries are referred to by indices that go from 0 ... `num_packets` – 1.
+Returns 0 if `read_pipe` is successful and a negative value otherwise.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 158
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

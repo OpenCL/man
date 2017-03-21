@@ -1,0 +1,33 @@
+.General information about work-group functions
+
+This built-in function must be encountered by all work-items in a work-group executing the kernel.
+We use the generic type name gentype to indicate the built-in data types `half` (if the <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> extension is supported), `int`, `uint`, `long`, `ulong`, `float` or `double` (if double precision is supported) as the type for the arguments.
+
+The _<op>_ in `work_group_reduce_<op>`, `work_group_scan_exclusive_<op>` and `work_group_scan_inclusive_<op>` defines the operator and can be `add`, `min` or `max`.
+
+The inclusive scan operation takes a binary operator `op` with an identity `I` and `n` (where `n` is the size of the work-group) elements `[a0, a1, ... an-1]` and returns `[a0, (a0 op a1), ... (a0 op a1 op ... op an-1)]`.
+If <`op`> = `add`, the identity `I` is 0.
+If <`op`> = `min`, the identity `I` is `INT_MAX`, `UINT_MAX`, `LONG_MAX`, `ULONG_MAX`, for `int`, `uint`, `long`, `ulong` types and is `+INF` for floating-point types.
+Similarly if <`op`> = max, the identity `I` is `INT_MIN`, 0, `LONG_MIN`, 0 and `-INF`.
+
+Consider the following example:
+
+----
+void foo(int *p)
+{
+    ...
+    int prefix_sum_val = work_group_scan_inclusive_add(
+              p[get_local_id(0)]);
+}
+----
+
+For the example above, let's assume that the work-group size is 8 and p points to the following elements [3 1 7 0 4 1 6 3].
+Work-item 0 calls `work_group_scan_inclusive_add` with 3 and returns 3.
+Work-item 1 calls `work_group_scan_inclusive_add` with 1 and returns 4.
+The full set of values returned by `work_group_scan_inclusive_add` for work-items 0 ... 7 are [3 4 11 11 14 16 22 25].
+
+The exclusive scan operation takes a binary associative operator `op` with an identity `I` and `n` (where `n` is the size of the work-group) elements `[a0, a1, ... an-1]` and returns `[I, a0, (a0 op a1), ... (a0 op a1 op ... op an-2)]`.
+For the example above, the exclusive scan add operation on the ordered set [3 1 7 0 4 1 6 3] would return [0 3 4 11 11 14 16 22].
+
+NOTE: The order of floating-point operations is not guaranteed for the `work_group_reduce_<op>`, `work_group_scan_inclusive_<op>` and `work_group_scan_exclusive_<op>` built-in functions that operate on `half`, `float` and `double` data types.
+The order of these floating-point operations is also non-deterministic for a given workgroup.

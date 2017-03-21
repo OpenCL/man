@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[clRetainMemObject]]
+= clRetainMemObject
+
+Increments the memory object reference count.
+
+[source,c]
+----
+cl_int clRetainMemObject(cl_mem memobj)
+----
+
+
+[[parameters]]
+== Parameters
+
+`memobj`::
+
+A valid memory object.
+
+
+[[notes]]
+== Notes
+
+<<clCreateBuffer.adoc#, `clCreateBuffer`>>, <<clCreateSubBuffer.adoc#, `clCreateSubBuffer`>>, <<clCreateImage.adoc#, `clCreateImage`>>, and <<clCreatePipe.adoc#, `clCreatePipe`>> perform an implicit retain.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_MEM_OBJECT` if `memobj` is a not a valid memory object (buffer or image object).
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 163
+
+
+[[seealso]]
+== Also see
+
+<<clCreateBuffer.adoc#, `clCreateBuffer`>>, <<clEnqueueCopyBuffer.adoc#, `clEnqueueCopyBuffer`>>, <<clEnqueueReadBuffer.adoc#, `clEnqueueReadBuffer`>>, <<clEnqueueWriteBuffer.adoc#, `clEnqueueWriteBuffer`>>, <<clReleaseMemObject.adoc#, `clReleaseMemObject`>>
+
+include::_footer.adoc[]

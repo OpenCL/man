@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[max]]
+= max
+
+Returns the greater of two values.
+
+[source,c]
+----
+gentype max(gentype x,
+            gentype y)
+
+gentypef max(gentypef x,
+             float y)
+
+gentyped max(gentyped x,
+             double y)
+----
+
+----
+gentype max (gentype x,
+             half y)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+`max` returns `y` if `x` < `y`, otherwise it returns `x`.
+If `x` and `y` are infinite or NaN, the return values are undefined.
+
+
+[[notes]]
+== Notes
+
+include::commonFunctionsInc.adoc[]
+
+If extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>>, generic type name `gentype` may indicate `half` and `half{2|3|4|8|16}` as arguments and return values.
+
+
+:spec-name: CLan
+:spec-page: 86
+
+
+[[seealso]]
+== Also see
+
+<<commonFunctions.adoc#, Common Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,122 @@
+include::_header.adoc[]
+
+
+[[clBuildProgram]]
+= clBuildProgram
+
+Builds (compiles and links) a program executable from the program source or binary.
+
+[source,c]
+----
+cl_int clBuildProgram(cl_program program,
+                      cl_uint num_devices,
+                      const cl_device_id *device_list,
+                      const char *options,
+                      void (CL_CALLBACK *pfn_notify)( cl_program program, void *user_data),
+                      void *user_data)
+----
+
+
+[[parameters]]
+== Parameters
+
+`program`::
+
+The program object.
+
+`device_list`::
+
+A pointer to a list of devices associated with `program`.
+If `device_list` is a NULL value, the program executable is built for all devices associated with `program` for which a source or binary has been loaded.
+If `device_list` is a non-NULL value, the program executable is built for devices specified in this list for which a source or binary has been loaded.
+
+`num_devices`::
+
+The number of devices listed in `device_list`.
+
+`options`::
+
+A pointer to a null-terminated string of characters that describes the build options to be used for building the program executable.
+Certain options are ignored when `program` is created with IL.
+The list of supported options is described below.
+
+`pfn_notify`::
+
+A function pointer to a notification routine.
+The notification routine is a callback function that an application can register and which will be called when the program executable has been built (successfully or unsuccessfully).
+If `pfn_notify` is not NULL, `clBuildProgram` does not need to wait for the build to complete and can return immediately once the build operation can begin.
+The build operation can begin if the context, program whose sources are being compiled and linked, list of devices and build options specified are all valid and appropriate host and device resources needed to perform the build are available.
+If `pfn_notify` is NULL, `clBuildProgram` does not return until the build has completed.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application’s responsibility to ensure that the callback function is thread-safe.
+
+`user_data`::
+
+Passed as an argument when `pfn_notify` is called.
+`user_data` can be NULL.
+
+
+[[notes]]
+== Notes
+
+Builds (compiles & links) a program executable from the program source or binary for all the devices or a specific device(s) in the OpenCL context associated with `program`.
+OpenCL allows program executables to be built using the source or the binary.
+`clBuildProgram` must be called for `program` created using either <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>>, <<clCreateProgramWithIL.adoc#, `clCreateProgramWithIL`>>, or <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>> to build the program executable for one or more devices associated with `program`.
+If `program` is created with <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>, then the program binary must be an executable binary (not a compiled binary or library).
+
+The executable binary can be queried using <<clGetProgramInfo.adoc#, `clGetProgramInfo`>>(`program`, `CL_PROGRAM_BINARIES`, ...) and can be specified to <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>> to create a new program object.
+
+`clBuildProgram` does not return until the build has completed.
+This callback function may be called asynchronously by the OpenCL implementation.
+It is the application’s responsibility to ensure that the callback function is thread-safe.
+
+include::buildOptionsInc.adoc[]
+
+
+[[errors]]
+== Errors
+
+`clBuildProgram` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_PROGRAM` if `program` is not a valid program object.
+
+* `CL_INVALID_VALUE` if `device_list` is NULL and `num_devices` is greater than zero, or if `device_list` is not NULL and `num_devices` is zero.
+
+* `CL_INVALID_VALUE` if `pfn_notify` is NULL but `user_data` is not NULL.
+
+* `CL_INVALID_DEVICE` if OpenCL devices listed in `device_list` are not in the list of devices associated with `program`.
+
+* `CL_INVALID_BINARY` if `program` is created with <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>> and devices listed in `device_list` do not have a valid program binary loaded.
+
+* `CL_INVALID_BUILD_OPTIONS` if the build options specified by `options` are invalid.
+
+* `CL_INVALID_OPERATION` if the build of a program executable for any of the devices listed in `device_list` by a previous call to `clBuildProgram` for `program` has not completed.
+
+* `CL_COMPILER_NOT_AVAILABLE` if `program` is created with <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>> and a compiler is not available i.e.
+`CL_DEVICE_COMPILER_AVAILABLE` specified in the table of OpenCL Device Queries for <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>> is set to `CL_FALSE`.
+
+* `CL_BUILD_PROGRAM_FAILURE` if there is a failure to build the program executable.
+This error will be returned if `clBuildProgram` does not return until the build has completed.
+
+* `CL_INVALID_OPERATION` if there are kernel objects attached to `program`.
+
+* `CL_INVALID_OPERATION` if `program` was not created with <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>>, <<clCreateProgramWithIL.adoc#, `clCreateProgramWithIL`>>, or <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>.
+
+* `CL_INVALID_OPERATION` if the `program` requires independent forward progress of sub-groups but one or more of the devices listed in `device_list` does not return `CL_TRUE` for the `CL_DEVICE_SUBGROUP_INDEPENDENT_FORWARD_PROGRESS` query.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 200
+
+
+[[seealso]]
+== Also see
+
+<<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>, <<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>, <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>>, <<clCreateProgramWithIL.adoc#, `clCreateProgramWithIL`>>, <<clCompileProgram.adoc#, `clCompileProgram`>>, <<clLinkProgram.adoc#, `clLinkProgram`>>
+
+include::_footer.adoc[]

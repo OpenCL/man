@@ -1,0 +1,50 @@
+include::_header.adoc[]
+
+
+[[isinf]]
+= isinf
+
+Test for infinity value.
+
+[source,c]
+----
+int isinf(float)
+
+int n isinf(float n)
+
+int isinf(double)
+
+long n isinf(double n)
+----
+
+----
+int isinf (half)      // if half extension enabled
+
+shortn isinf (halfn)      // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Test for infinity value (positive or negative).
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

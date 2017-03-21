@@ -1,0 +1,54 @@
+include::_header.adoc[]
+
+
+[[vloadn]]
+= vloadn
+
+Read vectors from a pointer to memory.
+
+[source,c]
+----
+gentype n vload n(size_t offset,
+                  const gentype *p)
+
+gentype n vload n(size_t offset,
+                  const constant gentype *p)
+----
+
+
+[[description]]
+== Description
+
+Return sizeof (`gentypen`) bytes of data read from address (`p` + (`offset` * `n`)).
+
+The read address computed as (`p` + (`offset` * `n`)) must be 8-bit aligned if `gentype` is `char` or `uchar`; 16-bit aligned if `gentype` is `short`, `ushort`, or `half`; 32-bit aligned if `gentype` is `int`, `uint`, or `float`; 64-bit aligned if `gentype` is `long` or `ulong`.
+
+If the `half` extension is enabled, the address computed as (`p` + (`offset` * `n`)) must be 16-bit aligned.
+
+
+[[notes]]
+== Notes
+
+The generic type `gentype` is used to indicate the built-in data types `char`, `uchar`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, or `double`.
+
+The generic type name `gentypen` represents n-element vectors of `gentype` elements.
+The suffix n is also used in the function names (i.e.
+`vloadn`, `vstoren`, etc.), where n = 2, 3, 4, 8, or 16.
+
+include::vectorFunctionsInc.adoc[]
+
+include::vectorHalfFunctionsInc.adoc[]
+
+`vload3` and `vload_half3` read `x`, `y`, `z` components from address (`p` + (`offset` * 3)) into a 3-component vector.
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

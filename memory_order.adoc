@@ -1,0 +1,49 @@
+include::_header.adoc[]
+
+
+[[memory_order]]
+= memory_order
+
+Enumeration to identify memory ordering constraints.
+
+----
+memory_order
+----
+
+
+[[description]]
+== Description
+
+The OpenCL C programming language implements a subset of the C11 atomics (refer to section 7.17 of the C11 specification) and synchronization operations.
+These operations play a special role in making assignments in one work-item visible to another.
+A synchronization operation on one or more memory locations is either an acquire operation, a release operation, or both an acquire and release operation. (The C11 consume operation is not supported.) A synchronization operation without an associated memory location is a fence and can be either an acquire fence, a release fence or both an acquire and release fence.
+In addition, there are relaxed atomic operations, which are not synchronization operations, and atomic read-modify-write operations which have special characteristics
+
+The enumerated type `memory_order` specifies the detailed regular (non-atomic) memory synchronization operations as defined in section 5.1.2.4 of the C11 specification and may provide for operation ordering.
+Its enumeration constants are as follows:
+
+----
+     memory_order_relaxed
+     memory_order_acquire
+     memory_order_release
+     memory_order_acq_rel
+     memory_order_seq_cst
+----
+
+The `memory_order` can be used when performing atomic operations to global or local memory.
+
+
+[[notes]]
+== Notes
+
+
+:spec-name: CLan
+:spec-page: 105
+
+
+[[seealso]]
+== Also see
+
+<<atomicFunctions.adoc#, Atomic Functions>>, <<memory_scope.adoc#, `memory_scope`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,29 @@
+[cols="1a,1a", options="header"]
+|===
+
+|cl_device_type
+|Description
+
+|`CL_DEVICE_TYPE_CPU`
+|An OpenCL device that is the host processor.
+The host processor runs the OpenCL implementations and is a single or multi-core CPU.
+
+|`CL_DEVICE_TYPE_GPU`
+|An OpenCL device that is a GPU.
+By this we mean that the device can also be used to accelerate a 3D API such as OpenGL or DirectX.
+
+|`CL_DEVICE_TYPE_ACCELERATOR`
+|Dedicated OpenCL accelerators (for example the IBM CELL Blade).
+These devices communicate with the host processor using a peripheral interconnect such as PCIe.
+
+|`CL_DEVICE_TYPE_CUSTOM`
+|Dedicated accelerators that do not support programs written in OpenCL C.
+
+|`CL_DEVICE_TYPE_DEFAULT`
+|The default OpenCL device in the system.
+The default device cannot be a `CL_DEVICE_TYPE_CUSTOM` device.
+
+|`CL_DEVICE_TYPE_ALL`
+|All OpenCL devices available in the system except `CL_DEVICE_TYPE_CUSTOM` devices.
+
+|===

@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[vstoren]]
+= vstore_n_
+
+Write sizeof bytes (`gentypen`) to memory.
+
+[source,c]
+----
+void vstore n(gentype n data,
+              size_t offset,
+              gentype *p)
+----
+
+
+[[description]]
+== Description
+
+Write `sizeof(gentypen)` bytes given by `data` to address (`p` + (`offset` * `n`)).
+The address computed as (`p` + (`offset` * `n`)) must be 8-bit aligned if `gentype` is `char` or `uchar`; 16-bit aligned if `gentype` is `short`, `ushort`, or `half`; 32-bit aligned if `gentype` is `int`, `uint`, or `float`; 64-bit aligned if `gentype` is `long` or `ulong`.
+
+
+[[notes]]
+== Notes
+
+The generic type `gentype` is used to indicate the built-in data types `char`, `uchar`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, or `double`.
+
+The generic type name `gentypen` represents n-element vectors of `gentype` elements.
+The suffix n is also used in the function names (i.e.
+`vloadn`, `vstoren`, etc.), where n = 2, 3, 4, 8, or 16.
+
+include::vectorFunctionsInc.adoc[]
+
+include::vectorHalfFunctionsInc.adoc[]
+
+When the half extension is enabled, the address computed as (`p` + (`offset` * `n`)) must be 16-bit aligned.
+
+`vstore3`, and `vstore_half3` write `x`, `y`, `z` components from a 3-component vector to address (`p` + (`offset` * 3)).
+
+
+:spec-name: CLan
+:spec-page: 93
+
+
+[[seealso]]
+== Also see
+
+<<vectorDataLoadandStoreFunctions.adoc#, Vector Data Load and Store Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,3 @@
+If an implementation extends this specification to support IEEE-754 flags or exceptions, then all built-in relational functions shall proceed without raising the `invalid` floating-point exception when one or more of the operands are NaNs.
+
+The built-in relational functions are extended with <<cl_khr_fp16.adoc#, `cl_khr_fp16`>> to include versions that take `half`, and `half{2|3|4|8|16}` as arguments.

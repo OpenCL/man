@@ -1,0 +1,77 @@
+include::_header.adoc[]
+
+
+[[exp]]
+= exp, exp2, exp10, expm1 (including half_ and native_)
+
+Exponent functions.
+
+[source,c]
+----
+gentype exp(gentype x)
+
+gentype exp2(gentype)
+
+gentype exp10(gentype)
+
+gentype expm1(gentype x)
+
+gentype half_exp(gentype x)
+
+gentype half_exp2(gentype x)
+
+gentype half_exp10(gentype x)
+
+gentype native_exp(gentype x)
+
+gentype native_exp2(gentype x)
+
+gentype native_exp10(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`exp` computes the base- e exponential of `x`.
+
+`exp2` is the exponential base 2 function.
+
+`exp10` is the exponential base 10 function.
+
+`expm1` computes `e`^x^ - 1.0.
+
+`half_exp` computes the base- e exponential of `x`.
+
+`half_exp2` computes the base- 2 exponential of `x`.
+
+`half_exp10` computes the base- 10 exponential of `x`.
+
+`native_exp` computes the base- e exponential of `x` over an implementation-defined range.
+The maximum error is implementation-defined.
+
+`native_exp2` computes the base- 2 exponential of `x` over an implementation-defined range.
+The maximum error is implementation-defined.
+
+`native_exp10` computes the base- 10 exponential of `x` over an implementation-defined range.
+The maximum error is implementation-defined.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,36 @@
+include::_header.adoc[]
+
+
+[[trunc]]
+= trunc
+
+Round to integer toward zero.
+
+[source,c]
+----
+gentype trunc(gentype)
+----
+
+
+[[description]]
+== Description
+
+Round to integral value using the round to zero rounding mode.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

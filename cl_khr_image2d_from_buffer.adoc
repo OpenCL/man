@@ -1,0 +1,23 @@
+include::_header.adoc[]
+
+
+[[cl_khr_image2d_from_buffer]]
+= cl_khr_image2d_from_buffer
+
+----
+#pragma OPENCL EXTENSION cl_khr_image2d_from_buffer : enable
+----
+
+
+[[description]]
+== Description
+
+
+:spec-name: Core
+:spec-page: 78
+
+
+[[seealso]]
+== Also see
+
+include::_footer.adoc[]

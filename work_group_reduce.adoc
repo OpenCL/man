@@ -1,0 +1,32 @@
+include::_header.adoc[]
+
+
+[[work_group_reduce]]
+= work_group_reduce_<op>
+
+Return result of reduction operation for work-items in a work-group.
+
+[source,c]
+----
+gentype work_group_reduce_<op>(gentype x)
+----
+
+
+[[description]]
+== Description
+
+Return result of reduction operation specified by _<op>_ for all values of `x` specified by work-items in a work-group.
+
+include::workGroupOpInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 154
+
+
+[[seealso]]
+== Also see
+
+<<work_group_scan_exclusive.adoc#, `work_group_scan_exclusive`>>, <<work_group_scan_inclusive.adoc#, `work_group_scan_inclusive`>>
+
+include::_footer.adoc[]

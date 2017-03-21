@@ -1,0 +1,38 @@
+include::_header.adoc[]
+
+
+[[prefetch]]
+= prefetch
+
+Prefetch bytes into the global cache.
+
+[source,c]
+----
+void prefetch(const __global gentype *p,
+              size_t num_gentypes)
+----
+
+
+[[description]]
+== Description
+
+`prefetch` prefetches `num_gentypes` * sizeof(`gentype`) bytes into the global cache.
+The prefetch instruction is applied to a work-item in a work-group and does not affect the functional behavior of the kernel.
+
+The kernel must wait for the completion of all async copies using the `wait_group_events` built-in function before exiting; otherwise the behavior is undefined.
+
+include::asyncCopyInc.adoc[]
+
+include::vectorHalfFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 100
+
+
+[[seealso]]
+== Also see
+
+<<asyncCopyFunctions.adoc#, Async Copy and Prefetch Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,81 @@
+include::_header.adoc[]
+
+
+[[log]]
+= log, log2, log10, log1p, logb
+
+Logarithm functions.
+
+[source,c]
+----
+gentype log(gentype)
+
+gentype log2(gentype)
+
+gentype log10(gentype)
+
+gentype log1p(gentype x)
+
+gentype logb(gentype x)
+
+gentype half_log(gentype x)
+
+gentype half_log2(gentype x)
+
+gentype half_log10(gentype x)
+
+gentype native_log(gentype x)
+
+gentype native_log2(gentype x)
+
+gentype native_log10(gentype x)
+----
+
+
+[[description]]
+== Description
+
+`log` computes natural logarithm.
+
+`log2` computes a base 2 logarithm.
+
+`log10` computes a base 10 logarithm.
+
+`log1p` computes log~e~(1.0 + `x`).
+
+`logb` computes the exponent of `x`, which is the integral part of log~r~ |`x`|.
+
+`half_log` computes natural logarithm.
+
+`half_log2` computes a base 2 logarithm.
+
+`half_log10` computes a base 10 logarithm.
+
+`native_log` computes natural logarithm over an implementation-defined range.
+The maximum error is implementation-defined.
+
+`native_log2` computes a base 2 logarithm over an implementation-defined range.
+The maximum error is implementation-defined.
+
+`native_log10` computes a base 10 logarithm over an implementation-defined range.
+The maximum error is implementation-defined.
+
+
+[[notes]]
+== Notes
+
+include::mathFunctionsInc.adoc[]
+
+include::halfNativeMathInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

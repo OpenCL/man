@@ -1,0 +1,41 @@
+include::_header.adoc[]
+
+
+[[fract]]
+= fract
+
+Fractional value in `x`.
+
+[source,c]
+----
+gentype fract(gentype x,
+              gentype *itpr)
+----
+
+
+[[description]]
+== Description
+
+Returns <<fmin.adoc#, `fmin`>>(`x` - <<floor.adoc#, `floor`>>(`x`), 0x1.ffcp-1f ).
+<<floor.adoc#, `floor`>>(`x`) is returned in `iptr`.
+
+
+[[notes]]
+== Notes
+
+The min() operator is there to prevent `fract`(-small ) from returning 1.0.
+It returns the largest positive floating-point number less than 1.0.
+
+include::mathFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 72
+
+
+[[seealso]]
+== Also see
+
+<<mathFunctions.adoc#, Math Functions>>
+
+include::_footer.adoc[]

@@ -1,0 +1,127 @@
+include::_header.adoc[]
+
+
+[[clGetKernelInfo]]
+= clGetKernelInfo
+
+Returns information about the kernel object.
+
+[source,c]
+----
+cl_int clGetKernelInfo(cl_kernel kernel,
+                       cl_kernel_info param_name,
+                       size_t param_value_size,
+                       void *param_value,
+                       size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`kernel`::
+
+Specifies the kernel object being queried.
+
+`param_name`::
+
+Specifies the information to query.
+The list of supported `param_name` types and the information returned in `param_value` by `clGetKernelInfo` is described in the table below.
+
+`param_value`::
+
+A pointer to memory where the appropriate result being queried is returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
++
+--
+
+Used to specify the size in bytes of memory pointed to by `param_value`.
+This size must be ≥ size of return type as described in the table below.
+
+
+[[cl_kernel_info]]
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|cl_kernel_info
+|Return Type
+|Info.
+returned in `param_value`
+
+|`CL_KERNEL_FUNCTION_NAME`
+|char[]
+|Return the kernel function name.
+
+|`CL_KERNEL_NUM_ARGS`
+|cl_uint
+|Return the number of arguments to `kernel`.
+
+|`CL_KERNEL_REFERENCE_COUNT`
+|cl_uint
+|
+
+Return the `kernel` reference count.
+
+The reference count returned should be considered immediately stale.
+It is unsuitable for general use in applications.
+This feature is provided for identifying memory leaks.
+
+|`CL_KERNEL_CONTEXT`
+|cl_context
+|Return the context associated with `kernel`.
+
+|`CL_KERNEL_PROGRAM`
+|cl_program
+|Return the program object associated with `kernel`.
+
+|`CL_KERNEL_ATTRIBUTES`
+|char[]
+|
+
+Returns any attributes specified using the __<<attribute.adoc#, `attribute`>>__ qualifier with the kernel function declaration in the program source.
+These attributes include those on the __<<attribute.adoc#, `attribute`>>__ page and other attributes supported by an implementation.
+
+Attributes are returned as they were declared inside __<<attribute.adoc#, `attribute`>>__((...)), with any surrounding whitespace and embedded newlines removed.
+When multiple attributes are present, they are returned as a single, space delimited string.
+
+For kernels not created from OpenCL C source and the <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>> API call the string returned from this query will be empty.
+
+|===
+
+--
+
+`param_value_size_ret`::
+
+the actual size in bytes of data copied to `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_VALUE` if `param_name` is not valid, or if size in bytes specified by `param_value_size` is < size of return type as described in the table above and `param_value` is not NULL.
+
+* `CL_INVALID_KERNEL` if `kernel` is not a valid kernel object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 231
+
+
+[[seealso]]
+== Also see
+
+<<clCreateKernel.adoc#, `clCreateKernel`>>, <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>>, <<clGetKernelArgInfo.adoc#, `clGetKernelArgInfo`>>, <<clRetainKernel.adoc#, `clRetainKernel`>>, <<clReleaseKernel.adoc#, `clReleaseKernel`>>, <<clSetKernelArg.adoc#, `clSetKernelArg`>>, <<clGetKernelWorkGroupInfo.adoc#, `clGetKernelWorkGroupInfo`>>
+
+include::_footer.adoc[]

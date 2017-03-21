@@ -1,0 +1,58 @@
+include::_header.adoc[]
+
+
+[[fast_normalize]]
+= fast_normalize
+
+Normal vector length 1.
+
+[source,c]
+----
+float n fast_normalize(float n p)
+----
+
+
+[[description]]
+== Description
+
+Returns a vector in the same direction as `p` but with a length of 1.
+`fast_normalize` is computed as:
+
+----
+          p * half_rsqrt(p.x2 + p.y2 +...)
+----
+
+The result shall be within 8192 ulps error from the infinitely precise result of:
+
+----
+          if (all(p == 0.0f))
+                    result = p;
+          else
+                    result = p /  sqrt(p.x2 + p.y2 +...);
+----
+
+with the following exceptions:
+
+. If the sum of squares is greater than `FLT_MAX` then the value of the floating-point values in the result vector are undefined.
+
+. If the sum of squares is less than `FLT_MIN` then the implementation may return back `p`.
+
+. If the device is in 'denorms are flushed to zero' mode, individual operand elements with magnitude less than <<sqrt.adoc#, `sqrt`>>(`FLT_MIN`) may be flushed to zero before proceeding with the calculation.
+
+
+[[notes]]
+== Notes
+
+include::geometricFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 88
+
+
+[[seealso]]
+== Also see
+
+<<geometricFunctions.adoc#, Geometric Functions>>
+
+include::_footer.adoc[]

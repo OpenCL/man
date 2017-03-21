@@ -1,0 +1,60 @@
+include::_header.adoc[]
+
+
+[[isnotequal]]
+= isnotequal
+
+Compare of `x` != `y`.
+
+[source,c]
+----
+int isnotequal(float x,
+               float y)
+
+int n isnotequal(float n x,
+                 float n y)
+
+int isnotequal(double x,
+               double y)
+
+long n isnotequal(double n x,
+                  double n y)
+----
+
+----
+int isnotequal
+     (half x,
+       half y)   // if half extension enabled
+
+shortn isnotequal
+     (halfn x,
+       halfn y)   // if half extension enabled
+----
+
+
+[[description]]
+== Description
+
+Returns the component-wise compare of `x` != `y`.
+
+
+[[notes]]
+== Notes
+
+include::relationalFunctionsInc1.adoc[]
+
+include::relationalFunctionsInc2.adoc[]
+
+`isnotequal` returns 1 if one or both arguments are not a number (NaN) and the argument type is a scalar and returns -1 if one or both arguments are not a number (NaN) and the argument type is a vector.
+
+
+:spec-name: CLan
+:spec-page: 90
+
+
+[[seealso]]
+== Also see
+
+<<relationalFunctions.adoc#, Relational Functions>>
+
+include::_footer.adoc[]

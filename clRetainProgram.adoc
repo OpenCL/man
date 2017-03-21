@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[clRetainProgram]]
+= clRetainProgram
+
+Increments the `program` reference count.
+
+[source,c]
+----
+cl_int clRetainProgram(cl_program program)
+----
+
+
+[[notes]]
+== Notes
+
+<<clCreateProgram.adoc#, `clCreateProgram`>> does an implicit retain.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_PROGRAM` if `program` is not a valid program object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 199
+
+
+[[seealso]]
+== Also see
+
+<<clCreateProgramWithBinary.adoc#, `clCreateProgramWithBinary`>>, <<clCreateProgramWithSource.adoc#, `clCreateProgramWithSource`>>, <<clRetainProgram.adoc#, `clRetainProgram`>>
+
+include::_footer.adoc[]

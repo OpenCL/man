@@ -1,0 +1,62 @@
+include::_header.adoc[]
+
+
+[[accessQualifiers]]
+= Access Qualifiers
+
+Access Qualifiers for image memory objects.
+
+----
+__read_only
+__write_only
+__read_write
+read_only
+write_only
+read_write
+----
+
+
+[[description]]
+== Description
+
+Image objects specified as arguments to a kernel can be declared to be read-only, write-only or read-write.
+The `__read_only` (or `read_only`) and `__write_only` (or `write_only`) qualifiers must be used with image object arguments to declare if the image object is being read or written by a kernel or function.
+The `__read_write` (or `read_write`) qualifier must be used with image object arguments of kernels and of user-defined functions to declare if the image object is being both read and written by the kernel.
+If no qualifier is provided, `read_only` is assumed.
+
+In the following example
+
+----
+kernel void
+foo (read_only image2d_t imageA,
+    write_only image2d_t imageB)
+{
+    ...
+}
+----
+
+`imageA` is a read-only 2D image object, and `imageB` is a write-only 2D image object.
+
+The sampler-less read image and write image built-ins can be used with image declared with the `__read_write` (or `read_write`) qualifier.
+Calls to built-ins that read from an image using a sampler for images declared with the `__read_write` (or `read_write`) qualifier will be a compilation error.
+
+Pipe objects specified as arguments to a kernel also use these access qualifiers.
+Refer to section 6.13.16 for a detailed description on how these access qualifiers can be used with pipes.
+
+
+[[notes]]
+== Notes
+
+The `__read_only`, `__write_only`, `__read_write`, `read_only`, `write_only` and `read_write` names are reserved for use as access qualifiers and shall not be used otherwise.
+
+
+:spec-name: CLan
+:spec-page: 46
+
+
+[[seealso]]
+== Also see
+
+<<qualifiers.adoc#, `qualifiers`>>,
+
+include::_footer.adoc[]

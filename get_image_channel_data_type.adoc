@@ -1,0 +1,80 @@
+include::_header.adoc[]
+
+
+[[get_image_channel_data_type]]
+= get_image_channel_data_type
+
+Return the channel data type.
+
+[source,c]
+----
+int get_image_channel_data_type(aQual image1d_t image)
+
+int get_image_channel_data_type(aQual image1d_buffer_t image)
+
+int get_image_channel_data_type(aQual image2d_t image)
+
+int get_image_channel_data_type(aQual image3d_t image)
+
+int get_image_channel_data_type(aQual image1d_array_t image)
+
+int get_image_channel_data_type(aQual image2d_array_t image)
+
+int get_image_channel_data_type(aQual image2d_depth_t image)
+
+int get_image_channel_data_type(aQual image2d_array_depth_t image)
+
+int get_image_channel_data_type(image2d_msaa_t image)
+
+int get_image_channel_data_type(image2d_array_msaa_t image)
+
+int get_image_channel_data_type(image2d_msaa_depth_t image)
+
+int get_image_channel_data_type(image2d_array_msaa_depth_t image)
+----
+
+
+[[description]]
+== Description
+
+include::imageQueryFunctionsInc.adoc[]
+
+Return the channel data type.
+Valid values are:
+
+----
+CLK_SNORM_INT8
+CLK_SNORM_INT16
+CLK_UNORM_INT8
+CLK_UNORM_INT16
+CLK_UNORM_SHORT_565
+CLK_UNORM_SHORT_555
+CLK_UNORM_SHORT_101010
+CLK_SIGNED_INT8
+CLK_SIGNED_INT16
+CLK_SIGNED_INT32
+CLK_UNSIGNED_INT8
+CLK_UNSIGNED_INT16
+CLK_UNSIGNED_INT32
+CLK_HALF_FLOAT
+CLK_FLOAT
+----
+
+
+[[notes]]
+== Notes
+
+The values returned by `get_image_channel_data_type` and `get_image_channel_order` as specified the table above with the `CLK_` prefixes correspond to the `CL_` prefixes used to describe the image channel order and data type in tables 5.4 (see <<clCreateSubBuffer.adoc#, `clCreateSubBuffer`>>) and 5.5 (see <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>>).
+For example, both `CL_UNORM_INT8` and `CLK_UNORM_INT8` refer to an image channel data type that is an unnormalized unsigned 8-bit integer.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_gl_msaa_sharing.adoc#, `cl_khr_gl_msaa_sharing`>>, <<clCreateSubBuffer.adoc#, `clCreateSubBuffer`>>, <<clEnqueueMapBuffer.adoc#, `clEnqueueMapBuffer`>>
+
+include::_footer.adoc[]

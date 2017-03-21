@@ -1,0 +1,92 @@
+include::_header.adoc[]
+
+
+[[clGetDeviceIDs]]
+= clGetDeviceIDs
+
+Obtain the list of devices available on a platform.
+
+[source,c]
+----
+cl_int clGetDeviceIDs(cl_platform_id platform,
+                      cl_device_type device_type,
+                      cl_uint num_entries,
+                      cl_device_id *devices,
+                      cl_uint *num_devices)
+----
+
+
+[[parameters]]
+== Parameters
+
+`platform`::
+
+Refers to the platform ID returned by <<clGetPlatformIDs.adoc#, `clGetPlatformIDs`>> or can be NULL.
+If `platform` is NULL, the behavior is implementation-defined.
+
+`device_type`::
+
++
+--
+
+A bitfield that identifies the type of OpenCL device.
+The `device_type` can be used to query specific OpenCL devices or all OpenCL devices available.
+The valid values for `device_type` are specified in the following table.
+
+include::cl_device_type_Inc.adoc[]
+
+--
+
+`num_entries`::
+
+The number of `cl_device_id` entries that can be added to `devices`.
+If `devices` is not NULL, the `num_entries` must be greater than zero.
+
+`devices`::
+
+A list of OpenCL devices found.
+The `cl_device_id` values returned in `devices` can be used to identify a specific OpenCL device.
+If `devices` argument is NULL, this argument is ignored.
+The number of OpenCL devices returned is the mininum of the value specified by `num_entries` or the number of OpenCL devices whose type matches `device_type`.
+
+`num_devices`::
+
+The number of OpenCL devices available that match `device_type`.
+If `num_devices` is NULL, this argument is ignored.
+
+
+[[notes]]
+== Notes
+
+`clGetDeviceIDs` may return all or a subset of the actual physical devices present in the platform and that match `device_type`.
+
+
+[[errors]]
+== Errors
+
+`clGetDeviceIDs` returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise it returns one of the following errors:
+
+* `CL_INVALID_PLATFORM` if `platform` is not a valid platform.
+
+* `CL_INVALID_DEVICE_TYPE` if `device_type` is not a valid value.
+
+* `CL_INVALID_VALUE` if `num_entries` is equal to zero and `devices` is not NULL or if both `num_devices` and `devices` are NULL.
+
+* `CL_DEVICE_NOT_FOUND` if no OpenCL devices that matched `device_type` were found.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 64
+
+
+[[seealso]]
+== Also see
+
+<<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>, <<clGetPlatformIDs.adoc#, `clGetPlatformIDs`>>, <<clCreateContext.adoc#, `clCreateContext`>>, <<classDiagram.adoc#, Cardinality Diagram>>
+
+include::_footer.adoc[]

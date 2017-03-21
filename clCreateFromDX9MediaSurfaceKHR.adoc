@@ -1,0 +1,116 @@
+include::_header.adoc[]
+
+
+[[clCreateFromDX9MediaSurfaceKHR]]
+= clCreateFromDX9MediaSurfaceKHR
+
+Creates an OpenCL image object from a media surface.
+
+[source,c]
+----
+cl_mem clCreateFromDX9MediaSurfaceKHR(cl_context context,
+                                      cl_mem_flags flags,
+                                      cl_dx9_media_adapter_type_khr adapter_type,
+                                      void *surface_info,
+                                      cl_uint plane,
+                                      cl_int *errcode_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`context`::
+
+A valid OpenCL context created from a media adapter.
+
+`flags`::
+
+A bit-field that is used to specify usage information.
+Refer to the table of allowed values for `flags` for <<clCreateBuffer.adoc#, `clCreateBuffer`>>.
+Only `CL_MEM_READ_ONLY`, `CL_MEM_WRITE_ONLY`, and `CL_MEM_READ_WRITE` values specified in the table of allowed values for `flags` for <<clCreateBuffer.adoc#, `clCreateBuffer`>> can be used.
+
+`adapter_type`::
+
++
+--
+
+A value from enumeration of supported adapters described in the table of `cl_dx9_media_adapter_type_khr` values for <<clGetDeviceIDsFromDX9MediaAdapterKHR.adoc#, `clGetDeviceIDsFromDX9MediaAdapterKHR`>>.
+The type of `surface_info` is determined by the adapter type.
+The implementation does not need to support all adapter types.
+This approach provides flexibility to support additional adapter types in the future.
+Supported adapter types are `CL_ADAPTER_D3D9_KHR`, `CL_ADAPTER_D3D9EX_KHR`, and `CL_ADAPTER_DXVA_KHR`.
+
+If `adapter_type` is `CL_ADAPTER_D3D9_KHR`, `CL_ADAPTER_D3D9EX_KHR`, or `CL_ADAPTER_DXVA_KHR`, the `surface_info` points to the following structure:
+
+`typedef struct _cl_dx9_surface_info_khr { IDirect3DSurface9 *resource; HANDLE shared_handle; } cl_dx9_surface_info_khr;`
+
+For D3D9 surfaces, we need both the handle to the resource and the resource itself to have a sufficient amount of information to eliminate a copy of the surface for sharing in cases where this is possible.
+Elimination of the copy is driver dependent.
+`shared_handle` may be NULL and this may result in sub-optimal performance.
+
+--
+
+`surface_info`::
+
+A pointer to one of the structures defined in the `adapter_type` description above passed in as a `void` *.
+
+`plane`::
+
+The plane of resource to share for planar surface formats.
+For planar formats, we use the plane parameter to obtain a handle to thie specific plane (Y, U or V for example).
+For nonplanar formats used by media, `plane` must be 0.
+
+`errcode_ret`::
+
+An appropriate error code.
+If `errcode_ret` is NULL, no error code is returned.
+
+
+[[notes]]
+== Notes
+
+The width and height of the returned OpenCL 2D image object are determined by the width and height of the plane of resource.
+The channel type and order of the returned image object is determined by the format and plane of resource and are described in tables 9.10.3 and 9.10.4.
+
+This call will increment the internal media surface count on `resource`.
+The internal media surface reference count on `resource` will be decremented when the OpenCL reference count on the returned OpenCL memory object drops to zero.
+
+include::sharingDX9Inc.adoc[]
+
+
+[[errors]]
+== Errors
+
+Returns a valid non-zero 2D image object and `errcode_ret` is set to `CL_SUCCESS` if the 2D image object is created successfully.
+Otherwise, it returns a NULL value with one of the following error values returned in `errcode_ret`:
+
+* `CL_INVALID_CONTEXT` if `context` is not a valid context.
+
+* `CL_INVALID_VALUE` if values specified in `flags` are not valid or if `plane` is not a valid plane of `resource` specified in `surface_info`.
+
+* `CL_INVALID_DX9_MEDIA_SURFACE_KHR` if `resource` specified in `surface_info` is not a valid resource or is not associated with `adapter_type` (e.g., `adapter_type` is set to `CL_ADAPTER_D3D9_KHR` and `resource` is not a Direct3D 9 surface created in `D3DPOOL_DEFAULT`).
+
+* `CL_INVALID_DX9_MEDIA_SURFACE_KHR` if `shared_handle` specified in `surface_info` is not NULL or a valid handle value.
+
+* `CL_INVALID_DX9_MEDIA_SURFACE_KHR` if `adapter_type` is set to a media adapter and the `surface_info` does not reference a media surface of the required type, or if `adapter_type` is set to a media adapter type and `surface_info` does not contain a valid reference to a media surface on that adapter, by <<clGetMemObjectInfo.adoc#, `clGetMemObjectInfo`>> when `param_name` is a surface or handle when the image was not created from an appropriate media surface, and from <<clGetImageInfo.adoc#, `clGetImageInfo`>> when `param_name` is `CL_IMAGE_DX9_MEDIA_PLANE_KHR` and image was not created from an appropriate media surface.
+
+* `CL_INVALID_IMAGE_FORMAT_DESCRIPTOR` if the texture format of `resource` is not listed in tables 9.10.3 and 9.10.4.
+
+* `CL_INVALID_OPERATION` if there are no devices in `context` that support `adapter_type`.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Ext
+:spec-page: 87
+
+
+[[seealso]]
+== Also see
+
+<<cl_khr_dx9_media_sharing.adoc#, `cl_khr_dx9_media_sharing`>>, <<clCreateBuffer.adoc#, `clCreateBuffer`>>,
+
+include::_footer.adoc[]

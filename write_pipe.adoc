@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[write_pipe]]
+= write_pipe
+
+Read packet from `pipe` into `ptr`.
+
+[source,c]
+----
+int write_pipe(write_only pipe gentype p,
+               const gentype *ptr)
+
+int write_pipe(write_only pipe gentype p,
+               reserve_id_t reserve_id,
+               uint index,
+               const gentype *ptr)
+----
+
+
+[[description]]
+== Description
+
+For the form without `reserve_id`, write packet specified by `ptr` into pipe `p`.
+Returns 0 if `write_pipe` is successful and a negative value if the pipe is full.
+
+For the form using `reserve_id`, write packet specified by `ptr` to the reserved area of the pipe referred to by `reserve_id` and `index`.
+The reserved pipe entries are referred to by indices that go from 0 … `num_packets` – 1.
+Returns 0 if `write_pipe` is successful and a negative value otherwise.
+
+include::pipeFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 158
+
+
+[[seealso]]
+== Also see
+
+<<pipeFunctions.adoc#, Pipe Functions>>
+
+include::_footer.adoc[]

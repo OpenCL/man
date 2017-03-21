@@ -1,0 +1,33 @@
+include::_header.adoc[]
+
+
+[[get_local_id]]
+= get_local_id
+
+Returns the unique local work-item ID.
+
+[source,c]
+----
+size_t get_local_id(uint dimindx)
+----
+
+
+[[description]]
+== Description
+
+Returns the unique local work-item ID, i.e.
+a work-item within a specific work-group for dimension identified by `dimindx`.
+Valid values of `dimindx` are 0 to <<get_work_dim.adoc#, `get_work_dim`>>() - 1.
+For other values of `dimindx`, `get_local_id`() returns 0.
+
+
+:spec-name: CLan
+:spec-page: 69
+
+
+[[seealso]]
+== Also see
+
+<<workItemFunctions.adoc#, Work-Item Functions>>, <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>
+
+include::_footer.adoc[]

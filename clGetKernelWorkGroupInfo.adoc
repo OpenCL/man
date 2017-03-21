@@ -1,0 +1,140 @@
+include::_header.adoc[]
+
+
+[[clGetKernelWorkGroupInfo]]
+= clGetKernelWorkGroupInfo
+
+Returns information about the kernel object that may be specific to a device.
+
+[source,c]
+----
+cl_int clGetKernelWorkGroupInfo(cl_kernel kernel,
+                                cl_device_id device,
+                                cl_kernel_work_group_info param_name,
+                                size_t param_value_size,
+                                void *param_value,
+                                size_t *param_value_size_ret)
+----
+
+
+[[parameters]]
+== Parameters
+
+`kernel`::
+
+Specifies the kernel object being queried.
+
+`device`::
+
+Identifies a specific device in the list of devices associated with `kernel`.
+The list of devices is the list of devices in the OpenCL context that is associated with `kernel`.
+If the list of devices associated with `kernel` is a single device, `device` can be a NULL value.
+
+`param_name`::
+
+Specifies the information to query.
+The list of supported `param_name` types and the information returned in `param_value` by `clGetKernelWorkGroupInfo` is described in the table below.
+
+`param_value`::
+
+A pointer to memory where the appropriate result being queried is returned.
+If `param_value` is NULL, it is ignored.
+
+`param_value_size`::
+
++
+--
+
+Used to specify the size in bytes of memory pointed to by `param_value`.
+This size must be ≥ size of return type as described in the table below.
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+|cl_kernel_work_group_info
+|Return Type
+|Info.
+returned in `param_value`
+
+|`CL_KERNEL_GLOBAL_WORK_SIZE`
+|size_t[3]
+|This provides a mechanism for the application to query the maximum global size that can be used to execute a kernel (i.e.
+`global_work_size` argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>>) on a custom device given by `device` or a built-in kernel on an OpenCL device given by `device`.
+
+If `device` is not a custom device or `kernel` is not a built-in kernel, `clGetKernelWorkGroupInfo` returns the error `CL_INVALID_VALUE`.
+
+|`CL_KERNEL_WORK_GROUP_SIZE`
+|size_t
+|
+
+This provides a mechanism for the application to query the maximum work-group size that can be used to execute the kernel on a specific device given by `device`.
+The OpenCL implementation uses the resource requirements of the kernel (register usage etc.) to determine what this work-group size should be.
+
+As a result and unlike `CL_DEVICE_MAX_WORK_GROUP_SIZE` this value may vary from one kernel to another as well as one device to another.
+
+`CL_KERNEL_WORK_GROUP_SIZE` will be less than or equal to `CL_DEVICE_MAX_WORK_GROUP_SIZE` for a given kernel object.
+
+|`CL_KERNEL_COMPILE_- WORK_GROUP_SIZE`
+|size_t[3]
+|Returns the work-group size specified in the kernel source or IL.
+If the work-group size is not specified in the kernel source or IL, (0, 0, 0) is returned.
+
+|`CL_KERNEL_LOCAL_MEM_SIZE`
+|cl_ulong
+|
+
+Returns the amount of local memory in bytes being used by a kernel.
+This includes local memory that may be needed by an implementation to execute the kernel, variables declared inside the kernel with the <<local.adoc#, `__local`>> address qualifier and local memory to be allocated for arguments to the kernel declared as pointers with the <<local.adoc#, `__local`>> address qualifier and whose size is specified with <<clSetKernelArg.adoc#, `clSetKernelArg`>>.
+
+If the local memory size, for any pointer argument to the kernel declared with the <<local.adoc#, `__local`>> address qualifier, is not specified, its size is assumed to be 0.
+
+|`CL_KERNEL_PREFERRED_WORK_- GROUP_SIZE_MULTIPLE`
+|size_t
+|Returns the preferred multiple of workgroup size for launch.
+This is a performance hint.
+Specifying a workgroup size that is not a multiple of the value returned by this query as the value of the local work size argument to <<clEnqueueNDRangeKernel.adoc#, `clEnqueueNDRangeKernel`>> will not fail to enqueue the kernel for execution unless the work-group size specified is larger than the device maximum.
+
+|`CL_KERNEL_PRIVATE_MEM_SIZE`
+|cl_ulong
+|Returns the minimum amount of private memory, in bytes, used by each work-item in the kernel.
+This value may include any private memory needed by an implementation to execute the kernel, including that used by the language built-ins and variable declared inside the kernel with the <<private.adoc#, `__private`>> qualifier.
+
+|===
+
+--
+
+`param_value_size_ret`::
+
+Returns the actual size in bytes of data copied to `param_value`.
+If `param_value_size_ret` is NULL, it is ignored.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_DEVICE` if `device` is not in the list of devices associated with `kernel` or if `device` is NULL but there is more than one device associated with `kernel`.
+
+* `CL_INVALID_VALUE` if `param_name` is not valid, or if size in bytes specified by `param_value_size` is < size of return type as described in the table above and `param_value` is not NULL.
+
+* `CL_INVALID_VALUE` if `param_name` is `CL_KERNEL_GLOBAL_WORK_SIZE` and `device` is not a custom device and `kernel` is not a built-in kernel.
+
+* `CL_INVALID_KERNEL` if `kernel` is a not a valid kernel object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 233
+
+
+[[seealso]]
+== Also see
+
+<<clCreateKernel.adoc#, `clCreateKernel`>>, <<clCreateKernelsInProgram.adoc#, `clCreateKernelsInProgram`>>, <<clReleaseKernel.adoc#, `clReleaseKernel`>>, <<clRetainKernel.adoc#, `clRetainKernel`>>, <<clSetKernelArg.adoc#, `clSetKernelArg`>>, <<clGetKernelInfo.adoc#, `clGetKernelInfo`>>
+
+include::_footer.adoc[]

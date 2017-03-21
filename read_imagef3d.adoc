@@ -1,0 +1,82 @@
+include::_header.adoc[]
+
+
+[[read_image2d]]
+= read_imagef (3D)
+
+Do an element lookup in the 3D image object, returning floating-point values.
+
+[source,c]
+----
+float4 read_imagef(read_only image3d_t image,
+                   sampler_t sampler,
+                   int4 coord)
+
+float4 read_imagef(read_only image3d_t image,
+                   sampler_t sampler,
+                   float4 coord)
+
+float4 read_imagef(aQual image3d_t image,
+                   int4 coord)
+
+float4 read_imagef(image3d_t image,
+                   sampler_t sampler,
+                   float4 coord,
+                   float lod)
+
+float4 read_imagef(image3d_t image,
+                   sampler_t sampler,
+                   float4 coord,
+                   float4 gradient_x,
+                   float4 gradient_y)
+----
+
+
+[[description]]
+== Description
+
+`aQual` refers to one of the access qualifiers `read_only`, `write_only`, or `read_write`.
+For samplerless read functions this may be `read_only` or `read_write`.
+
+For the forms that take an `image3d_t`, use the coordinate _(coord.x, coord.y, coord.z)_ to do an element lookup in the 3D image object specified by `image`. _coord.w_ is ignored.
+
+The samplerless read image functions behave exactly as the corresponding read image functions that take integer coordinates and a sampler with filter mode set to `CLK_FILTER_NEAREST`, normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode to `CLK_ADDRESS_NONE`.
+
+`read_imagef` returns floating-point values in the range [0.0... 1.0] for image objects created with `image_channel_data_type` set to one of the predefined packed formats or `CL_UNORM_INT8` or `CL_UNORM_INT16`.
+
+`read_imagef` returns floating-point values in the range [-1.0... 1.0] for image objects created with `image_channel_data_type` set to `CL_SNORM_INT8`, or `CL_SNORM_INT16`.
+
+`read_imagef` returns floating-point values for image objects created with `image_channel_data_type` set to `CL_HALF_FLOAT` or `CL_FLOAT`.
+
+The `read_imagef` calls that take integer coordinates must use a sampler with filter mode set to `CLK_FILTER_NEAREST`, normalized coordinates set to `CLK_NORMALIZED_COORDS_FALSE` and addressing mode set to `CLK_ADDRESS_CLAMP_TO_EDGE`, `CLK_ADDRESS_CLAMP` or `CLK_ADDRESS_NONE`; otherwise the values returned are undefined.
+
+Values returned by `read_imagef` for image objects with `image_channel_data_type` values not specified in the description above are undefined.
+
+include::imageMipmapFunctions3DInc.adoc[]
+
+
+[[notes]]
+== Notes
+
+General information about the `read_image`* functions follows.
+
+include::imageFunctionsInc.adoc[]
+
+include::imageMappingInc.adoc[]
+
+.Mipmap read image functions:
+
+`CL_SAMPLER_NORMALIZED_COORDS` must be `CL_TRUE` for built-in functions described in the table above that read from a mip-mapped image; otherwise the behavior is undefined.
+The value specified in the `lod` argument is clamped to the minimum of (actual number of mip-levels – 1) in the image or value specified for `CL_SAMPLER_LOD_MAX`.
+
+
+:spec-name: CLan
+:spec-page: 127
+
+
+[[seealso]]
+== Also see
+
+<<imageFunctions.adoc#, Image Functions>>, <<cl_khr_mipmap_image.adoc#, `cl_khr_mipmap_image`>>, <<sampler_t.adoc#, `sampler_t`>>
+
+include::_footer.adoc[]

@@ -1,0 +1,48 @@
+include::_header.adoc[]
+
+
+[[hadd]]
+= hadd, rhadd
+
+Returns (`x` + `y`) >> 1, or (`x` + `y` + 1) >> 1
+
+[source,c]
+----
+gentype hadd(gentype x,
+             gentype y)
+
+gentype rhadd(gentype x,
+              gentype y)
+----
+
+
+[[description]]
+== Description
+
+`hadd` returns (`x`+`y`) >> 1.
+The intermediate sum does not modulo overflow.
+
+`rhadd` returns (`x`+`y`+1) >> 1.
+The intermediate sum does not modulo overflow.
+
+Frequently vector operations need n + 1 bits temporarily to calculate a result.
+The `rhadd` instruction gives you an extra bit without needing to upsample and downsample.
+This can be a profound performance win.
+
+
+[[notes]]
+== Notes
+
+include::integerFunctionsInc.adoc[]
+
+
+:spec-name: CLan
+:spec-page: 82
+
+
+[[seealso]]
+== Also see
+
+<<integerFunctions.adoc#, Integer Functions>>
+
+include::_footer.adoc[]

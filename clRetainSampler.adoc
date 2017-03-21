@@ -1,0 +1,51 @@
+include::_header.adoc[]
+
+
+[[clRetainSampler]]
+= clRetainSampler
+
+Increments the sampler reference count.
+
+[source,c]
+----
+cl_int clRetainSampler(cl_sampler sampler)
+----
+
+
+[[parameters]]
+== Parameters
+
+`sampler`::
+
+Specifies the `sampler` being retained.
+
+
+[[notes]]
+== Notes
+
+<<clCreateSamplerWithProperties.adoc#, `clCreateSamplerWithProperties`>> performs an implicit retain.
+
+
+[[errors]]
+== Errors
+
+Returns `CL_SUCCESS` if the function is executed successfully.
+Otherwise, it returns one of the following errors:
+
+* `CL_INVALID_SAMPLER` if `sampler` is not a valid sampler object.
+
+* `CL_OUT_OF_RESOURCES` if there is a failure to allocate resources required by the OpenCL implementation on the device.
+
+* `CL_OUT_OF_HOST_MEMORY` if there is a failure to allocate resources required by the OpenCL implementation on the host.
+
+
+:spec-name: Core
+:spec-page: 191
+
+
+[[seealso]]
+== Also see
+
+<<clCreateSamplerWithProperties.adoc#, `clCreateSamplerWithProperties`>>, <<clGetSamplerInfo.adoc#, `clGetSamplerInfo`>>, <<clReleaseSampler.adoc#, `clReleaseSampler`>>
+
+include::_footer.adoc[]

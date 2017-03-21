@@ -1,0 +1,43 @@
+include::_header.adoc[]
+
+
+[[cl_khr_d3d10_sharing]]
+= cl_khr_d3d10_sharing
+
+Provide interoperability between OpenCL and Direct3D 10.
+
+----
+#pragma OPENCL EXTENSION cl_khr_d3d10_sharing : enable
+----
+
+
+[[description]]
+== Description
+
+If the `cl_khr_d3d10_sharing` extension is supported, then the following functions are enabled:
+
+* <<clGetDeviceIDsFromD3D10KHR.adoc#, `clGetDeviceIDsFromD3D10KHR`>>
+
+* <<clCreateFromD3D10BufferKHR.adoc#, `clCreateFromD3D10BufferKHR`>>
+
+* <<clCreateFromD3D10Texture2DKHR.adoc#, `clCreateFromD3D10Texture2DKHR`>>
+
+* <<clCreateFromD3D10Texture3DKHR.adoc#, `clCreateFromD3D10Texture3DKHR`>>
+
+* <<clEnqueueAcquireD3D10ObjectsKHR.adoc#, `clEnqueueAcquireD3D10ObjectsKHR`>>
+
+* <<clEnqueueReleaseD3D10ObjectsKHR.adoc#, `clEnqueueReleaseD3D10ObjectsKHR`>>
+
+include::sharingD3D10Inc.adoc[]
+
+
+:spec-name: Ext
+:spec-page: 64
+
+
+[[seealso]]
+== Also see
+
+<<EXTENSION.adoc#, EXTENSION>>, <<clGetPlatformInfo.adoc#, `clGetPlatformInfo`>>, <<clGetDeviceInfo.adoc#, `clGetDeviceInfo`>>
+
+include::_footer.adoc[]

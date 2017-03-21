@@ -1,0 +1,1 @@
+The argment type `gentype` can be `char`, `charn`, `uchar`, `ucharn`, `short`, `shortn`, `ushort`, `ushortn`, `int`, `intn`, `uint`, `uintn`, `long`, `longn`, `ulong`, `ulongn`, `float`, `floatn`, `double`, and `doublen`.

@@ -1,0 +1,126 @@
+include::_header.adoc[]
+
+
+[[genericAddressSpace]]
+= generic
+
+Generic Address Space.
+
+----
+__generic (unnamed address space)
+----
+
+
+[[description]]
+== Description
+
+Generic address space (glossary): An address space that include the private, local, and global address spaces available to a device.
+The generic address space supports conversion of pointers to and from private, local and global address spaces, and hence lets a programmer write a single function that at compile time can take arguments from any of the three named address spaces.
+
+
+[[notes]]
+== Notes
+
+Programmers often need functions callable from kernels where the pointers manipulated by those functions can point to multiple named address spaces.
+This saves a programmer from the error- prone and wasteful practice of creating multiple copies of functions; one for each named address space.
+Therefore the global, local and private address spaces belong to a single _generic address space_.
+This is closely modeled after the concept of a generic address space used in the embedded C standard (ISO/IEC 9899:1999).
+Since they all belong to a single generic address space, the following properties are supported for pointers to named address spaces in device memory:
+
+The following rules apply when using pointers that point to the generic address space:
+
+* A pointer that points to the `global`, `local` or `private` address space can be implicitly converted to a pointer to the unnamed generic address space but not vice-versa.
+
+* Pointer casts can be used to cast a pointer that points to the `global`, `local` or `private` space to the unnamed generic addresss space and vice-versa.
+
+* A pointer that points to the `constant` address space cannot be cast or implicitly converted to the generic address space.
+
+
+[[example1]]
+== Example
+
+This is the canonical example.
+In this example, function `foo`() is declared with an argument that is a pointer with no address space qualifier.
+
+----
+void foo(int *a)
+{
+    *a = *a + 2;
+}
+
+kernel void k1(local int *a)
+{
+    …
+    foo(a);
+    …
+}
+kernel void k2(global int *a)
+{
+    …
+    foo(a);
+    …
+}
+----
+
+In the example below, `var` is in the unnamed generic address space which gets mapped to the `global` or `local` address space depending on the result of the conditional expression.
+
+----
+kernel void bar(global int *g, local int *l)
+{
+    int *var;
+    if (is_even(get_global_id(0))
+        var = g;
+    else
+        var = l;
+    *var = 42;
+    …
+}
+----
+
+The example below is an example with one unnamed generic address space pointer with multiple named address space assignments.
+
+----
+int *ptr;
+global int g;
+ptr = &g; // legal
+
+local int l;
+ptr = &l; // legal
+
+private int p;
+ptr = &p; // legal
+
+constant int c;
+ptr = &c; // illegal
+----
+
+The example below is an example with one unnamed generic address space pointer being assigned to point to several named address spaces.
+
+----
+global int * gp;
+local int *lp;
+private int *pp;
+
+int *p;
+p = gp; // legal
+p = lp; // legal
+p = pp; // legal
+
+// it is illegal to convert from a generic pointer
+// to an explicit address space pointer without a cast:
+gp = p; // compile-time error
+lp = p; // compile-time error
+pp = p; // compile-time error
+----
+
+
+:spec-name: CLan
+:spec-page: 38
+
+
+[[seealso]]
+== Also see
+
+<<global.adoc#, `__global`>>, <<constant.adoc#, `__constant`>>, <<private.adoc#, `__private`>>, <<qualifiers.adoc#, `qualifiers`>>
+
+include::_footer.adoc[]
