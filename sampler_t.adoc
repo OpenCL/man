@@ -46,7 +46,7 @@ The sampler fields are described in the table below:
 
 |
 
-Specifies whether the `x`, `y` and `z` coordinates are passed in as normalized ([0,1[) or unnormalized ({0, size-1}) values.
+Specifies whether the `x`, `y` and `z` coordinates are passed in as normalized (`[0,1[`) or unnormalized (`{0, ..., size-1}`) values.
 This must be a literal value and can be one of the following predefined enums:
 
 ----
