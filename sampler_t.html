@@ -78,7 +78,7 @@ A variable of <code>sampler_t</code> type declared in the program source must be
 <p><code>&lt;normalized coords&gt;</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Specifies whether the <code>x</code>, <code>y</code> and <code>z</code> coordinates are passed in as normalized or unnormalized values.
+<p>Specifies whether the <code>x</code>, <code>y</code> and <code>z</code> coordinates are passed in as normalized (<code>[0, 1[</code>) or unnormalized (<code>[0, dimension_size - 1]</code>) values.
 This must be a literal value and can be one of the following predefined enums:</p>
 </div>
 <div class="listingblock">
@@ -103,19 +103,19 @@ This must be a literal value and can be one of the following predefined enums:</
 <div class="paragraph">
 <p><code>CLK_ADDRESS_MIRRORED_REPEAT</code> - Flip the image coordinate at every integer junction.
 This addressing mode can only be used with normalized coordinates.
-If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.</p>
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined. Example: <code>cba|abcd|dcb</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>CLK_ADDRESS_REPEAT</code> - out-of-range image coordinates are wrapped to the valid range.
 This <code>address mode</code> can only be used with normalized coordinates.
-If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.</p>
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined. Example: <code>bcd|abcd|abc</code>.</p>
 </div>
 <div class="paragraph">
-<p><code>CLK_ADDRESS_CLAMP_TO_EDGE</code> - out-of-range image coordinates are clamped to the extent.</p>
+<p><code>CLK_ADDRESS_CLAMP_TO_EDGE</code> - out-of-range image coordinates are clamped to the extent. Example: <code>aaa|abcd|ddd</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>CLK_ADDRESS_CLAMP</code> - out-of-range image coordinates will return a border color.
-This is similar to the <code>GL_ADDRESS_CLAMP_TO_BORDER</code> addressing mode.</p>
+This is similar to the <code>GL_ADDRESS_CLAMP_TO_BORDER</code> addressing mode. Example: <code>000|abcd|000</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>CLK_ADDRESS_NONE</code> - for this addressing mode the programmer guarantees that the image coordinates used to sample elements of the image refer to a location inside the image; otherwise the results are undefined.</p>
@@ -207,6 +207,18 @@ The sampler type cannot be used with the <code><em>local</code> and <code></em>g
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="otherDataTypes.html">Other Data Types</a>, <a href="imageFunctions.html">Image Read and Write Functions</a>, <a href="classDiagram.html">Cardinality Diagram</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="references">References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.milania.de/blog/Addressing_mode_of_sampler_objects_for_image_types_in_OpenCL_reviewed">Addressing mode of sampler objects for image types in OpenCL reviewed</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
