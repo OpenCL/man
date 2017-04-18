@@ -46,7 +46,7 @@ The sampler fields are described in the table below:
 
 |
 
-Specifies whether the `x`, `y` and `z` coordinates are passed in as normalized or unnormalized values.
+Specifies whether the `x`, `y` and `z` coordinates are passed in as normalized (`[0, 1[`) or unnormalized (`[0, dimension_size - 1]`) values.
 This must be a literal value and can be one of the following predefined enums:
 
 ----
@@ -68,16 +68,16 @@ This must be a literal value and can be one of the following predefined enums:
 
 `CLK_ADDRESS_MIRRORED_REPEAT` - Flip the image coordinate at every integer junction.
 This addressing mode can only be used with normalized coordinates.
-If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined. Example: `cba\|abcd\|dcb`.
 
 `CLK_ADDRESS_REPEAT` - out-of-range image coordinates are wrapped to the valid range.
 This `address mode` can only be used with normalized coordinates.
-If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined.
+If normalized coordinates are not used, this addressing mode may generate image coordinates that are undefined. Example: `bcd\|abcd\|abc`.
 
-`CLK_ADDRESS_CLAMP_TO_EDGE` - out-of-range image coordinates are clamped to the extent.
+`CLK_ADDRESS_CLAMP_TO_EDGE` - out-of-range image coordinates are clamped to the extent. Example: `aaa\|abcd\|ddd`.
 
 `CLK_ADDRESS_CLAMP` - out-of-range image coordinates will return a border color.
-This is similar to the `GL_ADDRESS_CLAMP_TO_BORDER` addressing mode.
+This is similar to the `GL_ADDRESS_CLAMP_TO_BORDER` addressing mode. Example: `000\|abcd\|000`.
 
 `CLK_ADDRESS_NONE` - for this addressing mode the programmer guarantees that the image coordinates used to sample elements of the image refer to a location inside the image; otherwise the results are undefined.
 
@@ -150,5 +150,9 @@ samplerA specifies a sampler that uses normalized coordinates, the repeat addres
 == Also see
 
 <<otherDataTypes.adoc#, Other Data Types>>, <<imageFunctions.adoc#, Image Read and Write Functions>>, <<classDiagram.adoc#, Cardinality Diagram>>
+
+[[references]]
+== References
+* https://www.milania.de/blog/Addressing_mode_of_sampler_objects_for_image_types_in_OpenCL_reviewed[Addressing mode of sampler objects for image types in OpenCL reviewed]
 
 include::_footer.adoc[]
