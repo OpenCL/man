@@ -105,6 +105,32 @@ If `event` is NULL, no event will be created for this kernel execution instance 
 If the `event_wait_list` and the `event` arguments are not NULL, the `event` argument should not refer to an element of the `event_wait_list` array.
 
 
+[[example]]
+== Example
+
+As example of how to specify the size of a kernel, suppose a 1D kernel should be enqueued with
+
+[source,c]
+----
+global_work_offset[0] = 2;
+global_work_size[0] = 4;
+local_work_size[0] = 2;
+----
+
+This will create 4 work-items with the following IDs:
+
+[cols="1a,1a,1a", options="header"]
+|===
+
+||Global ID|Local ID
+|work-item 1|2|0
+|work-item 2|3|1
+|work-item 3|4|0
+|work-item 4|5|1
+
+|===
+
+
 [[errors]]
 == Errors
 
