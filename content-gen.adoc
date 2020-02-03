@@ -468,7 +468,7 @@
 *** <<memory_order.adoc#, memory_order>>
 *** <<memory_scope.adoc#, memory_scope>>
 *** <<commonMin.adoc#, min (Common function)>>
-*** <<integerMin.adoc#, min (Integer function)>>
+*** <<integerMax.adoc#, min (Integer function)>>
 *** <<mag.adoc#, minmag>>
 *** <<cl_khr_mipmap_image.adoc#, mipmaps (cl_khr_mipmap_image)>>
 *** <<mix.adoc#, mix>>
@@ -870,7 +870,7 @@
 **** <<mad_hi.adoc#, mad_hi>>
 **** <<mad_sat.adoc#, mad_sat>>
 **** <<integerMax.adoc#, max>>
-**** <<integerMin.adoc#, min>>
+**** <<integerMax.adoc#, min>>
 **** <<mul24.adoc#, mul24>>
 **** <<mul_hi.adoc#, mul_hi>>
 **** <<popcount.adoc#, popcount>>
