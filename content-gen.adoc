@@ -830,7 +830,7 @@
 **** <<create_user_event.adoc#, create_user_event>>
 **** <<is_valid_event.adoc#, is_valid_event>>
 **** <<set_user_event_status.adoc#, set_user_event_status>>
-**** <<capture_event_profiling_info.adoc#, normalize>>
+**** <<capture_event_profiling_info.adoc#, capture_event_profiling_info>>
 *** <<geometricFunctions.adoc#, Geometric Functions>>
 **** <<cross.adoc#, cross>>
 **** <<dot.adoc#, dot>>
