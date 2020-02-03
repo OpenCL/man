@@ -468,7 +468,7 @@
 *** <<memory_order.adoc#, memory_order>>
 *** <<memory_scope.adoc#, memory_scope>>
 *** <<commonMin.adoc#, min (Common function)>>
-*** <<integerMax.adoc#, min (Integer function)>>
+*** <<integerMin.adoc#, min (Integer function)>>
 *** <<mag.adoc#, minmag>>
 *** <<cl_khr_mipmap_image.adoc#, mipmaps (cl_khr_mipmap_image)>>
 *** <<mix.adoc#, mix>>
@@ -817,9 +817,9 @@
 *** <<commonFunctions.adoc#, Common Functions>>
 **** <<clamp_common.adoc#, clamp>>
 **** <<degrees.adoc#, degrees>>
-**** <<commonMax.adoc#, ma>>
+**** <<commonMax.adoc#, max>>
 **** <<commonMin.adoc#, min>>
-**** <<mix.adoc#, mi>>
+**** <<mix.adoc#, mix>>
 **** <<radians.adoc#, radians>>
 **** <<sign.adoc#, sign>>
 **** <<smoothstep.adoc#, smoothstep>>
@@ -869,8 +869,8 @@
 **** <<mad24.adoc#, mad24>>
 **** <<mad_hi.adoc#, mad_hi>>
 **** <<mad_sat.adoc#, mad_sat>>
-**** <<integerMax.adoc#, ma>>
-**** <<integerMax.adoc#, min>>
+**** <<integerMax.adoc#, max>>
+**** <<integerMin.adoc#, min>>
 **** <<mul24.adoc#, mul24>>
 **** <<mul_hi.adoc#, mul_hi>>
 **** <<popcount.adoc#, popcount>>
@@ -914,7 +914,7 @@
 **** <<fdim.adoc#, fdim>>
 **** <<floor.adoc#, floor>>
 **** <<fma.adoc#, fma>>
-**** <<fmax.adoc#, fma>>
+**** <<fmax.adoc#, fmax>>
 **** <<fmin.adoc#, fmin>>
 **** <<fmod.adoc#, fmod>>
 **** <<fract.adoc#, fract>>
@@ -933,7 +933,7 @@
 **** <<log.adoc#, log1p>>
 **** <<log.adoc#, logb>>
 **** <<mad.adoc#, mad>>
-**** <<mag.adoc#, magma>>
+**** <<mag.adoc#, magmax>>
 **** <<mag.adoc#, magmin>>
 **** <<modf.adoc#, modf>>
 **** <<nan.adoc#, nan>>
