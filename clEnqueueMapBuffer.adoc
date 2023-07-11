@@ -49,7 +49,7 @@ When the map command is completed, the application can access the contents of th
 +
 --
 
-A bit-bield with the following supported values.
+A bit-field with the following supported values.
 
 include::map_flags_Inc.adoc[]
 
